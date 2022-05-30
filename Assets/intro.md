@@ -40,7 +40,7 @@ In two words, script changes pitch, if item has **preserve pitch** option and ch
 
 ### Global functions
 
-![Global Functions preview](/Assets/images/global_action_settings.png)
+<img src="/Assets/images/global_action_settings.png" alt="Global Functions preview" width="430"/>
 
 This function has many useful perks that processed in real-time:
 
