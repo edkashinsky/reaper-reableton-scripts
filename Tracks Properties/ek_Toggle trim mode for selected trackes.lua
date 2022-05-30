@@ -1,22 +1,27 @@
 -- @description ek_Toggle trim mode for selected trackes
--- @version 1.0.0
+-- @version 1.0.1
 -- @author Ed Kashinsky
 -- @about
 --   Toggles trim mode for selected tracks and shows current state as button highlight
 -- @changelog
 --   - Added core functions
 
-function CoreFunctionsLoaded()
+function CoreFunctionsLoaded(script)
 	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
 	local root_path = debug.getinfo(1, 'S').source:sub(2, -5):match("(.*" .. sep .. ")")
-	local script_path = root_path .. ".." .. sep .. "Core" .. sep .. "ek_Core functions.lua"
+	local script_path = root_path .. ".." .. sep .. "Core" .. sep .. script
 	local file = io.open(script_path, 'r')
 
 	if file then file:close() dofile(script_path) return true else return false end
 end
 
-if not CoreFunctionsLoaded() then
+if not CoreFunctionsLoaded("ek_Core functions.lua") then
 	reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0)
+	return
+end
+
+if not CoreFunctionsLoaded("ek_Core functions startup.lua") then
+	reaper.MB('Global startup action is missing. Please install "ek_Global startup action" it via ReaPack (Action: Browse packages)', '', 0)
 	return
 end
 
