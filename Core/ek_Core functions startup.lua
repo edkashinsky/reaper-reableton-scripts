@@ -21,7 +21,7 @@ ga_settings = {
 	},
 	project_limit = {
 		key = "project_limit",
-		title = "Automatically limit zoom to size of project",
+		title = "Automatically limit zoom to content of project",
 		description = "Feature from Ableton: max zoom level limits by the farthest item in the project.",
 		default = true,
 		order = 2,
@@ -42,8 +42,8 @@ ga_settings = {
 	},
 	monitoring_fx_plugin = {
 		key = "monitoring_fx_plugin",
-		title = "Title of monitoring FX-plugin",
-		description = "If you use spectrum correction plugins (such as Realphones, Sonarworks Reference 4, SoundID Reference and etc.) on Monitoring FX when using headphones, you can always see if the plugin is enabled. For using it, add script 'ek_Toggle monitoring fx plugin' to your toolbar and this button will be highlighted automatically when the plugin is enabled.",
+		title = "Monitoring the plugin status on monitoring FX-chain",
+		description = "If you use spectrum correction plugins (such as Realphones, Sonarworks Reference 4, SoundID Reference and etc.) on Monitoring FX when using headphones, you can always see if the plugin is enabled. For using it, add script 'ek_Toggle monitoring fx plugin' to your toolbar and this button will be highlighted automatically when the plugin on monitoring FX is enabled.",
 		default = "Realphones",
 		order = 5,
 	},

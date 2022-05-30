@@ -40,29 +40,33 @@ In two words, script changes pitch, if item has **preserve pitch** option and ch
 
 ### Global functions
 
-![Global Functions preview](/Assets/images/auto_grid_preview.gif)
+![Global Functions preview](/Assets/images/global_action_settings.gif)
 
 This function has many useful perks that processed in real-time:
 
-1. Auto grid update depending on zoom level in arrange view (like in Ableton)
-2. Observing that project has only 5 last backup files (it removes older stuff). It only works if you use timestamp backups 
-3. Observing of states of buttons (highlight when in needs)
-4. Observing of project zoom is limiting by the farthest item (like in Ableton)
-5. Observing that if you arm some track, project become 96khz
-6. Observing selected midi items and focus it in one MIDI Editor (like in Ableton)
+1. **Automatically adjust grid to zoom**. When you change zoom level, grid adjusts to it.
+2. **Automatically limit zoom to size of project**. Max zoom level limits by the farthest item in the project.
+3. **Automatically focus to MIDI editor when you click on an item**. When you single click on item, you see only one MIDI editor and focus on this particular item.
+4. **Automatically highlight buttons**. This option highlights toolbar buttons in real-time.
+5. **Monitoring the plugin status on monitoring FX-chain**. If you use spectrum correction plugins (such as Realphones, Sonarworks Reference 4, SoundID Reference and etc.) on Monitoring FX when using headphones, you can always see if the plugin is enabled.
+6. **Different sample rate for recording**. This option useful for sound designers, who usually uses 48kHz and forget to increase the sampling rate before recording to get better recording quality.
+7. **Automatic limit timestamp backup files**. Useful, if you want to keep only last limited amount of backup files.
 
 For installation:
-1. Install this script via **Extensions** -> **ReaPack** -> **Browse Packages**
+1. Install 'ek_Global startup action' script via **Extensions** -> **ReaPack** -> **Browse Packages**
 2. Open **Actions** -> **Action List**
-3. Find "Script: ek_Global Startup Functions.lua" in list and select "Copy selected action command ID" by right mouse click
+3. Find this in list and select "Copy selected action command ID" by right mouse click
 4. Open **Extensions** -> **Startup Actions** -> **Set Global Startup Action...** and paste copied command ID
 5. Restart Reaper
+6. Install and run 'ek_Global startup action settings' and configure the parameters you want to use
+
+![Global Functions preview](/Assets/images/auto_grid_preview.gif)
 
 ### Theme
 
 #### Flat Madness Dark Remix
 
-The one of the most [impressive themes](https://forum.cockos.com/showthread.php?t=247086) for Reaper. I tuned a bit this theme to look it more like Ableton.
+The one of the most [impressive themes](https://forum.cockos.com/showthread.php?t=247086) for Reaper (made by Dmytry Hapochka). I tuned a bit this theme to look it more like Ableton.
 
 ![Theme Preview](/Assets/images/theme_preview.png)
 

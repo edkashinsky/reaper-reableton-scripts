@@ -1,5 +1,5 @@
 -- @description ek_Global startup action settings
--- @version 1.0.0
+-- @version 1.0.1
 -- @author Ed Kashinsky
 -- @about
 --   Here you can set features for global startup actions
