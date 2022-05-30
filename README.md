@@ -55,7 +55,7 @@ This function has many useful perks that processed in real-time:
 For installation:
 1. Install 'ek_Global startup action' script via **Extensions** -> **ReaPack** -> **Browse Packages**
 2. Open **Actions** -> **Action List**
-3. Find this in list and select "Copy selected action command ID" by right mouse click
+3. Find this script in list and select "Copy selected action command ID" by right mouse click
 4. Open **Extensions** -> **Startup Actions** -> **Set Global Startup Action...** and paste copied command ID
 5. Restart Reaper
 6. Install and run 'ek_Global startup action settings' and configure the parameters you want to use
