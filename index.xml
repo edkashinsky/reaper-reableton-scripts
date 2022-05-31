@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="2a870df591554f96d000ddb50141517924547cdc">
+<index version="1" name="Reableton Scripts" commit="715e3abfc82c1c9b93fbdc2ada3f054c7879acb3">
   <category name="ColorThemes">
     <reapack name="Flat Madness Dark Remix.theme" type="theme" desc="Flat Madness Dark Remix">
       <metadata>
@@ -36,6 +36,12 @@
         <source file="ek_Core functions v1.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Core/ek_Core%20functions%20v1.lua</source>
         <source file="ek_Core functions GUI.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Core/ek_Core%20functions%20GUI.lua</source>
       </version>
+      <version name="1.0.1" author="Ed Kashinsky" time="2022-05-31T08:06:26Z">
+        <changelog><![CDATA[- added core loader]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Core/ek_Core%20functions.lua</source>
+        <source file="ek_Core functions v1.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Core/ek_Core%20functions%20v1.lua</source>
+        <source file="ek_Core functions GUI.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Core/ek_Core%20functions%20GUI.lua</source>
+      </version>
     </reapack>
     <reapack name="ek_Global startup action settings.lua" type="script" desc="ek_Global startup action settings">
       <metadata>
@@ -54,6 +60,10 @@
       <version name="1.0.1" author="Ed Kashinsky" time="2022-05-30T19:07:28Z">
         <changelog><![CDATA[- Added window]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2a870df591554f96d000ddb50141517924547cdc/Core/ek_Global%20startup%20action%20settings.lua</source>
+      </version>
+      <version name="1.0.2" author="Ed Kashinsky" time="2022-05-31T08:06:26Z">
+        <changelog><![CDATA[- Added window]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Core/ek_Global%20startup%20action%20settings.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Global startup action.lua" type="script" desc="ek_Global startup action">
@@ -83,6 +93,12 @@
 - Added customizable options for realtime]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/cb26ef2d99a62c0245331f6b9cc82ebde8bb7d8a/Core/ek_Global%20startup%20action.lua</source>
         <source file="ek_Core functions startup.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/cb26ef2d99a62c0245331f6b9cc82ebde8bb7d8a/Core/ek_Core%20functions%20startup.lua</source>
+      </version>
+      <version name="1.0.2" author="Ed Kashinsky" time="2022-05-31T08:06:26Z">
+        <changelog><![CDATA[- Added settings window
+- Added customizable options for realtime]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Core/ek_Global%20startup%20action.lua</source>
+        <source file="ek_Core functions startup.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Core/ek_Core%20functions%20startup.lua</source>
       </version>
     </reapack>
   </category>
@@ -116,6 +132,10 @@
       <version name="1.0.0" author="Ed Kashinsky" time="2022-05-30T09:42:49Z">
         <changelog><![CDATA[- Added core functions]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Items%20Editing/ek_Change%20pitch%20mode%20for%20selected%20items.lua</source>
+      </version>
+      <version name="1.0.1" author="Ed Kashinsky" time="2022-05-31T08:06:26Z">
+        <changelog><![CDATA[- Added core functions]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Items%20Editing/ek_Change%20pitch%20mode%20for%20selected%20items.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Clear pitch or rate for selected items.lua" type="script" desc="ek_Clear pitch or rate for selected items">
@@ -169,6 +189,10 @@
         <changelog><![CDATA[- Added core functions]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Items%20Editing/ek_Decrease%20pitch%20or%20rate%20for%20selected%20items.lua</source>
       </version>
+      <version name="1.0.1" author="Ed Kashinsky" time="2022-05-31T08:06:26Z">
+        <changelog><![CDATA[- Added core functions]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Items%20Editing/ek_Decrease%20pitch%20or%20rate%20for%20selected%20items.lua</source>
+      </version>
     </reapack>
     <reapack name="ek_Increase pitch or rate for selected items.lua" type="script" desc="ek_Increase pitch or rate for selected items">
       <metadata>
@@ -185,6 +209,10 @@
       <version name="1.0.0" author="Ed Kashinsky" time="2022-05-30T09:42:49Z">
         <changelog><![CDATA[- Added core functions]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Items%20Editing/ek_Increase%20pitch%20or%20rate%20for%20selected%20items.lua</source>
+      </version>
+      <version name="1.0.1" author="Ed Kashinsky" time="2022-05-31T08:06:26Z">
+        <changelog><![CDATA[- Added core functions]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Items%20Editing/ek_Increase%20pitch%20or%20rate%20for%20selected%20items.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Pin selected items at markers started from.lua" type="script" desc="ek_Pin selected items at markers started from">
@@ -204,6 +232,10 @@ Lokasenna_GUI
         <changelog><![CDATA[- GUI updated to ReaImGui]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Items%20Editing/ek_Pin%20selected%20items%20at%20markers%20started%20from.lua</source>
       </version>
+      <version name="1.0.1" author="Ed Kashinsky" time="2022-05-31T08:06:26Z">
+        <changelog><![CDATA[- GUI updated to ReaImGui]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Items%20Editing/ek_Pin%20selected%20items%20at%20markers%20started%20from.lua</source>
+      </version>
     </reapack>
     <reapack name="ek_Switch to next pitch mode for selected items.lua" type="script" desc="ek_Switch to next pitch mode for selected items">
       <metadata>
@@ -219,6 +251,10 @@ Lokasenna_GUI
       <version name="1.0.0" author="Ed Kashinsky" time="2022-05-30T09:42:49Z">
         <changelog><![CDATA[- Added core functions]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Items%20Editing/ek_Switch%20to%20next%20pitch%20mode%20for%20selected%20items.lua</source>
+      </version>
+      <version name="1.0.1" author="Ed Kashinsky" time="2022-05-31T08:06:26Z">
+        <changelog><![CDATA[- Added core functions]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Items%20Editing/ek_Switch%20to%20next%20pitch%20mode%20for%20selected%20items.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Switch to prev pitch mode for selected items.lua" type="script" desc="ek_Switch to prev pitch mode for selected items">
@@ -236,6 +272,10 @@ Lokasenna_GUI
         <changelog><![CDATA[- Added core functions]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Items%20Editing/ek_Switch%20to%20prev%20pitch%20mode%20for%20selected%20items.lua</source>
       </version>
+      <version name="1.0.1" author="Ed Kashinsky" time="2022-05-31T08:06:26Z">
+        <changelog><![CDATA[- Added core functions]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Items%20Editing/ek_Switch%20to%20prev%20pitch%20mode%20for%20selected%20items.lua</source>
+      </version>
     </reapack>
     <reapack name="ek_Toggle overlaping items vertically option.lua" type="script" desc="ek_Toggle overlaping items vertically option">
       <metadata>
@@ -249,6 +289,9 @@ Lokasenna_GUI
       </metadata>
       <version name="1.0.0" author="Ed Kashinsky" time="2022-05-30T09:42:49Z">
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Items%20Editing/ek_Toggle%20overlaping%20items%20vertically%20option.lua</source>
+      </version>
+      <version name="1.0.1" author="Ed Kashinsky" time="2022-05-31T08:06:26Z">
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Items%20Editing/ek_Toggle%20overlaping%20items%20vertically%20option.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Toggle preserve pitch for selected items.lua" type="script" desc="ek_Toggle preserve pitch for selected items">
@@ -267,6 +310,10 @@ Lokasenna_GUI
         <changelog><![CDATA[- Added core functions]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Items%20Editing/ek_Toggle%20preserve%20pitch%20for%20selected%20items.lua</source>
       </version>
+      <version name="1.0.1" author="Ed Kashinsky" time="2022-05-31T08:06:26Z">
+        <changelog><![CDATA[- Added core functions]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Items%20Editing/ek_Toggle%20preserve%20pitch%20for%20selected%20items.lua</source>
+      </version>
     </reapack>
     <reapack name="ek_Trim silence at the edges of selected items (no prompt).lua" type="script" desc="ek_Trim silence at the edges of selected items (no prompt)">
       <metadata>
@@ -281,6 +328,9 @@ Lokasenna_GUI
       </metadata>
       <version name="1.0.0" author="Ed Kashinsky" time="2022-05-30T09:42:49Z">
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Items%20Editing/ek_Trim%20silence%20at%20the%20edges%20of%20selected%20items%20(no%20prompt).lua</source>
+      </version>
+      <version name="1.0.1" author="Ed Kashinsky" time="2022-05-31T08:06:26Z">
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Items%20Editing/ek_Trim%20silence%20at%20the%20edges%20of%20selected%20items%20(no%20prompt).lua</source>
       </version>
     </reapack>
     <reapack name="ek_Trim silence at the edges of selected items.lua" type="script" desc="ek_Trim silence edges for selected items">
@@ -297,6 +347,10 @@ Lokasenna_GUI
       <version name="1.0.0" author="Ed Kashinsky" time="2022-05-30T09:42:49Z">
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Items%20Editing/ek_Trim%20silence%20at%20the%20edges%20of%20selected%20items.lua</source>
         <source file="../Core/ek_Triming silence edges functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Core/ek_Triming%20silence%20edges%20functions.lua</source>
+      </version>
+      <version name="1.0.1" author="Ed Kashinsky" time="2022-05-31T08:06:26Z">
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Items%20Editing/ek_Trim%20silence%20at%20the%20edges%20of%20selected%20items.lua</source>
+        <source file="../Core/ek_Triming silence edges functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Core/ek_Triming%20silence%20edges%20functions.lua</source>
       </version>
     </reapack>
   </category>
@@ -482,6 +536,10 @@ Lokasenna_GUI
         <changelog><![CDATA[- Added core functions]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Toolbars/ek_Toggle%20last%20under%20docker%20window.lua</source>
       </version>
+      <version name="1.0.1" author="Ed Kashinsky" time="2022-05-31T08:06:26Z">
+        <changelog><![CDATA[- Added core functions]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Toolbars/ek_Toggle%20last%20under%20docker%20window.lua</source>
+      </version>
     </reapack>
     <reapack name="ek_Toggle Media Browser window.lua" type="script" desc="ek_Toggle Media Browser window">
       <metadata>
@@ -497,6 +555,10 @@ Lokasenna_GUI
       <version name="1.0.0" author="Ed Kashinsky" time="2022-05-30T09:42:49Z">
         <changelog><![CDATA[- Added core functions]]></changelog>
         <source main="main mediaexplorer">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Toolbars/ek_Toggle%20Media%20Browser%20window.lua</source>
+      </version>
+      <version name="1.0.1" author="Ed Kashinsky" time="2022-05-31T08:06:26Z">
+        <changelog><![CDATA[- Added core functions]]></changelog>
+        <source main="main mediaexplorer">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Toolbars/ek_Toggle%20Media%20Browser%20window.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Toggle MIDI Editor window in arrange.lua" type="script" desc="ek_Toggle MIDI Editor window in arrange">
@@ -514,6 +576,10 @@ Lokasenna_GUI
         <changelog><![CDATA[- Added core functions]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Toolbars/ek_Toggle%20MIDI%20Editor%20window%20in%20arrange.lua</source>
       </version>
+      <version name="1.0.1" author="Ed Kashinsky" time="2022-05-31T08:06:26Z">
+        <changelog><![CDATA[- Added core functions]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Toolbars/ek_Toggle%20MIDI%20Editor%20window%20in%20arrange.lua</source>
+      </version>
     </reapack>
     <reapack name="ek_Toggle MIDI Editor window.lua" type="script" desc="ek_Toggle MIDI Editor window">
       <metadata>
@@ -529,6 +595,10 @@ Lokasenna_GUI
       <version name="1.0.0" author="Ed Kashinsky" time="2022-05-30T09:42:49Z">
         <changelog><![CDATA[- Added core functions]]></changelog>
         <source main="midi_editor">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Toolbars/ek_Toggle%20MIDI%20Editor%20window.lua</source>
+      </version>
+      <version name="1.0.1" author="Ed Kashinsky" time="2022-05-31T08:06:26Z">
+        <changelog><![CDATA[- Added core functions]]></changelog>
+        <source main="midi_editor">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Toolbars/ek_Toggle%20MIDI%20Editor%20window.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Toggle monitoring fx plugin.lua" type="script" desc="ek_Toggle monitoring fx plugin">
@@ -546,6 +616,10 @@ Lokasenna_GUI
       <version name="1.0.0" author="Ed Kashinsky" time="2022-05-30T09:42:49Z">
         <changelog><![CDATA[- Added core functions]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Toolbars/ek_Toggle%20monitoring%20fx%20plugin.lua</source>
+      </version>
+      <version name="1.0.1" author="Ed Kashinsky" time="2022-05-31T08:06:26Z">
+        <changelog><![CDATA[- Added core functions]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Toolbars/ek_Toggle%20monitoring%20fx%20plugin.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Toggle random color for selected items or tracks.lua" type="script" desc="ek_Toggle random color for selected items or tracks">
@@ -576,6 +650,10 @@ Lokasenna_GUI
       <version name="1.0.0" author="Ed Kashinsky" time="2022-05-30T09:42:49Z">
         <changelog><![CDATA[- Added core functions]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Toolbars/ek_Toggle%20render%20matrix%20window.lua</source>
+      </version>
+      <version name="1.0.1" author="Ed Kashinsky" time="2022-05-31T08:06:26Z">
+        <changelog><![CDATA[- Added core functions]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Toolbars/ek_Toggle%20render%20matrix%20window.lua</source>
       </version>
     </reapack>
   </category>
@@ -730,6 +808,10 @@ Lokasenna_GUI
       <version name="1.0.1" author="Ed Kashinsky" time="2022-05-30T10:25:11Z">
         <changelog><![CDATA[- Added core functions]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7db1659bcf581a5cee34da9e7129764a37d1e2c4/Tracks%20Properties/ek_Toggle%20trim%20mode%20for%20selected%20trackes.lua</source>
+      </version>
+      <version name="1.0.2" author="Ed Kashinsky" time="2022-05-31T08:06:26Z">
+        <changelog><![CDATA[- Added core functions]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Tracks%20Properties/ek_Toggle%20trim%20mode%20for%20selected%20trackes.lua</source>
       </version>
     </reapack>
   </category>
