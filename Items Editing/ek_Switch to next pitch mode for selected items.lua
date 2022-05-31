@@ -1,5 +1,5 @@
 -- @description ek_Switch to next pitch mode for selected items
--- @version 1.0.0
+-- @version 1.0.1
 -- @author Ed Kashinsky
 -- @about
 --   This script helps to switch between pitch modes quicker just in one click.
@@ -14,11 +14,13 @@ function CoreFunctionsLoaded()
 	local script_path = root_path .. ".." .. sep .. "Core" .. sep .. "ek_Core functions.lua"
 	local file = io.open(script_path, 'r')
 
-	if file then file:close() dofile(script_path) return true else return false end
+	if file then file:close() dofile(script_path) else return nil end
+	return not not _G["EK_HasExtState"]
 end
 
-if not CoreFunctionsLoaded() then
-	reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0)
+local loaded = CoreFunctionsLoaded()
+if not loaded then
+	if loaded == nil then  reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0) end
 	return
 end
 

@@ -3,15 +3,6 @@
 -- @noindex
 
 local SCRIPT_NAME = ({reaper.get_action_context()})[2]:match("([^/\\_]+)%.lua$")
-local window_flags =
-	reaper.ImGui_WindowFlags_NoCollapse() |
-	reaper.ImGui_WindowFlags_NoResize() |
-	reaper.ImGui_WindowFlags_TopMost()
-
-gui_input_flags =
-	reaper.ImGui_InputTextFlags_AutoSelectAll() |
-	reaper.ImGui_InputTextFlags_AllowTabInput() |
-	reaper.ImGui_InputTextFlags_AlwaysOverwrite()
 
 local ctx
 local window_visible = false
@@ -21,11 +12,12 @@ local window_height = 0
 local font_name = 'arial'
 local font_size = 15
 local default_enter_action = nil
+local cached_fonts = nil
 
-gui_fonts = {
-	None = reaper.ImGui_CreateFont(font_name, font_size, reaper.ImGui_FontFlags_None()),
-	Italic = reaper.ImGui_CreateFont(font_name, font_size, reaper.ImGui_FontFlags_Italic()),
-	Bold = reaper.ImGui_CreateFont(font_name, font_size, reaper.ImGui_FontFlags_Bold()),
+gui_font_types = {
+	None = 1,
+	Italic = 2,
+	Bold = 3,
 }
 
 gui_colors = {
@@ -41,21 +33,51 @@ gui_buttons_types = {
 
 GUI_OnWindowClose = nil
 
+
+local function GetWindowFlags()
+	return reaper.ImGui_WindowFlags_NoCollapse() |
+		reaper.ImGui_WindowFlags_NoResize() |
+		reaper.ImGui_WindowFlags_TopMost()
+end
+
+function GUI_GetInputFlags()
+	return reaper.ImGui_InputTextFlags_AutoSelectAll() |
+		reaper.ImGui_InputTextFlags_AllowTabInput() |
+		reaper.ImGui_InputTextFlags_AlwaysOverwrite()
+end
+
+
+local function GUI_GetFonts()
+	if not cached_fonts then
+		cached_fonts = {}
+		cached_fonts[gui_font_types.None] = reaper.ImGui_CreateFont(font_name, font_size, reaper.ImGui_FontFlags_None())
+		cached_fonts[gui_font_types.Italic] = reaper.ImGui_CreateFont(font_name, font_size, reaper.ImGui_FontFlags_Italic())
+		cached_fonts[gui_font_types.Bold] = reaper.ImGui_CreateFont(font_name, font_size, reaper.ImGui_FontFlags_Bold())
+	end
+
+	return cached_fonts
+end
+
+function GUI_GetFont(font_type)
+	local fonts = GUI_GetFonts()
+	return fonts[font_type]
+end
+
 --
 -- Show main window
 --
 local function main()
-	for flag, font in pairs(gui_fonts) do
+	for flag, font in pairs(GUI_GetFonts()) do
 		reaper.ImGui_AttachFont(ctx, font)
 	end
 
-	reaper.ImGui_PushFont(ctx, gui_fonts.None)
+	reaper.ImGui_PushFont(ctx, GUI_GetFont(gui_font_types.None))
 	reaper.ImGui_PushStyleColor(ctx, reaper.ImGui_Col_WindowBg(), 0x1a1b1bff)
 	reaper.ImGui_PushStyleColor(ctx, reaper.ImGui_Col_FrameBg(), 0x545454ff)
 
 	reaper.ImGui_SetNextWindowSize(ctx, window_width, window_height)
 
-	window_visible, window_opened = reaper.ImGui_Begin(ctx, SCRIPT_NAME, true, window_flags)
+	window_visible, window_opened = reaper.ImGui_Begin(ctx, SCRIPT_NAME, true, GetWindowFlags())
 
 	if window_visible then
 	    frame()
@@ -98,7 +120,7 @@ function GUI_CloseMainWindow()
 end
 
 function GUI_DrawText(text, font, color)
-	if not font then font = gui_fonts.None end
+	if not font then font = GUI_GetFont(gui_font_types.None) end
 
 	if color ~= nil then
 		reaper.ImGui_PushStyleColor(ctx, reaper.ImGui_Col_Text(), color)
@@ -112,8 +134,6 @@ function GUI_DrawText(text, font, color)
 		reaper.ImGui_PopStyleColor(ctx)
 	end
 end
-
-
 
 function GUI_DrawButton(label, action, btn_type, prevent_close_wnd)
 	if not btn_type then btn_type = gui_buttons_types.Action end

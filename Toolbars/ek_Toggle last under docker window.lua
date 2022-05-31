@@ -1,5 +1,5 @@
 -- @description ek_Toggle last under docker window
--- @version 1.0.0
+-- @version 1.0.1
 -- @author Ed Kashinsky
 -- @about
 --   This script helps to join several windows (on one docker region as usual) to one shortcut for toggling view. It remembers last opened window and toggle it.
@@ -12,11 +12,13 @@ function CoreFunctionsLoaded()
 	local script_path = root_path .. ".." .. sep .. "Core" .. sep .. "ek_Core functions.lua"
 	local file = io.open(script_path, 'r')
 
-	if file then file:close() dofile(script_path) return true else return false end
+	if file then file:close() dofile(script_path) else return nil end
+	return not not _G["EK_HasExtState"]
 end
 
-if not CoreFunctionsLoaded() then
-	reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0)
+local loaded = CoreFunctionsLoaded()
+if not loaded then
+	if loaded == nil then  reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0) end
 	return
 end
 

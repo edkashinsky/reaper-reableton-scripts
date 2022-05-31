@@ -1,5 +1,5 @@
 -- @description ek_Trim silence at the edges of selected items (no prompt)
--- @version 1.0.0
+-- @version 1.0.1
 -- @author Ed Kashinsky
 -- @about
 --   ![Preview](/Assets/images/trim_silence_edges_preview.gif)
@@ -12,11 +12,13 @@ function CoreFunctionsLoaded(script)
 	local script_path = root_path .. ".." .. sep .. "Core" .. sep .. script
 	local file = io.open(script_path, 'r')
 
-	if file then file:close() dofile(script_path) return true else return false end
+	if file then file:close() dofile(script_path) else return nil end
+	return not not _G["EK_HasExtState"]
 end
 
-if not CoreFunctionsLoaded("ek_Core functions.lua") then
-	reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0)
+local loaded = CoreFunctionsLoaded("ek_Core functions.lua")
+if not loaded then
+	if loaded == nil then  reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0) end
 	return
 end
 
@@ -34,14 +36,14 @@ if countSelectedItems > 0 then
     local trailingPad = getTsParamValue(tsParams.trailing.pad)
     local trailingFade = getTsParamValue(tsParams.trailing.fade)
 
-    Debug("== Leading edge ==\n")
-    Debug("Threshold: " .. leadingThreshold .. "db\n")
-    Debug("Pad: " .. leadingPad .. "s\n")
-    Debug("Fade: " .. leadingFade .. "s\n")
-    Debug("== Trailing edge ==\n")
-    Debug("Threshold: " .. trailingThreshold .. "db\n")
-    Debug("Pad: " .. trailingPad .. "s\n")
-    Debug("Fade: " .. trailingFade .. "s\n")
+    Log("== Leading edge ==")
+    Log("Threshold: " .. leadingThreshold .. "db")
+    Log("Pad: " .. leadingPad .. "s")
+    Log("Fade: " .. leadingFade .. "s")
+    Log("== Trailing edge ==")
+    Log("Threshold: " .. trailingThreshold .. "db")
+    Log("Pad: " .. trailingPad .. "s")
+    Log("Fade: " .. trailingFade .. "s")
 
     for i = 0, countSelectedItems - 1 do
         local item = reaper.GetSelectedMediaItem(proj, i)

@@ -1,5 +1,5 @@
 -- @description ek_Global startup action settings
--- @version 1.0.1
+-- @version 1.0.2
 -- @author Ed Kashinsky
 -- @about
 --   Here you can set features for global startup actions
@@ -12,11 +12,13 @@ function CoreFunctionsLoaded(script)
 	local script_path = root_path .. ".." .. sep .. "Core" .. sep .. script
 	local file = io.open(script_path, 'r')
 
-	if file then file:close() dofile(script_path) return true else return false end
+	if file then file:close() dofile(script_path) else return nil end
+	return not not _G["EK_HasExtState"]
 end
 
-if not CoreFunctionsLoaded("ek_Core functions.lua") then
-	reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0)
+local loaded = CoreFunctionsLoaded("ek_Core functions.lua")
+if not loaded then
+	if loaded == nil then reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0) end
 	return
 end
 
@@ -25,13 +27,18 @@ if not CoreFunctionsLoaded("ek_Core functions startup.lua") then
 	return
 end
 
+if not reaper.APIExists("ImGui_WindowFlags_NoCollapse") then
+    reaper.MB('Please install "ReaImGui: ReaScript binding for Dear ImGui" via ReaPack', '', 0)
+	return
+end
+
 local ordered_settings = GA_GetOrderedSettings()
 
 function frame()
 	local is_enabled = EK_IsGlobalActionEnabled()
-	local input_flags = gui_input_flags
+	local input_flags = GUI_GetInputFlags()
 
-	GUI_DrawText("Settings for 'ek_Global startup action'", gui_fonts.Bold)
+	GUI_DrawText("Settings for 'ek_Global startup action'", GUI_GetFont(gui_font_types.Bold))
 
 	reaper.ImGui_TextWrapped(GUI_GetCtx(), "Status:")
 	reaper.ImGui_SameLine(GUI_GetCtx())
@@ -41,7 +48,7 @@ function frame()
 	else
 		reaper.ImGui_TextColored(GUI_GetCtx(), gui_colors.Red, "Disabled")
 		GUI_DrawGap()
-		GUI_DrawText("Open 'Extensions' => 'Startup actions' => 'Set global startup action' and paste command id of 'ek_Global startup action' and re-open Reaper", gui_fonts.Bold, gui_colors.Red)
+		GUI_DrawText("Open 'Extensions' => 'Startup actions' => 'Set global startup action' and paste command id of 'ek_Global startup action' and re-open Reaper", GUI_GetFont(gui_font_types.Bold), gui_colors.Red)
 
 		input_flags = input_flags | reaper.ImGui_InputTextFlags_ReadOnly()
 	end
@@ -53,9 +60,9 @@ function frame()
 		local setting = ordered_settings[i]
 		local curVal = GA_GetSettingValue(setting)
 
-		reaper.ImGui_PushItemWidth(GUI_GetCtx(), 250)
+		reaper.ImGui_PushItemWidth(GUI_GetCtx(), 170)
 
-		reaper.ImGui_PushFont(GUI_GetCtx(), gui_fonts.Bold)
+		reaper.ImGui_PushFont(GUI_GetCtx(), GUI_GetFont(gui_font_types.Bold))
 
 		if type(curVal) == 'boolean' then
 			r, newVal = reaper.ImGui_Checkbox(GUI_GetCtx(), setting.title, curVal)
@@ -72,7 +79,7 @@ function frame()
 		reaper.ImGui_PopFont(GUI_GetCtx())
 		reaper.ImGui_PopItemWidth(GUI_GetCtx())
 
-		GUI_DrawText(setting.description, gui_fonts.Italic)
+		GUI_DrawText(setting.description, GUI_GetFont(gui_font_types.Italic))
 		GUI_DrawGap()
 	end
 end

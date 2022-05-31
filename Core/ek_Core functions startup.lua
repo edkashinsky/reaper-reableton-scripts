@@ -42,7 +42,7 @@ ga_settings = {
 	},
 	monitoring_fx_plugin = {
 		key = "monitoring_fx_plugin",
-		title = "Monitoring the plugin status on monitoring FX-chain",
+		title = "Check plugin status on monitoring FX",
 		description = "If you use spectrum correction plugins (such as Realphones, Sonarworks Reference 4, SoundID Reference and etc.) on Monitoring FX when using headphones, you can always see if the plugin is enabled. For using it, add script 'ek_Toggle monitoring fx plugin' to your toolbar and this button will be highlighted automatically when the plugin on monitoring FX is enabled.",
 		default = "Realphones",
 		order = 5,
@@ -95,9 +95,7 @@ function GA_GetOrderedSettings()
 end
 
 function GA_GetSettingValue(param)
-	local value = EK_GetExtState(ga_key_prefix .. param.key)
-
-	if value ~= nil then return value else return param.default end
+	return EK_GetExtState(ga_key_prefix .. param.key, param.default)
 end
 
 function GA_SetSettingValue(param, value)

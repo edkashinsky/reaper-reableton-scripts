@@ -1,7 +1,5 @@
 -- @noindex
 
-local debug = false
-
 tsParams = {
 	leading = {
 		threshold = {
@@ -38,35 +36,8 @@ tsParams = {
 }
 
 local r = reaper
-local base_key = "ek_stuff"
 
-function log10(x) 
-  return math.log(x, 10) 
-end
-  
-function sample_to_db(sample)
-  --returns -150 for any 0.0 sample point (since you can't take the log of 0)
-  if sample == 0 then
-    return -150.0
-  else
-    local db = 20 * log10(math.abs(sample))
-
-    if db > 0 then return 0 else return db end
-  end
-end
-
-function round(number, decimals)
-  local power = 10 ^ decimals
-  return math.floor(number * power) / power
-end
-
-function Debug(string)
-	if debug then
-		reaper.ShowConsoleMsg(string .. "\n")
-	end
-end
-  
-function getDataForAccessor(take)
+local function getDataForAccessor(take)
   -- Get media source of media item take
   local take_pcm_source = r.GetMediaItemTake_Source(take)
   if take_pcm_source == nil then return end
@@ -97,7 +68,7 @@ function getDataForAccessor(take)
   return aa, a_length, aa_start, aa_end, take_source_sample_rate, take_source_num_channels, samples_per_channel
 end
 
-function getStartPositionLouderThenThreshold(take, threshold)  
+function getStartPositionLouderThenThreshold(take, threshold)
   if take == nil then return end
   
   local aa, a_length, aa_start, aa_end, take_source_sample_rate, take_source_num_channels, samples_per_channel = getDataForAccessor(take)
@@ -166,7 +137,7 @@ function getStartPositionLouderThenThreshold(take, threshold)
   
   r.DestroyAudioAccessor(aa)
   
-  Debug("Start point detected: " .. round(peak, 2) .. "db " .. round(peakTime, 3) .. "s ".. "\n")
+  Log("Start point detected: " .. round(peak, 2) .. "db " .. round(peakTime, 3) .. "s")
   
   return peakTime
 end
@@ -249,18 +220,17 @@ function getEndPositionLouderThenThreshold(take, threshold)
   
   r.DestroyAudioAccessor(aa)
   
-  Debug("End point detected: " .. round(peak, 2) .. "db " .. round(peakTime, 3) .. "s ".. "\n")
+  Log("End point detected: " .. round(peak, 2) .. "db " .. round(peakTime, 3) .. "s")
   
   return peakTime
 end
 
 function getTsParamValue(param)
-  local value = r.GetExtState(base_key, param.key)
-  if value ~= '' then return tonumber(value) else return param.default end
+    return tonumber(EK_GetExtState(param.key, param.default))
 end
 
 function setTsParamValue(param, value)
-  r.SetExtState(base_key, param.key, value, true)
+    EK_SetExtState(param.key, value)
 end
 
 function trimLeadingPosition(take, startOffset)

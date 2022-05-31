@@ -59,10 +59,11 @@ function EK_HasExtState(key)
 	return reaper.HasExtState(ext_key_prefix, key)
 end
 
-function EK_GetExtState(key)
+function EK_GetExtState(key, default)
     local value = reaper.GetExtState(ext_key_prefix, key)
 
-    if value == '' then return nil end
+	if not default then default = nil end
+    if value == '' then return default end
 	if value == 'true' then value = true end
 	if value == 'false' then value = false end
 
@@ -334,4 +335,19 @@ function ShowPitchTooltip(semi)
 
 	local message = (semi > 0 and "+" .. semi or semi) .. " " .. (math.abs(semi) == 1 and "semitone" or "semitones")
 	EK_ShowTooltip(message)
+end
+
+function log10(x)
+  	return math.log(x, 10)
+end
+
+function sample_to_db(sample)
+  --returns -150 for any 0.0 sample point (since you can't take the log of 0)
+  if sample == 0 then
+    return -150.0
+  else
+    local db = 20 * log10(math.abs(sample))
+
+    if db > 0 then return 0 else return db end
+  end
 end

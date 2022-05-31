@@ -1,5 +1,5 @@
 -- @description ek_Toggle monitoring fx plugin
--- @version 1.0.0
+-- @version 1.0.1
 -- @author Ed Kashinsky
 -- @about
 --   This script helps to watching for monitoring plugins (Realphones, Reference 4 and etc). You can see state of enabling plugin by state of button on your toolbar.
@@ -16,11 +16,13 @@ function CoreFunctionsLoaded(script)
 	local script_path = root_path .. ".." .. sep .. "Core" .. sep .. script
 	local file = io.open(script_path, 'r')
 
-	if file then file:close() dofile(script_path) return true else return false end
+	if file then file:close() dofile(script_path) else return nil end
+	return not not _G["EK_HasExtState"]
 end
 
-if not CoreFunctionsLoaded("ek_Core functions.lua") then
-	reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0)
+local loaded = CoreFunctionsLoaded("ek_Core functions.lua")
+if not loaded then
+	if loaded == nil then  reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0) end
 	return
 end
 
