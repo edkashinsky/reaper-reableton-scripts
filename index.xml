@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="715e3abfc82c1c9b93fbdc2ada3f054c7879acb3">
+<index version="1" name="Reableton Scripts" commit="8cd9f1b22e71bdbc18f3f5028f4625580f3ec334">
   <category name="ColorThemes">
     <reapack name="Flat Madness Dark Remix.theme" type="theme" desc="Flat Madness Dark Remix">
       <metadata>
@@ -42,6 +42,13 @@
         <source file="ek_Core functions v1.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Core/ek_Core%20functions%20v1.lua</source>
         <source file="ek_Core functions GUI.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Core/ek_Core%20functions%20GUI.lua</source>
       </version>
+      <version name="1.0.2" author="Ed Kashinsky" time="2022-06-04T22:17:47Z">
+        <changelog><![CDATA[- added dark mode feature
+- added core loader]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/8cd9f1b22e71bdbc18f3f5028f4625580f3ec334/Core/ek_Core%20functions.lua</source>
+        <source file="ek_Core functions v1.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/8cd9f1b22e71bdbc18f3f5028f4625580f3ec334/Core/ek_Core%20functions%20v1.lua</source>
+        <source file="ek_Core functions GUI.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/8cd9f1b22e71bdbc18f3f5028f4625580f3ec334/Core/ek_Core%20functions%20GUI.lua</source>
+      </version>
     </reapack>
     <reapack name="ek_Global startup action settings.lua" type="script" desc="ek_Global startup action settings">
       <metadata>
@@ -64,6 +71,10 @@
       <version name="1.0.2" author="Ed Kashinsky" time="2022-05-31T08:06:26Z">
         <changelog><![CDATA[- Added window]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Core/ek_Global%20startup%20action%20settings.lua</source>
+      </version>
+      <version name="1.0.3" author="Ed Kashinsky" time="2022-06-04T22:17:47Z">
+        <changelog><![CDATA[- Added dark mode feature]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/8cd9f1b22e71bdbc18f3f5028f4625580f3ec334/Core/ek_Global%20startup%20action%20settings.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Global startup action.lua" type="script" desc="ek_Global startup action">
@@ -99,6 +110,13 @@
 - Added customizable options for realtime]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Core/ek_Global%20startup%20action.lua</source>
         <source file="ek_Core functions startup.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Core/ek_Core%20functions%20startup.lua</source>
+      </version>
+      <version name="1.0.3" author="Ed Kashinsky" time="2022-06-04T22:17:47Z">
+        <changelog><![CDATA[- Added dark mode theme feature
+- Added settings window
+- Added customizable options for realtime]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/8cd9f1b22e71bdbc18f3f5028f4625580f3ec334/Core/ek_Global%20startup%20action.lua</source>
+        <source file="ek_Core functions startup.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/8cd9f1b22e71bdbc18f3f5028f4625580f3ec334/Core/ek_Core%20functions%20startup.lua</source>
       </version>
     </reapack>
   </category>
