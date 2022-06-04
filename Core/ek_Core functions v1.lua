@@ -18,6 +18,7 @@ local ek_debug_levels = {
 
 proj = 0
 defProjPitchMode = -1
+dir_sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
 
 local ek_debug_level = ek_debug_levels.Off
 local ext_key_prefix = "ek_stuff"
@@ -350,4 +351,17 @@ function sample_to_db(sample)
 
     if db > 0 then return 0 else return db end
   end
+end
+
+function modifyTime(dt, mdParams)
+	if not mdParams then mdParams = {} end
+
+	return os.time({
+		year = mdParams.year ~= nil and mdParams.year or dt.year,
+		month = mdParams.month ~= nil and mdParams.month or dt.month,
+		day = mdParams.day ~= nil and mdParams.day or dt.day,
+		hour = mdParams.hour ~= nil and mdParams.hour or dt.hour,
+		min = mdParams.min ~= nil and mdParams.min or dt.min,
+		sec = 0
+	})
 end

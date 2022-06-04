@@ -1,9 +1,10 @@
 -- @description ek_Global startup action settings
--- @version 1.0.2
+-- @version 1.0.3
 -- @author Ed Kashinsky
 -- @about
 --   Here you can set features for global startup actions
 -- @changelog
+--   - Added dark mode feature
 -- 	 - Added window
 
 function CoreFunctionsLoaded(script)
@@ -60,7 +61,7 @@ function frame()
 		local setting = ordered_settings[i]
 		local curVal = GA_GetSettingValue(setting)
 
-		reaper.ImGui_PushItemWidth(GUI_GetCtx(), 170)
+		reaper.ImGui_PushItemWidth(GUI_GetCtx(), 200)
 
 		reaper.ImGui_PushFont(GUI_GetCtx(), GUI_GetFont(gui_font_types.Bold))
 

@@ -1,5 +1,5 @@
 -- @description ek_Global startup action
--- @version 1.0.2
+-- @version 1.0.3
 -- @author Ed Kashinsky
 -- @about
 --   This is startup action brings some ableton-like features in realtime. You can control any option by 'ek_Global startup action settings' script.
@@ -12,6 +12,7 @@
 --      5. Restart Reaper
 --      6. Open 'ek_Global startup action settings' for customize options
 -- @changelog
+--   - Added dark mode theme feature
 --   - Added settings window
 --   - Added customizable options for realtime
 -- 	 - Observing of backups works only if you turn up "Timestamp backups" in Preferences
@@ -107,6 +108,11 @@ function observeGlobalAction()
 	-- Backup files
 	if GA_GetSettingValue(ga_settings.backup_files) then
 		GA_ObserveAndRemoveOldBackupFiles(changes, cached_changes)
+	end
+
+	-- Dark mode
+	if GA_GetSettingValue(ga_settings.dark_mode) then
+		GA_ObserveDarkMode(changes, cached_changes)
 	end
 
 	reaper.defer(observeGlobalAction)

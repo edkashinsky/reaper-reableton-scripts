@@ -75,13 +75,34 @@ ga_settings = {
 		default = 5,
 		order = 9,
 	},
+	dark_mode = {
+		key = "dark_mode",
+		title = "Use dark mode theme",
+		description = "If you want to use special theme for dark mode, turn on this option.",
+		default = false,
+		order = 10,
+	},
+	dark_mode_theme = {
+		key = "dark_mode_theme",
+		title = "Name of theme for dark mode",
+		description = "Specify title of theme for dark mode. Note that, this theme should be in the same folder as a regular theme. Name should be with \".ReaperTheme\" extension",
+		default = "",
+		order = 11,
+	},
+	dark_mode_time = {
+		key = "dark_mode_time",
+		title = "Dark mode time interval",
+		description = "Specify time interval for dark mode. Format: \"HH:mm-HH:mm\"",
+		default = "20:00-09:00",
+		order = 12,
+	},
 	additional_action = {
 		key = "additional_action",
 		title = "Additional global startup action",
 		description = "If you have your own action on startup, you can specified command Id and it will be executed on startup.",
 		default = "",
-		order = 10,
-	}
+		order = 13,
+	},
 }
 
 function GA_GetOrderedSettings()
@@ -469,6 +490,85 @@ function GA_ObserveAndRemoveOldBackupFiles(changes, values)
 
 				os.remove(root .. backup_files[j])
 			end
+		end
+	end
+end
+
+local function inTimeInterval(stParam, edParam)
+	local time = math.floor(reaper.time_precise())
+	local date = os.date("*t", time)
+
+	local startTime = modifyTime(date, {
+		hour = stParam.hour,
+		min = stParam.min,
+	})
+
+	local endTime = modifyTime(date, {
+		hour = edParam.hour,
+		min = edParam.min,
+	})
+
+	if startTime == endTime then
+		return false
+	elseif endTime <= startTime then -- 20:00 / 09:00
+		if date.hour >= os.date("*t", startTime).hour then
+			endTime = modifyTime(date, {
+				day = date.day + 1,
+				hour = edParam.hour,
+				min = edParam.min,
+			})
+		else
+			startTime = modifyTime(date, {
+				day = date.day - 1,
+				hour = stParam.hour,
+				min = stParam.min,
+			})
+		end
+	end
+
+	return time >= startTime and time <= endTime
+end
+
+function GA_ObserveDarkMode(changes, values)
+	local timeInterval = GA_GetSettingValue(ga_settings.dark_mode_time)
+	local themeName = GA_GetSettingValue(ga_settings.dark_mode_theme)
+
+	if not timeInterval or not themeName then return end
+
+	local hours = split(timeInterval, "-")
+	if not hours[1] or not hours[2] then return end
+
+	local startHours = split(hours[1], ":")
+	if not startHours[1] or not startHours[2] then return end
+
+	local endHours = split(hours[2], ":")
+	if not endHours[1] or not endHours[2] then return end
+
+	local startParam = {
+		hour = tonumber(startHours[1]),
+		min = tonumber(startHours[2]),
+	}
+
+	local endParam = {
+		hour = tonumber(endHours[1]),
+		min = tonumber(endHours[2])
+	}
+
+	local theme_key = ga_key_prefix .. "cached_dark_mode_theme"
+	local curThemeNamePath = reaper.GetLastColorThemeFile()
+	local curThemeNamePathPart = split(curThemeNamePath, dir_sep)
+	local curThemeName = curThemeNamePathPart[#curThemeNamePathPart]
+	local inInterval = inTimeInterval(startParam, endParam)
+	local themePath = string.gsub(curThemeNamePath, curThemeName, "")
+
+	if inInterval and curThemeName ~= themeName then
+		EK_SetExtState(theme_key, curThemeName)
+		reaper.OpenColorThemeFile(themePath .. "/" .. themeName)
+	elseif not inInterval and curThemeName == themeName then
+		local curThemeNameCached = EK_GetExtState(theme_key)
+
+		if curThemeNameCached ~= nil and curThemeNameCached ~= curThemeName then
+			reaper.OpenColorThemeFile(themePath .. "/" .. curThemeNameCached)
 		end
 	end
 end

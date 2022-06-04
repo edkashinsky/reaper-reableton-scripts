@@ -38,9 +38,9 @@ It works similar like in Ableton:
 
 In two words, script changes pitch, if item has **preserve pitch** option and changes rate and length for selected items if items has this option off.
 
-### Global functions
+### Global startup action
 
-<img src="/Assets/images/global_action_settings.png" alt="Global Functions preview" width="430"/>
+<img src="/Assets/images/global_action_settings.png" alt="Global Functions preview" width="450"/>
 
 This function has many useful perks that processed in real-time:
 
@@ -50,7 +50,8 @@ This function has many useful perks that processed in real-time:
 4. **Automatically highlight buttons**. This option highlights toolbar buttons in real-time.
 5. **Monitoring the plugin status on monitoring FX-chain**. If you use spectrum correction plugins (such as Realphones, Sonarworks Reference 4, SoundID Reference and etc.) on Monitoring FX when using headphones, you can always see if the plugin is enabled.
 6. **Different sample rate for recording**. This option useful for sound designers, who usually uses 48kHz and forget to increase the sampling rate before recording to get better recording quality.
-7. **Automatic limit timestamp backup files**. Useful, if you want to keep only last limited amount of backup files.
+7. **Dark mode theme**. If you want to turn on special dark theme in night hours, you can use this feature
+8. **Automatic limit timestamp backup files**. Useful, if you want to keep only last limited amount of backup files.
 
 For installation:
 1. Install 'ek_Global startup action' script via **Extensions** -> **ReaPack** -> **Browse Packages**
