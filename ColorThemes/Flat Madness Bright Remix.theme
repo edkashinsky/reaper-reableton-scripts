@@ -1,0 +1,12 @@
+@description Flat Madness Bright Remix
+@version 1.0.0
+@changelog
+  - Tweaked default define_paramteters 
+@provides Flat Madness Dark Remix.ReaperThemeZip
+@author Dmytry Hapochka (edited by Ed Kashinsky)
+@links
+  Forum Thread https://forum.cockos.com/showthread.php?t=247086
+@screenshots
+  Overview https://stash.reaper.fm/44544/FM171D.png
+@about
+  a brilliant flat theme for Reaper
