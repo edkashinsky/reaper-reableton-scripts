@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="91bb3971af3d899d76fccb771a897a0a76796ec1">
+<index version="1" name="Reableton Scripts" commit="dce798260257493ed00168c85bc8119e35b563e4">
   <category name="ColorThemes">
     <reapack name="Flat Madness Bright Remix.theme" type="theme" desc="Flat Madness Bright Remix">
       <metadata>
@@ -41,6 +41,10 @@
       <version name="1.0.1" author="Dmytry Hapochka (edited by Ed Kashinsky)" time="2022-06-05T21:14:47Z">
         <changelog><![CDATA[- Tweaked default define_paramteters ]]></changelog>
         <source file="Flat Madness Dark Remix.ReaperThemeZip">https://github.com/edkashinsky/reaper-reableton-scripts/raw/91bb3971af3d899d76fccb771a897a0a76796ec1/ColorThemes/Flat%20Madness%20Dark%20Remix.ReaperThemeZip</source>
+      </version>
+      <version name="1.0.2" author="Dmytry Hapochka (edited by Ed Kashinsky)" time="2022-06-05T21:26:50Z">
+        <changelog><![CDATA[- Tweaked default define_paramteters ]]></changelog>
+        <source file="Flat Madness Dark Remix.ReaperThemeZip">https://github.com/edkashinsky/reaper-reableton-scripts/raw/dce798260257493ed00168c85bc8119e35b563e4/ColorThemes/Flat%20Madness%20Dark%20Remix.ReaperThemeZip</source>
       </version>
     </reapack>
   </category>
