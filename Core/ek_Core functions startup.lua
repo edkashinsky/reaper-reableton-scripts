@@ -561,14 +561,18 @@ function GA_ObserveDarkMode(changes, values)
 	local inInterval = inTimeInterval(startParam, endParam)
 	local themePath = string.gsub(curThemeNamePath, curThemeName, "")
 
+	-- Log((inInterval and 1 or 0) .. " " .. themeName .. " " .. curThemeName .. " " .. EK_GetExtState(theme_key), ek_log_levels.Notice)
+
 	if inInterval and curThemeName ~= themeName then
 		EK_SetExtState(theme_key, curThemeName)
 		reaper.OpenColorThemeFile(themePath .. "/" .. themeName)
+		Log("Turn on dark mode to " .. themeName)
 	elseif not inInterval and curThemeName == themeName then
 		local curThemeNameCached = EK_GetExtState(theme_key)
 
 		if curThemeNameCached ~= nil and curThemeNameCached ~= curThemeName then
 			reaper.OpenColorThemeFile(themePath .. "/" .. curThemeNameCached)
+			Log("Turn on light mode to " .. curThemeNameCached)
 		end
 	end
 end
