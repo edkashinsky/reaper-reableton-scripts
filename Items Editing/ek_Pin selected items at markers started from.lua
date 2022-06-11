@@ -1,10 +1,11 @@
 -- @description ek_Pin selected items at markers started from
--- @version 1.0.1
+-- @version 1.0.2
 -- @author Ed Kashinsky
 -- @about
 --   ![Preview](/Assets/images/pin_items_to_markers_preview.gif)
---   This script pins selected items to markers started from specified number. It requires [Lokasenna_GUI](https://github.com/jalovatt/Lokasenna_GUI)
+--   This script pins selected items to markers started from specified number. It requires ReaImGui extension.
 -- @changelog
+--   - Small fixes
 --   - GUI updated to ReaImGui
 
 function CoreFunctionsLoaded()
@@ -68,8 +69,8 @@ end
 
 local function findNearestMarkerNum(position)
 	local retval, num_markers, num_regions = reaper.CountProjectMarkers(proj)
-	local prevMarkerNum
-	local prevMarkerPos
+	local prevMarkerNum = 0
+	local prevMarkerPos = 0
 	
 	for i = 0, num_markers + num_regions - 1 do
 		local retval, isrgn, pos, rgnend, name, markrgnindexnumber = reaper.EnumProjectMarkers(i)
