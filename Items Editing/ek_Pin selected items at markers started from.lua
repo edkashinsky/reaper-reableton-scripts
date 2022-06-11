@@ -3,6 +3,7 @@
 -- @author Ed Kashinsky
 -- @about
 --   ![Preview](/Assets/images/pin_items_to_markers_preview.gif)
+--
 --   This script pins selected items to markers started from specified number. It requires ReaImGui extension.
 -- @changelog
 --   - Small fixes

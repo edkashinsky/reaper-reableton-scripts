@@ -114,6 +114,7 @@ Script just adds 1 second gap between selected items without any GUI
 #### ek_Pin selected items at markers started from
 
 ![Preview](/Assets/images/pin_items_to_markers_preview.gif)
+
 This script pins selected items to markers started from specified number. It requires ReaImGui extension.
 
 #### ek_Decrease pitch or rate for selected items
