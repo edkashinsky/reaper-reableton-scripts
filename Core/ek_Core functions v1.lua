@@ -63,7 +63,6 @@ end
 function EK_GetExtState(key, default)
     local value = reaper.GetExtState(ext_key_prefix, key)
 
-	if not default then default = nil end
     if value == '' then return default end
 	if value == 'true' then value = true end
 	if value == 'false' then value = false end
