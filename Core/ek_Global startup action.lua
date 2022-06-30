@@ -1,5 +1,5 @@
 -- @description ek_Global startup action
--- @version 1.0.3
+-- @version 1.0.4
 -- @author Ed Kashinsky
 -- @about
 --   This is startup action brings some ableton-like features in realtime. You can control any option by 'ek_Global startup action settings' script.
@@ -12,6 +12,7 @@
 --      5. Restart Reaper
 --      6. Open 'ek_Global startup action settings' for customize options
 -- @changelog
+--   - Bugs fixes
 --   - Added dark mode theme feature
 --   - Added settings window
 --   - Added customizable options for realtime

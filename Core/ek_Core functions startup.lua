@@ -558,6 +558,7 @@ function GA_ObserveDarkMode(changes, values)
 	local curThemeNamePath = reaper.GetLastColorThemeFile()
 	local curThemeNamePathPart = split(curThemeNamePath, dir_sep)
 	local curThemeName = curThemeNamePathPart[#curThemeNamePathPart]
+	if not curThemeName then curThemeName = "" end
 	local inInterval = inTimeInterval(startParam, endParam)
 	local themePath = string.gsub(curThemeNamePath, curThemeName, "")
 
