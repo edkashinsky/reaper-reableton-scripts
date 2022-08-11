@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="b8e4a77e39cddbe42c40c2cb2e95c28b36c19e42">
+<index version="1" name="Reableton Scripts" commit="44b1c04bfdbbd189a7c1c68dd1a94bf3fd334eae">
   <category name="ColorThemes">
     <reapack name="Flat Madness Bright Remix.theme" type="theme" desc="Flat Madness Bright Remix">
       <metadata>
@@ -126,12 +126,7 @@
 
 {\pard \ql \f0 \sa180 \li0 \fi0 This is startup action brings some ableton-like features in realtime. You can control any option by 'ek_Global startup action settings' script.\par}
 {\pard \ql \f0 \sa180 \li0 \fi0 For installation:\par}
-{\pard \ql \f0 \sa0 \li360 \fi-360 1.\tx360\tab Install this script via {\b Extensions} -> {\b ReaPack} -> {\b Browse Packages}\par}
-{\pard \ql \f0 \sa0 \li360 \fi-360 2.\tx360\tab Open {\b Actions} -> {\b Action List}\par}
-{\pard \ql \f0 \sa0 \li360 \fi-360 3.\tx360\tab Find "Script: ek_Global startup action" in list and select "Copy selected action command ID" by right mouse click\par}
-{\pard \ql \f0 \sa0 \li360 \fi-360 4.\tx360\tab Open {\b Extensions} -> {\b Startup Actions} -> {\b Set Global Startup Action...} and paste copied command ID\par}
-{\pard \ql \f0 \sa0 \li360 \fi-360 5.\tx360\tab Restart Reaper\par}
-{\pard \ql \f0 \sa0 \li360 \fi-360 6.\tx360\tab Open 'ek_Global startup action settings' for customize options\sa180\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 1.\tx360\tab Install 'ek_Core functions.lua'\sa180\par}
 }
 ]]></description>
       </metadata>
@@ -158,6 +153,24 @@
 - Added customizable options for realtime]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/8cd9f1b22e71bdbc18f3f5028f4625580f3ec334/Core/ek_Global%20startup%20action.lua</source>
         <source file="ek_Core functions startup.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/8cd9f1b22e71bdbc18f3f5028f4625580f3ec334/Core/ek_Core%20functions%20startup.lua</source>
+      </version>
+      <version name="1.0.4" author="Ed Kashinsky" time="2022-06-30T13:20:45Z">
+        <changelog><![CDATA[- Bugs fixes
+- Added dark mode theme feature
+- Added settings window
+- Added customizable options for realtime]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/16eb14bdca7a5fda7bb9cda8996aa20ea8ba5eb8/Core/ek_Global%20startup%20action.lua</source>
+        <source file="ek_Core functions startup.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/16eb14bdca7a5fda7bb9cda8996aa20ea8ba5eb8/Core/ek_Core%20functions%20startup.lua</source>
+      </version>
+      <version name="1.0.5" author="Ed Kashinsky" time="2022-08-11T17:23:15Z">
+        <changelog><![CDATA[- Removed script 'ek_Toggle monitoring fx plugin'
+- Added scripts 'ek_Toggle monitoring FX on slot 1-5'
+- Bugs fixes
+- Added dark mode theme feature
+- Added settings window
+- Added customizable options for realtime]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/44b1c04bfdbbd189a7c1c68dd1a94bf3fd334eae/Core/ek_Global%20startup%20action.lua</source>
+        <source file="ek_Core functions startup.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/44b1c04bfdbbd189a7c1c68dd1a94bf3fd334eae/Core/ek_Core%20functions%20startup.lua</source>
       </version>
     </reapack>
   </category>
@@ -662,25 +675,80 @@
         <source main="midi_editor">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Toolbars/ek_Toggle%20MIDI%20Editor%20window.lua</source>
       </version>
     </reapack>
-    <reapack name="ek_Toggle monitoring fx plugin.lua" type="script" desc="ek_Toggle monitoring fx plugin">
+    <reapack name="ek_Toggle monitoring FX on slot 1.lua" type="script" desc="Toggle monitoring fx plugin on slot 1">
       <metadata>
         <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
 {\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
 \widowctrl\hyphauto
 
-{\pard \ql \f0 \sa180 \li0 \fi0 This script helps to watching for monitoring plugins (Realphones, Reference 4 and etc). You can see state of enabling plugin by state of button on your toolbar.\par}
-{\pard \ql \f0 \sa180 \li0 \fi0 For installation just add this script on toolbar and set "ek_Global Startup Functions" as global startup action via SWS.\par}
-{\pard \ql \f0 \sa180 \li0 \fi0 If you want to change Realphones for another plugin, please put in "ek_Headphones monitoring functions"\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\cf1 [image: /Assets/images/mfx_slots_preview.gif]\cf0}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 This script monitors a certain fx slot in the monitoring chain and switches the bypass on it\par}
 }
 ]]></description>
       </metadata>
-      <version name="1.0.0" author="Ed Kashinsky" time="2022-05-30T09:42:49Z">
-        <changelog><![CDATA[- Added core functions]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Toolbars/ek_Toggle%20monitoring%20fx%20plugin.lua</source>
+      <version name="1.0.0" author="Ed Kashinsky" time="2022-08-11T17:23:15Z">
+        <changelog><![CDATA[- Added script]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/44b1c04bfdbbd189a7c1c68dd1a94bf3fd334eae/Toolbars/ek_Toggle%20monitoring%20FX%20on%20slot%201.lua</source>
       </version>
-      <version name="1.0.1" author="Ed Kashinsky" time="2022-05-31T08:06:26Z">
-        <changelog><![CDATA[- Added core functions]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Toolbars/ek_Toggle%20monitoring%20fx%20plugin.lua</source>
+    </reapack>
+    <reapack name="ek_Toggle monitoring FX on slot 2.lua" type="script" desc="Toggle monitoring fx plugin on slot 2">
+      <metadata>
+        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \ql \f0 \sa180 \li0 \fi0 This script monitors a certain fx slot in the monitoring chain and switches the bypass on it\par}
+}
+]]></description>
+      </metadata>
+      <version name="1.0.0" author="Ed Kashinsky" time="2022-08-11T17:23:15Z">
+        <changelog><![CDATA[- Added script]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/44b1c04bfdbbd189a7c1c68dd1a94bf3fd334eae/Toolbars/ek_Toggle%20monitoring%20FX%20on%20slot%202.lua</source>
+      </version>
+    </reapack>
+    <reapack name="ek_Toggle monitoring FX on slot 3.lua" type="script" desc="Toggle monitoring fx plugin on slot 3">
+      <metadata>
+        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \ql \f0 \sa180 \li0 \fi0 This script monitors a certain fx slot in the monitoring chain and switches the bypass on it\par}
+}
+]]></description>
+      </metadata>
+      <version name="1.0.0" author="Ed Kashinsky" time="2022-08-11T17:23:15Z">
+        <changelog><![CDATA[- Added script]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/44b1c04bfdbbd189a7c1c68dd1a94bf3fd334eae/Toolbars/ek_Toggle%20monitoring%20FX%20on%20slot%203.lua</source>
+      </version>
+    </reapack>
+    <reapack name="ek_Toggle monitoring FX on slot 4.lua" type="script" desc="Toggle monitoring fx plugin on slot 4">
+      <metadata>
+        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \ql \f0 \sa180 \li0 \fi0 This script monitors a certain fx slot in the monitoring chain and switches the bypass on it\par}
+}
+]]></description>
+      </metadata>
+      <version name="1.0.0" author="Ed Kashinsky" time="2022-08-11T17:23:15Z">
+        <changelog><![CDATA[- Added script]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/44b1c04bfdbbd189a7c1c68dd1a94bf3fd334eae/Toolbars/ek_Toggle%20monitoring%20FX%20on%20slot%204.lua</source>
+      </version>
+    </reapack>
+    <reapack name="ek_Toggle monitoring FX on slot 5.lua" type="script" desc="Toggle monitoring fx plugin on slot 5">
+      <metadata>
+        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \ql \f0 \sa180 \li0 \fi0 This script monitors a certain fx slot in the monitoring chain and switches the bypass on it\par}
+}
+]]></description>
+      </metadata>
+      <version name="1.0.0" author="Ed Kashinsky" time="2022-08-11T17:23:15Z">
+        <changelog><![CDATA[- Added script]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/44b1c04bfdbbd189a7c1c68dd1a94bf3fd334eae/Toolbars/ek_Toggle%20monitoring%20FX%20on%20slot%205.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Toggle random color for selected items or tracks.lua" type="script" desc="ek_Toggle random color for selected items or tracks">
