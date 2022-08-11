@@ -1,4 +1,4 @@
--- @description Toggle monitoring fx plugin on slot 5
+-- @description ek_Toggle monitoring fx plugin on slot 5
 -- @version 1.0.0
 -- @author Ed Kashinsky
 -- @about

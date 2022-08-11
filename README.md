@@ -239,25 +239,25 @@ For correct work please install ek_Toggle last under docker window
 
 This script helps to join several windows (on one docker region as usual) to one shortcut for toggling view. It remembers last opened window and toggle it.
 
-#### Toggle monitoring fx plugin on slot 1
+#### ek_Toggle monitoring fx plugin on slot 1
 
 ![Preview](/Assets/images/mfx_slots_preview.gif)
 
 This script monitors a certain fx slot in the monitoring chain and switches the bypass on it
 
-#### Toggle monitoring fx plugin on slot 2
+#### ek_Toggle monitoring fx plugin on slot 2
 
 This script monitors a certain fx slot in the monitoring chain and switches the bypass on it
 
-#### Toggle monitoring fx plugin on slot 3
+#### ek_Toggle monitoring fx plugin on slot 3
 
 This script monitors a certain fx slot in the monitoring chain and switches the bypass on it
 
-#### Toggle monitoring fx plugin on slot 4
+#### ek_Toggle monitoring fx plugin on slot 4
 
 This script monitors a certain fx slot in the monitoring chain and switches the bypass on it
 
-#### Toggle monitoring fx plugin on slot 5
+#### ek_Toggle monitoring fx plugin on slot 5
 
 This script monitors a certain fx slot in the monitoring chain and switches the bypass on it
 
