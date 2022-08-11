@@ -16,7 +16,8 @@ This scripts makes Repear a bit close to Ableton workflow. Also it brings useful
 https://raw.githubusercontent.com/edkashinsky/reaper-reableton-scripts/master/index.xml
 ```
 4. Done! You can find all new scripts in **Extensions** -> **ReaPack** -> **Browse Packages**
-5. From time to time please execute **Extensions** -> **ReaPack** -> **Synchronize Packages** to get new versions of scripts.
+5. Install script **ek_Core functions**, because many of scripts require this base script with common functions 
+6. From time to time please execute **Extensions** -> **ReaPack** -> **Synchronize Packages** to get new versions of scripts.
 
 ## Main useful scripts
 
