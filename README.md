@@ -79,67 +79,19 @@ For installation:
 
 ## List of scripts
 
-#### ek_Increase pitch or rate for selected items
-
-This script increases pitch or rate of selected items depending on "Preserve Pitch" option.
-
-If option is on, script increases pitch and change rate in other case. Also when rate is changing, length is changing too (like in Ableton)
-
-This script normally adds 1 semitone, but if you hold ctrl/cmd it adds 0.1 semitone
-
-#### ek_Trim silence at the edges of selected items (no prompt)
-
-![Preview](/Assets/images/trim_silence_edges_preview.gif)
-
-It removes silence at the start at the end of item without prompt. Using together with "ek_Trim silence at the edges of selected items"
-
-#### ek_Toggle preserve pitch for selected items
-
-![Preview](/Assets/images/prevent_pitch_preview.gif)
-
-This script just toggle "Preserve Pitch" for selected items but it saves state for button. For example, if you select item and it has preserve option, button starts highlight.
-
-For installation just add this script on toolbar and set "ek_Global Startup Functions" as global startup action via SWS.
-
-#### ek_Switch to prev pitch mode for selected items
-
-This script helps to switch between pitch modes quicker just in one click.
-
-Work with script ek_Switch to next pitch mode for selected items.lua
-
 #### ek_Add 1 sec gap between selected items
 
 Script just adds 1 second gap between selected items without any GUI
 
-#### ek_Pin selected items at markers started from
+#### ek_Change pitch mode for selected items
 
-![Preview](/Assets/images/pin_items_to_markers_preview.gif)
+![Preview](/Assets/images/change_pitch_mode_preview.gif)
 
-This script pins selected items to markers started from specified number. It requires ReaImGui extension.
-
-#### ek_Decrease pitch or rate for selected items
-
-This script decreases pitch or rate of selected items depending on "Preserve Pitch" option.
-
-If option is on, script decreases pitch and change rate in other case. Also when rate is changing, length is changing too (like in Ableton)
-
-This script normally subtracts 1 semitone, but if you hold ctrl/cmd it subtracts 0.1 semitone
-
-Works with 'ek_Increase pitch or rate for selected items'
-
-#### ek_Switch to next pitch mode for selected items
-
-This script helps to switch between pitch modes quicker just in one click.
-
-Work with script ek_Switch to prev pitch mode for selected items.lua
+This script shows nested menu of all pitch modes for selected items right on the toolbar without "Item properties" window
 
 #### ek_Clear pitch or rate for selected items
 
 This script resets any pitch, rate and length info for selected items and makes as default
-
-#### ek_Toggle overlaping items vertically option
-
-This script toggles option of editing multiple items on one track at the same time
 
 #### ek_Create crossfade on edges of items
 
@@ -151,57 +103,64 @@ Installation for better experience:
 3. Choose this script in field **Default action**
 4. Done! It means that when you double click on edge between media items, you create crossfade between them
 
+#### ek_Decrease pitch or rate for selected items
+
+This script decreases pitch or rate of selected items depending on "Preserve Pitch" option.
+
+If option is on, script decreases pitch and change rate in other case. Also when rate is changing, length is changing too (like in Ableton)
+
+This script normally subtracts 1 semitone, but if you hold ctrl/cmd it subtracts 0.1 semitone
+
+Works with 'ek_Increase pitch or rate for selected items'
+
+#### ek_Increase pitch or rate for selected items
+
+This script increases pitch or rate of selected items depending on "Preserve Pitch" option.
+
+If option is on, script increases pitch and change rate in other case. Also when rate is changing, length is changing too (like in Ableton)
+
+This script normally adds 1 semitone, but if you hold ctrl/cmd it adds 0.1 semitone
+
+#### ek_Pin selected items at markers started from
+
+![Preview](/Assets/images/pin_items_to_markers_preview.gif)
+This script pins selected items to markers started from specified number. It requires ReaImGui extension.
+
+#### ek_Switch to next pitch mode for selected items
+
+This script helps to switch between pitch modes quicker just in one click.
+
+Work with script ek_Switch to prev pitch mode for selected items.lua
+
+#### ek_Switch to prev pitch mode for selected items
+
+This script helps to switch between pitch modes quicker just in one click.
+
+Work with script ek_Switch to next pitch mode for selected items.lua
+
+#### ek_Toggle overlaping items vertically option
+
+This script toggles option of editing multiple items on one track at the same time
+
+#### ek_Toggle preserve pitch for selected items
+
+![Preview](/Assets/images/prevent_pitch_preview.gif)
+
+This script just toggle "Preserve Pitch" for selected items but it saves state for button. For example, if you select item and it has preserve option, button starts highlight.
+
+For installation just add this script on toolbar and set "ek_Global Startup Functions" as global startup action via SWS.
+
+#### ek_Trim silence at the edges of selected items (no prompt)
+
+![Preview](/Assets/images/trim_silence_edges_preview.gif)
+
+It removes silence at the start at the end of item without prompt. Using together with "ek_Trim silence at the edges of selected items"
+
 #### ek_Trim silence edges for selected items
 
 This script helps to remove silence at the start and at the end of selected items by individual thresholds, pads and fades.
 
 Also it provides UI for configuration
-
-#### ek_Change pitch mode for selected items
-
-![Preview](/Assets/images/change_pitch_mode_preview.gif)
-
-This script shows nested menu of all pitch modes for selected items right on the toolbar without "Item properties" window
-
-#### ek_Move cursor or selected MIDI notes left by grid
-
-If any note is selected, this script moves it to left by grid size. And move cursor by grid in other case
-
-#### ek_Smart horizontal zoom in
-
-This script helps live with Project Limit option is on. It makes zoom available to places behind limits
-
-#### ek_Select next non-tiny track
-
-This script helps to navigate by tracks and shown envelopes by hotkeys.
-
-I usually attach this script to down arrow and it goes down throw project and select next track/envelope lane if it visible
-
-#### ek_Smart horizontal zoom out
-
-This script helps live with Project Limit option is on. It makes zoom available to places behind limits
-
-#### ek_Move cursor or selected items right by pixel
-
-If any item is selected, this script moves it to right by pixel. And moves cursor by pixel in other case
-
-#### ek_Move cursor or selected items left by pixel
-
-If any item is selected, this script moves to left it by pixel. And moves cursor by pixel in other case
-
-#### ek_Move cursor or selected items right by grid
-
-If any item is selected, this script moves it to right by grid size. And moves cursor by grid in other case
-
-#### ek_Move cursor or selected MIDI notes right by grid
-
-If any note is selected, this script moves it to right by grid size. And move cursor by grid in other case
-
-#### ek_Select prev non-tiny track
-
-This script helps to navigate by tracks and shown envelopes by hotkeys.
-
-I usually attach this script to up arrow and it goes up throw project and select previous track/envelope lane if it visible
 
 #### ek_Auto grid for MIDI Editor
 
@@ -214,35 +173,59 @@ For installation:
 3. Add to this custom script MultiZoom shortcut hotkey
 4. Have fun!
 
+#### ek_Move cursor or selected MIDI notes left by grid
+
+If any note is selected, this script moves it to left by grid size. And move cursor by grid in other case
+
+#### ek_Move cursor or selected MIDI notes right by grid
+
+If any note is selected, this script moves it to right by grid size. And move cursor by grid in other case
+
 #### ek_Move cursor or selected items left by grid
 
 If any item is selected, this script moves it to left by grid size. And moves cursor by grid in other case
 
-#### ek_Toggle monitoring fx plugin
+#### ek_Move cursor or selected items left by pixel
 
-This script helps to watching for monitoring plugins (Realphones, Reference 4 and etc). You can see state of enabling plugin by state of button on your toolbar.
+If any item is selected, this script moves to left it by pixel. And moves cursor by pixel in other case
 
-For installation just add this script on toolbar and set "ek_Global Startup Functions" as global startup action via SWS.
+#### ek_Move cursor or selected items right by grid
 
-If you want to change Realphones for another plugin, please put in "ek_Headphones monitoring functions"
+If any item is selected, this script moves it to right by grid size. And moves cursor by grid in other case
 
-#### ek_Toggle random color for selected items or tracks
+#### ek_Move cursor or selected items right by pixel
 
-It changes color for items or tracks depending on focus
+If any item is selected, this script moves it to right by pixel. And moves cursor by pixel in other case
 
-#### ek_Toggle last under docker window
+#### ek_Select next non-tiny track
 
-This script helps to join several windows (on one docker region as usual) to one shortcut for toggling view. It remembers last opened window and toggle it.
+This script helps to navigate by tracks and shown envelopes by hotkeys.
 
-#### ek_Toggle MIDI Editor window
+I usually attach this script to down arrow and it goes down throw project and select next track/envelope lane if it visible
 
-It remember MIDI Editor button for toggling docker window in MIDI Editor section
+#### ek_Select prev non-tiny track
 
-For correct work please install ek_Toggle last under docker window
+This script helps to navigate by tracks and shown envelopes by hotkeys.
+
+I usually attach this script to up arrow and it goes up throw project and select previous track/envelope lane if it visible
+
+#### ek_Smart horizontal zoom in
+
+This script helps live with Project Limit option is on. It makes zoom available to places behind limits
+
+#### ek_Smart horizontal zoom out
+
+This script helps live with Project Limit option is on. It makes zoom available to places behind limits
 
 #### ek_Toggle MIDI Editor window in arrange
 
 It remember MIDI Editor button for toggling docker window in arrange view
+
+For correct work please install ek_Toggle last under docker window
+
+#### ek_Toggle MIDI Editor window
+
+It remember MIDI Editor button for toggling docker window in MIDI Editor section
 
 For correct work please install ek_Toggle last under docker window
 
@@ -251,6 +234,36 @@ For correct work please install ek_Toggle last under docker window
 It remember Media Browser button for toggling docker window
 
 For correct work please install ek_Toggle last under docker window
+
+#### ek_Toggle last under docker window
+
+This script helps to join several windows (on one docker region as usual) to one shortcut for toggling view. It remembers last opened window and toggle it.
+
+#### Toggle monitoring fx plugin on slot 1
+
+![Preview](/Assets/images/mfx_slots_preview.gif)
+
+This script monitors a certain fx slot in the monitoring chain and switches the bypass on it
+
+#### Toggle monitoring fx plugin on slot 2
+
+This script monitors a certain fx slot in the monitoring chain and switches the bypass on it
+
+#### Toggle monitoring fx plugin on slot 3
+
+This script monitors a certain fx slot in the monitoring chain and switches the bypass on it
+
+#### Toggle monitoring fx plugin on slot 4
+
+This script monitors a certain fx slot in the monitoring chain and switches the bypass on it
+
+#### Toggle monitoring fx plugin on slot 5
+
+This script monitors a certain fx slot in the monitoring chain and switches the bypass on it
+
+#### ek_Toggle random color for selected items or tracks
+
+It changes color for items or tracks depending on focus
 
 #### ek_Toggle render matrix window
 
@@ -262,17 +275,25 @@ For work please install ek_Toggle last under docker window
 
 It collapses selected tracks/envelope lanes between 3 states: small, medium, large
 
-#### ek_Toggle single solo for selected tracks
+#### ek_Delete selected tracks
 
-Toggles selected track soloed
+If item has several takes and option "Show all takes in lane (when room)" is on, we gonna delete active take. And in other case it deletes track and select previous available track
+
+#### ek_Duplicate selected tracks or items
+
+If any item is selected, it duplicate item. In other case is duplicate track
 
 #### ek_Expand selected tracks
 
 It expands selected tracks/envelope lanes between 3 states: small, medium, large
 
-#### ek_Toggle trim mode for selected trackes
+#### ek_Insert new track
 
-Toggles trim mode for selected tracks and shows current state as button highlight
+It just inserts track or inserts it in the end of list depending on situation
+
+#### ek_Nudge volume for selected tracks down
+
+It decrease volume for selected track a bit and shows tooltip with set volume
 
 #### ek_Nudge volume for selected tracks up
 
@@ -282,19 +303,11 @@ It increase volume for selected track a bit and shows tooltip with set volume
 
 Renaming stuff for takes, items and tracks depending on focus
 
-#### ek_Insert new track
+#### ek_Toggle single solo for selected tracks
 
-It just inserts track or inserts it in the end of list depending on situation
+Toggles selected track soloed
 
-#### ek_Delete selected tracks
+#### ek_Toggle trim mode for selected trackes
 
-If item has several takes and option "Show all takes in lane (when room)" is on, we gonna delete active take. And in other case it deletes track and select previous available track
-
-#### ek_Duplicate selected tracks or items
-
-If any item is selected, it duplicate item. In other case is duplicate track
-
-#### ek_Nudge volume for selected tracks down
-
-It decrease volume for selected track a bit and shows tooltip with set volume
+Toggles trim mode for selected tracks and shows current state as button highlight
 

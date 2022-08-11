@@ -1,17 +1,20 @@
 -- @description ek_Global startup action
--- @version 1.0.4
+-- @version 1.0.5
 -- @author Ed Kashinsky
 -- @about
 --   This is startup action brings some ableton-like features in realtime. You can control any option by 'ek_Global startup action settings' script.
 --
 --   For installation:
---      1. Install this script via **Extensions** -> **ReaPack** -> **Browse Packages**
+--      1. Install 'ek_Core functions.lua'
+--		2. Install this script via **Extensions** -> **ReaPack** -> **Browse Packages**
 --      2. Open **Actions** -> **Action List**
 --      3. Find "Script: ek_Global startup action" in list and select "Copy selected action command ID" by right mouse click
 --      4. Open **Extensions** -> **Startup Actions** -> **Set Global Startup Action...** and paste copied command ID
 --      5. Restart Reaper
 --      6. Open 'ek_Global startup action settings' for customize options
 -- @changelog
+--   - Removed script 'ek_Toggle monitoring fx plugin'
+--   - Added scripts 'ek_Toggle monitoring FX on slot 1-5'
 --   - Bugs fixes
 --   - Added dark mode theme feature
 --   - Added settings window

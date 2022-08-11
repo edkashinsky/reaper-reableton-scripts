@@ -36,7 +36,7 @@ class Intro:
 
         for category in self.__pathCategories:
             for root, dirnames, filenames in os.walk(self.__rootPath + "/" + category):
-                for filename in fnmatch.filter(filenames, '*.lua'):
+                for filename in sorted(fnmatch.filter(filenames, '*.lua')):
                     with open(os.path.join(root, filename)) as f:
                         lua = ast.parse(f.read())
 

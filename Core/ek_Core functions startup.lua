@@ -4,11 +4,31 @@
 
 local ga_key_prefix = "ga_"
 ga_highlight_buttons = {
-    monitoring_fx = "monitoring_fx_btn",
     preserve_pitch = "preserve_pitch_btn",
     trim_mode = "trim_mode_btn",
     midi_editor = "midi_editor_btn",
-	overlaping_items_vertically = "overlaping_items_vertically"
+	overlaping_items_vertically = "overlaping_items_vertically",
+	mfx_slot_1 = "mfx_slot_1",
+	mfx_slot_2 = "mfx_slot_2",
+	mfx_slot_3 = "mfx_slot_3",
+	mfx_slot_4 = "mfx_slot_4",
+	mfx_slot_5 = "mfx_slot_5"
+}
+
+ga_mfx_slots = {
+	mfx_slot_1 = 0,
+	mfx_slot_2 = 1,
+	mfx_slot_3 = 2,
+	mfx_slot_4 = 3,
+	mfx_slot_5 = 4
+}
+
+local ga_slots_data = {
+	{ btn = ga_highlight_buttons.mfx_slot_1, slot = ga_mfx_slots.mfx_slot_1 },
+	{ btn = ga_highlight_buttons.mfx_slot_2, slot = ga_mfx_slots.mfx_slot_2 },
+	{ btn = ga_highlight_buttons.mfx_slot_3, slot = ga_mfx_slots.mfx_slot_3 },
+	{ btn = ga_highlight_buttons.mfx_slot_4, slot = ga_mfx_slots.mfx_slot_4 },
+	{ btn = ga_highlight_buttons.mfx_slot_5, slot = ga_mfx_slots.mfx_slot_5 },
 }
 
 ga_settings = {
@@ -40,11 +60,11 @@ ga_settings = {
 		default = true,
 		order = 4,
 	},
-	monitoring_fx_plugin = {
-		key = "monitoring_fx_plugin",
-		title = "Check plugin status on monitoring FX",
-		description = "If you use spectrum correction plugins (such as Realphones, Sonarworks Reference 4, SoundID Reference and etc.) on Monitoring FX when using headphones, you can always see if the plugin is enabled. For using it, add script 'ek_Toggle monitoring fx plugin' to your toolbar and this button will be highlighted automatically when the plugin on monitoring FX is enabled.",
-		default = "Realphones",
+	mfx_slots_exclusive = {
+		key = "mfx_slots_exclusive",
+		title = "Toggle monitoring fx slots in exclusive mode",
+		description = "If you use script 'ek_Toggle monitoring FX on slot 1-5' and want to toggle plugins between slots in monitoring chain exclusively (when you turn on some plugin, others are turning off)",
+		default = false,
 		order = 5,
 	},
 	rec_sample_rate = {
@@ -126,37 +146,50 @@ end
 --
 -- Functions for monitoring FX button
 --
-function EK_GetMonitoringFxIndexOnMasterTrack()
-    local masterTrack = reaper.GetMasterTrack(proj)
-	local retval, buf
-	local start = 0x1000000
-    local MonitoringFx = GA_GetSettingValue(ga_settings.monitoring_fx_plugin)
+function GA_GetEnabledMfxOnSlot(slot)
+	local id = 0x1000000 + slot
+	local masterTrack = reaper.GetMasterTrack(proj)
 
-	for i = 0, 20 do
-		buf = ""
-		retval, buf = reaper.TrackFX_GetFXName(masterTrack, start + i, buf)
-
-		if retval then
-			local find = string.find(buf, MonitoringFx)
-
-			if find ~= nil then
-				return start + i
-			end
-		end
-	end
-
-	return -1
+	return reaper.TrackFX_GetEnabled(masterTrack, id)
 end
 
-function EK_GetMonitoringFxEnabledOnMasterTrack()
-    local masterTrack = reaper.GetMasterTrack(proj)
-	local fxInd = EK_GetMonitoringFxIndexOnMasterTrack()
+function GA_SetEnabledMfxOnSlot(slot, enabled)
+	local id = 0x1000000 + slot
+	local masterTrack = reaper.GetMasterTrack(proj)
 
-	if fxInd >= 0 then
-		return reaper.TrackFX_GetEnabled(masterTrack, fxInd)
+	reaper.TrackFX_SetEnabled(masterTrack, id, enabled)
+end
+
+function GA_ToggleMfxBtnOnSlot(slot, btn, sectionID, cmdID)
+	if GA_GetSettingValue(ga_settings.mfx_slots_exclusive) then
+		local isAnySlotsEnabled = false
+		for k, row in pairs(ga_slots_data) do
+			if slot ~= row.slot then
+				if not isAnySlotsEnabled and GA_GetEnabledMfxOnSlot(row.slot) then
+					isAnySlotsEnabled = true
+				end
+
+				GA_SetEnabledMfxOnSlot(row.slot, false)
+				GA_UpdateStateForButton(row.btn, 0)
+			end
+		end
+
+		if isAnySlotsEnabled then
+			GA_SetEnabledMfxOnSlot(slot, true)
+		else
+			GA_SetEnabledMfxOnSlot(slot, not GA_GetEnabledMfxOnSlot(slot))
+		end
 	else
-		return nil
+		GA_SetEnabledMfxOnSlot(slot, not GA_GetEnabledMfxOnSlot(slot))
 	end
+
+	reaper.SetToggleCommandState(sectionID, cmdID, GA_GetEnabledMfxOnSlot(slot) and 1 or 0)
+	reaper.RefreshToolbar2(sectionID, cmdID)
+	GA_SetButtonForHighlight(btn, sectionID, cmdID)
+
+	-- update audio connection just in case
+	reaper.Audio_Quit()
+	reaper.Audio_Init()
 end
 
 --
@@ -304,10 +337,12 @@ end
 --
 function GA_ObserveMonitoringFx(changes, values)
 	if changes.play_state then
-		local isEnabled = EK_GetMonitoringFxEnabledOnMasterTrack()
+		for k, row in pairs(ga_slots_data) do
+            local isEnabled = GA_GetEnabledMfxOnSlot(row.slot)
+			GA_UpdateStateForButton(row.btn, isEnabled == true and 1 or 0)
+        end
 
 		Log("Changed: {param} - monitoring fx", ek_log_levels.Warning, ga_settings.highlight_buttons.key)
-		GA_UpdateStateForButton(ga_highlight_buttons.monitoring_fx, isEnabled == true and 1 or 0)
 	end
 end
 

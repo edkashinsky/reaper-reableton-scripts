@@ -12,12 +12,6 @@ local proj = 0
 local minHeight = 30
 local tinyChildrenState = 2
 
-function Debug(string)
-	if true then
-		reaper.ShowConsoleMsg(string .. "\n")
-	end
-end
-
 local envelope = reaper.GetSelectedTrackEnvelope(proj)
 
 if envelope ~= nil then
