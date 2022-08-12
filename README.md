@@ -244,23 +244,23 @@ This script helps to join several windows (on one docker region as usual) to one
 
 ![Preview](/Assets/images/mfx_slots_preview.gif)
 
-This script monitors a certain fx slot in the monitoring chain and switches the bypass on it
+This script monitors a certain fx slot in the monitoring chain and switches the bypass on it. For realtime highlighting install 'Global startup action'
 
 #### ek_Toggle monitoring fx plugin on slot 2
 
-This script monitors a certain fx slot in the monitoring chain and switches the bypass on it
+This script monitors a certain fx slot in the monitoring chain and switches the bypass on it. For realtime highlighting install 'Global startup action'
 
 #### ek_Toggle monitoring fx plugin on slot 3
 
-This script monitors a certain fx slot in the monitoring chain and switches the bypass on it
+This script monitors a certain fx slot in the monitoring chain and switches the bypass on it. For realtime highlighting install 'Global startup action'
 
 #### ek_Toggle monitoring fx plugin on slot 4
 
-This script monitors a certain fx slot in the monitoring chain and switches the bypass on it
+This script monitors a certain fx slot in the monitoring chain and switches the bypass on it. For realtime highlighting install 'Global startup action'
 
 #### ek_Toggle monitoring fx plugin on slot 5
 
-This script monitors a certain fx slot in the monitoring chain and switches the bypass on it
+This script monitors a certain fx slot in the monitoring chain and switches the bypass on it. For realtime highlighting install 'Global startup action'
 
 #### ek_Toggle random color for selected items or tracks
 
