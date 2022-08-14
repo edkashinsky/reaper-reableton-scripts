@@ -278,7 +278,7 @@ It collapses selected tracks/envelope lanes between 3 states: small, medium, lar
 
 #### ek_Delete selected tracks
 
-If item has several takes and option "Show all takes in lane (when room)" is on, we gonna delete active take. And in other case it deletes track and select previous available track
+If item has several takes and option "Show all takes in lane (when room)" is on, we gonna delete active take. If automation lane in focus, delete it. And in other case it deletes track and select previous available track
 
 #### ek_Duplicate selected tracks or items
 
@@ -303,6 +303,14 @@ It increase volume for selected track a bit and shows tooltip with set volume
 #### ek_Rename selected tracks or takes
 
 Renaming stuff for takes, items and tracks depending on focus
+
+#### ek_Toggle mute and offline FX for selected tracks
+
+This script makes fx offline when selected track is muted
+
+#### ek_Toggle mute for selected tracks
+
+This script toggles mute for selected tracks and makes fx online if it is offine
 
 #### ek_Toggle single solo for selected tracks
 
