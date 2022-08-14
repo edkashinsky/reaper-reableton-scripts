@@ -1,10 +1,10 @@
 -- @description ek_Delete selected tracks
--- @version 1.0.0
+-- @version 1.0.1
 -- @author Ed Kashinsky
 -- @about
---   If item has several takes and option "Show all takes in lane (when room)" is on, we gonna delete active take. And in other case it deletes track and select previous available track
+--   If item has several takes and option "Show all takes in lane (when room)" is on, we gonna delete active take. If automation lane in focus, delete it. And in other case it deletes track and select previous available track
 -- @changelog
---   - Small fixes
+--   - Remove automation lane when it is on focus
 
 reaper.Undo_BeginBlock()
 
@@ -72,11 +72,20 @@ local function GetPrevTrack()
 	return reaper.GetTrack(proj, sIndex or 0)
 end
 
+-- Automation lane
+local function isEnvelopeVisible(env)
+	return env ~= nil and reaper.GetEnvelopeInfo_Value(env, "I_TCPH_USED") > 0
+end
+
 fetchFirstSelectedTrack()
+
+local firstSelectedEnvelope = reaper.GetSelectedEnvelope(proj)
 
 -- IF item has several takes and option "Show all takes in lane (when room)" is on, we gonna delete active take
 if showAllTakesOption and firstSelectedItemCountTakes > 1 then
 	reaper.Main_OnCommand(reaper.NamedCommandLookup(40129), 0) -- Take: Delete active take from items
+elseif isEnvelopeVisible(firstSelectedEnvelope) then
+	reaper.Main_OnCommand(reaper.NamedCommandLookup(40065), 0) -- Envelope: Clear or remove envelope
 else
 	reaper.Main_OnCommand(reaper.NamedCommandLookup(40184), 0) -- Remove items/tracks/envelope points (depending on focus) - no prompting
 
