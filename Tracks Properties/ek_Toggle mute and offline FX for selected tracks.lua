@@ -1,7 +1,7 @@
 -- @description ek_Toggle mute and offline FX for selected tracks
--- @version: 1.0
--- @author: Ed Kashinsky
--- @about:
+-- @version 1.0.0
+-- @author Ed Kashinsky
+-- @about
 --   This script makes fx offline when selected track is muted
   
 reaper.Undo_BeginBlock()

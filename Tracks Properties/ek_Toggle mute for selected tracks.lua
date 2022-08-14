@@ -1,7 +1,7 @@
 -- @description ek_Toggle mute for selected tracks
--- @version: 1.0
--- @author: Ed Kashinsky
--- @about:
+-- @version 1.0.0
+-- @author Ed Kashinsky
+-- @about
 --   This script toggles mute for selected tracks and makes fx online if it is offine
   
 reaper.Undo_BeginBlock()
