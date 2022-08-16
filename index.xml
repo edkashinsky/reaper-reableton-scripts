@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="f17d73389614990ab8f04b8dd56cab7ffa2eae9f">
+<index version="1" name="Reableton Scripts" commit="efaa0a632b6da13d6999f43a00092e2ee01c01c4">
   <category name="ColorThemes">
     <reapack name="Flat Madness Bright Remix.theme" type="theme" desc="Flat Madness Bright Remix">
       <metadata>
@@ -848,6 +848,10 @@
       <version name="1.0.1" author="Ed Kashinsky" time="2022-08-14T20:30:59Z">
         <changelog><![CDATA[- Remove automation lane when it is on focus]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/5c1e8c27c7c2ff4e327d228108a8cc27ecaa37b2/Tracks%20Properties/ek_Delete%20selected%20tracks.lua</source>
+      </version>
+      <version name="1.0.2" author="Ed Kashinsky" time="2022-08-16T17:32:29Z">
+        <changelog><![CDATA[- Small fixes]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/efaa0a632b6da13d6999f43a00092e2ee01c01c4/Tracks%20Properties/ek_Delete%20selected%20tracks.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Duplicate selected tracks or items.lua" type="script" desc="ek_Duplicate selected tracks or items">
