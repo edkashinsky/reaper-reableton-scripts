@@ -1,10 +1,9 @@
 -- @description ek_Core functions
 -- @author Ed Kashinsky
 -- @about Base functions used by ek-scripts.
--- @version 1.0.3
+-- @version 1.0.4
 -- @provides
---   ek_Core functions v1.lua
---   ek_Core functions GUI.lua
+--   added some core functions
 -- @changelog
 --    - improved core stability
 --    - added dark mode feature

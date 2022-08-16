@@ -76,6 +76,10 @@ function EK_SetExtState(key, value)
 	reaper.SetExtState(ext_key_prefix, key, value, true)
 end
 
+function EK_DeleteExtState(key)
+	reaper.DeleteExtState(ext_key_prefix, key, true)
+end
+
 function EK_IsGlobalActionEnabled()
 	return EK_HasExtState(ext_key_global)
 end

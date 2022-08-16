@@ -1,5 +1,5 @@
 -- @description ek_Global startup action
--- @version 1.0.5
+-- @version 1.0.6
 -- @author Ed Kashinsky
 -- @about
 --   This is startup action brings some ableton-like features in realtime. You can control any option by 'ek_Global startup action settings' script.
@@ -13,13 +13,7 @@
 --      5. Restart Reaper
 --      6. Open 'ek_Global startup action settings' for customize options
 -- @changelog
---   - Removed script 'ek_Toggle monitoring fx plugin'
---   - Added scripts 'ek_Toggle monitoring FX on slot 1-5'
---   - Bugs fixes
---   - Added dark mode theme feature
---   - Added settings window
---   - Added customizable options for realtime
--- 	 - Observing of backups works only if you turn up "Timestamp backups" in Preferences
+--   - fixed bug when toolbar button do not update highlight state in realtime in some circumstances
 -- @provides
 --   ek_Core functions startup.lua
 

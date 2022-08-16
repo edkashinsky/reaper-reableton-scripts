@@ -196,6 +196,21 @@ end
 -- Update highlighting of buttons
 --
 function GA_SetButtonForHighlight(buttonKey, sectionID, cmdID)
+	-- drop existed key
+	for key, value in pairs(ga_highlight_buttons) do
+		if buttonKey ~= value then
+			local sid = tonumber(EK_GetExtState(ga_key_prefix .. ":" .. value .. ":section_id"))
+			local cid = tonumber(EK_GetExtState(ga_key_prefix .. ":" .. value .. ":command_id"))
+
+			if sid == sectionID and cid == cmdID then
+				EK_DeleteExtState(ga_key_prefix .. ":" .. value .. ":section_id")
+				EK_DeleteExtState(ga_key_prefix .. ":" .. value .. ":command_id")
+
+				Log("Button " .. value .. " uses actual ids, so it was deleted", ek_log_levels.Notice)
+			end
+		end
+	end
+
 	EK_SetExtState(ga_key_prefix .. ":" .. buttonKey .. ":section_id", sectionID)
 	EK_SetExtState(ga_key_prefix .. ":" .. buttonKey .. ":command_id", cmdID)
 end
