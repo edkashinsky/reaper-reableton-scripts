@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="efaa0a632b6da13d6999f43a00092e2ee01c01c4">
+<index version="1" name="Reableton Scripts" commit="539949af61cc02524de40c9704d90de734e6c584">
   <category name="ColorThemes">
     <reapack name="Flat Madness Bright Remix.theme" type="theme" desc="Flat Madness Bright Remix">
       <metadata>
@@ -180,6 +180,11 @@
         <changelog><![CDATA[- fixed bug when toolbar button do not update highlight state in realtime in some circumstances]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f17d73389614990ab8f04b8dd56cab7ffa2eae9f/Core/ek_Global%20startup%20action.lua</source>
         <source file="ek_Core functions startup.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f17d73389614990ab8f04b8dd56cab7ffa2eae9f/Core/ek_Core%20functions%20startup.lua</source>
+      </version>
+      <version name="1.0.7" author="Ed Kashinsky" time="2022-09-08T17:03:47Z">
+        <changelog><![CDATA[- fixed bug when old backup files don't delete if project has special characters in title]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/539949af61cc02524de40c9704d90de734e6c584/Core/ek_Global%20startup%20action.lua</source>
+        <source file="ek_Core functions startup.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/539949af61cc02524de40c9704d90de734e6c584/Core/ek_Core%20functions%20startup.lua</source>
       </version>
     </reapack>
   </category>
@@ -822,13 +827,17 @@
 {\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
 \widowctrl\hyphauto
 
-{\pard \ql \f0 \sa180 \li0 \fi0 It collapses selected tracks/envelope lanes between 3 states: small, medium, large\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 It collapses selected tracks/envelope lanes between 3 states: small, large. Put height values you like to 'Extensions' -> 'Command parameters' -> 'Track Height A' (for small size) and 'Track Height B' (for large size)\par}
 }
 ]]></description>
       </metadata>
       <version name="1.0.0" author="Ed Kashinsky" time="2022-05-30T09:42:49Z">
         <changelog><![CDATA[- Small fixes]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Tracks%20Properties/ek_Collapse%20selected%20tracks.lua</source>
+      </version>
+      <version name="1.0.1" author="Ed Kashinsky" time="2022-09-08T17:03:47Z">
+        <changelog><![CDATA[- Small fixes]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/539949af61cc02524de40c9704d90de734e6c584/Tracks%20Properties/ek_Collapse%20selected%20tracks.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Delete selected tracks.lua" type="script" desc="ek_Delete selected tracks">
@@ -874,13 +883,17 @@
 {\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
 \widowctrl\hyphauto
 
-{\pard \ql \f0 \sa180 \li0 \fi0 It expands selected tracks/envelope lanes between 3 states: small, medium, large\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 It expands selected tracks/envelope lanes between 2 states: small, large. Put height values you like to 'Extensions' -> 'Command parameters' -> 'Track Height A' (for small size) and 'Track Height B' (for large size)\par}
 }
 ]]></description>
       </metadata>
       <version name="1.0.0" author="Ed Kashinsky" time="2022-05-30T09:42:49Z">
         <changelog><![CDATA[- Small fixes]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Tracks%20Properties/ek_Expand%20selected%20tracks.lua</source>
+      </version>
+      <version name="1.0.2" author="Ed Kashinsky" time="2022-09-08T17:03:47Z">
+        <changelog><![CDATA[- Small fixes]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/539949af61cc02524de40c9704d90de734e6c584/Tracks%20Properties/ek_Expand%20selected%20tracks.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Insert new track.lua" type="script" desc="ek_Insert new track">
