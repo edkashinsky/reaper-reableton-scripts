@@ -1,13 +1,11 @@
 -- @description ek_Core functions
 -- @author Ed Kashinsky
 -- @about Base functions used by ek-scripts.
--- @version 1.0.4
+-- @version 1.0.5
 -- @provides
 --   added some core functions
 -- @changelog
 --    - improved core stability
---    - added dark mode feature
---    - added core loader
 
 function CoreLoadFunctions()
     local info = debug.getinfo(1,'S');

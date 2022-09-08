@@ -1,5 +1,5 @@
 -- @description ek_Global startup action
--- @version 1.0.6
+-- @version 1.0.7
 -- @author Ed Kashinsky
 -- @about
 --   This is startup action brings some ableton-like features in realtime. You can control any option by 'ek_Global startup action settings' script.
@@ -13,7 +13,7 @@
 --      5. Restart Reaper
 --      6. Open 'ek_Global startup action settings' for customize options
 -- @changelog
---   - fixed bug when toolbar button do not update highlight state in realtime in some circumstances
+--   - fixed bug when old backup files don't delete if project has special characters in title
 -- @provides
 --   ek_Core functions startup.lua
 

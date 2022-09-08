@@ -514,7 +514,11 @@ function GA_ObserveAndRemoveOldBackupFiles(changes, values)
 		local backup_files = {}
 
 		local root = reaper.GetProjectPath() .. "/../"
-		local project = string.gsub(reaper.GetProjectName(proj), ".[rR][pP][pP]", "")
+		local project = reaper.GetProjectName(proj)
+
+		project = string.gsub(project, ".[rR][pP][pP]", "")
+		project = string.gsub(project, '[$().*+?^%-%[%]%%]', '[%1]')
+
 		local pattern = project .. "[0-9_-]+[.]rpp[-]bak"
 
 		if string.len(project) == 0 then

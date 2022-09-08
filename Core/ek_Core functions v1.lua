@@ -28,6 +28,14 @@ local ext_key_global = "global_action_enabled"
 local last_grouped_docker_window_key = "last_grouped_docker_window"
 local opened_grouped_docker_window_key = "opened_grouped_docker_window"
 
+local retval, dpi = reaper.ThemeLayout_GetLayout("mcp", -3) -- get the current dpi
+--Now we need to tell the gfx-functions, that Retina/HiDPI is available(512)
+if dpi == "512" then -- if dpi==retina, set the gfx.ext_retina to 1, else to 0
+   gfx.ext_retina = 1 -- Retina
+   else
+   gfx.ext_retina = 0 -- no Retina
+end
+
 function Log(msg, level, param)
 	if not level then level = ek_log_levels.Important end
 	if level < ek_debug_level then return end
