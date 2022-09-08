@@ -1,7 +1,7 @@
 -- @description ek_Core functions
 -- @author Ed Kashinsky
 -- @about Base functions used by ek-scripts.
--- @version 1.0.5
+-- @version 1.0.6
 -- @provides
 --   added some core functions
 -- @changelog

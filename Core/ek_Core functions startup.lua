@@ -125,6 +125,14 @@ ga_settings = {
 	},
 }
 
+local retval, dpi = reaper.ThemeLayout_GetLayout("tcp", -3) -- get the current dpi
+--Now we need to tell the gfx-functions, that Retina/HiDPI is available(512)
+if dpi == "512" then -- if dpi==retina, set the gfx.ext_retina to 1, else to 0
+   gfx.ext_retina = 1 -- Retina
+   else
+   gfx.ext_retina = 0 -- no Retina
+end
+
 function GA_GetOrderedSettings()
 	local ordered_settings = {}
 
@@ -397,48 +405,52 @@ end
 local cached_zoom_level
 
 function GA_ObserveArrangeGrid()
+	local getRetinaLevel = function(lvl)
+		return gfx.ext_retina == 0 and lvl or lvl * 2
+	end
+
     local getOrderByZoomLevel = function(level)
 	    local order
 
-        if level <= 1 then
+        if level <= getRetinaLevel(1) then
             order = -3
-        elseif level < 3 then
+        elseif level < getRetinaLevel(3) then
             order = -2
-        elseif level < 5 then
+        elseif level < getRetinaLevel(5) then
             order = -1
-        elseif level < 15 then
+        elseif level < getRetinaLevel(15) then
             order = 0
-        elseif level < 25 then
+        elseif level < getRetinaLevel(25) then
             order = 1
-        elseif level < 55 then
+        elseif level < getRetinaLevel(55) then
             order = 2
-        elseif level < 110 then
+        elseif level < getRetinaLevel(110) then
             order = 3
-        elseif level < 220 then
+        elseif level < getRetinaLevel(220) then
             order = 4
-        elseif level < 450 then
+        elseif level < getRetinaLevel(450) then
             order = 5
-        elseif level < 850 then
+        elseif level < getRetinaLevel(850) then
             order = 6
-        elseif level < 1600 then
+        elseif level < getRetinaLevel(1600) then
             order = 7
-        elseif level < 3500 then
+        elseif level < getRetinaLevel(3500) then
             order = 8
-        elseif level < 6700 then
+        elseif level < getRetinaLevel(6700) then
             order = 9
-        elseif level < 12000 then
+        elseif level < getRetinaLevel(12000) then
             order = 10
-        elseif level < 30000 then
+        elseif level < getRetinaLevel(30000) then
             order = 11
-        elseif level < 45200 then
+        elseif level < getRetinaLevel(45200) then
             order = 12
-        elseif level < 55100 then
+        elseif level < getRetinaLevel(55100) then
             order = 13
-        elseif level < 80000 then
+        elseif level < getRetinaLevel(80000) then
             order = 14
-        elseif level < 110000 then
+        elseif level < getRetinaLevel(110000) then
             order = 15
-        elseif level < 150000 then
+        elseif level < getRetinaLevel(150000) then
             order = 16
         else
             order = 17

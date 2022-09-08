@@ -1,5 +1,5 @@
 -- @description ek_Expand selected tracks
--- @version 1.0.3
+-- @version 1.0.4
 -- @author Ed Kashinsky
 -- @about
 --   It expands selected tracks/envelope lanes between 2 states: small, large. Put height values you like to 'Extensions' -> 'Command parameters' -> 'Track Height A' (for small size) and 'Track Height B' (for large size)
@@ -8,7 +8,7 @@
 
 reaper.Undo_BeginBlock()
 
-local retval, dpi = reaper.ThemeLayout_GetLayout("mcp", -3) -- get the current dpi
+local retval, dpi = reaper.ThemeLayout_GetLayout("tcp", -3) -- get the current dpi
 --Now we need to tell the gfx-functions, that Retina/HiDPI is available(512)
 if dpi == "512" then -- if dpi==retina, set the gfx.ext_retina to 1, else to 0
    gfx.ext_retina = 1 -- Retina
