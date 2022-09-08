@@ -1,5 +1,5 @@
 -- @description ek_Expand selected tracks
--- @version 1.0.2
+-- @version 1.0.3
 -- @author Ed Kashinsky
 -- @about
 --   It expands selected tracks/envelope lanes between 2 states: small, large. Put height values you like to 'Extensions' -> 'Command parameters' -> 'Track Height A' (for small size) and 'Track Height B' (for large size)
@@ -40,7 +40,12 @@ else
 		local isMaster = reaper.GetMediaTrackInfo_Value(track,  "IP_TRACKNUMBER") == -1
 		
 		if isMaster then
-			reaper.SetMediaTrackInfo_Value(track, "I_HEIGHTOVERRIDE", 80)
+			local masterHeight = 80
+			if gfx.ext_retina == 1 then
+				masterHeight = masterHeight * 2
+			end
+
+			reaper.SetMediaTrackInfo_Value(track, "I_HEIGHTOVERRIDE", masterHeight)
 			reaper.TrackList_AdjustWindows(false)
 		elseif isFolder == 1 and state == tinyChildrenState then
 			reaper.SetMediaTrackInfo_Value(track, "I_FOLDERCOMPACT", 0)
