@@ -4,7 +4,7 @@
 -- @about
 --   It expands selected tracks/envelope lanes between 2 states: small, large. Put height values you like to 'Extensions' -> 'Command parameters' -> 'Track Height A' (for small size) and 'Track Height B' (for large size)
 -- @changelog
---   - Small fixes
+--   - retina detection fix
 
 reaper.Undo_BeginBlock()
 

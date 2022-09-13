@@ -1,10 +1,10 @@
 -- @description ek_Collapse selected tracks
--- @version 1.0.2
+-- @version 1.0.3
 -- @author Ed Kashinsky
 -- @about
 --   It collapses selected tracks/envelope lanes between 3 states: small, large. Put height values you like to 'Extensions' -> 'Command parameters' -> 'Track Height A' (for small size) and 'Track Height B' (for large size)
 -- @changelog
---   - Small fixes
+--   - retina detection fix
 
 reaper.Undo_BeginBlock()
 
