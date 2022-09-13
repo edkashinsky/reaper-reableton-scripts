@@ -1,11 +1,11 @@
 -- @description ek_Core functions
 -- @author Ed Kashinsky
 -- @about Base functions used by ek-scripts.
--- @version 1.0.6
+-- @version 1.0.7
 -- @provides
 --   added some core functions
 -- @changelog
---    - improved core stability
+--    - retina detection fix
 
 function CoreLoadFunctions()
     local info = debug.getinfo(1,'S');
