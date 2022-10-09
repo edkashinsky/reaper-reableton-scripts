@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="91880c5b41f521f7a00a908545ce2ed01e2d7cf6">
+<index version="1" name="Reableton Scripts" commit="d069a7ec585981ae2bc3c50f2ed73f8682875b8f">
   <category name="ColorThemes">
     <reapack name="Flat Madness Bright Remix.theme" type="theme" desc="Flat Madness Bright Remix">
       <metadata>
@@ -196,6 +196,11 @@
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f7562d32fb79ff80e5d56ba363144bb0e37d0eea/Core/ek_Global%20startup%20action.lua</source>
         <source file="ek_Core functions startup.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f7562d32fb79ff80e5d56ba363144bb0e37d0eea/Core/ek_Core%20functions%20startup.lua</source>
       </version>
+      <version name="1.0.10" author="Ed Kashinsky" time="2022-10-09T22:54:02Z">
+        <changelog><![CDATA[- added observing for script "ek_Select items from selected to mouse cursor"]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d069a7ec585981ae2bc3c50f2ed73f8682875b8f/Core/ek_Global%20startup%20action.lua</source>
+        <source file="ek_Core functions startup.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d069a7ec585981ae2bc3c50f2ed73f8682875b8f/Core/ek_Core%20functions%20startup.lua</source>
+      </version>
     </reapack>
   </category>
   <category name="Items Editing">
@@ -247,6 +252,9 @@
       <version name="1.0.0" author="Ed Kashinsky" time="2022-05-30T09:42:49Z">
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Items%20Editing/ek_Clear%20pitch%20or%20rate%20for%20selected%20items.lua</source>
       </version>
+      <version name="1.0.1" author="Ed Kashinsky" time="2022-10-09T22:54:02Z">
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d069a7ec585981ae2bc3c50f2ed73f8682875b8f/Items%20Editing/ek_Clear%20pitch%20or%20rate%20for%20selected%20items.lua</source>
+      </version>
     </reapack>
     <reapack name="ek_Create crossfade on edges of items.lua" type="script" desc="ek_Create crossfade on edges of items">
       <metadata>
@@ -289,6 +297,10 @@
         <changelog><![CDATA[- Added core functions]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Items%20Editing/ek_Decrease%20pitch%20or%20rate%20for%20selected%20items.lua</source>
       </version>
+      <version name="1.0.2" author="Ed Kashinsky" time="2022-10-09T22:54:02Z">
+        <changelog><![CDATA[- Added core functions]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d069a7ec585981ae2bc3c50f2ed73f8682875b8f/Items%20Editing/ek_Decrease%20pitch%20or%20rate%20for%20selected%20items.lua</source>
+      </version>
     </reapack>
     <reapack name="ek_Increase pitch or rate for selected items.lua" type="script" desc="ek_Increase pitch or rate for selected items">
       <metadata>
@@ -309,6 +321,10 @@
       <version name="1.0.1" author="Ed Kashinsky" time="2022-05-31T08:06:26Z">
         <changelog><![CDATA[- Added core functions]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Items%20Editing/ek_Increase%20pitch%20or%20rate%20for%20selected%20items.lua</source>
+      </version>
+      <version name="1.0.2" author="Ed Kashinsky" time="2022-10-09T22:54:02Z">
+        <changelog><![CDATA[- Added core functions]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d069a7ec585981ae2bc3c50f2ed73f8682875b8f/Items%20Editing/ek_Increase%20pitch%20or%20rate%20for%20selected%20items.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Pin selected items at markers started from.lua" type="script" desc="ek_Pin selected items at markers started from">
@@ -333,6 +349,20 @@
         <changelog><![CDATA[- Small fixes
 - GUI updated to ReaImGui]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/b8e4a77e39cddbe42c40c2cb2e95c28b36c19e42/Items%20Editing/ek_Pin%20selected%20items%20at%20markers%20started%20from.lua</source>
+      </version>
+    </reapack>
+    <reapack name="ek_Separated actions for Media item in Mouse modifiers.lua" type="script" desc="ek_Separated actions for Media item in Mouse modifiers">
+      <metadata>
+        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \ql \f0 \sa180 \li0 \fi0 This script gives opportunity to attach 2 different actions on Media item context in Mouse modifiers - when we click on header of media item and part between header and middle of it. For installation open "Mouse Modifiers" preferences, find "Media item" context and select this script in any section. Also you can copy this script and use it in different hotkey-sections and actions.\par}
+}
+]]></description>
+      </metadata>
+      <version name="1.0.0" author="Ed Kashinsky" time="2022-10-09T22:54:02Z">
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d069a7ec585981ae2bc3c50f2ed73f8682875b8f/Items%20Editing/ek_Separated%20actions%20for%20Media%20item%20in%20Mouse%20modifiers.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Switch to next pitch mode for selected items.lua" type="script" desc="ek_Switch to next pitch mode for selected items">
@@ -556,6 +586,34 @@
       <version name="1.0.0" author="Ed Kashinsky" time="2022-05-30T09:42:49Z">
         <changelog><![CDATA[- Small fixes]]></changelog>
         <source main="midi_editor">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Navigation/ek_Move%20cursor%20or%20selected%20MIDI%20notes%20right%20by%20grid.lua</source>
+      </version>
+    </reapack>
+    <reapack name="ek_Move cursor to start of item under mouse.lua" type="script" desc="ek_Move cursor to start of item under mouse">
+      <metadata>
+        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \ql \f0 \sa180 \li0 \fi0 It just moves edit cursor to start of selected item\par}
+}
+]]></description>
+      </metadata>
+      <version name="1.0.0" author="Ed Kashinsky" time="2022-10-09T22:54:02Z">
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d069a7ec585981ae2bc3c50f2ed73f8682875b8f/Navigation/ek_Move%20cursor%20to%20start%20of%20item%20under%20mouse.lua</source>
+      </version>
+    </reapack>
+    <reapack name="ek_Select items from selected to mouse cursor.lua" type="script" desc="ek_Select items from selected to mouse cursor">
+      <metadata>
+        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \ql \f0 \sa180 \li0 \fi0 This script extends selection of items from selected to mouse cursor. As usual this action attaches in mouse modifiers on media item section\par}
+}
+]]></description>
+      </metadata>
+      <version name="1.0.0" author="Ed Kashinsky" time="2022-10-09T22:54:02Z">
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d069a7ec585981ae2bc3c50f2ed73f8682875b8f/Navigation/ek_Select%20items%20from%20selected%20to%20mouse%20cursor.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Select next non-tiny track.lua" type="script" desc="ek_Select next non-tiny track">
