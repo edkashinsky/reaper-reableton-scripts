@@ -1,5 +1,5 @@
 -- @description ek_Decrease pitch or rate for selected items
--- @version 1.0.1
+-- @version 1.0.2
 -- @author Ed Kashinsky
 -- @about
 --   This script decreases pitch or rate of selected items depending on "Preserve Pitch" option.
@@ -31,67 +31,21 @@ end
 reaper.Undo_BeginBlock()
 
 local proj = 0
-local adding = 1
+local delta = 1
 
 -- ctrl/cmd is pressed (smoother changes)
 if reaper.JS_Mouse_GetState(4) > 0 then
-  adding = 0.1
+	delta = 0.1
 end
-
-local semiFactor = 2 ^ (1 / 12) -- Rate: 2.0 = Pitch * 12
-local curSemiFactor = 2 ^ ((1 / 12) * adding)
 
 for i = 0, reaper.CountSelectedMediaItems(proj) - 1 do
 	local item = reaper.GetSelectedMediaItem(proj, i)
 	local takeInd = reaper.GetMediaItemInfo_Value(item, "I_CURTAKE")
 
 	local itemTake = reaper.GetMediaItemTake(item, takeInd)
-	
-	if reaper.TakeIsMIDI(itemTake) then
-		local retval, notes = reaper.MIDI_CountEvts(itemTake)
-		
-		-- decrease pitch for every note
-		if retval then
-			for j = 0, notes - 1 do
-				local retval, sel, muted, startppqpos, endppqpos, chan, pitch = reaper.MIDI_GetNote(itemTake, j)
-		
-				pitch = pitch - 1
-				reaper.MIDI_SetNote(itemTake, j, sel, muted, startppqpos, endppqpos, chan, pitch)
+	local mode = reaper.GetMediaItemTakeInfo_Value(itemTake, "B_PPITCH")
 
-				ShowPitchTooltip(pitch)
-			end
-		end
-	else
-		local mode = reaper.GetMediaItemTakeInfo_Value(itemTake, "B_PPITCH")
-		
-		if mode == 1 then
-			-- decrease pitch
-			local pitch = reaper.GetMediaItemTakeInfo_Value(itemTake, "D_PITCH")
-			pitch = pitch - adding
-			
-			reaper.SetMediaItemTakeInfo_Value(itemTake, "D_PITCH", pitch)
-			
-			if i == 0 then
-				ShowPitchTooltip(pitch)
-			end
-		else
-			-- decrease rate
-			local rate = reaper.GetMediaItemTakeInfo_Value(itemTake, "D_PLAYRATE")
-			rate = rate / curSemiFactor
-			
-			reaper.SetMediaItemTakeInfo_Value(itemTake, "D_PLAYRATE", rate)
-			
-			local length = reaper.GetMediaItemInfo_Value(item, "D_LENGTH")
-			reaper.SetMediaItemInfo_Value(item, "D_LENGTH", length * curSemiFactor)
-			
-			if i == 0 then
-				local semitones = round(math.log(rate, semiFactor), 1)
-				ShowPitchTooltip(semitones)
-			end
-		end
-	end
-	
-	reaper.UpdateArrange()
+	changePitchForTake(itemTake, delta, mode == 1, false)
 end
 
 reaper.Undo_EndBlock("Decrease Pitch or Rate", -1)

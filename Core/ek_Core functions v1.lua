@@ -28,7 +28,7 @@ local ext_key_global = "global_action_enabled"
 local last_grouped_docker_window_key = "last_grouped_docker_window"
 local opened_grouped_docker_window_key = "opened_grouped_docker_window"
 
-local retval, dpi = reaper.ThemeLayout_GetLayout("tcp", -3)
+local _, dpi = reaper.ThemeLayout_GetLayout("tcp", -3)
 if reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32" then
 	gfx.ext_retina = dpi >= "512" and 1 or 0
 else
@@ -49,7 +49,10 @@ function Log(msg, level, param)
 		if type(msg) == 'table' then msg = serializeTable(msg) end
 	end
 
-	if msg then reaper.ShowConsoleMsg(msg .. '\n') end
+	if msg then
+		reaper.ShowConsoleMsg(msg)
+		reaper.ShowConsoleMsg('\n')
+	end
 end
 
 function EK_ShowTooltip(fmt)
@@ -78,7 +81,10 @@ function EK_GetExtState(key, default)
 end
 
 function EK_SetExtState(key, value)
+	if not key then return end
+
 	if type(value) == 'boolean' then value = value and 'true' or 'false' end
+	if not value then value = "" end
 
 	reaper.SetExtState(ext_key_prefix, key, value, true)
 end
@@ -210,9 +216,6 @@ function EK_GetPitchModeBySubMode(id)
 end
 
 function EK_StoreLastGroupedDockerWindow(sectionId, commandId, actionId)
-	-- EK_SetExtState("docker_current_tab", "")
-	-- EK_SetExtState("docker_opened_tabs", "")
-
 	local id = sectionId .. delRow .. commandId .. delRow .. actionId
 	local isFind = false
 	local open_windows = EK_GetExtState(opened_grouped_docker_window_key)
@@ -273,14 +276,38 @@ function EK_ToggleLastGroupedDockerWindow()
 		newState = 1
 	end
 	
-	Log("=== Toggle last docker window ===")
-	Log("last grouped docker wnd: " .. last_window)
-	Log("opened grouped docker wnd: " .. open_windows)
-	Log(sectionId .. " " .. commandId .. " " .. newState)
+	Log("=== Toggle last docker window ===", ek_log_levels.Warning)
+	Log("last grouped docker wnd: " .. last_window, ek_log_levels.Warning)
+	Log("opened grouped docker wnd: " .. open_windows, ek_log_levels.Warning)
+	Log(sectionId .. " " .. commandId .. " " .. newState, ek_log_levels.Warning)
 	
 	reaper.Main_OnCommand(actionId, 0)
 	reaper.SetToggleCommandState(sectionId, commandId, newState)
 	reaper.RefreshToolbar2(sectionId, commandId)
+end
+
+function EK_SyncLastGroupedDockerWindows()
+	-- close others tabs --
+	local open_windows = EK_GetExtState(opened_grouped_docker_window_key)
+	local open_windows_arr = split(open_windows, delCol)
+	local isAnyWindowOpened = false
+
+	for i = 1, #open_windows_arr do
+		local id = split(open_windows_arr[i], delRow)
+
+		local state = reaper.GetToggleCommandStateEx(id[1], id[3])
+		if state == 1 then
+			reaper.SetToggleCommandState(id[1], id[2], 1)
+			reaper.RefreshToolbar2(id[1], id[2])
+			isAnyWindowOpened = true
+		end
+	end
+
+
+	--if not isAnyWindowOpened then
+	--	EK_SetExtState(last_grouped_docker_window_key, "")
+	--	EK_SetExtState(opened_grouped_docker_window_key, "")
+	--end
 end
 
 function split(str, pat)
@@ -374,4 +401,118 @@ function modifyTime(dt, mdParams)
 		min = mdParams.min ~= nil and mdParams.min or dt.min,
 		sec = 0
 	})
+end
+
+function changePitchForTake(take, delta, preservePitch, isIncreasing)
+	if not take then return end
+
+	local semiFactor = 2 ^ (1 / 12) -- Rate: 2.0 = Pitch * 12
+	local curSemiFactor = 2 ^ ((1 / 12) * delta)
+
+	if reaper.TakeIsMIDI(take) then
+		local retval, notes = reaper.MIDI_CountEvts(take)
+
+		-- increase pitch for every note
+		if retval then
+			for j = 0, notes - 1 do
+				local _, sel, muted, startppqpos, endppqpos, chan, pitch = reaper.MIDI_GetNote(take, j)
+
+				pitch = isIncreasing and pitch + 1 or pitch - 1
+
+				reaper.MIDI_SetNote(take, j, sel, muted, startppqpos, endppqpos, chan, pitch)
+				ShowPitchTooltip(pitch)
+			end
+		end
+	else
+		if preservePitch then
+			-- increase pitch
+			local pitch = reaper.GetMediaItemTakeInfo_Value(take, "D_PITCH")
+
+			pitch = isIncreasing and pitch + delta or pitch - delta
+
+			reaper.SetMediaItemTakeInfo_Value(take, "D_PITCH", pitch)
+
+			ShowPitchTooltip(pitch)
+		else
+			-- increase rate
+			local rate = reaper.GetMediaItemTakeInfo_Value(take, "D_PLAYRATE")
+
+			rate = isIncreasing and rate * curSemiFactor or rate / curSemiFactor
+
+			reaper.SetMediaItemTakeInfo_Value(take, "D_PLAYRATE", rate)
+
+			local item = reaper.GetMediaItemTakeInfo_Value(take, "P_ITEM")
+			local length = reaper.GetMediaItemInfo_Value(item, "D_LENGTH")
+
+			length = isIncreasing and length / curSemiFactor or length * curSemiFactor
+
+			reaper.SetMediaItemInfo_Value(item, "D_LENGTH", length)
+
+			local semitones = round(math.log(rate, semiFactor), 1)
+			ShowPitchTooltip(semitones)
+		end
+	end
+
+	reaper.UpdateArrange()
+end
+
+function clearPitchForTake(take)
+	if not take then return end
+
+	local semiFactor = 2 ^ (1/12) -- Rate: 2.0 = Pitch * 12
+
+	if reaper.TakeIsMIDI(take) then
+		-- do nothing
+	else
+		local mode = reaper.GetMediaItemTakeInfo_Value(take, "B_PPITCH")
+
+		if mode == 1 then
+			-- clear pitch
+			reaper.SetMediaItemTakeInfo_Value(take, "D_PITCH", 0)
+			reaper.SetMediaItemTakeInfo_Value(take, "D_PLAYRATE", 1)
+		else
+			-- clear rate
+			local rate = reaper.GetMediaItemTakeInfo_Value(take, "D_PLAYRATE")
+
+			reaper.SetMediaItemTakeInfo_Value(take, "D_PITCH", 0)
+			reaper.SetMediaItemTakeInfo_Value(take, "D_PLAYRATE", 1)
+
+			local item = reaper.GetMediaItemTakeInfo_Value(take, "P_ITEM")
+			local length = reaper.GetMediaItemInfo_Value(item, "D_LENGTH")
+			local semitones = math.log(rate, semiFactor)
+
+			if semitones >= 0 then
+				length = length * (semiFactor ^ semitones)
+			else
+				length = length / (semiFactor ^ math.abs(semitones))
+			end
+
+			reaper.SetMediaItemInfo_Value(item, "D_LENGTH", length)
+		end
+	end
+
+	reaper.UpdateArrange()
+end
+
+function EK_AskUser(title, fields)
+	local labels = ""
+	local values = ""
+
+	for i = 1, #fields do
+		if fields[i][1] then labels = labels .. fields[i][1] end
+		if fields[i][2] then values = values .. fields[i][2] end
+
+		if i < #fields then
+			if fields[i][1] then labels = labels .. "," end
+			if fields[i][2] then values = values .. "," end
+		end
+	end
+
+	local is_done, result = reaper.GetUserInputs(title, #fields, labels, values)
+
+	if is_done then
+		return split(result, ",")
+	else
+		return
+	end
 end

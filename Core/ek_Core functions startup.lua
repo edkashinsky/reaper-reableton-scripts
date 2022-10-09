@@ -642,3 +642,29 @@ function GA_ObserveDarkMode(changes, values)
 		end
 	end
 end
+
+function getDfiItem()
+	local guid = EK_GetExtState("delayed_first_selected_item")
+
+	if guid then
+		for i = 0, reaper.CountMediaItems(proj) - 1 do
+			local item = reaper.GetMediaItem(proj, i)
+			local _, id = reaper.GetSetMediaItemInfo_String(item, "GUID", "", false)
+			if guid == id then
+				return item
+			end
+		end
+	else
+		return nil
+	end
+end
+
+function setDfiItem(item)
+	local guid = ""
+
+	if item then
+		_, guid = reaper.GetSetMediaItemInfo_String(item, "GUID", "", false)
+	end
+
+	EK_SetExtState("delayed_first_selected_item", guid)
+end

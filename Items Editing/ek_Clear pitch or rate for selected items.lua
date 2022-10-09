@@ -1,13 +1,28 @@
 -- @description ek_Clear pitch or rate for selected items
--- @version 1.0.0
+-- @version 1.0.1
 -- @author Ed Kashinsky
 -- @about
 --   This script resets any pitch, rate and length info for selected items and makes as default
 
+function CoreFunctionsLoaded()
+	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
+	local root_path = debug.getinfo(1, 'S').source:sub(2, -5):match("(.*" .. sep .. ")")
+	local script_path = root_path .. ".." .. sep .. "Core" .. sep .. "ek_Core functions.lua"
+	local file = io.open(script_path, 'r')
+
+	if file then file:close() dofile(script_path) else return nil end
+	return not not _G["EK_HasExtState"]
+end
+
+local loaded = CoreFunctionsLoaded()
+if not loaded then
+	if loaded == nil then reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0) end
+	return
+end
+
 reaper.Undo_BeginBlock()
 
-proj = 0
-semiFactor = 2 ^ (1/12) -- Rate: 2.0 = Pitch * 12
+local proj = 0
 
 for i = 0, reaper.CountSelectedMediaItems(proj) - 1 do
 	local item = reaper.GetSelectedMediaItem(proj, i)
@@ -15,36 +30,7 @@ for i = 0, reaper.CountSelectedMediaItems(proj) - 1 do
 
 	local itemTake = reaper.GetMediaItemTake(item, takeInd)
 
-	if reaper.TakeIsMIDI(itemTake) then
-		-- do nothing
-	else
-		local mode = reaper.GetMediaItemTakeInfo_Value(itemTake, "B_PPITCH")
-	
-		if mode == 1 then
-			-- clear pitch
-			reaper.SetMediaItemTakeInfo_Value(itemTake, "D_PITCH", 0)
-			reaper.SetMediaItemTakeInfo_Value(itemTake, "D_PLAYRATE", 1)
-		else
-			-- clear rate
-			local rate = reaper.GetMediaItemTakeInfo_Value(itemTake, "D_PLAYRATE")
-			
-			reaper.SetMediaItemTakeInfo_Value(itemTake, "D_PITCH", 0)
-			reaper.SetMediaItemTakeInfo_Value(itemTake, "D_PLAYRATE", 1)
-		
-			local length = reaper.GetMediaItemInfo_Value(item, "D_LENGTH")
-			local semitones = math.log(rate, semiFactor)
-			
-			if semitones >= 0 then
-				length = length * (semiFactor ^ semitones)
-			else
-				length = length / (semiFactor ^ math.abs(semitones))
-			end
-			
-			reaper.SetMediaItemInfo_Value(item, "D_LENGTH", length)
-		end
-	end
-	
-	reaper.UpdateArrange()
+	clearPitchForTake(itemTake)
 end
 
 reaper.Undo_EndBlock("Clear pitch or rate", -1)

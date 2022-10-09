@@ -1,5 +1,5 @@
 -- @description ek_Global startup action
--- @version 1.0.9
+-- @version 1.0.10
 -- @author Ed Kashinsky
 -- @about
 --   This is startup action brings some ableton-like features in realtime. You can control any option by 'ek_Global startup action settings' script.
@@ -13,7 +13,7 @@
 --      5. Restart Reaper
 --      6. Open 'ek_Global startup action settings' for customize options
 -- @changelog
---   - retina detection fix
+--   - added observing for script "ek_Select items from selected to mouse cursor"
 -- @provides
 --   ek_Core functions startup.lua
 
@@ -44,14 +44,39 @@ local cached_changes = {
 	first_selected_item = nil,
 }
 
-function isChanged(value, param) 
+local dfi_time = reaper.time_precise()
+local dfi_time_delay = 0.2
+local dfi_item = nil
+local dfi_is_executed = false
+local function updateDfiItem()
+	-- delayed mode
+	if reaper.time_precise() < dfi_time + dfi_time_delay then
+		reaper.defer(updateDfiItem)
+		return
+	end
+
+	setDfiItem(dfi_item)
+	dfi_is_executed = false
+end
+
+local function isChanged(value, param)
 	local cached = cached_changes[param]
 	cached_changes[param] = value
+
+	if param == "first_selected_item" and dfi_item ~= value then
+		dfi_item = value
+
+		if not dfi_is_executed then
+			dfi_is_executed = true
+			dfi_time = reaper.time_precise()
+			updateDfiItem()
+		end
+	end
 
 	return value ~= cached
 end
 
-function observeGlobalAction()
+local function observeGlobalAction()
 	local something_is_changed = false
 	local changes = {
 		play_state = isChanged(reaper.GetPlayState(), "play_state"),
@@ -113,6 +138,10 @@ function observeGlobalAction()
 		GA_ObserveDarkMode(changes, cached_changes)
 	end
 
+	if changes.play_state then
+		EK_SyncLastGroupedDockerWindows()
+	end
+
 	reaper.defer(observeGlobalAction)
 end
 
@@ -125,3 +154,4 @@ if command ~= 0 then
 end
 
 EK_SetIsGlobalActionEnabled()
+EK_SyncLastGroupedDockerWindows()

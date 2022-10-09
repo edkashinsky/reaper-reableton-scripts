@@ -1,9 +1,9 @@
 -- @description ek_Core functions
 -- @author Ed Kashinsky
 -- @about Base functions used by ek-scripts.
--- @version 1.0.7
+-- @version 1.0.8
 -- @provides
---   added some core functions
+--   added some useful functions
 -- @changelog
 --    - retina detection fix
 
