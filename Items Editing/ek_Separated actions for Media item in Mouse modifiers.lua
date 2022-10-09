@@ -1,5 +1,5 @@
 -- @description ek_Separated actions for Media item in Mouse modifiers
--- @version 1.0.0
+-- @version 1.0.1
 -- @author Ed Kashinsky
 -- @about
 --   This script gives opportunity to attach 2 different actions on Media item context in Mouse modifiers - when we click on header of media item and part between header and middle of it.
@@ -43,6 +43,8 @@ local _, ry = reaper.JS_Window_ScreenToClient(ArrangeHwnd, x, y)
 
 local headerHeight = 20
 local item, _ = reaper.GetItemFromPoint(x, y, true)
+
+if gfx.ext_retina == 1 then headerHeight = headerHeight * 2 end
 
 if (not header_cmd_id and not item_cmd_id) or not item then
 	local isAnyActionSet = false
