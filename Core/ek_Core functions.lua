@@ -1,11 +1,12 @@
 -- @description ek_Core functions
 -- @author Ed Kashinsky
 -- @about Base functions used by ek-scripts.
--- @version 1.0.8
+-- @version 1.0.9
 -- @provides
---   added some useful functions
+--   ek_Core functions v1.lua
+--   ek_Core functions GUI.lua
 -- @changelog
---    - retina detection fix
+--    added some useful functions
 
 function CoreLoadFunctions()
     local info = debug.getinfo(1,'S');
