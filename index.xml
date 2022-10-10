@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="888292cf1116128262a85f5edb4b401d337e855b">
+<index version="1" name="Reableton Scripts" commit="ab272e2a7ea966693ea0a23b7e9c6b2413898205">
   <category name="ColorThemes">
     <reapack name="Flat Madness Bright Remix.theme" type="theme" desc="Flat Madness Bright Remix">
       <metadata>
@@ -372,6 +372,9 @@
       </version>
       <version name="1.0.1" author="Ed Kashinsky" time="2022-10-09T23:10:47Z">
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/888292cf1116128262a85f5edb4b401d337e855b/Items%20Editing/ek_Separated%20actions%20for%20Media%20item%20in%20Mouse%20modifiers.lua</source>
+      </version>
+      <version name="1.0.2" author="Ed Kashinsky" time="2022-10-10T09:08:14Z">
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/ab272e2a7ea966693ea0a23b7e9c6b2413898205/Items%20Editing/ek_Separated%20actions%20for%20Media%20item%20in%20Mouse%20modifiers.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Switch to next pitch mode for selected items.lua" type="script" desc="ek_Switch to next pitch mode for selected items">
