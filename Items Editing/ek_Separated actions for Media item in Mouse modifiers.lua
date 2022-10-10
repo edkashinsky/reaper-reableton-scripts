@@ -1,5 +1,5 @@
 -- @description ek_Separated actions for Media item in Mouse modifiers
--- @version 1.0.1
+-- @version 1.0.2
 -- @author Ed Kashinsky
 -- @about
 --   This script gives opportunity to attach 2 different actions on Media item context in Mouse modifiers - when we click on header of media item and part between header and middle of it.
@@ -53,18 +53,24 @@ if (not header_cmd_id and not item_cmd_id) or not item then
 		{"CmdID for top of media item", item_cmd_id}
 	})
 
-	if result and result[1] and reaper.NamedCommandLookup(result[1]) then
-		EK_SetExtState(hKey_id .. cmdID, result[1])
-		isAnyActionSet = true
-	end
+	if result then
+		if result[1] and reaper.NamedCommandLookup(result[1]) then
+			EK_SetExtState(hKey_id .. cmdID, result[1])
+			isAnyActionSet = true
+		else
+			EK_DeleteExtState(hKey_id .. cmdID)
+		end
 
-	if result and result[2] and reaper.NamedCommandLookup(result[2]) then
-		EK_SetExtState(tKey_id .. cmdID, result[2])
-		isAnyActionSet = true
-	end
+		if result[2] and reaper.NamedCommandLookup(result[2]) then
+			EK_SetExtState(tKey_id .. cmdID, result[2])
+			isAnyActionSet = true
+		else
+			EK_DeleteExtState(tKey_id .. cmdID)
+		end
 
-	if isAnyActionSet then
-		reaper.MB("Action(s) has set, please use this action in Mouse modifiers on \"Media item\" context. If you want to change settings, execute this script in action list.", "Separated actions for top of item", 0)
+		if isAnyActionSet then
+			reaper.MB("Action(s) has set, please use this action in Mouse modifiers on \"Media item\" context. If you want to change settings, execute this script in action list.", "Separated actions for top of item", 0)
+		end
 	end
 
 	return
