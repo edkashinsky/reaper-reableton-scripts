@@ -1,6 +1,6 @@
 # Reableton - scripts for Reaper
 
-This scripts makes Repear a bit close to Ableton workflow. Also it brings useful things to save time.
+This scripts makes Reaper a bit close to Ableton workflow. Also it brings useful things to save time.
 
 ## Installation
 
