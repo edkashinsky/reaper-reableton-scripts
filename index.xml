@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="ab272e2a7ea966693ea0a23b7e9c6b2413898205">
+<index version="1" name="Reableton Scripts" commit="09aa4a206a93c1c3f85a14e6a49d939fad849991">
   <category name="ColorThemes">
     <reapack name="Flat Madness Bright Remix.theme" type="theme" desc="Flat Madness Bright Remix">
       <metadata>
@@ -99,6 +99,12 @@
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d6b17c924033a576c01810875b64e2f0eb842806/Core/ek_Core%20functions.lua</source>
         <source file="ek_Core functions v1.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d6b17c924033a576c01810875b64e2f0eb842806/Core/ek_Core%20functions%20v1.lua</source>
         <source file="ek_Core functions GUI.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d6b17c924033a576c01810875b64e2f0eb842806/Core/ek_Core%20functions%20GUI.lua</source>
+      </version>
+      <version name="1.0.10" author="Ed Kashinsky" time="2022-10-12T19:38:12Z">
+        <changelog><![CDATA[improved stability]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/09aa4a206a93c1c3f85a14e6a49d939fad849991/Core/ek_Core%20functions.lua</source>
+        <source file="ek_Core functions v1.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/09aa4a206a93c1c3f85a14e6a49d939fad849991/Core/ek_Core%20functions%20v1.lua</source>
+        <source file="ek_Core functions GUI.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/09aa4a206a93c1c3f85a14e6a49d939fad849991/Core/ek_Core%20functions%20GUI.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Global startup action settings.lua" type="script" desc="ek_Global startup action settings">
@@ -290,8 +296,10 @@
 
 {\pard \ql \f0 \sa180 \li0 \fi0 This script decreases pitch or rate of selected items depending on "Preserve Pitch" option.\par}
 {\pard \ql \f0 \sa180 \li0 \fi0 If option is on, script decreases pitch and change rate in other case. Also when rate is changing, length is changing too (like in Ableton)\par}
-{\pard \ql \f0 \sa180 \li0 \fi0 This script normally subtracts 1 semitone, but if you hold ctrl/cmd it subtracts 0.1 semitone\par}
-{\pard \ql \f0 \sa180 \li0 \fi0 Works with 'ek_Increase pitch or rate for selected items'\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 If you hold special keys with mouse click, you get additional opportunities\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Hotkeys:\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab CMD/CTRL: Adjusting by 0.1 semitone (and 1 semitone without hotkey)\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab SHIFT: You can enter absolute value for pitch\sa180\par}
 }
 ]]></description>
       </metadata>
@@ -307,6 +315,10 @@
         <changelog><![CDATA[- Added core functions]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d069a7ec585981ae2bc3c50f2ed73f8682875b8f/Items%20Editing/ek_Decrease%20pitch%20or%20rate%20for%20selected%20items.lua</source>
       </version>
+      <version name="1.0.3" author="Ed Kashinsky" time="2022-10-12T19:38:12Z">
+        <changelog><![CDATA[- Now you can enter absolute pitch value by clicking on button + pressing Shift key. Also press Cmd/Ctrl for smoothing changes]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/09aa4a206a93c1c3f85a14e6a49d939fad849991/Items%20Editing/ek_Decrease%20pitch%20or%20rate%20for%20selected%20items.lua</source>
+      </version>
     </reapack>
     <reapack name="ek_Increase pitch or rate for selected items.lua" type="script" desc="ek_Increase pitch or rate for selected items">
       <metadata>
@@ -316,7 +328,10 @@
 
 {\pard \ql \f0 \sa180 \li0 \fi0 This script increases pitch or rate of selected items depending on "Preserve Pitch" option.\par}
 {\pard \ql \f0 \sa180 \li0 \fi0 If option is on, script increases pitch and change rate in other case. Also when rate is changing, length is changing too (like in Ableton)\par}
-{\pard \ql \f0 \sa180 \li0 \fi0 This script normally adds 1 semitone, but if you hold ctrl/cmd it adds 0.1 semitone\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 If you hold special keys with mouse click, you get additional opportunities\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Hotkeys:\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab CMD/CTRL: Adjusting by 0.1 semitone (and 1 semitone without hotkey)\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab SHIFT: You can enter absolute value for pitch\sa180\par}
 }
 ]]></description>
       </metadata>
@@ -331,6 +346,10 @@
       <version name="1.0.2" author="Ed Kashinsky" time="2022-10-09T22:54:02Z">
         <changelog><![CDATA[- Added core functions]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d069a7ec585981ae2bc3c50f2ed73f8682875b8f/Items%20Editing/ek_Increase%20pitch%20or%20rate%20for%20selected%20items.lua</source>
+      </version>
+      <version name="1.0.3" author="Ed Kashinsky" time="2022-10-12T19:38:12Z">
+        <changelog><![CDATA[- Now you can enter absolute pitch value by clicking on button + pressing Shift key. Also press Cmd/Ctrl for smoothing changes]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/09aa4a206a93c1c3f85a14e6a49d939fad849991/Items%20Editing/ek_Increase%20pitch%20or%20rate%20for%20selected%20items.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Pin selected items at markers started from.lua" type="script" desc="ek_Pin selected items at markers started from">
@@ -375,6 +394,9 @@
       </version>
       <version name="1.0.2" author="Ed Kashinsky" time="2022-10-10T09:08:14Z">
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/ab272e2a7ea966693ea0a23b7e9c6b2413898205/Items%20Editing/ek_Separated%20actions%20for%20Media%20item%20in%20Mouse%20modifiers.lua</source>
+      </version>
+      <version name="1.0.3" author="Ed Kashinsky" time="2022-10-12T19:38:12Z">
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/09aa4a206a93c1c3f85a14e6a49d939fad849991/Items%20Editing/ek_Separated%20actions%20for%20Media%20item%20in%20Mouse%20modifiers.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Switch to next pitch mode for selected items.lua" type="script" desc="ek_Switch to next pitch mode for selected items">
@@ -491,6 +513,11 @@
       <version name="1.0.1" author="Ed Kashinsky" time="2022-05-31T08:06:26Z">
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Items%20Editing/ek_Trim%20silence%20at%20the%20edges%20of%20selected%20items.lua</source>
         <source file="../Core/ek_Triming silence edges functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Core/ek_Triming%20silence%20edges%20functions.lua</source>
+      </version>
+      <version name="1.1.0" author="Ed Kashinsky" time="2022-10-12T19:38:12Z">
+        <changelog><![CDATA[- Added visual preview]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/09aa4a206a93c1c3f85a14e6a49d939fad849991/Items%20Editing/ek_Trim%20silence%20at%20the%20edges%20of%20selected%20items.lua</source>
+        <source file="../Core/ek_Triming silence edges functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/09aa4a206a93c1c3f85a14e6a49d939fad849991/Core/ek_Triming%20silence%20edges%20functions.lua</source>
       </version>
     </reapack>
   </category>
