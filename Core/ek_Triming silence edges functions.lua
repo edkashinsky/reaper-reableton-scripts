@@ -137,7 +137,7 @@ function getStartPositionLouderThenThreshold(take, threshold)
   
   r.DestroyAudioAccessor(aa)
   
-  Log("Start point detected: " .. round(peak, 2) .. "db " .. round(peakTime, 3) .. "s")
+  Log("Start point detected: " .. round(peak, 2) .. "db " .. round(peakTime, 3) .. "s", ek_log_levels.Notice)
   
   return peakTime
 end
@@ -220,7 +220,7 @@ function getEndPositionLouderThenThreshold(take, threshold)
   
   r.DestroyAudioAccessor(aa)
   
-  Log("End point detected: " .. round(peak, 2) .. "db " .. round(peakTime, 3) .. "s")
+  Log("End point detected: " .. round(peak, 2) .. "db " .. round(peakTime, 3) .. "s", ek_log_levels.Notice)
   
   return peakTime
 end

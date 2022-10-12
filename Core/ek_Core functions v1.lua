@@ -403,59 +403,6 @@ function modifyTime(dt, mdParams)
 	})
 end
 
-function changePitchForTake(take, delta, preservePitch, isIncreasing)
-	if not take then return end
-
-	local semiFactor = 2 ^ (1 / 12) -- Rate: 2.0 = Pitch * 12
-	local curSemiFactor = 2 ^ ((1 / 12) * delta)
-
-	if reaper.TakeIsMIDI(take) then
-		local retval, notes = reaper.MIDI_CountEvts(take)
-
-		-- increase pitch for every note
-		if retval then
-			for j = 0, notes - 1 do
-				local _, sel, muted, startppqpos, endppqpos, chan, pitch = reaper.MIDI_GetNote(take, j)
-
-				pitch = isIncreasing and pitch + 1 or pitch - 1
-
-				reaper.MIDI_SetNote(take, j, sel, muted, startppqpos, endppqpos, chan, pitch)
-				ShowPitchTooltip(pitch)
-			end
-		end
-	else
-		if preservePitch then
-			-- increase pitch
-			local pitch = reaper.GetMediaItemTakeInfo_Value(take, "D_PITCH")
-
-			pitch = isIncreasing and pitch + delta or pitch - delta
-
-			reaper.SetMediaItemTakeInfo_Value(take, "D_PITCH", pitch)
-
-			ShowPitchTooltip(pitch)
-		else
-			-- increase rate
-			local rate = reaper.GetMediaItemTakeInfo_Value(take, "D_PLAYRATE")
-
-			rate = isIncreasing and rate * curSemiFactor or rate / curSemiFactor
-
-			reaper.SetMediaItemTakeInfo_Value(take, "D_PLAYRATE", rate)
-
-			local item = reaper.GetMediaItemTakeInfo_Value(take, "P_ITEM")
-			local length = reaper.GetMediaItemInfo_Value(item, "D_LENGTH")
-
-			length = isIncreasing and length / curSemiFactor or length * curSemiFactor
-
-			reaper.SetMediaItemInfo_Value(item, "D_LENGTH", length)
-
-			local semitones = round(math.log(rate, semiFactor), 1)
-			ShowPitchTooltip(semitones)
-		end
-	end
-
-	reaper.UpdateArrange()
-end
-
 function clearPitchForTake(take)
 	if not take then return end
 
@@ -494,6 +441,71 @@ function clearPitchForTake(take)
 	reaper.UpdateArrange()
 end
 
+function changePitchForTake(take, value, preservePitch, isDelta)
+	if not take then return end
+
+	local semiFactor = 2 ^ (1 / 12) -- Rate: 2.0 = Pitch * 12
+	local curSemiFactor = 2 ^ ((1 / 12) * math.abs(value))
+
+	if reaper.TakeIsMIDI(take) then
+		local retval, notes = reaper.MIDI_CountEvts(take)
+
+		-- increase pitch for every note
+		if retval then
+			for j = 0, notes - 1 do
+				local _, sel, muted, startppqpos, endppqpos, chan, pitch = reaper.MIDI_GetNote(take, j)
+
+				if isDelta then
+					pitch = value > 0 and pitch + 1 or pitch - 1
+				else
+					pitch = value
+				end
+
+				reaper.MIDI_SetNote(take, j, sel, muted, startppqpos, endppqpos, chan, pitch)
+				ShowPitchTooltip(pitch)
+			end
+		end
+	else
+		if preservePitch then
+			-- increase pitch
+			local pitch = reaper.GetMediaItemTakeInfo_Value(take, "D_PITCH")
+
+			if isDelta then
+				pitch = pitch + value
+			else
+				pitch = value
+			end
+
+			reaper.SetMediaItemTakeInfo_Value(take, "D_PITCH", pitch)
+
+			ShowPitchTooltip(pitch)
+		else
+			if not isDelta then
+				clearPitchForTake(take)
+			end
+
+			-- increase rate
+			local rate = reaper.GetMediaItemTakeInfo_Value(take, "D_PLAYRATE")
+
+			rate = value > 0 and rate * curSemiFactor or rate / curSemiFactor
+
+			reaper.SetMediaItemTakeInfo_Value(take, "D_PLAYRATE", rate)
+
+			local item = reaper.GetMediaItemTakeInfo_Value(take, "P_ITEM")
+			local length = reaper.GetMediaItemInfo_Value(item, "D_LENGTH")
+
+			length = value > 0 and length / curSemiFactor or length * curSemiFactor
+
+			reaper.SetMediaItemInfo_Value(item, "D_LENGTH", length)
+
+			local semitones = round(math.log(rate, semiFactor), 1)
+			ShowPitchTooltip(semitones)
+		end
+	end
+
+	reaper.UpdateArrange()
+end
+
 function EK_AskUser(title, fields)
 	local labels = ""
 	local values = ""
@@ -516,3 +528,15 @@ function EK_AskUser(title, fields)
 		return
 	end
 end
+
+local function getColor(color)
+	return (color[3] & 0xFF) | ((color[2] & 0xFF) << 8) | ((color[1] & 0xFF) << 16) | (0xFF << 24)
+end
+
+ek_colors = {
+	Red = getColor({ 255, 0, 0 }),
+	Green = getColor({ 0, 255, 0 }),
+	Blue = getColor({ 0, 0, 255 }),
+	White = getColor({ 255, 255, 255 }),
+}
+

@@ -1,16 +1,19 @@
 -- @description ek_Decrease pitch or rate for selected items
--- @version 1.0.2
+-- @version 1.0.3
 -- @author Ed Kashinsky
 -- @about
 --   This script decreases pitch or rate of selected items depending on "Preserve Pitch" option.
 --
 --   If option is on, script decreases pitch and change rate in other case. Also when rate is changing, length is changing too (like in Ableton)
 --
---   This script normally subtracts 1 semitone, but if you hold ctrl/cmd it subtracts 0.1 semitone
+--   If you hold special keys with mouse click, you get additional opportunities
 --
---   Works with 'ek_Increase pitch or rate for selected items'
+--   Hotkeys:
+--      - CMD/CTRL: Adjusting by 0.1 semitone (and 1 semitone without hotkey)
+--      - SHIFT: You can enter absolute value for pitch
+--
 -- @changelog
---   - Added core functions
+--   - Now you can enter absolute pitch value by clicking on button + pressing Shift key. Also press Cmd/Ctrl for smoothing changes
 
 function CoreFunctionsLoaded()
 	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
@@ -31,11 +34,27 @@ end
 reaper.Undo_BeginBlock()
 
 local proj = 0
-local delta = 1
+local delta = -1
+local isDelta = true
 
 -- ctrl/cmd is pressed (smoother changes)
 if reaper.JS_Mouse_GetState(4) > 0 then
-	delta = 0.1
+	delta = -0.1
+end
+
+-- Shift is pressed (enter value)
+if reaper.JS_Mouse_GetState(8) > 0 then
+	local result = EK_AskUser("Pitch Adjustment", {
+		{"Enter value for pitch (in semitones):", "" }
+	})
+
+	if not result or not result[1] then return end
+
+	delta = tonumber(result[1])
+	if not delta then return end
+
+	delta = -math.abs(delta)
+	isDelta = false
 end
 
 for i = 0, reaper.CountSelectedMediaItems(proj) - 1 do
@@ -45,7 +64,7 @@ for i = 0, reaper.CountSelectedMediaItems(proj) - 1 do
 	local itemTake = reaper.GetMediaItemTake(item, takeInd)
 	local mode = reaper.GetMediaItemTakeInfo_Value(itemTake, "B_PPITCH")
 
-	changePitchForTake(itemTake, delta, mode == 1, false)
+	changePitchForTake(itemTake, delta, mode == 1, isDelta)
 end
 
 reaper.Undo_EndBlock("Decrease Pitch or Rate", -1)
