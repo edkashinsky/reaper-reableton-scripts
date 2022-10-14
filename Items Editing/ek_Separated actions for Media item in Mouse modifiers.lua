@@ -1,9 +1,11 @@
 -- @description ek_Separated actions for Media item in Mouse modifiers
--- @version 1.0.3
+-- @version 1.0.4
 -- @author Ed Kashinsky
 -- @about
 --   This script gives opportunity to attach 2 different actions on Media item context in Mouse modifiers - when we click on header of media item and part between header and middle of it.
 --   For installation open "Mouse Modifiers" preferences, find "Media item" context and select this script in any section. Also you can copy this script and use it in different hotkey-sections and actions.
+-- @changelog
+--   Improved header position detect
 
 if not reaper.APIExists("JS_ReaScriptAPI_Version") then
 	local answer = reaper.MB("You have to install JS_ReaScriptAPI for this script to work. Would you like to open the relative web page in your browser?", "JS_ReaScriptAPI not installed", 4 )
@@ -42,10 +44,14 @@ local x, y = reaper.GetMousePosition()
 local _, ry = reaper.JS_Window_ScreenToClient(ArrangeHwnd, x, y)
 
 local headerHeight = 16
+local headerShowingLimit = 40
 local item, _ = reaper.GetItemFromPoint(x, y, true)
 local isSettingsNeeded = not item and reaper.JS_Window_GetFocus() ~= ArrangeHwnd
 
-if gfx.ext_retina == 1 then headerHeight = headerHeight * 2 end
+if gfx.ext_retina == 1 then
+	headerHeight = headerHeight * 2
+	headerShowingLimit = 70
+end
 
 if (not header_cmd_id and not item_cmd_id) or isSettingsNeeded then
 	local isAnyActionSet = false
@@ -80,7 +86,10 @@ end
 if not item then return end
 
 local track = reaper.GetMediaItem_Track(item)
-local track_y = reaper.GetMediaTrackInfo_Value(track, "I_TCPY") + headerHeight
+local track_height = reaper.GetMediaTrackInfo_Value(track, "I_TCPH")
+local track_y = reaper.GetMediaTrackInfo_Value(track, "I_TCPY")
+
+if track_height >= headerShowingLimit then track_y = track_y + headerHeight end
 
 if ry < track_y then
 	-- Clicked on header
