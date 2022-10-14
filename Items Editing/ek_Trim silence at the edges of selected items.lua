@@ -1,12 +1,12 @@
 -- @description ek_Trim silence edges for selected items
--- @version 1.1.0
+-- @version 1.1.1
 -- @author Ed Kashinsky
 -- @about
 --   This script helps to remove silence at the start and at the end of selected items by individual thresholds, pads and fades.
 --
 --   Also it provides UI for configuration
 -- @changelog
---   - Added visual preview
+--   - Small fixes
 -- @provides
 --   ../Core/ek_Triming silence edges functions.lua
 
@@ -33,8 +33,6 @@ end
 
 CoreFunctionsLoaded("ek_Triming silence edges functions.lua")
 
-if reaper.CountSelectedMediaItems(proj) == 0 then return end
-
 local p_l_threshold = getTsParamValue(tsParams.leading.threshold)
 local p_l_pad = getTsParamValue(tsParams.leading.pad)
 local p_l_fade = getTsParamValue(tsParams.leading.fade)
@@ -43,29 +41,33 @@ local p_t_pad = getTsParamValue(tsParams.trailing.pad)
 local p_t_fade = getTsParamValue(tsParams.trailing.fade)
 local p_preview = getTsParamValue(tsParams.preview_result)
 
-local cached_l_threshold, cached_p_threshold
-local cached_start_time, cached_end_time
+local cachedPositions = {
+    leading = {},
+    trailing = {},
+}
 
 local function getEdgePositionsByItem(item)
+    if not item then return end
+
     local take = reaper.GetActiveTake(item)
-    if take == nil then return end
+    local _, guid = reaper.GetSetMediaItemInfo_String(item, "GUID", "", false)
+
+    if not take or not guid then return end
 
     local startTime, endTime
 
-    if cached_l_threshold == p_l_threshold then
-        startTime = cached_start_time
+    if cachedPositions.leading[guid] and cachedPositions.leading[guid].threshold == p_l_threshold then
+        startTime = cachedPositions.leading[guid].position
     else
         startTime = getStartPositionLouderThenThreshold(take, p_l_threshold)
-        cached_start_time = startTime
-        cached_l_threshold = p_l_threshold
+        cachedPositions.leading[guid] = { threshold = p_l_threshold, position = startTime }
     end
 
-    if cached_p_threshold == p_t_threshold then
-        endTime = cached_end_time
+    if cachedPositions.trailing[guid] and cachedPositions.trailing[guid].threshold == p_t_threshold then
+        endTime = cachedPositions.trailing[guid].position
     else
         endTime = getEndPositionLouderThenThreshold(take, p_t_threshold)
-        cached_end_time = endTime
-        cached_p_threshold = p_t_threshold
+        cachedPositions.trailing[guid] = { threshold = p_t_threshold, position = endTime }
     end
 
     return startTime, endTime
@@ -130,116 +132,98 @@ local function preview_result()
     local zoom = reaper.GetHZoomLevel()
     local _, scrollposh = reaper.JS_Window_GetScrollInfo(ArrangeHwnd, "h")
 
-    for i = 0, reaper.CountSelectedMediaItems(proj) - 1 do
-        local item = reaper.GetSelectedMediaItem(proj, i)
-        local track = reaper.GetMediaItem_Track(item)
-        local item_height = reaper.GetMediaItemInfo_Value(item, "I_LASTH")
-        local position = reaper.GetMediaItemInfo_Value(item, "D_POSITION")
-        local item_length = reaper.GetMediaItemInfo_Value(item, "D_LENGTH")
-        local startTime, endTime = getEdgePositionsByItem(item)
+    for i = 0, reaper.CountMediaItems(proj) - 1 do
+        local item = reaper.GetMediaItem(proj, i)
 
-        local item_offset_x = (position * zoom) - scrollposh
-        local item_offset_y = reaper.GetMediaTrackInfo_Value(track, "I_TCPY") + headerHeight
-        local item_length_px = item_length * zoom
+        if reaper.IsMediaItemSelected(item) then
+            local track = reaper.GetMediaItem_Track(item)
+            local item_height = reaper.GetMediaItemInfo_Value(item, "I_LASTH")
+            local position = reaper.GetMediaItemInfo_Value(item, "D_POSITION")
+            local item_length = reaper.GetMediaItemInfo_Value(item, "D_LENGTH")
+            local startTime, endTime = getEdgePositionsByItem(item)
 
-        ------------- LEADING PART --------------
+            local item_offset_x = (position * zoom) - scrollposh
+            local item_offset_y = reaper.GetMediaTrackInfo_Value(track, "I_TCPY") + headerHeight
+            local item_length_px = item_length * zoom
 
-        local l_threshold = startTime * zoom
-        local l_pad = l_threshold - (p_l_pad * zoom)
-        local l_fade_start = l_pad
-        local l_fade_end = l_fade_start + (p_l_fade * zoom)
+            ------------- LEADING PART --------------
 
-        if l_threshold < min_start then l_threshold = 0 end
-        if l_pad < min_start then l_pad = 0 end
-        if l_fade_start < min_start then l_fade_start = 0 end
-        if l_fade_end < min_start then l_fade_end = 0 end
-        if l_fade_end > item_length_px then l_fade_end = item_length_px end
+            local l_threshold = startTime * zoom
+            local l_pad = l_threshold - (p_l_pad * zoom)
+            local l_fade_start = l_pad
+            local l_fade_end = l_fade_start + (p_l_fade * zoom)
 
-        local l_bm_width = math.max(l_threshold, l_fade_end)
-        local l_bm_height = item_height
+            if l_threshold < min_start then l_threshold = 0 end
+            if l_pad < min_start then l_pad = 0 end
+            if l_fade_start < min_start then l_fade_start = 0 end
+            if l_fade_end < min_start then l_fade_end = 0 end
+            if l_fade_end > item_length_px then l_fade_end = item_length_px end
 
-        l_bm_width = l_bm_width + 2
+            local l_bm_width = math.max(l_threshold, l_fade_end)
+            local l_bm_height = item_height
 
-        if p_preview == 1 and startTime > min_start and startTime < item_length then
-            local bitmap = updateBitmapIfNeeded(bm.leading, i, l_bm_width, l_bm_height)
+            l_bm_width = l_bm_width + 2
 
-            -- reaper.ShowConsoleMsg(l_pad .. " " .. l_bm_width .. " " .. l_bm_height .. "\n")
+            if p_preview == 1 and startTime > min_start and startTime < item_length then
+                local bitmap = updateBitmapIfNeeded(bm.leading, i, l_bm_width, l_bm_height)
 
-            -- threshold line
-            _drawVerticalLine(bitmap, l_threshold, item_height, ek_colors.Blue)
+                -- reaper.ShowConsoleMsg(l_pad .. " " .. l_bm_width .. " " .. l_bm_height .. "\n")
 
-            -- pad line
-            if l_pad > 0 and p_l_pad > 0 then _drawVerticalLine(bitmap, l_pad, item_height, ek_colors.Red) end
+                -- threshold line
+                _drawVerticalLine(bitmap, l_threshold, item_height, ek_colors.Blue)
 
-            -- fade line
-            if p_l_fade > 0 and l_fade_start > 0 then
-                reaper.JS_LICE_Line(bitmap, l_fade_start, item_height, l_fade_end, 0, ek_colors.Green, 1, "", true)
+                -- pad line
+                if l_pad > 0 and p_l_pad > 0 then _drawVerticalLine(bitmap, l_pad, item_height, ek_colors.Red) end
+
+                -- fade line
+                if p_l_fade > 0 and l_fade_start > 0 then
+                    reaper.JS_LICE_Line(bitmap, l_fade_start, item_height, l_fade_end, 0, ek_colors.Green, 1, "", true)
+                end
+
+                reaper.JS_Composite(ArrangeHwnd, _f(item_offset_x), _f(item_offset_y), _f(l_bm_width), _f(l_bm_height), bitmap, 0, 0, _f(l_bm_width), _f(l_bm_height), true)
+            else
+                clearBitmap(bm.leading, i)
             end
 
-            reaper.JS_Composite(
-                ArrangeHwnd,
-                _f(item_offset_x),
-                _f(item_offset_y),
-                _f(l_bm_width),
-                _f(l_bm_height),
-                bitmap,
-                0,
-                0,
-                _f(l_bm_width),
-                _f(l_bm_height),
-                true
-            )
+            ------------- TRAILING PART --------------
+
+            local t_threshold = endTime * zoom
+            local t_pad = t_threshold + (p_t_pad * zoom)
+            local t_fade_end = t_pad
+            local t_fade_start = t_fade_end - (p_t_fade * zoom)
+
+
+            if t_threshold < min_start then t_threshold = 0 end
+            if t_pad < min_start then t_pad = 0 end
+            if t_pad > item_length_px then t_pad = item_length_px end
+            if t_fade_start < min_start then t_fade_start = 0 end
+            if t_fade_end > item_length_px then t_fade_end = item_length_px end
+
+            local t_bm_width = math.max(t_threshold, t_fade_end, t_pad)
+            local t_bm_height = item_height
+
+            t_bm_width = t_bm_width + 2
+
+            if p_preview == 1 and endTime > min_start and endTime < item_length then
+                local bitmap = updateBitmapIfNeeded(bm.trailing, i, t_bm_width, t_bm_height)
+
+                -- threshold line
+                _drawVerticalLine(bitmap, t_threshold, item_height, ek_colors.Blue)
+
+                -- pad line
+                if t_pad < item_length_px and p_t_pad > 0 then _drawVerticalLine(bitmap, t_pad, item_height, ek_colors.Red) end
+
+                -- fade line
+                if p_t_fade > 0 and t_fade_end < item_length_px then
+                    reaper.JS_LICE_Line(bitmap, t_fade_start, 0, t_fade_end, item_height, ek_colors.Green, 1, "", true)
+                end
+
+                reaper.JS_Composite(ArrangeHwnd, _f(item_offset_x), _f(item_offset_y), _f(t_bm_width), _f(t_bm_height), bitmap, 0, 0, _f(t_bm_width), _f(t_bm_height), true)
+            else
+                clearBitmap(bm.trailing, i)
+            end
         else
             clearBitmap(bm.leading, i)
-        end
-
-        ------------- TRAILING PART --------------
-
-        local t_threshold = endTime * zoom
-        local t_pad = t_threshold + (p_t_pad * zoom)
-        local t_fade_end = t_pad
-        local t_fade_start = t_fade_end - (p_t_fade * zoom)
-
-
-        if t_threshold < min_start then t_threshold = 0 end
-        if t_pad < min_start then t_pad = 0 end
-        if t_pad > item_length_px then t_pad = item_length_px end
-        if t_fade_start < min_start then t_fade_start = 0 end
-        if t_fade_end > item_length_px then t_fade_end = item_length_px end
-
-        local t_bm_width = math.max(t_threshold, t_fade_end, t_pad)
-        local t_bm_height = item_height
-
-        t_bm_width = t_bm_width + 2
-
-        if p_preview == 1 and endTime > min_start and endTime < item_length then
-            local bitmap = updateBitmapIfNeeded(bm.trailing, i, t_bm_width, t_bm_height)
-
-            -- threshold line
-            _drawVerticalLine(bitmap, t_threshold, item_height, ek_colors.Blue)
-
-            -- pad line
-            if t_pad < item_length_px and p_t_pad > 0 then _drawVerticalLine(bitmap, t_pad, item_height, ek_colors.Red) end
-
-            -- fade line
-            if p_t_fade > 0 and t_fade_end < item_length_px then
-                reaper.JS_LICE_Line(bitmap, t_fade_start, 0, t_fade_end, item_height, ek_colors.Green, 1, "", true)
-            end
-
-            reaper.JS_Composite(
-                ArrangeHwnd,
-                _f(item_offset_x),
-                _f(item_offset_y),
-                _f(t_bm_width),
-                _f(t_bm_height),
-                bitmap,
-                0,
-                0,
-                _f(t_bm_width),
-                _f(t_bm_height),
-                true
-            )
-        else
             clearBitmap(bm.trailing, i)
         end
     end
@@ -264,7 +248,7 @@ local function trimSilenceResult()
         local startTime, endTime = getEdgePositionsByItem(item)
 
         if startTime and startTime > 0 then trimLeadingPosition(take, startTime) end
-        if endTime and endTime > 0 then trimTrailingPosition(take, endTime) end
+        if endTime and endTime > 0 then trimTrailingPosition(take, endTime - startTime) end
     end
 
     reaper.UpdateArrange()
