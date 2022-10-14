@@ -1,5 +1,5 @@
 -- @description ek_Trim silence edges for selected items
--- @version 1.1.1
+-- @version 1.1.2
 -- @author Ed Kashinsky
 -- @about
 --   This script helps to remove silence at the start and at the end of selected items by individual thresholds, pads and fades.
@@ -33,18 +33,14 @@ end
 
 CoreFunctionsLoaded("ek_Triming silence edges functions.lua")
 
-local p_l_threshold = getTsParamValue(tsParams.leading.threshold)
-local p_l_pad = getTsParamValue(tsParams.leading.pad)
-local p_l_fade = getTsParamValue(tsParams.leading.fade)
-local p_t_threshold = getTsParamValue(tsParams.trailing.threshold)
-local p_t_pad = getTsParamValue(tsParams.trailing.pad)
-local p_t_fade = getTsParamValue(tsParams.trailing.fade)
-local p_preview = getTsParamValue(tsParams.preview_result)
-
-local cachedPositions = {
-    leading = {},
-    trailing = {},
+local f_count = 0
+local f_limit = 3
+local f_values = {
+    leading = { threshold = 0, pad = 0, fade = 0, },
+    trailing = { threshold = 0, pad = 0, fade = 0, },
 }
+local p_preview = getTsParamValue(tsParams.preview_result)
+local cachedPositions = { leading = {}, trailing = {} }
 
 local function getEdgePositionsByItem(item)
     if not item then return end
@@ -55,6 +51,8 @@ local function getEdgePositionsByItem(item)
     if not take or not guid then return end
 
     local startTime, endTime
+    local p_l_threshold = getTsParamValue(tsParams.leading.threshold)
+    local p_t_threshold = getTsParamValue(tsParams.trailing.threshold)
 
     if cachedPositions.leading[guid] and cachedPositions.leading[guid].threshold == p_l_threshold then
         startTime = cachedPositions.leading[guid].position
@@ -124,6 +122,7 @@ end
 local MainHwnd = reaper.GetMainHwnd()
 local ArrangeHwnd = reaper.JS_Window_FindChildByID(MainHwnd, 0x3E8)
 
+local headerShowingLimit = 40
 local headerHeight = 16
 if gfx.ext_retina == 1 then headerHeight = headerHeight * 2 end
 local min_start = 0.0001
@@ -131,20 +130,27 @@ local min_start = 0.0001
 local function preview_result()
     local zoom = reaper.GetHZoomLevel()
     local _, scrollposh = reaper.JS_Window_GetScrollInfo(ArrangeHwnd, "h")
+    local p_l_pad = getTsParamValue(tsParams.leading.pad)
+    local p_l_fade = getTsParamValue(tsParams.leading.fade)
+    local p_t_pad = getTsParamValue(tsParams.trailing.pad)
+    local p_t_fade = getTsParamValue(tsParams.trailing.fade)
 
     for i = 0, reaper.CountMediaItems(proj) - 1 do
         local item = reaper.GetMediaItem(proj, i)
 
-        if reaper.IsMediaItemSelected(item) then
+        if reaper.IsMediaItemSelected(item) and p_preview == 1 then
             local track = reaper.GetMediaItem_Track(item)
             local item_height = reaper.GetMediaItemInfo_Value(item, "I_LASTH")
             local position = reaper.GetMediaItemInfo_Value(item, "D_POSITION")
             local item_length = reaper.GetMediaItemInfo_Value(item, "D_LENGTH")
             local startTime, endTime = getEdgePositionsByItem(item)
+            local track_height = reaper.GetMediaTrackInfo_Value(track, "I_TCPH")
 
             local item_offset_x = (position * zoom) - scrollposh
-            local item_offset_y = reaper.GetMediaTrackInfo_Value(track, "I_TCPY") + headerHeight
+            local item_offset_y = reaper.GetMediaTrackInfo_Value(track, "I_TCPY")
             local item_length_px = item_length * zoom
+
+            if track_height >= headerShowingLimit then item_offset_y = item_offset_y + headerHeight end
 
             ------------- LEADING PART --------------
 
@@ -164,10 +170,8 @@ local function preview_result()
 
             l_bm_width = l_bm_width + 2
 
-            if p_preview == 1 and startTime > min_start and startTime < item_length then
+            if startTime > min_start and startTime < item_length then
                 local bitmap = updateBitmapIfNeeded(bm.leading, i, l_bm_width, l_bm_height)
-
-                -- reaper.ShowConsoleMsg(l_pad .. " " .. l_bm_width .. " " .. l_bm_height .. "\n")
 
                 -- threshold line
                 _drawVerticalLine(bitmap, l_threshold, item_height, ek_colors.Blue)
@@ -204,7 +208,7 @@ local function preview_result()
 
             t_bm_width = t_bm_width + 2
 
-            if p_preview == 1 and endTime > min_start and endTime < item_length then
+            if endTime > min_start and endTime < item_length then
                 local bitmap = updateBitmapIfNeeded(bm.trailing, i, t_bm_width, t_bm_height)
 
                 -- threshold line
@@ -233,13 +237,13 @@ local function trimSilenceResult()
     reaper.Undo_BeginBlock()
 
     Log("== Leading edge ==")
-    Log("Threshold: " .. p_l_threshold .. "db")
-    Log("Pad: " .. p_l_pad .. "s")
-    Log("Fade: " .. p_l_fade .. "s")
+    Log("Threshold: " .. getTsParamValue(tsParams.leading.threshold) .. "db")
+    Log("Pad: " .. getTsParamValue(tsParams.leading.pad) .. "s")
+    Log("Fade: " .. getTsParamValue(tsParams.leading.fade) .. "s")
     Log("== Trailing edge ==")
-    Log("Threshold: " .. p_t_threshold .. "db")
-    Log("Pad: " .. p_t_pad .. "s")
-    Log("Fade: " .. p_t_fade .. "s")
+    Log("Threshold: " .. getTsParamValue(tsParams.trailing.threshold) .. "db")
+    Log("Pad: " .. getTsParamValue(tsParams.trailing.pad) .. "s")
+    Log("Fade: " .. getTsParamValue(tsParams.trailing.fade) .. "s")
 
     for i = 0, reaper.CountSelectedMediaItems(proj) - 1 do
         local item = reaper.GetSelectedMediaItem(proj, i)
@@ -256,6 +260,27 @@ local function trimSilenceResult()
     reaper.Undo_EndBlock("Trim silence edges for selected items (no prompt)", -1)
 end
 
+local function initValues()
+    for id, pos in pairs(f_values) do
+        for key, _ in pairs(pos) do
+            f_values[id][key] = getTsParamValue(tsParams[id][key])
+        end
+    end
+end
+
+local function updateValues()
+    local curValue
+
+    for id, pos in pairs(f_values) do
+        for key, val in pairs(pos) do
+            curValue = getTsParamValue(tsParams[id][key])
+            if curValue ~= val then
+                setTsParamValue(tsParams[id][key], val)
+            end
+        end
+    end
+end
+
 function frame()
     local r, newVal
 
@@ -263,22 +288,24 @@ function frame()
     -- Leading part
     --
     GUI_DrawText('Leading edge:', GUI_GetFont(gui_font_types.Bold))
-    r, newVal = reaper.ImGui_SliderDouble(GUI_GetCtx(), 'Threshold In', p_l_threshold, -70, 0, '%.1fdb', slider_flags)
-    if p_l_threshold ~= newVal then
-        setTsParamValue(tsParams.leading.threshold, newVal)
-        p_l_threshold = newVal
+    r, newVal = reaper.ImGui_SliderDouble(GUI_GetCtx(), 'Threshold In', f_values.leading.threshold, -70, 0, '%.1fdb', slider_flags)
+    if f_values.leading.threshold ~= newVal then
+        f_values.leading.threshold = newVal
+        f_count = 0
     end
 
-    r, newVal = reaper.ImGui_DragDouble(GUI_GetCtx(), 'Pad In', p_l_pad, 0.01, 0, nil, '%.2fs')
-    if p_l_pad ~= newVal then
-        setTsParamValue(tsParams.leading.pad, newVal)
-        p_l_pad = newVal
+    r, newVal = reaper.ImGui_DragDouble(GUI_GetCtx(), 'Pad In', f_values.leading.pad, 0.01, 0, nil, '%.2fs')
+    if f_values.leading.pad ~= newVal then
+        f_values.leading.pad = newVal
+        f_count = 0
+        updateValues()
     end
 
-    r, newVal = reaper.ImGui_DragDouble(GUI_GetCtx(), 'Fade In', p_l_fade, 0.01, 0, nil, '%.2fs')
-    if p_l_fade ~= newVal then
-        setTsParamValue(tsParams.leading.fade, newVal)
-        p_l_fade = newVal
+    r, newVal = reaper.ImGui_DragDouble(GUI_GetCtx(), 'Fade In', f_values.leading.fade, 0.01, 0, nil, '%.2fs')
+    if f_values.leading.fade ~= newVal then
+        f_values.leading.fade = newVal
+        f_count = 0
+        updateValues()
     end
 
     --
@@ -287,30 +314,32 @@ function frame()
     GUI_DrawGap()
     GUI_DrawText('Trailing edge:', GUI_GetFont(gui_font_types.Bold))
 
-    r, newVal = reaper.ImGui_SliderDouble(GUI_GetCtx(), 'Threshold Out', p_t_threshold, -70, 0, '%.1fdb', slider_flags)
-    if p_t_threshold ~= newVal then
-        setTsParamValue(tsParams.trailing.threshold, newVal)
-        p_t_threshold = newVal
+    r, newVal = reaper.ImGui_SliderDouble(GUI_GetCtx(), 'Threshold Out', f_values.trailing.threshold, -70, 0, '%.1fdb', slider_flags)
+    if f_values.trailing.threshold ~= newVal then
+        f_values.trailing.threshold = newVal
+        f_count = 0
     end
 
-    r, newVal = reaper.ImGui_DragDouble(GUI_GetCtx(), 'Pad Out', p_t_pad, 0.01, 0, nil, '%.2fs')
-    if p_t_pad ~= newVal then
-        setTsParamValue(tsParams.trailing.pad, newVal)
-        p_t_pad = newVal
+    r, newVal = reaper.ImGui_DragDouble(GUI_GetCtx(), 'Pad Out', f_values.trailing.pad, 0.01, 0, nil, '%.2fs')
+    if f_values.trailing.pad ~= newVal then
+        f_values.trailing.pad = newVal
+        f_count = 0
+        updateValues()
     end
 
-    r, newVal = reaper.ImGui_DragDouble(GUI_GetCtx(), 'Fade Out', p_t_fade, 0.01, 0, nil, '%.2fs')
-    if p_t_fade ~= newVal then
-        setTsParamValue(tsParams.trailing.fade, newVal)
-        p_t_fade = newVal
+    r, newVal = reaper.ImGui_DragDouble(GUI_GetCtx(), 'Fade Out', f_values.trailing.fade, 0.01, 0, nil, '%.2fs')
+    if f_values.trailing.fade ~= newVal then
+        f_values.trailing.fade = newVal
+        f_count = 0
+        updateValues()
     end
 
     r, newVal = reaper.ImGui_Checkbox(GUI_GetCtx(), 'Preview Result', p_preview == 1)
     newVal = newVal and 1 or 0
 
     if p_preview ~= newVal then
-        setTsParamValue(tsParams.preview_result, newVal)
         p_preview = newVal
+        setTsParamValue(tsParams.preview_result, newVal)
     end
 
     GUI_DrawGap()
@@ -324,8 +353,17 @@ function frame()
 
     GUI_DrawButton('Cancel', nil, gui_buttons_types.Cancel)
 
-     preview_result()
+    if f_count > f_limit then
+        updateValues()
+        f_count = 0
+    end
+
+    f_count = f_count + 1
+
+    preview_result()
 end
+
+initValues()
 
 GUI_ShowMainWindow(330, 320)
 
