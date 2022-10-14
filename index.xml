@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="ac2935bf8c1148c34870a2db2e506fa0096dd9c0">
+<index version="1" name="Reableton Scripts" commit="2707144ae82085d46f885a989b5425e843c36b0f">
   <category name="ColorThemes">
     <reapack name="Flat Madness Bright Remix.theme" type="theme" desc="Flat Madness Bright Remix">
       <metadata>
@@ -106,6 +106,12 @@
         <source file="ek_Core functions v1.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/09aa4a206a93c1c3f85a14e6a49d939fad849991/Core/ek_Core%20functions%20v1.lua</source>
         <source file="ek_Core functions GUI.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/09aa4a206a93c1c3f85a14e6a49d939fad849991/Core/ek_Core%20functions%20GUI.lua</source>
       </version>
+      <version name="1.0.11" author="Ed Kashinsky" time="2022-10-14T23:10:01Z">
+        <changelog><![CDATA[improved stability]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2707144ae82085d46f885a989b5425e843c36b0f/Core/ek_Core%20functions.lua</source>
+        <source file="ek_Core functions v1.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2707144ae82085d46f885a989b5425e843c36b0f/Core/ek_Core%20functions%20v1.lua</source>
+        <source file="ek_Core functions GUI.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2707144ae82085d46f885a989b5425e843c36b0f/Core/ek_Core%20functions%20GUI.lua</source>
+      </version>
     </reapack>
     <reapack name="ek_Global startup action settings.lua" type="script" desc="ek_Global startup action settings">
       <metadata>
@@ -132,6 +138,10 @@
       <version name="1.0.3" author="Ed Kashinsky" time="2022-06-04T22:17:47Z">
         <changelog><![CDATA[- Added dark mode feature]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/8cd9f1b22e71bdbc18f3f5028f4625580f3ec334/Core/ek_Global%20startup%20action%20settings.lua</source>
+      </version>
+      <version name="1.0.4" author="Ed Kashinsky" time="2022-10-14T23:10:01Z">
+        <changelog><![CDATA[- Added grid modes like in Ableton]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2707144ae82085d46f885a989b5425e843c36b0f/Core/ek_Global%20startup%20action%20settings.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Global startup action.lua" type="script" desc="ek_Global startup action">
@@ -212,6 +222,11 @@
         <changelog><![CDATA[- added observing for script "ek_Select items from selected to mouse cursor"]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d069a7ec585981ae2bc3c50f2ed73f8682875b8f/Core/ek_Global%20startup%20action.lua</source>
         <source file="ek_Core functions startup.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d069a7ec585981ae2bc3c50f2ed73f8682875b8f/Core/ek_Core%20functions%20startup.lua</source>
+      </version>
+      <version name="1.0.11" author="Ed Kashinsky" time="2022-10-14T23:10:01Z">
+        <changelog><![CDATA[- added observing or grid modes]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2707144ae82085d46f885a989b5425e843c36b0f/Core/ek_Global%20startup%20action.lua</source>
+        <source file="ek_Core functions startup.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2707144ae82085d46f885a989b5425e843c36b0f/Core/ek_Core%20functions%20startup.lua</source>
       </version>
     </reapack>
   </category>
@@ -318,6 +333,38 @@
       <version name="1.0.3" author="Ed Kashinsky" time="2022-10-12T19:38:12Z">
         <changelog><![CDATA[- Now you can enter absolute pitch value by clicking on button + pressing Shift key. Also press Cmd/Ctrl for smoothing changes]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/09aa4a206a93c1c3f85a14e6a49d939fad849991/Items%20Editing/ek_Decrease%20pitch%20or%20rate%20for%20selected%20items.lua</source>
+      </version>
+    </reapack>
+    <reapack name="ek_Edge silence cropper (no prompt).lua" type="script" desc="ek_Edge silence cropper (no prompt)">
+      <metadata>
+        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \ql \f0 \sa180 \li0 \fi0 {\cf1 [image: /Assets/images/trim_silence_edges_preview.gif]\cf0}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 It removes silence at the start at the end of item without prompt. Using together with "ek_Trim silence at the edges of selected items"\par}
+}
+]]></description>
+      </metadata>
+      <version name="1.0.1" author="Ed Kashinsky" time="2022-10-14T23:10:01Z">
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2707144ae82085d46f885a989b5425e843c36b0f/Items%20Editing/ek_Edge%20silence%20cropper%20(no%20prompt).lua</source>
+      </version>
+    </reapack>
+    <reapack name="ek_Edge silence cropper.lua" type="script" desc="ek_Edge silence cropper">
+      <metadata>
+        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \ql \f0 \sa180 \li0 \fi0 This script helps to remove silence at the start and at the end of selected items by individual thresholds, pads and fades.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Also it provides UI for configuration\par}
+}
+]]></description>
+      </metadata>
+      <version name="1.0.0" author="Ed Kashinsky" time="2022-10-14T23:10:01Z">
+        <changelog><![CDATA[- Small fixes]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2707144ae82085d46f885a989b5425e843c36b0f/Items%20Editing/ek_Edge%20silence%20cropper.lua</source>
+        <source file="../Core/ek_Edge silence cropper functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2707144ae82085d46f885a989b5425e843c36b0f/Core/ek_Edge%20silence%20cropper%20functions.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Increase pitch or rate for selected items.lua" type="script" desc="ek_Increase pitch or rate for selected items">
@@ -481,69 +528,6 @@
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Items%20Editing/ek_Toggle%20preserve%20pitch%20for%20selected%20items.lua</source>
       </version>
     </reapack>
-    <reapack name="ek_Trim silence at the edges of selected items (no prompt).lua" type="script" desc="ek_Trim silence at the edges of selected items (no prompt)">
-      <metadata>
-        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
-{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
-\widowctrl\hyphauto
-
-{\pard \ql \f0 \sa180 \li0 \fi0 {\cf1 [image: /Assets/images/trim_silence_edges_preview.gif]\cf0}\par}
-{\pard \ql \f0 \sa180 \li0 \fi0 It removes silence at the start at the end of item without prompt. Using together with "ek_Trim silence at the edges of selected items"\par}
-}
-]]></description>
-      </metadata>
-      <version name="1.0.0" author="Ed Kashinsky" time="2022-05-30T09:42:49Z">
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Items%20Editing/ek_Trim%20silence%20at%20the%20edges%20of%20selected%20items%20(no%20prompt).lua</source>
-      </version>
-      <version name="1.0.1" author="Ed Kashinsky" time="2022-05-31T08:06:26Z">
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Items%20Editing/ek_Trim%20silence%20at%20the%20edges%20of%20selected%20items%20(no%20prompt).lua</source>
-      </version>
-    </reapack>
-    <reapack name="ek_Trim silence at the edges of selected items.lua" type="script" desc="ek_Trim silence edges for selected items">
-      <metadata>
-        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
-{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
-\widowctrl\hyphauto
-
-{\pard \ql \f0 \sa180 \li0 \fi0 This script helps to remove silence at the start and at the end of selected items by individual thresholds, pads and fades.\par}
-{\pard \ql \f0 \sa180 \li0 \fi0 Also it provides UI for configuration\par}
-}
-]]></description>
-      </metadata>
-      <version name="1.0.0" author="Ed Kashinsky" time="2022-05-30T09:42:49Z">
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Items%20Editing/ek_Trim%20silence%20at%20the%20edges%20of%20selected%20items.lua</source>
-        <source file="../Core/ek_Triming silence edges functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Core/ek_Triming%20silence%20edges%20functions.lua</source>
-      </version>
-      <version name="1.0.1" author="Ed Kashinsky" time="2022-05-31T08:06:26Z">
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Items%20Editing/ek_Trim%20silence%20at%20the%20edges%20of%20selected%20items.lua</source>
-        <source file="../Core/ek_Triming silence edges functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Core/ek_Triming%20silence%20edges%20functions.lua</source>
-      </version>
-      <version name="1.1.0" author="Ed Kashinsky" time="2022-10-12T19:38:12Z">
-        <changelog><![CDATA[- Added visual preview]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/09aa4a206a93c1c3f85a14e6a49d939fad849991/Items%20Editing/ek_Trim%20silence%20at%20the%20edges%20of%20selected%20items.lua</source>
-        <source file="../Core/ek_Triming silence edges functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/09aa4a206a93c1c3f85a14e6a49d939fad849991/Core/ek_Triming%20silence%20edges%20functions.lua</source>
-      </version>
-      <version name="1.1.1" author="Ed Kashinsky" time="2022-10-14T08:30:38Z">
-        <changelog><![CDATA[- Small fixes]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/c5a85d3c9082274295e7b87c7eaa91eded4ba80c/Items%20Editing/ek_Trim%20silence%20at%20the%20edges%20of%20selected%20items.lua</source>
-        <source file="../Core/ek_Triming silence edges functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/c5a85d3c9082274295e7b87c7eaa91eded4ba80c/Core/ek_Triming%20silence%20edges%20functions.lua</source>
-      </version>
-      <version name="1.1.2" author="Ed Kashinsky" time="2022-10-14T09:54:23Z">
-        <changelog><![CDATA[- Small fixes]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/222f2fa52c0c0c5bfcb7ebde9cf5fb7d7fd1168a/Items%20Editing/ek_Trim%20silence%20at%20the%20edges%20of%20selected%20items.lua</source>
-        <source file="../Core/ek_Triming silence edges functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/222f2fa52c0c0c5bfcb7ebde9cf5fb7d7fd1168a/Core/ek_Triming%20silence%20edges%20functions.lua</source>
-      </version>
-      <version name="1.1.3" author="Ed Kashinsky" time="2022-10-14T10:36:32Z">
-        <changelog><![CDATA[- Small fixes]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/42feb3e2e6e2bb18fe678bbd38a950be92e65a95/Items%20Editing/ek_Trim%20silence%20at%20the%20edges%20of%20selected%20items.lua</source>
-        <source file="../Core/ek_Triming silence edges functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/42feb3e2e6e2bb18fe678bbd38a950be92e65a95/Core/ek_Triming%20silence%20edges%20functions.lua</source>
-      </version>
-      <version name="1.1.4" author="Ed Kashinsky" time="2022-10-14T10:50:00Z">
-        <changelog><![CDATA[- Small fixes]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/ac2935bf8c1148c34870a2db2e506fa0096dd9c0/Items%20Editing/ek_Trim%20silence%20at%20the%20edges%20of%20selected%20items.lua</source>
-        <source file="../Core/ek_Triming silence edges functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/ac2935bf8c1148c34870a2db2e506fa0096dd9c0/Core/ek_Triming%20silence%20edges%20functions.lua</source>
-      </version>
-    </reapack>
   </category>
   <category name="Navigation">
     <reapack name="ek_Auto grid for MIDI Editor.lua" type="script" desc="ek_Auto grid for MIDI Editor">
@@ -563,6 +547,10 @@
       <version name="1.0.0" author="Ed Kashinsky" time="2022-05-30T09:42:49Z">
         <changelog><![CDATA[- Small fixes]]></changelog>
         <source main="midi_editor">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Navigation/ek_Auto%20grid%20for%20MIDI%20Editor.lua</source>
+      </version>
+      <version name="1.0.1" author="Ed Kashinsky" time="2022-10-14T23:10:01Z">
+        <changelog><![CDATA[- Added grid modes like in Ableton]]></changelog>
+        <source main="midi_editor">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2707144ae82085d46f885a989b5425e843c36b0f/Navigation/ek_Auto%20grid%20for%20MIDI%20Editor.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Move cursor or selected items left by grid.lua" type="script" desc="ek_Move cursor or selected items left by grid">
