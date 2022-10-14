@@ -39,89 +39,109 @@ ga_settings = {
 		default = true,
 		order = 1,
 	},
+	arrange_grid_setting = {
+		key = "arrange_grid_setting",
+		title = "Grid setting for Arrange view",
+		--description = "Select which grid you want to have in Arrange view",
+		default = 3,
+		select_values = {
+			"Widest", "Wide", "Medium", "Narrow", "Narrowest", "4 bar", "2 bar", "1 bar", "1/2", "1/4", "1/8", "1/16", "1/32",
+		},
+		order = 2,
+	},
+	midi_grid_setting = {
+		key = "midi_grid_setting",
+		title = "Grid setting for MIDI Editor",
+		description = "Select which grid you want to have",
+		default = 3,
+		select_values = {
+			"Widest", "Wide", "Medium", "Narrow", "Narrowest", "4 bar", "2 bar", "1 bar", "1/2", "1/4", "1/8", "1/16", "1/32",
+		},
+		order = 3,
+	},
 	project_limit = {
 		key = "project_limit",
 		title = "Automatically limit zoom to content of project",
 		description = "Feature from Ableton: max zoom level limits by the farthest item in the project.",
 		default = true,
-		order = 2,
+		order = 4,
 	},
 	focus_midi_editor = {
 		key = "focus_midi_editor",
 		title = "Automatically focus to MIDI editor when you click on an item",
 		description = "Feature from Ableton: when you single click on item, you see only one MIDI editor and focus on this particular item.",
 		default = true,
-		order = 3,
+		order = 5,
 	},
 	highlight_buttons = {
 		key = "highlight_buttons",
 		title = "Automatically highlight buttons",
 		description = "This option highlights toolbar buttons in real-time. This applies to scripts: 'ek_Toggle preserve pitch for selected items', 'ek_Toggle trim mode for selected trackes', 'ek_Toggle monitoring fx plugin'",
 		default = true,
-		order = 4,
+		order = 6,
 	},
 	mfx_slots_exclusive = {
 		key = "mfx_slots_exclusive",
 		title = "Toggle monitoring fx slots in exclusive mode",
 		description = "If you use script 'ek_Toggle monitoring FX on slot 1-5' and want to toggle plugins between slots in monitoring chain exclusively (when you turn on some plugin, others are turning off)",
 		default = false,
-		order = 5,
+		order = 7,
 	},
 	rec_sample_rate = {
 		key = "rec_sample_rate",
 		title = "Different sample rate for recording",
 		description = "This option useful for sound designers, who usually uses 48kHz and forget to increase the sampling rate before recording to get better recording quality.",
 		default = false,
-		order = 6,
+		order = 8,
 	},
 	rec_sample_rate_value = {
 		key = "rec_sample_rate_value",
 		title = "Sample rate for recording",
 		description = "Specify your recording sample rate",
 		default = 96000,
-		order = 7,
+		order = 9,
 	},
 	backup_files = {
 		key = "backup_files",
 		title = "Automatic limit timestamp backup files",
 		description = "If you want to keep only last limited amount of backup files, you can enable this option. Make sure that option 'Timestamp backup' is on in general preferences.",
 		default = false,
-		order = 8,
+		order = 10,
 	},
 	backup_files_limit = {
 		key = "backup_files_limit",
 		title = "Amount of backup files",
 		description = "Specify count of fresh backup files you want to keep.",
 		default = 5,
-		order = 9,
+		order = 11,
 	},
 	dark_mode = {
 		key = "dark_mode",
 		title = "Use dark mode theme",
 		description = "If you want to use special theme for dark mode, turn on this option.",
 		default = false,
-		order = 10,
+		order = 12,
 	},
 	dark_mode_theme = {
 		key = "dark_mode_theme",
 		title = "Name of theme for dark mode",
 		description = "Specify title of theme for dark mode. Note that, this theme should be in the same folder as a regular theme. Name should be with \".ReaperTheme\" extension",
 		default = "",
-		order = 11,
+		order = 13,
 	},
 	dark_mode_time = {
 		key = "dark_mode_time",
 		title = "Dark mode time interval",
 		description = "Specify time interval for dark mode. Format: \"HH:mm-HH:mm\"",
 		default = "20:00-09:00",
-		order = 12,
+		order = 14,
 	},
 	additional_action = {
 		key = "additional_action",
 		title = "Additional global startup action",
 		description = "If you have your own action on startup, you can specified command Id and it will be executed on startup.",
 		default = "",
-		order = 13,
+		order = 15,
 	},
 }
 
@@ -402,8 +422,9 @@ end
 -- Observe Grid in Arrange View
 --
 local cached_zoom_level
+local cached_config_id
 
-function GA_ObserveArrangeGrid()
+function GA_GetAdaptiveGridValue(zoom_level, for_midi_editor)
 	local getRetinaLevel = function(lvl)
 		return gfx.ext_retina == 0 and lvl or lvl * 2
 	end
@@ -456,6 +477,7 @@ function GA_ObserveArrangeGrid()
         end
         return order
     end
+
     local getNoteDivision = function(order)
         if order < 0 then
             return 2 * math.abs(order)
@@ -463,15 +485,53 @@ function GA_ObserveArrangeGrid()
             return 1 / (2 ^ order)
         end
     end
+
+	local order = getOrderByZoomLevel(zoom_level)
+
+	return getNoteDivision(order)
+end
+
+function GA_GetGridSettings(id)
+	local config = {
+		{ ratio = 8, is_adapt = true }, 		-- 0: Widest
+		{ ratio = 4, is_adapt = true  }, 		-- 1: Wide
+		{ ratio = 2, is_adapt = true }, 		-- 2: Medium
+		{ ratio = 1, is_adapt = true }, 		-- 3: Narrow
+		{ ratio = 0.5, is_adapt = true }, 		-- 4: Narrowest
+		{ ratio = 4, is_adapt = false }, 		-- 5: 4 bar
+		{ ratio = 2, is_adapt = false }, 		-- 6: 2 bar
+		{ ratio = 1, is_adapt = false }, 		-- 7: 1 bar
+		{ ratio = 0.5, is_adapt = false }, 		-- 8: 1/2
+		{ ratio = 0.25, is_adapt = false }, 	-- 9: 1/4
+		{ ratio = 0.125, is_adapt = false }, 	-- 10: 1/8
+		{ ratio = 0.0625, is_adapt = false }, 	-- 11: 1/16
+		{ ratio = 0.03125, is_adapt = false }, 	-- 12: 1/32
+	}
+
+	return config[id + 1]
+end
+
+function GA_ObserveArrangeGrid()
 	local zoom_level = math.floor(reaper.GetHZoomLevel())
+	local id = tonumber(GA_GetSettingValue(ga_settings.arrange_grid_setting))
 
-	if zoom_level ~= cached_zoom_level then
-		Log("Changed: {param}", ek_log_levels.Warning, ga_settings.auto_grid.key)
+	if zoom_level ~= cached_zoom_level or cached_config_id ~= id then
+		local settings = GA_GetGridSettings(id)
+		local grid
 
-		local order = getOrderByZoomLevel(zoom_level)
+		if settings.is_adapt then
+			grid = GA_GetAdaptiveGridValue(zoom_level)
+			grid = grid * settings.ratio
+		else
+			grid = settings.ratio
+		end
 
-		reaper.SetProjectGrid(proj, getNoteDivision(order))
+		Log("Changed: {param}, setting: " .. id .. ", grid: " .. grid, ek_log_levels.Warning, ga_settings.auto_grid.key)
+
+		reaper.SetProjectGrid(proj, grid)
+
 		cached_zoom_level = zoom_level
+		cached_config_id = id
 	end
 end
 
@@ -483,7 +543,7 @@ local cached_first_selected_track_sample_rate_marked = nil
 function GA_ObserveArmRec(changes, values)
 	if values.first_selected_track ~= nil and values.first_selected_track ~= cached_first_selected_track_sample_rate_marked then
 		local isArmed = reaper.GetMediaTrackInfo_Value(values.first_selected_track, "I_RECARM")
-		local retval, desc = reaper.GetAudioDeviceInfo("SRATE")
+		local _, desc = reaper.GetAudioDeviceInfo("SRATE")
 		local setting = GA_GetSettingValue(ga_settings.rec_sample_rate_value)
 		local hasMidiProgram = reaper.HasTrackMIDIProgramsEx(proj, values.first_selected_track)
 

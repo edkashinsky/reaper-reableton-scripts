@@ -1,11 +1,10 @@
 -- @description ek_Global startup action settings
--- @version 1.0.3
+-- @version 1.0.4
 -- @author Ed Kashinsky
 -- @about
 --   Here you can set features for global startup actions
 -- @changelog
---   - Added dark mode feature
--- 	 - Added window
+--   - Added grid modes like in Ableton
 
 function CoreFunctionsLoaded(script)
 	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
@@ -65,7 +64,9 @@ function frame()
 
 		reaper.ImGui_PushFont(GUI_GetCtx(), GUI_GetFont(gui_font_types.Bold))
 
-		if type(curVal) == 'boolean' then
+		if setting.select_values then
+			r, newVal = reaper.ImGui_Combo(GUI_GetCtx(), setting.title, curVal, join(setting.select_values, "\0") .. "\0")
+		elseif type(curVal) == 'boolean' then
 			r, newVal = reaper.ImGui_Checkbox(GUI_GetCtx(), setting.title, curVal)
 		elseif type(curVal) == 'number' then
 			r, newVal = reaper.ImGui_InputInt(GUI_GetCtx(), setting.title, curVal, nil, nil, input_flags)
@@ -80,8 +81,10 @@ function frame()
 		reaper.ImGui_PopFont(GUI_GetCtx())
 		reaper.ImGui_PopItemWidth(GUI_GetCtx())
 
-		GUI_DrawText(setting.description, GUI_GetFont(gui_font_types.Italic))
-		GUI_DrawGap()
+		if setting.description then
+			GUI_DrawText(setting.description, GUI_GetFont(gui_font_types.Italic))
+			GUI_DrawGap()
+		end
 	end
 end
 

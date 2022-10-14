@@ -1,4 +1,4 @@
--- @description ek_Trim silence at the edges of selected items (no prompt)
+-- @description ek_Edge silence cropper (no prompt)
 -- @version 1.0.1
 -- @author Ed Kashinsky
 -- @about
@@ -22,7 +22,7 @@ if not loaded then
 	return
 end
 
-CoreFunctionsLoaded("ek_Triming silence edges functions.lua")
+CoreFunctionsLoaded("ek_Edge silence cropper functions.lua")
 
 reaper.Undo_BeginBlock()
 
@@ -68,4 +68,4 @@ if countSelectedItems > 0 then
     reaper.UpdateArrange()
 end
 
-reaper.Undo_EndBlock("Trim silence at the edges of selected items (no prompt)", -1)
+reaper.Undo_EndBlock("Edge silence cropper (no prompt)", -1)

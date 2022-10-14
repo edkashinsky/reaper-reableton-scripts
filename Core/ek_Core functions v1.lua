@@ -334,6 +334,18 @@ function split(str, pat)
    	return t
 end
 
+function join(list, delimiter)
+	if type(list) ~= 'table' or #list == 0 then return "" end
+
+	local string = list[1]
+
+	for i = 2, #list do
+		string = string .. delimiter .. list[i]
+	end
+
+	return string
+end
+
 function serializeTable(val, name, skipnewlines, depth)
     skipnewlines = skipnewlines or false
     depth = depth or 0

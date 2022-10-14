@@ -1,5 +1,5 @@
--- @description ek_Trim silence edges for selected items
--- @version 1.1.4
+-- @description ek_Edge silence cropper
+-- @version 1.0.0
 -- @author Ed Kashinsky
 -- @about
 --   This script helps to remove silence at the start and at the end of selected items by individual thresholds, pads and fades.
@@ -8,7 +8,7 @@
 -- @changelog
 --   - Small fixes
 -- @provides
---   ../Core/ek_Triming silence edges functions.lua
+--   ../Core/ek_Edge silence cropper functions.lua
 
 function CoreFunctionsLoaded(script)
 	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
@@ -31,7 +31,7 @@ if not reaper.APIExists("ImGui_WindowFlags_NoCollapse") then
 	return
 end
 
-CoreFunctionsLoaded("ek_Triming silence edges functions.lua")
+CoreFunctionsLoaded("ek_Edge silence cropper functions.lua")
 
 local f_count = 0
 local f_limit = 3
@@ -261,7 +261,7 @@ local function trimSilenceResult()
 
     reaper.UpdateArrange()
 
-    reaper.Undo_EndBlock("Trim silence edges for selected items (no prompt)", -1)
+    reaper.Undo_EndBlock("Edge silence cropper", -1)
 end
 
 local function initValues()

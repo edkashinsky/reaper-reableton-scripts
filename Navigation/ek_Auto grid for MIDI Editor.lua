@@ -1,5 +1,5 @@
 -- @description ek_Auto grid for MIDI Editor
--- @version 1.0.0
+-- @version 1.0.1
 -- @author Ed Kashinsky
 -- @about
 --   It changes grid depending on zoom level in MIDI Editor.
@@ -11,20 +11,41 @@
 --     3. Add to this custom script MultiZoom shortcut hotkey
 --     4. Have fun!
 -- @changelog
---    - Small fixes
+--    - Added grid modes like in Ableton
 -- @provides [main=midi_editor] .
+
+function CoreFunctionsLoaded(script)
+	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
+	local root_path = debug.getinfo(1, 'S').source:sub(2, -5):match("(.*" .. sep .. ")")
+	local script_path = root_path .. ".." .. sep .. "Core" .. sep .. script
+	local file = io.open(script_path, 'r')
+
+	if file then file:close() dofile(script_path) else return nil end
+	return not not _G["EK_HasExtState"]
+end
+
+local loaded = CoreFunctionsLoaded("ek_Core functions.lua")
+if not loaded then
+	if loaded == nil then  reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0) end
+	return
+end
+
+if not CoreFunctionsLoaded("ek_Core functions startup.lua") then
+	reaper.MB('Global startup action is missing. Please install "ek_Global startup action" it via ReaPack (Action: Browse packages)', '', 0)
+	return
+end
 
 local MidiEditor = reaper.MIDIEditor_GetActive()
 
 function GetHZoomLevelForMidiEditor()
 	if not MidiEditor then return end
 	
-	local midiview = reaper.JS_Window_FindChildByID( MidiEditor, 0x3E9 )
-  	local _, width = reaper.JS_Window_GetClientSize( midiview )
- 	local take =  reaper.MIDIEditor_GetTake( MidiEditor )
-  	local guid = reaper.BR_GetMediaItemTakeGUID( take )
-  	local item =  reaper.GetMediaItemTake_Item( take )
-  	local _, chunk = reaper.GetItemStateChunk( item, "", false )
+	local midiview = reaper.JS_Window_FindChildByID(MidiEditor, 0x3E9)
+  	local _, width = reaper.JS_Window_GetClientSize(midiview)
+ 	local take =  reaper.MIDIEditor_GetTake(MidiEditor)
+  	local guid = reaper.BR_GetMediaItemTakeGUID(take)
+  	local item =  reaper.GetMediaItemTake_Item(take)
+  	local _, chunk = reaper.GetItemStateChunk(item, "", false)
   	local guidfound, editviewfound = false, false
   	local leftmost_tick, hzoom, timebase
   
@@ -71,64 +92,20 @@ end
 
 local function updateGrid()
 	local zoom_level = math.floor(GetHZoomLevelForMidiEditor(MidiEditor))
-	local order
+	local id = tonumber(GA_GetSettingValue(ga_settings.midi_grid_setting))
+	local settings = GA_GetGridSettings(id)
+	local grid
 
-	function getNoteDivision(ord)
-		if ord < 0 then
-			return 2 * math.abs(ord)
-		else
-			return 1 / (2 ^ ord)
-		end
-	end
-
-	if zoom_level <= 1 then
-		order = -3
-	elseif zoom_level < 3 then
-		order = -2
-	elseif zoom_level < 5 then
-		order = -1
-	elseif zoom_level < 15 then
-		order = 0
-	elseif zoom_level < 25 then
-		order = 1
-	elseif zoom_level < 55 then
-		order = 2
-	elseif zoom_level < 110 then
-		order = 3
-	elseif zoom_level < 220 then
-		order = 4
-	elseif zoom_level < 450 then
-		order = 5
-	elseif zoom_level < 850 then
-		order = 6
-	elseif zoom_level < 1600 then
-		order = 7
-	elseif zoom_level < 3500 then
-		order = 8
-	elseif zoom_level < 6700 then
-		order = 9
-	elseif zoom_level < 12000 then
-		order = 10
-	elseif zoom_level < 30000 then
-		order = 11
-	elseif zoom_level < 45200 then
-		order = 12
-	elseif zoom_level < 55100 then
-		order = 13
-	elseif zoom_level < 80000 then
-		order = 14
-	elseif zoom_level < 110000 then
-		order = 15
-	elseif zoom_level < 150000 then
-		order = 16
+	if settings.is_adapt then
+		grid = GA_GetAdaptiveGridValue(zoom_level)
+		grid = grid * settings.ratio
 	else
-		order = 17
+		grid = settings.ratio
 	end
 
 	-- reaper.ShowConsoleMsg(zoom_level .. " " .. order .. " " .. getNoteDivision(order) .. "\n")
 
-	-- reaper.SetProjectGrid(0, getNoteDivision(order))
-	reaper.SetMIDIEditorGrid(0, getNoteDivision(order))
+	reaper.SetMIDIEditorGrid(0, grid)
 end
 
 if MidiEditor then

@@ -1,5 +1,5 @@
 -- @description ek_Global startup action
--- @version 1.0.10
+-- @version 1.0.11
 -- @author Ed Kashinsky
 -- @about
 --   This is startup action brings some ableton-like features in realtime. You can control any option by 'ek_Global startup action settings' script.
@@ -13,7 +13,7 @@
 --      5. Restart Reaper
 --      6. Open 'ek_Global startup action settings' for customize options
 -- @changelog
---   - added observing for script "ek_Select items from selected to mouse cursor"
+--   - added observing or grid modes
 -- @provides
 --   ek_Core functions startup.lua
 
