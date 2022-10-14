@@ -1,5 +1,5 @@
 -- @description ek_Trim silence edges for selected items
--- @version 1.1.2
+-- @version 1.1.3
 -- @author Ed Kashinsky
 -- @about
 --   This script helps to remove silence at the start and at the end of selected items by individual thresholds, pads and fades.
@@ -125,6 +125,7 @@ local ArrangeHwnd = reaper.JS_Window_FindChildByID(MainHwnd, 0x3E8)
 local headerShowingLimit = 40
 local headerHeight = 16
 if gfx.ext_retina == 1 then headerHeight = headerHeight * 2 end
+if gfx.ext_retina == 1 then headerShowingLimit = headerShowingLimit * 2 end
 local min_start = 0.0001
 
 local function preview_result()
