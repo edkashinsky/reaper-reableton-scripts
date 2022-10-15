@@ -41,7 +41,7 @@ In two words, script changes pitch, if item has **preserve pitch** option and ch
 
 ### Global startup action
 
-<img src="/Assets/images/global_action_settings.png" alt="Global Functions preview" width="450"/>
+<img src="/Assets/images/global_action_settings.png" alt="Global Functions preview" width="500"/>
 
 This function has many useful perks that processed in real-time:
 
@@ -63,21 +63,21 @@ For installation:
 5. Restart Reaper
 6. Install and run 'ek_Global startup action settings' and configure the parameters you want to use
 
-![Global Functions preview](/Assets/images/auto_grid_preview.gif)
+<img src="/Assets/images/auto_grid_preview.gif" alt="Global Functions preview" width="500"/>
 
 ### Edge silence cropper
 
-![Edge silence cropper preview](/Assets/images/edge_silence_cropper_preview.gif)
+<img src="/Assets/images/edge_silence_cropper_preview.png" alt="Edge silence cropper preview" width="500"/>
 
 This complicated script helps to crop silence on the edges of items by individual thresholds. It is very useful for sounds with loud start and quite long tails. Additionally, you can set offset and fade time. It has preview mode and it is very handy. For instant work, there is one more script 'ek_Edge silence cropper (no prompt)' - it apply cropping by remembered values.
 
 Install:
-1. Install script "ek_Edge silence cropper" for GUI and preview mode
-2. [Additionally] install script "ek_Edge silence cropper (no prompt)" to applying crop without any GUI
+1. Install script **ek_Edge silence cropper** for GUI and preview mode
+2. [Additionally] install script **ek_Edge silence cropper (no prompt)** to applying crop without any GUI
 
 ### Separated actions for Media item in Mouse modifiers
 
-![Separated_actions_for_media_item_preview](/Assets/images/separated_actions_for_media_item_preview.png)
+<img src="/Assets/images/separated_actions_for_media_item_preview.png" alt="Separated_actions_for_media_item_preview" width="500"/>
 
 This small script helps to attach 2 independent actions on media item click: on header and zone below of it. 
 
