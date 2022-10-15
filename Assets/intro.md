@@ -82,9 +82,9 @@ Installation:
 
 ### Separated actions for Media item in Mouse modifiers
 
-<img src="/Assets/images/separated_actions_for_media_item_preview.png" alt="Separated_actions_for_media_item_preview" width="500"/>
-
 This small script helps to attach 2 independent actions on media item click: on header and zone below of it. 
+
+<img src="/Assets/images/separated_actions_for_media_item_preview.png" alt="Separated_actions_for_media_item_preview" width="400"/>
 
 Installation:
 1. Install script **ek_Separated actions for Media item in Mouse modifiers**
