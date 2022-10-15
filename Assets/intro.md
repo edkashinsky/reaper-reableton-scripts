@@ -67,9 +67,9 @@ For installation:
 
 ### Edge silence cropper
 
-![Edge silence cropper preview](/Assets/images/edge_silence_cropper_preview.png)
-
 This complicated script helps to crop silence on the edges of items by individual thresholds. It is very useful for sounds with loud start and quite long tails. Additionally, you can set offset and fade time. For instant work, there is one more script **ek_Edge silence cropper (no prompt)** - it apply cropping by remembered values.
+
+![Edge silence cropper preview](/Assets/images/edge_silence_cropper_preview.png)
 
 It has preview mode and it is very handy. Every setting has it own color:
 - ![#1589F0](https://via.placeholder.com/15/1589F0/1589F0.png) Threshold - Blue 
