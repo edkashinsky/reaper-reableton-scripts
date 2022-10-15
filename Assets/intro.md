@@ -45,11 +45,11 @@ In two words, script changes pitch, if item has **preserve pitch** option and ch
 
 This function has many useful perks that processed in real-time:
 
-1. **Automatically adjust grid to zoom**. When you change zoom level, grid adjusts to it.
+1. **Automatically adjust grid to zoom**. When you change zoom level, grid adjusts to it. Also you can choose grid level like in Ableton (adaptive or fixed)
 2. **Automatically limit zoom to size of project**. Max zoom level limits by the farthest item in the project.
 3. **Automatically focus to MIDI editor when you click on an item**. When you single click on item, you see only one MIDI editor and focus on this particular item.
 4. **Automatically highlight buttons**. This option highlights toolbar buttons in real-time. This applies to scripts: 'ek_Toggle preserve pitch for selected items', 'ek_Toggle trim mode for selected trackes', 'ek_Toggle monitoring fx plugin'
-5. **Check plugin status on monitoring FX**. If you use spectrum correction plugins (such as Realphones, Sonarworks Reference 4, SoundID Reference and etc.) on Monitoring FX when using headphones, you can always see if the plugin is enabled. For using it, add script 'ek_Toggle monitoring fx plugin' to your toolbar and this button will be highlighted automatically when the plugin on monitoring FX is enabled.
+5. **Toggle monitoring fx slots in exclusive mode**. If you use spectrum correction plugins (such as Realphones, Sonarworks Reference 4, SoundID Reference and etc.) on Monitoring FX when using headphones, you can always see if the plugin is enabled. For using it, add script 'ek_Toggle monitoring FX on slot 1-5' to your toolbar and this button will be highlighted automatically when the plugin on monitoring FX in particular slot is enabled.
 6. **Different sample rate for recording**. This option useful for sound designers, who usually uses 48kHz and forget to increase the sampling rate before recording to get better recording quality.
 7. **Automatic limit timestamp backup files**. Useful, if you want to keep only last limited amount of backup files.
 8. **Dark mode theme**. If you want to turn on special dark theme in night hours, you can use this feature
@@ -65,9 +65,32 @@ For installation:
 
 ![Global Functions preview](/Assets/images/auto_grid_preview.gif)
 
+### Edge silence cropper
+
+![Edge silence cropper preview](/Assets/images/edge_silence_cropper_preview.gif)
+
+This complicated script helps to crop silence on the edges of items by individual thresholds. It is very useful for sounds with loud start and quite long tails. Additionally, you can set offset and fade time. It has preview mode and it is very handy. For instant work, there is one more script 'ek_Edge silence cropper (no prompt)' - it apply cropping by remembered values.
+
+Install:
+1. Install script "ek_Edge silence cropper" for GUI and preview mode
+2. [Additionally] install script "ek_Edge silence cropper (no prompt)" to applying crop without any GUI
+
+### Separated actions for Media item in Mouse modifiers
+
+![Separated_actions_for_media_item_preview](/Assets/images/separated_actions_for_media_item_preview.png)
+
+This small script helps to attach 2 independent actions on media item click: on header and zone below of it. 
+
+Installation:
+1. Install script **ek_Separated actions for Media item in Mouse modifiers**
+2. Execute it from Action list window. You will see small settings window. Choose command ids of actions you want to execute on header and zone below click
+3. Open **Preferences** -> **Mouse modifiers**
+4. Select **Media item** in Context and **left click**
+5. Select this script in **Default action** in main section
+
 ### Theme
 
-#### Flat Madness Dark Remix
+#### Flat Madness Remix
 
 The one of the most [impressive themes](https://forum.cockos.com/showthread.php?t=247086) for Reaper (made by Dmytry Hapochka). I tuned a bit this theme to look it more like Ableton.
 
@@ -75,5 +98,5 @@ The one of the most [impressive themes](https://forum.cockos.com/showthread.php?
 
 For installation:
 1. Install [Fonts](/Assets/fonts/theme-fonts.zip?raw=true)
-2. Open **Extensions** -> **ReaPack** -> **Browse Packages** and install "Flat Madness Dark Remix"
+2. Open **Extensions** -> **ReaPack** -> **Browse Packages** and install "Flat Madness Dark Remix" or "Flat Madness Bright Remix"
 

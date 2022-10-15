@@ -11,7 +11,6 @@
 --   Hotkeys:
 --      - CMD/CTRL: Adjusting by 0.1 semitone (and 1 semitone without hotkey)
 --      - SHIFT: You can enter absolute value for pitch
---
 -- @changelog
 --   - Now you can enter absolute pitch value by clicking on button + pressing Shift key. Also press Cmd/Ctrl for smoothing changes
 

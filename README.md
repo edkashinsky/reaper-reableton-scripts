@@ -45,11 +45,11 @@ In two words, script changes pitch, if item has **preserve pitch** option and ch
 
 This function has many useful perks that processed in real-time:
 
-1. **Automatically adjust grid to zoom**. When you change zoom level, grid adjusts to it.
+1. **Automatically adjust grid to zoom**. When you change zoom level, grid adjusts to it. Also you can choose grid level like in Ableton (adaptive or fixed)
 2. **Automatically limit zoom to size of project**. Max zoom level limits by the farthest item in the project.
 3. **Automatically focus to MIDI editor when you click on an item**. When you single click on item, you see only one MIDI editor and focus on this particular item.
 4. **Automatically highlight buttons**. This option highlights toolbar buttons in real-time. This applies to scripts: 'ek_Toggle preserve pitch for selected items', 'ek_Toggle trim mode for selected trackes', 'ek_Toggle monitoring fx plugin'
-5. **Check plugin status on monitoring FX**. If you use spectrum correction plugins (such as Realphones, Sonarworks Reference 4, SoundID Reference and etc.) on Monitoring FX when using headphones, you can always see if the plugin is enabled. For using it, add script 'ek_Toggle monitoring fx plugin' to your toolbar and this button will be highlighted automatically when the plugin on monitoring FX is enabled.
+5. **Toggle monitoring fx slots in exclusive mode**. If you use spectrum correction plugins (such as Realphones, Sonarworks Reference 4, SoundID Reference and etc.) on Monitoring FX when using headphones, you can always see if the plugin is enabled. For using it, add script 'ek_Toggle monitoring FX on slot 1-5' to your toolbar and this button will be highlighted automatically when the plugin on monitoring FX in particular slot is enabled.
 6. **Different sample rate for recording**. This option useful for sound designers, who usually uses 48kHz and forget to increase the sampling rate before recording to get better recording quality.
 7. **Automatic limit timestamp backup files**. Useful, if you want to keep only last limited amount of backup files.
 8. **Dark mode theme**. If you want to turn on special dark theme in night hours, you can use this feature
@@ -65,9 +65,32 @@ For installation:
 
 ![Global Functions preview](/Assets/images/auto_grid_preview.gif)
 
+### Edge silence cropper
+
+![Edge silence cropper preview](/Assets/images/edge_silence_cropper_preview.gif)
+
+This complicated script helps to crop silence on the edges of items by individual thresholds. It is very useful for sounds with loud start and quite long tails. Additionally, you can set offset and fade time. It has preview mode and it is very handy. For instant work, there is one more script 'ek_Edge silence cropper (no prompt)' - it apply cropping by remembered values.
+
+Install:
+1. Install script "ek_Edge silence cropper" for GUI and preview mode
+2. [Additionally] install script "ek_Edge silence cropper (no prompt)" to applying crop without any GUI
+
+### Separated actions for Media item in Mouse modifiers
+
+![Separated_actions_for_media_item_preview](/Assets/images/separated_actions_for_media_item_preview.png)
+
+This small script helps to attach 2 independent actions on media item click: on header and zone below of it. 
+
+Installation:
+1. Install script **ek_Separated actions for Media item in Mouse modifiers**
+2. Execute it from Action list window. You will see small settings window. Choose command ids of actions you want to execute on header and zone below click
+3. Open **Preferences** -> **Mouse modifiers**
+4. Select **Media item** in Context and **left click**
+5. Select this script in **Default action** in main section
+
 ### Theme
 
-#### Flat Madness Dark Remix
+#### Flat Madness Remix
 
 The one of the most [impressive themes](https://forum.cockos.com/showthread.php?t=247086) for Reaper (made by Dmytry Hapochka). I tuned a bit this theme to look it more like Ableton.
 
@@ -75,7 +98,7 @@ The one of the most [impressive themes](https://forum.cockos.com/showthread.php?
 
 For installation:
 1. Install [Fonts](/Assets/fonts/theme-fonts.zip?raw=true)
-2. Open **Extensions** -> **ReaPack** -> **Browse Packages** and install "Flat Madness Dark Remix"
+2. Open **Extensions** -> **ReaPack** -> **Browse Packages** and install "Flat Madness Dark Remix" or "Flat Madness Bright Remix"
 
 
 ## List of scripts
@@ -110,9 +133,23 @@ This script decreases pitch or rate of selected items depending on "Preserve Pit
 
 If option is on, script decreases pitch and change rate in other case. Also when rate is changing, length is changing too (like in Ableton)
 
-This script normally subtracts 1 semitone, but if you hold ctrl/cmd it subtracts 0.1 semitone
+If you hold special keys with mouse click, you get additional opportunities
 
-Works with 'ek_Increase pitch or rate for selected items'
+Hotkeys:
+- CMD/CTRL: Adjusting by 0.1 semitone (and 1 semitone without hotkey)
+- SHIFT: You can enter absolute value for pitch
+
+#### ek_Edge silence cropper (no prompt)
+
+![Preview](/Assets/images/trim_silence_edges_preview.gif)
+
+It removes silence at the start at the end of item without prompt. Using together with "ek_Trim silence at the edges of selected items"
+
+#### ek_Edge silence cropper
+
+This script helps to remove silence at the start and at the end of selected items by individual thresholds, pads and fades.
+
+Also it provides UI for configuration
 
 #### ek_Increase pitch or rate for selected items
 
@@ -120,12 +157,21 @@ This script increases pitch or rate of selected items depending on "Preserve Pit
 
 If option is on, script increases pitch and change rate in other case. Also when rate is changing, length is changing too (like in Ableton)
 
-This script normally adds 1 semitone, but if you hold ctrl/cmd it adds 0.1 semitone
+If you hold special keys with mouse click, you get additional opportunities
+
+Hotkeys:
+- CMD/CTRL: Adjusting by 0.1 semitone (and 1 semitone without hotkey)
+- SHIFT: You can enter absolute value for pitch
 
 #### ek_Pin selected items at markers started from
 
 ![Preview](/Assets/images/pin_items_to_markers_preview.gif)
 This script pins selected items to markers started from specified number. It requires ReaImGui extension.
+
+#### ek_Separated actions for Media item in Mouse modifiers
+
+This script gives opportunity to attach 2 different actions on Media item context in Mouse modifiers - when we click on header of media item and part between header and middle of it.
+For installation open "Mouse Modifiers" preferences, find "Media item" context and select this script in any section. Also you can copy this script and use it in different hotkey-sections and actions.
 
 #### ek_Switch to next pitch mode for selected items
 
@@ -150,18 +196,6 @@ This script toggles option of editing multiple items on one track at the same ti
 This script just toggle "Preserve Pitch" for selected items but it saves state for button. For example, if you select item and it has preserve option, button starts highlight.
 
 For installation just add this script on toolbar and set "ek_Global Startup Functions" as global startup action via SWS.
-
-#### ek_Trim silence at the edges of selected items (no prompt)
-
-![Preview](/Assets/images/trim_silence_edges_preview.gif)
-
-It removes silence at the start at the end of item without prompt. Using together with "ek_Trim silence at the edges of selected items"
-
-#### ek_Trim silence edges for selected items
-
-This script helps to remove silence at the start and at the end of selected items by individual thresholds, pads and fades.
-
-Also it provides UI for configuration
 
 #### ek_Auto grid for MIDI Editor
 
@@ -197,6 +231,14 @@ If any item is selected, this script moves it to right by grid size. And moves c
 #### ek_Move cursor or selected items right by pixel
 
 If any item is selected, this script moves it to right by pixel. And moves cursor by pixel in other case
+
+#### ek_Move cursor to start of item under mouse
+
+It just moves edit cursor to start of selected item
+
+#### ek_Select items from selected to mouse cursor
+
+This script extends selection of items from selected to mouse cursor. As usual this action attaches in mouse modifiers on media item section
 
 #### ek_Select next non-tiny track
 
@@ -274,7 +316,7 @@ For work please install ek_Toggle last under docker window
 
 #### ek_Collapse selected tracks
 
-It collapses selected tracks/envelope lanes between 3 states: small, medium, large
+It collapses selected tracks/envelope lanes between 3 states: small, large. Put height values you like to 'Extensions' -> 'Command parameters' -> 'Track Height A' (for small size) and 'Track Height B' (for large size)
 
 #### ek_Delete selected tracks
 
@@ -286,7 +328,7 @@ If any item is selected, it duplicate item. In other case is duplicate track
 
 #### ek_Expand selected tracks
 
-It expands selected tracks/envelope lanes between 3 states: small, medium, large
+It expands selected tracks/envelope lanes between 2 states: small, large. Put height values you like to 'Extensions' -> 'Command parameters' -> 'Track Height A' (for small size) and 'Track Height B' (for large size)
 
 #### ek_Insert new track
 

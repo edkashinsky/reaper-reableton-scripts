@@ -4,11 +4,11 @@ from luaparser import ast
 
 
 class Intro:
-    __file = None
+    __readMeFile = None
 
     __assetsPath = os.path.dirname(os.path.realpath(__file__))
     __rootPath = __assetsPath + "/.."
-    __filename = "README.md"
+    __rmFilename = "README.md"
     __introductionFile = 'intro.md'
 
     __pathCategories = [
@@ -19,20 +19,20 @@ class Intro:
     ]
 
     def __init__(self):
-        self.__file = open(self.__rootPath + "/" + self.__filename, 'a')
-        self.__file.truncate(0)
+        self.__readMeFile = open(self.__rootPath + "/" + self.__rmFilename, 'a')
+        self.__readMeFile.truncate(0)
 
     def fill_readme(self):
         self.__fill_introduction()
         self.__fill_scripts()
-        self.__file.close()
+        self.__readMeFile.close()
 
     def __fill_introduction(self):
         with open(self.__assetsPath + "/" + self.__introductionFile) as f:
-            self.__file.write(f.read() + "\n")
+            self.__readMeFile.write(f.read() + "\n")
 
     def __fill_scripts(self):
-        self.__file.write("## List of scripts\n\n")
+        self.__readMeFile.write("## List of scripts\n\n")
 
         for category in self.__pathCategories:
             for root, dirnames, filenames in os.walk(self.__rootPath + "/" + category):
@@ -44,8 +44,12 @@ class Intro:
                             description = ""
                             about = ""
                             aboutStarted = False
+                            isWip = False
 
                             for comment in lua.body.body[0].comments:
+                                if comment.s.find("@wip") >= 0:
+                                    isWip = True
+                                    break
                                 if comment.s.find("@description") >= 0:
                                     description = comment.s[comment.s.find("@description") + 12:].strip()
                                 elif comment.s.find("@about") >= 0:
@@ -56,9 +60,9 @@ class Intro:
                                     else:
                                         about += comment.s[2:].strip() + "\n"
 
-                            if len(description) > 0:
-                                self.__file.write("#### " + description + "\n\n")
-                                self.__file.write(about + "\n")
+                            if isWip is False and len(description) > 0:
+                                self.__readMeFile.write("#### " + description + "\n\n")
+                                self.__readMeFile.write(about + "\n")
 
 
 intro = Intro()

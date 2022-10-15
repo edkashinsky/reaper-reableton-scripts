@@ -145,7 +145,7 @@ ga_settings = {
 	},
 }
 
-local retval, dpi = reaper.ThemeLayout_GetLayout("tcp", -3)
+local _, dpi = reaper.ThemeLayout_GetLayout("tcp", -3)
 if reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32" then
 	gfx.ext_retina = dpi >= "512" and 1 or 0
 else
