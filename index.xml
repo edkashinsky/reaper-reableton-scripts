@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="d47e8c9575f22bae0af853465d40bbd5f79d4733">
+<index version="1" name="Reableton Scripts" commit="7618bd914a19478ec5f111d7672bfccbd993d222">
   <category name="ColorThemes">
     <reapack name="Flat Madness Bright Remix.theme" type="theme" desc="Flat Madness Bright Remix">
       <metadata>
@@ -759,14 +759,14 @@
     </reapack>
   </category>
   <category name="Toolbars">
-    <reapack name="ek_Toggle Docker - FX Browser.lua" type="script" desc="ek_Toggle Docker: Mixer">
+    <reapack name="ek_Toggle Docker - FX Browser.lua" type="script" desc="ek_Toggle Docker: FX Browser">
       <metadata>
         <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
 {\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
 \widowctrl\hyphauto
 
-{\pard \ql \f0 \sa180 \li0 \fi0 It remember Render Matrix button for toggling docker window\par}
-{\pard \ql \f0 \sa180 \li0 \fi0 For work please install ek_Toggle last under docker window\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 This script toggles "FX Browser" window\par}
 }
 ]]></description>
       </metadata>
@@ -774,21 +774,29 @@
         <changelog><![CDATA[- Added core functions]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d47e8c9575f22bae0af853465d40bbd5f79d4733/Toolbars/ek_Toggle%20Docker%20-%20FX%20Browser.lua</source>
       </version>
+      <version name="1.0.1" author="Ed Kashinsky" time="2022-10-20T19:45:13Z">
+        <changelog><![CDATA[- Added script]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7618bd914a19478ec5f111d7672bfccbd993d222/Toolbars/ek_Toggle%20Docker%20-%20FX%20Browser.lua</source>
+      </version>
     </reapack>
-    <reapack name="ek_Toggle Docker - Loudness.lua" type="script" desc="ek_Toggle Docker: Mixer">
+    <reapack name="ek_Toggle Docker - Loudness.lua" type="script" desc="ek_Toggle Docker: Loudness">
       <metadata>
         <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
 {\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
 \widowctrl\hyphauto
 
-{\pard \ql \f0 \sa180 \li0 \fi0 It remember Render Matrix button for toggling docker window\par}
-{\pard \ql \f0 \sa180 \li0 \fi0 For work please install ek_Toggle last under docker window\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 This script toggles "Loudness" window\par}
 }
 ]]></description>
       </metadata>
       <version name="1.0.0" author="Ed Kashinsky" time="2022-10-20T19:35:40Z">
         <changelog><![CDATA[- Added core functions]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d47e8c9575f22bae0af853465d40bbd5f79d4733/Toolbars/ek_Toggle%20Docker%20-%20Loudness.lua</source>
+      </version>
+      <version name="1.0.1" author="Ed Kashinsky" time="2022-10-20T19:45:13Z">
+        <changelog><![CDATA[- Added script]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7618bd914a19478ec5f111d7672bfccbd993d222/Toolbars/ek_Toggle%20Docker%20-%20Loudness.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Toggle Docker - Media Explorer.lua" type="script" desc="ek_Toggle Docker: Media Explorer">
@@ -797,8 +805,8 @@
 {\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
 \widowctrl\hyphauto
 
-{\pard \ql \f0 \sa180 \li0 \fi0 It remember Media Browser button for toggling docker window\par}
-{\pard \ql \f0 \sa180 \li0 \fi0 For correct work please install ek_Toggle last under docker window\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 This script toggles "Media Explorer" window\par}
 }
 ]]></description>
       </metadata>
@@ -806,21 +814,29 @@
         <changelog><![CDATA[- Added core functions]]></changelog>
         <source main="main mediaexplorer">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d47e8c9575f22bae0af853465d40bbd5f79d4733/Toolbars/ek_Toggle%20Docker%20-%20Media%20Explorer.lua</source>
       </version>
+      <version name="1.0.1" author="Ed Kashinsky" time="2022-10-20T19:45:13Z">
+        <changelog><![CDATA[- Added script]]></changelog>
+        <source main="main mediaexplorer">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7618bd914a19478ec5f111d7672bfccbd993d222/Toolbars/ek_Toggle%20Docker%20-%20Media%20Explorer.lua</source>
+      </version>
     </reapack>
-    <reapack name="ek_Toggle Docker - MIDI Editor.lua" type="script" desc="ek_Toggle MIDI Editor window in arrange">
+    <reapack name="ek_Toggle Docker - MIDI Editor.lua" type="script" desc="ek_Toggle Docker: MIDI Editor">
       <metadata>
         <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
 {\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
 \widowctrl\hyphauto
 
-{\pard \ql \f0 \sa180 \li0 \fi0 It remember MIDI Editor button for toggling docker window in arrange view\par}
-{\pard \ql \f0 \sa180 \li0 \fi0 For correct work please install ek_Toggle last under docker window\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 This script toggles "MIDI Editor" window\par}
 }
 ]]></description>
       </metadata>
       <version name="1.0.0" author="Ed Kashinsky" time="2022-10-20T19:35:40Z">
         <changelog><![CDATA[- Added core functions]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d47e8c9575f22bae0af853465d40bbd5f79d4733/Toolbars/ek_Toggle%20Docker%20-%20MIDI%20Editor.lua</source>
+      </version>
+      <version name="1.0.1" author="Ed Kashinsky" time="2022-10-20T19:45:13Z">
+        <changelog><![CDATA[- Added script]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7618bd914a19478ec5f111d7672bfccbd993d222/Toolbars/ek_Toggle%20Docker%20-%20MIDI%20Editor.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Toggle Docker - Mixer.lua" type="script" desc="ek_Toggle Docker: Mixer">
@@ -829,14 +845,18 @@
 {\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
 \widowctrl\hyphauto
 
-{\pard \ql \f0 \sa180 \li0 \fi0 It remember Render Matrix button for toggling docker window\par}
-{\pard \ql \f0 \sa180 \li0 \fi0 For work please install ek_Toggle last under docker window\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 This script toggles "Mixer" window\par}
 }
 ]]></description>
       </metadata>
       <version name="1.0.0" author="Ed Kashinsky" time="2022-10-20T19:35:40Z">
         <changelog><![CDATA[- Added core functions]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d47e8c9575f22bae0af853465d40bbd5f79d4733/Toolbars/ek_Toggle%20Docker%20-%20Mixer.lua</source>
+      </version>
+      <version name="1.0.1" author="Ed Kashinsky" time="2022-10-20T19:45:13Z">
+        <changelog><![CDATA[- Added script]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7618bd914a19478ec5f111d7672bfccbd993d222/Toolbars/ek_Toggle%20Docker%20-%20Mixer.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Toggle Docker - Render Matrix.lua" type="script" desc="ek_Toggle Docker: Render Matrix">
@@ -845,8 +865,8 @@
 {\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
 \widowctrl\hyphauto
 
-{\pard \ql \f0 \sa180 \li0 \fi0 It remember Render Matrix button for toggling docker window\par}
-{\pard \ql \f0 \sa180 \li0 \fi0 For work please install ek_Toggle last under docker window\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 This script toggles "Render Matrix" window\par}
 }
 ]]></description>
       </metadata>
@@ -854,14 +874,19 @@
         <changelog><![CDATA[- Added core functions]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d47e8c9575f22bae0af853465d40bbd5f79d4733/Toolbars/ek_Toggle%20Docker%20-%20Render%20Matrix.lua</source>
       </version>
+      <version name="1.0.1" author="Ed Kashinsky" time="2022-10-20T19:45:13Z">
+        <changelog><![CDATA[- Added script]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7618bd914a19478ec5f111d7672bfccbd993d222/Toolbars/ek_Toggle%20Docker%20-%20Render%20Matrix.lua</source>
+      </version>
     </reapack>
-    <reapack name="ek_Toggle Docker - toggle bottom window.lua" type="script" desc="ek_Toggle last under docker window">
+    <reapack name="ek_Toggle Docker - toggle bottom window.lua" type="script" desc="ek_Toggle Docker - toggle bottom window">
       <metadata>
         <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
 {\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
 \widowctrl\hyphauto
 
-{\pard \ql \f0 \sa180 \li0 \fi0 This script helps to join several windows (on one docker region as usual) to one shortcut for toggling view. It remembers last opened window and toggle it.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 This script helps to toggle last opened window situated in bottom docker\par}
 }
 ]]></description>
       </metadata>
@@ -869,20 +894,29 @@
         <changelog><![CDATA[- Added core functions]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d47e8c9575f22bae0af853465d40bbd5f79d4733/Toolbars/ek_Toggle%20Docker%20-%20toggle%20bottom%20window.lua</source>
       </version>
+      <version name="1.0.1" author="Ed Kashinsky" time="2022-10-20T19:45:13Z">
+        <changelog><![CDATA[- Added script]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7618bd914a19478ec5f111d7672bfccbd993d222/Toolbars/ek_Toggle%20Docker%20-%20toggle%20bottom%20window.lua</source>
+      </version>
     </reapack>
-    <reapack name="ek_Toggle Docker - toggle right window.lua" type="script" desc="ek_Toggle last under docker window">
+    <reapack name="ek_Toggle Docker - toggle right window.lua" type="script" desc="ek_Toggle Docker: toggle right window">
       <metadata>
         <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
 {\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
 \widowctrl\hyphauto
 
-{\pard \ql \f0 \sa180 \li0 \fi0 This script helps to join several windows (on one docker region as usual) to one shortcut for toggling view. It remembers last opened window and toggle it.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 This script helps to toggle last opened window situated in right docker\par}
 }
 ]]></description>
       </metadata>
       <version name="1.0.0" author="Ed Kashinsky" time="2022-10-20T19:35:40Z">
         <changelog><![CDATA[- Added core functions]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d47e8c9575f22bae0af853465d40bbd5f79d4733/Toolbars/ek_Toggle%20Docker%20-%20toggle%20right%20window.lua</source>
+      </version>
+      <version name="1.0.1" author="Ed Kashinsky" time="2022-10-20T19:45:13Z">
+        <changelog><![CDATA[- Added script]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7618bd914a19478ec5f111d7672bfccbd993d222/Toolbars/ek_Toggle%20Docker%20-%20toggle%20right%20window.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Toggle Docker - Video.lua" type="script" desc="ek_Toggle Docker: Mixer">
