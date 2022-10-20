@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="6193dbd97da1cb6a9161d5c8dde34969e842d1c2">
+<index version="1" name="Reableton Scripts" commit="d47e8c9575f22bae0af853465d40bbd5f79d4733">
   <category name="ColorThemes">
     <reapack name="Flat Madness Bright Remix.theme" type="theme" desc="Flat Madness Bright Remix">
       <metadata>
@@ -111,6 +111,12 @@
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2707144ae82085d46f885a989b5425e843c36b0f/Core/ek_Core%20functions.lua</source>
         <source file="ek_Core functions v1.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2707144ae82085d46f885a989b5425e843c36b0f/Core/ek_Core%20functions%20v1.lua</source>
         <source file="ek_Core functions GUI.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2707144ae82085d46f885a989b5425e843c36b0f/Core/ek_Core%20functions%20GUI.lua</source>
+      </version>
+      <version name="1.0.12" author="Ed Kashinsky" time="2022-10-20T19:35:40Z">
+        <changelog><![CDATA[added toggle docker feature]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d47e8c9575f22bae0af853465d40bbd5f79d4733/Core/ek_Core%20functions.lua</source>
+        <source file="ek_Core functions v1.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d47e8c9575f22bae0af853465d40bbd5f79d4733/Core/ek_Core%20functions%20v1.lua</source>
+        <source file="ek_Core functions GUI.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d47e8c9575f22bae0af853465d40bbd5f79d4733/Core/ek_Core%20functions%20GUI.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Global startup action settings.lua" type="script" desc="ek_Global startup action settings">
@@ -227,6 +233,11 @@
         <changelog><![CDATA[- added observing or grid modes]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2707144ae82085d46f885a989b5425e843c36b0f/Core/ek_Global%20startup%20action.lua</source>
         <source file="ek_Core functions startup.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2707144ae82085d46f885a989b5425e843c36b0f/Core/ek_Core%20functions%20startup.lua</source>
+      </version>
+      <version name="1.0.12" author="Ed Kashinsky" time="2022-10-20T19:35:40Z">
+        <changelog><![CDATA[- added toggle docker feature]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d47e8c9575f22bae0af853465d40bbd5f79d4733/Core/ek_Global%20startup%20action.lua</source>
+        <source file="ek_Core functions startup.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d47e8c9575f22bae0af853465d40bbd5f79d4733/Core/ek_Core%20functions%20startup.lua</source>
       </version>
     </reapack>
   </category>
@@ -365,6 +376,11 @@
         <changelog><![CDATA[- Small fixes]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2707144ae82085d46f885a989b5425e843c36b0f/Items%20Editing/ek_Edge%20silence%20cropper.lua</source>
         <source file="../Core/ek_Edge silence cropper functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2707144ae82085d46f885a989b5425e843c36b0f/Core/ek_Edge%20silence%20cropper%20functions.lua</source>
+      </version>
+      <version name="1.0.1" author="Ed Kashinsky" time="2022-10-20T19:35:40Z">
+        <changelog><![CDATA[- Bug fixes: script now follows to play rate and fades created before cropping]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d47e8c9575f22bae0af853465d40bbd5f79d4733/Items%20Editing/ek_Edge%20silence%20cropper.lua</source>
+        <source file="../Core/ek_Edge silence cropper functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d47e8c9575f22bae0af853465d40bbd5f79d4733/Core/ek_Edge%20silence%20cropper%20functions.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Increase pitch or rate for selected items.lua" type="script" desc="ek_Increase pitch or rate for selected items">
@@ -743,26 +759,39 @@
     </reapack>
   </category>
   <category name="Toolbars">
-    <reapack name="ek_Toggle last under docker window.lua" type="script" desc="ek_Toggle last under docker window">
+    <reapack name="ek_Toggle Docker - FX Browser.lua" type="script" desc="ek_Toggle Docker: Mixer">
       <metadata>
         <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
 {\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
 \widowctrl\hyphauto
 
-{\pard \ql \f0 \sa180 \li0 \fi0 This script helps to join several windows (on one docker region as usual) to one shortcut for toggling view. It remembers last opened window and toggle it.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 It remember Render Matrix button for toggling docker window\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 For work please install ek_Toggle last under docker window\par}
 }
 ]]></description>
       </metadata>
-      <version name="1.0.0" author="Ed Kashinsky" time="2022-05-30T09:42:49Z">
+      <version name="1.0.0" author="Ed Kashinsky" time="2022-10-20T19:35:40Z">
         <changelog><![CDATA[- Added core functions]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Toolbars/ek_Toggle%20last%20under%20docker%20window.lua</source>
-      </version>
-      <version name="1.0.1" author="Ed Kashinsky" time="2022-05-31T08:06:26Z">
-        <changelog><![CDATA[- Added core functions]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Toolbars/ek_Toggle%20last%20under%20docker%20window.lua</source>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d47e8c9575f22bae0af853465d40bbd5f79d4733/Toolbars/ek_Toggle%20Docker%20-%20FX%20Browser.lua</source>
       </version>
     </reapack>
-    <reapack name="ek_Toggle Media Browser window.lua" type="script" desc="ek_Toggle Media Browser window">
+    <reapack name="ek_Toggle Docker - Loudness.lua" type="script" desc="ek_Toggle Docker: Mixer">
+      <metadata>
+        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \ql \f0 \sa180 \li0 \fi0 It remember Render Matrix button for toggling docker window\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 For work please install ek_Toggle last under docker window\par}
+}
+]]></description>
+      </metadata>
+      <version name="1.0.0" author="Ed Kashinsky" time="2022-10-20T19:35:40Z">
+        <changelog><![CDATA[- Added core functions]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d47e8c9575f22bae0af853465d40bbd5f79d4733/Toolbars/ek_Toggle%20Docker%20-%20Loudness.lua</source>
+      </version>
+    </reapack>
+    <reapack name="ek_Toggle Docker - Media Explorer.lua" type="script" desc="ek_Toggle Docker: Media Explorer">
       <metadata>
         <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
 {\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
@@ -773,16 +802,12 @@
 }
 ]]></description>
       </metadata>
-      <version name="1.0.0" author="Ed Kashinsky" time="2022-05-30T09:42:49Z">
+      <version name="1.0.0" author="Ed Kashinsky" time="2022-10-20T19:35:40Z">
         <changelog><![CDATA[- Added core functions]]></changelog>
-        <source main="main mediaexplorer">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Toolbars/ek_Toggle%20Media%20Browser%20window.lua</source>
-      </version>
-      <version name="1.0.1" author="Ed Kashinsky" time="2022-05-31T08:06:26Z">
-        <changelog><![CDATA[- Added core functions]]></changelog>
-        <source main="main mediaexplorer">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Toolbars/ek_Toggle%20Media%20Browser%20window.lua</source>
+        <source main="main mediaexplorer">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d47e8c9575f22bae0af853465d40bbd5f79d4733/Toolbars/ek_Toggle%20Docker%20-%20Media%20Explorer.lua</source>
       </version>
     </reapack>
-    <reapack name="ek_Toggle MIDI Editor window in arrange.lua" type="script" desc="ek_Toggle MIDI Editor window in arrange">
+    <reapack name="ek_Toggle Docker - MIDI Editor.lua" type="script" desc="ek_Toggle MIDI Editor window in arrange">
       <metadata>
         <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
 {\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
@@ -793,33 +818,87 @@
 }
 ]]></description>
       </metadata>
-      <version name="1.0.0" author="Ed Kashinsky" time="2022-05-30T09:42:49Z">
+      <version name="1.0.0" author="Ed Kashinsky" time="2022-10-20T19:35:40Z">
         <changelog><![CDATA[- Added core functions]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Toolbars/ek_Toggle%20MIDI%20Editor%20window%20in%20arrange.lua</source>
-      </version>
-      <version name="1.0.1" author="Ed Kashinsky" time="2022-05-31T08:06:26Z">
-        <changelog><![CDATA[- Added core functions]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Toolbars/ek_Toggle%20MIDI%20Editor%20window%20in%20arrange.lua</source>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d47e8c9575f22bae0af853465d40bbd5f79d4733/Toolbars/ek_Toggle%20Docker%20-%20MIDI%20Editor.lua</source>
       </version>
     </reapack>
-    <reapack name="ek_Toggle MIDI Editor window.lua" type="script" desc="ek_Toggle MIDI Editor window">
+    <reapack name="ek_Toggle Docker - Mixer.lua" type="script" desc="ek_Toggle Docker: Mixer">
       <metadata>
         <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
 {\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
 \widowctrl\hyphauto
 
-{\pard \ql \f0 \sa180 \li0 \fi0 It remember MIDI Editor button for toggling docker window in MIDI Editor section\par}
-{\pard \ql \f0 \sa180 \li0 \fi0 For correct work please install ek_Toggle last under docker window\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 It remember Render Matrix button for toggling docker window\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 For work please install ek_Toggle last under docker window\par}
 }
 ]]></description>
       </metadata>
-      <version name="1.0.0" author="Ed Kashinsky" time="2022-05-30T09:42:49Z">
+      <version name="1.0.0" author="Ed Kashinsky" time="2022-10-20T19:35:40Z">
         <changelog><![CDATA[- Added core functions]]></changelog>
-        <source main="midi_editor">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Toolbars/ek_Toggle%20MIDI%20Editor%20window.lua</source>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d47e8c9575f22bae0af853465d40bbd5f79d4733/Toolbars/ek_Toggle%20Docker%20-%20Mixer.lua</source>
       </version>
-      <version name="1.0.1" author="Ed Kashinsky" time="2022-05-31T08:06:26Z">
+    </reapack>
+    <reapack name="ek_Toggle Docker - Render Matrix.lua" type="script" desc="ek_Toggle Docker: Render Matrix">
+      <metadata>
+        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \ql \f0 \sa180 \li0 \fi0 It remember Render Matrix button for toggling docker window\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 For work please install ek_Toggle last under docker window\par}
+}
+]]></description>
+      </metadata>
+      <version name="1.0.0" author="Ed Kashinsky" time="2022-10-20T19:35:40Z">
         <changelog><![CDATA[- Added core functions]]></changelog>
-        <source main="midi_editor">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Toolbars/ek_Toggle%20MIDI%20Editor%20window.lua</source>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d47e8c9575f22bae0af853465d40bbd5f79d4733/Toolbars/ek_Toggle%20Docker%20-%20Render%20Matrix.lua</source>
+      </version>
+    </reapack>
+    <reapack name="ek_Toggle Docker - toggle bottom window.lua" type="script" desc="ek_Toggle last under docker window">
+      <metadata>
+        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \ql \f0 \sa180 \li0 \fi0 This script helps to join several windows (on one docker region as usual) to one shortcut for toggling view. It remembers last opened window and toggle it.\par}
+}
+]]></description>
+      </metadata>
+      <version name="1.0.0" author="Ed Kashinsky" time="2022-10-20T19:35:40Z">
+        <changelog><![CDATA[- Added core functions]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d47e8c9575f22bae0af853465d40bbd5f79d4733/Toolbars/ek_Toggle%20Docker%20-%20toggle%20bottom%20window.lua</source>
+      </version>
+    </reapack>
+    <reapack name="ek_Toggle Docker - toggle right window.lua" type="script" desc="ek_Toggle last under docker window">
+      <metadata>
+        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \ql \f0 \sa180 \li0 \fi0 This script helps to join several windows (on one docker region as usual) to one shortcut for toggling view. It remembers last opened window and toggle it.\par}
+}
+]]></description>
+      </metadata>
+      <version name="1.0.0" author="Ed Kashinsky" time="2022-10-20T19:35:40Z">
+        <changelog><![CDATA[- Added core functions]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d47e8c9575f22bae0af853465d40bbd5f79d4733/Toolbars/ek_Toggle%20Docker%20-%20toggle%20right%20window.lua</source>
+      </version>
+    </reapack>
+    <reapack name="ek_Toggle Docker - Video.lua" type="script" desc="ek_Toggle Docker: Mixer">
+      <metadata>
+        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \ql \f0 \sa180 \li0 \fi0 It remember Render Matrix button for toggling docker window\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 For work please install ek_Toggle last under docker window\par}
+}
+]]></description>
+      </metadata>
+      <version name="1.0.0" author="Ed Kashinsky" time="2022-10-20T19:35:40Z">
+        <changelog><![CDATA[- Added core functions]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d47e8c9575f22bae0af853465d40bbd5f79d4733/Toolbars/ek_Toggle%20Docker%20-%20Video.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Toggle monitoring FX on slot 1.lua" type="script" desc="ek_Toggle monitoring fx plugin on slot 1">
@@ -930,26 +1009,6 @@
       </metadata>
       <version name="1.0.0" author="Ed Kashinsky" time="2022-05-30T09:42:49Z">
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Toolbars/ek_Toggle%20random%20color%20for%20selected%20items%20or%20tracks.lua</source>
-      </version>
-    </reapack>
-    <reapack name="ek_Toggle render matrix window.lua" type="script" desc="ek_Toggle render matrix window">
-      <metadata>
-        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
-{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
-\widowctrl\hyphauto
-
-{\pard \ql \f0 \sa180 \li0 \fi0 It remember Render Matrix button for toggling docker window\par}
-{\pard \ql \f0 \sa180 \li0 \fi0 For work please install ek_Toggle last under docker window\par}
-}
-]]></description>
-      </metadata>
-      <version name="1.0.0" author="Ed Kashinsky" time="2022-05-30T09:42:49Z">
-        <changelog><![CDATA[- Added core functions]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Toolbars/ek_Toggle%20render%20matrix%20window.lua</source>
-      </version>
-      <version name="1.0.1" author="Ed Kashinsky" time="2022-05-31T08:06:26Z">
-        <changelog><![CDATA[- Added core functions]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Toolbars/ek_Toggle%20render%20matrix%20window.lua</source>
       </version>
     </reapack>
   </category>
