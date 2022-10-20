@@ -1,10 +1,12 @@
--- @description ek_Toggle last under docker window
--- @version 1.0.0
+-- @description ek_Toggle Docker - toggle bottom window
+-- @version 1.0.1
 -- @author Ed Kashinsky
 -- @about
---   This script helps to join several windows (on one docker region as usual) to one shortcut for toggling view. It remembers last opened window and toggle it.
+--   Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"
+--
+--   This script helps to toggle last opened window situated in bottom docker
 -- @changelog
---   - Added core functions
+--   - Added script
 
 function CoreFunctionsLoaded()
 	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"

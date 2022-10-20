@@ -265,27 +265,59 @@ This script helps live with Project Limit option is on. It makes zoom available 
 
 This script helps live with Project Limit option is on. It makes zoom available to places behind limits
 
-#### ek_Toggle MIDI Editor window in arrange
+#### ek_Toggle Docker: FX Browser
 
-It remember MIDI Editor button for toggling docker window in arrange view
+Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"
 
-For correct work please install ek_Toggle last under docker window
+This script toggles "FX Browser" window
 
-#### ek_Toggle MIDI Editor window
+#### ek_Toggle Docker: Loudness
 
-It remember MIDI Editor button for toggling docker window in MIDI Editor section
+Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"
 
-For correct work please install ek_Toggle last under docker window
+This script toggles "Loudness" window
 
-#### ek_Toggle Media Browser window
+#### ek_Toggle Docker: MIDI Editor
 
-It remember Media Browser button for toggling docker window
+Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"
 
-For correct work please install ek_Toggle last under docker window
+This script toggles "MIDI Editor" window
 
-#### ek_Toggle last under docker window
+#### ek_Toggle Docker: Media Explorer
 
-This script helps to join several windows (on one docker region as usual) to one shortcut for toggling view. It remembers last opened window and toggle it.
+Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"
+
+This script toggles "Media Explorer" window
+
+#### ek_Toggle Docker: Mixer
+
+Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"
+
+This script toggles "Mixer" window
+
+#### ek_Toggle Docker: Render Matrix
+
+Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"
+
+This script toggles "Render Matrix" window
+
+#### ek_Toggle Docker: Mixer
+
+It remember Render Matrix button for toggling docker window
+
+For work please install ek_Toggle last under docker window
+
+#### ek_Toggle Docker - toggle bottom window
+
+Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"
+
+This script helps to toggle last opened window situated in bottom docker
+
+#### ek_Toggle Docker: toggle right window
+
+Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"
+
+This script helps to toggle last opened window situated in right docker
 
 #### ek_Toggle monitoring fx plugin on slot 1
 
@@ -312,12 +344,6 @@ This script monitors a certain fx slot in the monitoring chain and switches the 
 #### ek_Toggle random color for selected items or tracks
 
 It changes color for items or tracks depending on focus
-
-#### ek_Toggle render matrix window
-
-It remember Render Matrix button for toggling docker window
-
-For work please install ek_Toggle last under docker window
 
 #### ek_Collapse selected tracks
 

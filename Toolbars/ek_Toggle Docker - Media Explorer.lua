@@ -1,12 +1,12 @@
 -- @description ek_Toggle Docker: Media Explorer
--- @version 1.0.0
+-- @version 1.0.1
 -- @author Ed Kashinsky
 -- @about
---   It remember Media Browser button for toggling docker window
+--   Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"
 --
---   For correct work please install ek_Toggle last under docker window
+--   This script toggles "Media Explorer" window
 -- @changelog
---   - Added core functions
+--   - Added script
 -- @provides [main=main,mediaexplorer] .
 
 function CoreFunctionsLoaded()

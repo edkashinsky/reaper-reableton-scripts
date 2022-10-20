@@ -1,12 +1,12 @@
--- @description ek_Toggle MIDI Editor window in arrange
--- @version 1.0.0
+-- @description ek_Toggle Docker: MIDI Editor
+-- @version 1.0.1
 -- @author Ed Kashinsky
 -- @about
---   It remember MIDI Editor button for toggling docker window in arrange view
+--   Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"
 --
---   For correct work please install ek_Toggle last under docker window
+--   This script toggles "MIDI Editor" window
 -- @changelog
---   - Added core functions
+--   - Added script
 -- @provides [main] .
 
 function CoreFunctionsLoaded(script)
