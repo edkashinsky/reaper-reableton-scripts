@@ -1,5 +1,5 @@
--- @description ek_Toggle render matrix window
--- @version 1.0.1
+-- @description ek_Toggle Docker: Mixer
+-- @version 1.0.0
 -- @author Ed Kashinsky
 -- @about
 --   It remember Render Matrix button for toggling docker window
@@ -24,9 +24,9 @@ if not loaded then
 	return
 end
 
--- View: Show region render matrix window
-local actionId = 41888
-local s_new_value, filename, sectionID, cmdID = reaper.get_action_context()
+if not reaper.APIExists("JS_ReaScriptAPI_Version") then
+	reaper.MB("Please, install JS_ReaScriptAPI for this script to function. Thanks!", "JS_ReaScriptAPI is not installed", 0)
+	return
+end
 
-EK_StoreLastGroupedDockerWindow(sectionID, cmdID, actionId)
-EK_ToggleLastGroupedDockerWindow()
+TD_ToggleWindow("Loudness", reaper.NamedCommandLookup("_BR_ANALAYZE_LOUDNESS_DLG"))

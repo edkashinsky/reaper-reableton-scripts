@@ -1,12 +1,12 @@
 -- @description ek_Edge silence cropper
--- @version 1.0.0
+-- @version 1.0.1
 -- @author Ed Kashinsky
 -- @about
 --   This script helps to remove silence at the start and at the end of selected items by individual thresholds, pads and fades.
 --
 --   Also it provides UI for configuration
 -- @changelog
---   - Small fixes
+--   - Bug fixes: script now follows to play rate and fades created before cropping
 -- @provides
 --   ../Core/ek_Edge silence cropper functions.lua
 
@@ -22,7 +22,7 @@ end
 
 local loaded = CoreFunctionsLoaded("ek_Core functions.lua")
 if not loaded then
-	if loaded == nil then  reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0) end
+	if loaded == nil then reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0) end
 	return
 end
 
@@ -47,6 +47,7 @@ local function getEdgePositionsByItem(item)
 
     local take = reaper.GetActiveTake(item)
     local _, guid = reaper.GetSetMediaItemInfo_String(item, "GUID", "", false)
+    local rate = reaper.GetMediaItemTakeInfo_Value(take, "D_PLAYRATE")
 
     if not take or not guid then return end
 
@@ -54,18 +55,21 @@ local function getEdgePositionsByItem(item)
     local p_l_threshold = getTsParamValue(tsParams.leading.threshold)
     local p_t_threshold = getTsParamValue(tsParams.trailing.threshold)
 
-    if cachedPositions.leading[guid] and cachedPositions.leading[guid].threshold == p_l_threshold then
-        startTime = cachedPositions.leading[guid].position
+    local l_cache = cachedPositions.leading[guid]
+    local r_cache = cachedPositions.trailing[guid]
+
+    if l_cache and l_cache.threshold == p_l_threshold and l_cache.rate == rate then
+        startTime = l_cache.position
     else
         startTime = getStartPositionLouderThenThreshold(take, p_l_threshold)
-        cachedPositions.leading[guid] = { threshold = p_l_threshold, position = startTime }
+        cachedPositions.leading[guid] = { threshold = p_l_threshold, position = startTime, rate = rate }
     end
 
-    if cachedPositions.trailing[guid] and cachedPositions.trailing[guid].threshold == p_t_threshold then
-        endTime = cachedPositions.trailing[guid].position
+    if r_cache and r_cache.threshold == p_t_threshold and r_cache.rate == rate then
+        endTime = r_cache.position
     else
         endTime = getEndPositionLouderThenThreshold(take, p_t_threshold)
-        cachedPositions.trailing[guid] = { threshold = p_t_threshold, position = endTime }
+        cachedPositions.trailing[guid] = { threshold = p_t_threshold, position = endTime, rate = rate }
     end
 
     return startTime, endTime
@@ -233,6 +237,10 @@ local function preview_result()
         else
             clearBitmap(bm.leading, i)
             clearBitmap(bm.trailing, i)
+
+            local _, guid = reaper.GetSetMediaItemInfo_String(item, "GUID", "", false)
+            cachedPositions.leading[guid] = nil
+            cachedPositions.trailing[guid] = nil
         end
     end
 end
@@ -253,10 +261,11 @@ local function trimSilenceResult()
         local item = reaper.GetSelectedMediaItem(proj, i)
         local take = reaper.GetActiveTake(item)
 
-        local startTime, endTime = getEdgePositionsByItem(item)
+        local startTime = getStartPositionLouderThenThreshold(take, getTsParamValue(tsParams.leading.threshold))
+        if startTime > 0 then trimLeadingPosition(take, startTime) end
 
-        if startTime and startTime > 0 then trimLeadingPosition(take, startTime) end
-        if endTime and endTime > 0 then trimTrailingPosition(take, endTime - startTime) end
+        local endTime = getEndPositionLouderThenThreshold(take, getTsParamValue(tsParams.trailing.threshold))
+        if endTime > 0 then trimTrailingPosition(take, endTime) end
     end
 
     reaper.UpdateArrange()

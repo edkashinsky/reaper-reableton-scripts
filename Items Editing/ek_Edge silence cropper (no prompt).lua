@@ -52,16 +52,10 @@ if countSelectedItems > 0 then
 
         if take ~= nil then
             local startTime = getStartPositionLouderThenThreshold(take, leadingThreshold)
-
-            if startTime > 0 then
-                trimLeadingPosition(take, startTime)
-            end
+            if startTime > 0 then trimLeadingPosition(take, startTime) end
 
             local endTime = getEndPositionLouderThenThreshold(take, trailingThreshold)
-
-            if endTime > 0 then
-                trimTrailingPosition(take, endTime)
-            end
+            if endTime > 0 then trimTrailingPosition(take, endTime) end
         end
     end
 

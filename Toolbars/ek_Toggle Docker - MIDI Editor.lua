@@ -1,5 +1,5 @@
 -- @description ek_Toggle MIDI Editor window in arrange
--- @version 1.0.1
+-- @version 1.0.0
 -- @author Ed Kashinsky
 -- @about
 --   It remember MIDI Editor button for toggling docker window in arrange view
@@ -27,18 +27,37 @@ end
 
 CoreFunctionsLoaded("ek_Core functions startup.lua")
 
--- View: Toggle show MIDI editor windows
+if not reaper.APIExists("JS_ReaScriptAPI_Version") then
+	reaper.MB("Please, install JS_ReaScriptAPI for this script to function. Thanks!", "JS_ReaScriptAPI is not installed", 0)
+	return
+end
+
 local actionId = 40716
-local s_new_value, filename, sectionID, cmdID = reaper.get_action_context()
 
-GA_SetButtonForHighlight(ga_highlight_buttons.midi_editor, sectionID, cmdID)
-EK_StoreLastGroupedDockerWindow(sectionID, cmdID, actionId)
-EK_ToggleLastGroupedDockerWindow()
+local function isEditorAvailable()
+	local editor = reaper.MIDIEditor_GetActive()
+	local state = reaper.MIDIEditor_GetMode(editor)
 
-local midieditor = reaper.MIDIEditor_GetActive()
-local state = reaper.MIDIEditor_GetMode(midieditor)
+	if state ~= -1 then return true end
+
+	reaper.Main_OnCommand(actionId, 0)
+
+	editor = reaper.MIDIEditor_GetActive()
+	state = reaper.MIDIEditor_GetMode(editor)
+
+	reaper.Main_OnCommand(actionId, 0)
+
+	return state ~= -1
+end
+
+if not isEditorAvailable() then return end
+
+TD_ToggleWindow("Edit MIDI", actionId)
+
+local _, _, sectionID, cmdID = reaper.get_action_context()
+local editor = reaper.MIDIEditor_GetActive()
+local state = reaper.MIDIEditor_GetMode(editor)
 local newState = state ~= -1 and 1 or 0
 
-reaper.SetToggleCommandState(sectionID, cmdID, newState)	
+reaper.SetToggleCommandState(sectionID, cmdID, newState)
 reaper.RefreshToolbar2(sectionID, cmdID)
-

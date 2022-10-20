@@ -21,12 +21,11 @@ defProjPitchMode = -1
 dir_sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
 
 local ek_debug_level = ek_debug_levels.Off
-local ext_key_prefix = "ek_stuff"
-local delRow = ":"
-local delCol = ","
-local ext_key_global = "global_action_enabled"
-local last_grouped_docker_window_key = "last_grouped_docker_window"
-local opened_grouped_docker_window_key = "opened_grouped_docker_window"
+
+local key_ext_prefix = "ek_stuff"
+local key_ext_global = "ek_global_action_enabled"
+local key_td_windows_stack = "td_windows_stack"
+local key_td_last_windows = "td_last_windows"
 
 local _, dpi = reaper.ThemeLayout_GetLayout("tcp", -3)
 if reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32" then
@@ -45,8 +44,8 @@ function Log(msg, level, param)
 
 		msg = string.gsub(msg, "{param}", param)
 	else
-		if type(msg) == 'boolean' then msg = msg and 'true' or 'false' end
-		if type(msg) == 'table' then msg = serializeTable(msg) end
+		if type(msg) == 'table' then msg = serializeTable(msg)
+		else msg = tostring(msg) end
 	end
 
 	if msg then
@@ -67,11 +66,11 @@ function EK_ShowTooltip(fmt)
 end
 
 function EK_HasExtState(key)
-	return reaper.HasExtState(ext_key_prefix, key)
+	return reaper.HasExtState(key_ext_prefix, key)
 end
 
 function EK_GetExtState(key, default)
-    local value = reaper.GetExtState(ext_key_prefix, key)
+    local value = reaper.GetExtState(key_ext_prefix, key)
 
     if value == '' then return default end
 	if value == 'true' then value = true end
@@ -86,19 +85,19 @@ function EK_SetExtState(key, value)
 	if type(value) == 'boolean' then value = value and 'true' or 'false' end
 	if not value then value = "" end
 
-	reaper.SetExtState(ext_key_prefix, key, value, true)
+	reaper.SetExtState(key_ext_prefix, key, value, true)
 end
 
 function EK_DeleteExtState(key)
-	reaper.DeleteExtState(ext_key_prefix, key, true)
+	reaper.DeleteExtState(key_ext_prefix, key, true)
 end
 
 function EK_IsGlobalActionEnabled()
-	return EK_HasExtState(ext_key_global)
+	return reaper.HasExtState(key_ext_global, key_ext_global)
 end
 
 function EK_SetIsGlobalActionEnabled()
-	reaper.SetExtState(ext_key_prefix, ext_key_global, 1, false)
+	reaper.SetExtState(key_ext_global, key_ext_global, 1, false)
 end
 
 function EK_GetPitchModesForSelectedItems()
@@ -215,99 +214,167 @@ function EK_GetPitchModeBySubMode(id)
 	end
 end
 
-function EK_StoreLastGroupedDockerWindow(sectionId, commandId, actionId)
-	local id = sectionId .. delRow .. commandId .. delRow .. actionId
-	local isFind = false
-	local open_windows = EK_GetExtState(opened_grouped_docker_window_key)
-	if open_windows == nil then open_windows = "" end
-	local open_windows_arr = split(open_windows, delCol)
+local function TD_GetWindowByTitle(title)
+	--local main = reaper.GetMainHwnd()
+	--local _, list = reaper.JS_Window_ListAllChild(main)
+	--
+	--for address in list:gmatch('[^,]+') do
+	--	local hwnd = reaper.JS_Window_HandleFromAddress(address)
+	--	reaper.ShowConsoleMsg(reaper.JS_Window_GetTitle(hwnd) .. '\n')
+	--end
 
-	for i = 0, #open_windows_arr do
-		if open_windows_arr[i] == id then
-			isFind = true
-			break
-		end
+	if title == "Edit MIDI" then
+		return reaper.MIDIEditor_GetActive()
+	else
+		return reaper.JS_Window_Find(reaper.JS_Localize(title, 'common'), true)
 	end
-
-	if isFind == false then
-		table.insert(open_windows_arr, id);
-	end
-
-	local result = table.concat(open_windows_arr, delCol)
-
-	Log("=== Store grouped docker window ===", ek_log_levels.Warning)
-	Log("last grouped docker wnd: " .. id, ek_log_levels.Warning)
-	Log("opened grouped docker wnd: " .. result, ek_log_levels.Warning)
-
-	EK_SetExtState(opened_grouped_docker_window_key, result)
-	EK_SetExtState(last_grouped_docker_window_key, id)
 end
 
-function EK_ToggleLastGroupedDockerWindow()
-	-- close others tabs --
-	local last_window = EK_GetExtState(last_grouped_docker_window_key)
-	local open_windows = EK_GetExtState(opened_grouped_docker_window_key)
-	local open_windows_arr = split(open_windows, delCol)
-	
-	for i = 1, #open_windows_arr do
-		if open_windows_arr[i] ~= last_window then
-			local id = split(open_windows_arr[i], delRow)
-				
-			local state = reaper.GetToggleCommandStateEx(id[1], id[2])
-			if state == 1 then
-				reaper.Main_OnCommand(id[3], 0)
-				reaper.SetToggleCommandState(id[1], id[2], 0)	
+local function TD_IsWindowVisible(title)
+	local wnd = TD_GetWindowByTitle(title)
+
+	-- reaper.ShowConsoleMsg("WINDOW: " .. reaper.JS_Window_GetTitle(wnd) .. " (" .. title .. ")\n")
+
+	if title == "Edit MIDI" then
+		return reaper.MIDIEditor_GetMode(wnd) ~= -1
+	else
+		return reaper.JS_Window_IsVisible(wnd)
+	end
+end
+
+local function TD_StoreWindow(data, title)
+	-- debug clear
+	--EK_SetExtState(key_td_windows_stack, serializeTable({}))
+	--EK_SetExtState(key_td_last_windows, serializeTable({}))
+
+	local wnd = TD_GetWindowByTitle(title)
+	local dockerId, _ = reaper.DockIsChildOfDock(wnd)
+
+	-- if wnd == reaper.GetMainHwnd() or string.len(title) == 0 then return end
+
+	local windows = EK_GetExtState(key_td_windows_stack)
+	windows = windows ~= nil and unserializeTable(windows) or {}
+
+	if dockerId == -1 then return end
+
+	windows[title] = {
+		dockerId,
+		data.sectionId,
+		data.commandId,
+		data.actionId
+	}
+
+	windows = serializeTable(windows)
+
+	local last_windows = EK_GetExtState(key_td_last_windows)
+	last_windows = last_windows ~= nil and unserializeTable(last_windows) or {}
+
+	last_windows[dockerId] = title
+	last_windows = serializeTable(last_windows)
+
+	Log("=== Toggle Docker ===", ek_log_levels.Warning)
+	Log("Store window: " .. title, ek_log_levels.Warning)
+	Log(data, ek_log_levels.Warning)
+	Log("====", ek_log_levels.Warning)
+	Log(windows, ek_log_levels.Warning)
+	Log("====", ek_log_levels.Warning)
+
+	EK_SetExtState(key_td_windows_stack, windows)
+	EK_SetExtState(key_td_last_windows, last_windows)
+end
+
+local function TD_HideAllInDockerExcept(title)
+	local windows = EK_GetExtState(key_td_windows_stack)
+	windows = windows ~= nil and unserializeTable(windows) or {}
+
+	local dockerId = windows[title] and windows[title][1] or -1
+
+	Log("\nClicked: " .. title .. " (" .. dockerId .. ')')
+
+	for wTitle, data in pairs(windows) do
+		local wDockedId = data[1]
+		local wSectionId = data[2]
+		local wCommandId = data[3]
+		local wActionId = data[4]
+
+		if dockerId == wDockedId and wTitle ~= title then
+			local isVisible = TD_IsWindowVisible(wTitle)
+			local state = reaper.GetToggleCommandState(wActionId)
+
+			Log("\t" .. wTitle .. " (" .. wDockedId .. ") -> " .. (isVisible and 1 or 0) .. " " .. state)
+
+			if isVisible then
+				reaper.Main_OnCommand(wActionId, 0)
+				reaper.SetToggleCommandState(wSectionId, wCommandId, 0)
+				reaper.RefreshToolbar2(wSectionId, wCommandId)
 			end
 		end
 	end
-		
-	-- toggle current --
-	local current_tab_arr = split(last_window, delRow)
-	local sectionId = current_tab_arr[1]
-	local commandId = current_tab_arr[2]
-	local actionId = current_tab_arr[3]
-	
-	local state = reaper.GetToggleCommandState(commandId)
-	local newState
-	
-	if state == 1 then
-		newState = 0
-	else
-		newState = 1
-	end
-	
-	Log("=== Toggle last docker window ===", ek_log_levels.Warning)
-	Log("last grouped docker wnd: " .. last_window, ek_log_levels.Warning)
-	Log("opened grouped docker wnd: " .. open_windows, ek_log_levels.Warning)
-	Log(sectionId .. " " .. commandId .. " " .. newState, ek_log_levels.Warning)
-	
+end
+
+function TD_ToggleWindow(title, actionId)
+	local _, _, sectionID, cmdID = reaper.get_action_context()
+	local isVisible = TD_IsWindowVisible(title)
+
+	TD_HideAllInDockerExcept(title)
+
 	reaper.Main_OnCommand(actionId, 0)
-	reaper.SetToggleCommandState(sectionId, commandId, newState)
+	reaper.SetToggleCommandState(sectionID, cmdID, isVisible and 0 or 1)
+	reaper.RefreshToolbar2(sectionID, cmdID)
+
+	if not isVisible then
+		TD_StoreWindow({
+			sectionId = sectionID,
+			commandId = cmdID,
+			actionId = actionId
+		}, title)
+	end
+end
+
+function TD_ToggleLastWindow(dockerId)
+	local windows = EK_GetExtState(key_td_windows_stack)
+	windows = windows ~= nil and unserializeTable(windows) or {}
+
+	local dockers = EK_GetExtState(key_td_last_windows)
+	dockers = dockers ~= nil and unserializeTable(dockers) or {}
+
+	local title = dockers[dockerId]
+	if not title then return end
+
+	Log("Toggling " .. title)
+
+	TD_HideAllInDockerExcept(title)
+
+	local isVisible = TD_IsWindowVisible(title)
+	local data = windows[title]
+	if not data then return end
+
+	local sectionId = data[2]
+	local commandId = data[3]
+	local actionId = data[4]
+
+	reaper.Main_OnCommand(actionId, 0)
+	reaper.SetToggleCommandState(sectionId, commandId, isVisible and 0 or 1)
 	reaper.RefreshToolbar2(sectionId, commandId)
 end
 
-function EK_SyncLastGroupedDockerWindows()
-	-- close others tabs --
-	local open_windows = EK_GetExtState(opened_grouped_docker_window_key)
-	local open_windows_arr = split(open_windows, delCol)
-	local isAnyWindowOpened = false
+function TD_SyncOpenedWindows()
+	local windows = EK_GetExtState(key_td_windows_stack)
+	windows = windows ~= nil and unserializeTable(windows) or {}
 
-	for i = 1, #open_windows_arr do
-		local id = split(open_windows_arr[i], delRow)
+	for wTitle, data in pairs(windows) do
+		local wSectionId = data[2]
+		local wCommandId = data[3]
+		local isVisible = TD_IsWindowVisible(wTitle)
+		local isActive = reaper.GetToggleCommandStateEx(wSectionId, wCommandId) == 1
 
-		local state = reaper.GetToggleCommandStateEx(id[1], id[3])
-		if state == 1 then
-			reaper.SetToggleCommandState(id[1], id[2], 1)
-			reaper.RefreshToolbar2(id[1], id[2])
-			isAnyWindowOpened = true
+		-- reaper.ShowConsoleMsg(wTitle .. " " .. (isVisible and 1 or 0) .. " " .. (isActive and 1 or 0) .. "\n")
+
+		if isVisible ~= isActive then
+			reaper.SetToggleCommandState(wSectionId, wCommandId, isVisible and 1 or 0)
+			reaper.RefreshToolbar2(wSectionId, wCommandId)
 		end
 	end
-
-
-	--if not isAnyWindowOpened then
-	--	EK_SetExtState(last_grouped_docker_window_key, "")
-	--	EK_SetExtState(opened_grouped_docker_window_key, "")
-	--end
 end
 
 function split(str, pat)
@@ -344,35 +411,6 @@ function join(list, delimiter)
 	end
 
 	return string
-end
-
-function serializeTable(val, name, skipnewlines, depth)
-    skipnewlines = skipnewlines or false
-    depth = depth or 0
-
-    local tmp = string.rep(" ", depth)
-
-    if name then tmp = tmp .. name .. " = " end
-
-    if type(val) == "table" then
-        tmp = tmp .. "{" .. (not skipnewlines and "\n" or "")
-
-        for k, v in pairs(val) do
-            tmp =  tmp .. serializeTable(v, k, skipnewlines, depth + 1) .. "," .. (not skipnewlines and "\n" or "")
-        end
-
-        tmp = tmp .. string.rep(" ", depth) .. "}"
-    elseif type(val) == "number" then
-        tmp = tmp .. tostring(val)
-    elseif type(val) == "string" then
-        tmp = tmp .. string.format("%q", val)
-    elseif type(val) == "boolean" then
-        tmp = tmp .. (val and "true" or "false")
-    else
-        tmp = tmp .. "\"[inserializeable datatype:" .. type(val) .. "]\""
-    end
-
-    return tmp
 end
 
 function round(number, decimals)
@@ -552,3 +590,98 @@ ek_colors = {
 	White = getColor({ 255, 255, 255 }),
 }
 
+local Pickle = {
+	clone = function(t)
+		local nt = {}
+
+	  	for i, v in pairs(t) do
+			nt[i] = v
+	  	end
+
+	  	return nt
+  	end
+}
+
+function Pickle:pickle_(root)
+	if type(root) ~= "table" then error("can only pickle tables, not ".. type(root).."s") end
+
+	self._tableToRef = {}
+	self._refToTable = {}
+	local savecount = 0
+	self:ref_(root)
+	local s = ""
+
+	while #self._refToTable > savecount do
+		savecount = savecount + 1
+		local t = self._refToTable[savecount]
+		s = s.."{"
+
+		for i, v in pairs(t) do
+			s = string.format("%s[%s]=%s,", s, self:value_(i), self:value_(v))
+		end
+		s = s.."},"
+	end
+
+	return string.format("{%s}", s)
+end
+
+function Pickle:value_(v)
+	local vtype = type(v)
+
+	if vtype == "string" then return string.format("%q", v)
+	elseif vtype == "number" then return v
+	elseif vtype == "boolean" then return tostring(v)
+	elseif vtype == "table" then return "{"..self:ref_(v).."}"
+	else error("pickle a "..type(v).." is not supported") end
+end
+
+function Pickle:ref_(t)
+	local ref = self._tableToRef[t]
+
+	if not ref then
+		if t == self then error("can't pickle the pickle class") end
+
+		table.insert(self._refToTable, t)
+		ref = #self._refToTable
+		self._tableToRef[t] = ref
+	end
+
+	return ref
+end
+
+function serializeTable(t)
+	return Pickle:clone():pickle_(t)
+end
+
+function unserializeTable(s)
+	if s == nil or s == '' then return end
+	if type(s) ~= "string" then error("can't unpickle a "..type(s)..", only strings") end
+
+	local gentables = load("return " .. s)
+	if gentables then
+		local tables = gentables()
+
+		if tables then
+			for tnum = 1, #tables do
+				local t = tables[tnum]
+				local tcopy = {}
+
+				for i, v in
+					pairs(t) do tcopy[i] = v
+				end
+
+				for i, v in pairs(tcopy) do
+					local ni, nv
+					if type(i) == "table" then ni = tables[i[1]] else ni = i end
+					if type(v) == "table" then nv = tables[v[1]] else nv = v end
+					t[i] = nil
+					t[ni] = nv
+				end
+			end
+
+			return tables[1]
+		end
+	else
+		--error
+	end
+end

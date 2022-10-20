@@ -1,5 +1,5 @@
 -- @description ek_Global startup action
--- @version 1.0.11
+-- @version 1.0.12
 -- @author Ed Kashinsky
 -- @about
 --   This is startup action brings some ableton-like features in realtime. You can control any option by 'ek_Global startup action settings' script.
@@ -13,7 +13,7 @@
 --      5. Restart Reaper
 --      6. Open 'ek_Global startup action settings' for customize options
 -- @changelog
---   - added observing or grid modes
+--   - added toggle docker feature
 -- @provides
 --   ek_Core functions startup.lua
 
@@ -139,7 +139,7 @@ local function observeGlobalAction()
 	end
 
 	if changes.play_state then
-		EK_SyncLastGroupedDockerWindows()
+		TD_SyncOpenedWindows()
 	end
 
 	reaper.defer(observeGlobalAction)
@@ -153,5 +153,5 @@ if command ~= 0 then
 	reaper.Main_OnCommand(command, 0)
 end
 
+TD_SyncOpenedWindows()
 EK_SetIsGlobalActionEnabled()
-EK_SyncLastGroupedDockerWindows()

@@ -38,191 +38,191 @@ tsParams = {
 local r = reaper
 
 local function getDataForAccessor(take)
-  -- Get media source of media item take
-  local take_pcm_source = r.GetMediaItemTake_Source(take)
-  if take_pcm_source == nil then return end
+    -- Get media source of media item take
+    local take_pcm_source = r.GetMediaItemTake_Source(take)
+    if take_pcm_source == nil then return end
 
-  -- Create take audio accessor
-  local aa = r.CreateTakeAudioAccessor(take)
-  
-  if aa == nil then return end
+    -- Create take audio accessor
+    local aa = r.CreateTakeAudioAccessor(take)
 
-  -- Get the start time of the audio that can be returned from this accessor
-  local aa_start = r.GetAudioAccessorStartTime(aa)
-  -- Get the end time of the audio that can be returned from this accessor
-  local aa_end = r.GetAudioAccessorEndTime(aa)
-  local a_length = (aa_end - aa_start) / 25
+    if aa == nil then return end
 
-  if a_length <= 1 then a_length = 1 elseif a_length > 20 then a_length = 20 end
-  
-  -- Get the number of channels in the source media.
-  local take_source_num_channels =  r.GetMediaSourceNumChannels(take_pcm_source)
-  if take_source_num_channels > 2 then take_source_num_channels = 2 end
+    -- Get the start time of the audio that can be returned from this accessor
+    local aa_start = r.GetAudioAccessorStartTime(aa)
+    -- Get the end time of the audio that can be returned from this accessor
+    local aa_end = r.GetAudioAccessorEndTime(aa)
+    local a_length = (aa_end - aa_start) / 25
 
-  -- Get the sample rate. MIDI source media will return zero.
-  local take_source_sample_rate = r.GetMediaSourceSampleRate(take_pcm_source)
- 
-  -- How many samples are taken from audio accessor and put in the buffer
-  local samples_per_channel = take_source_sample_rate / 2
-  
-  return aa, a_length, aa_start, aa_end, take_source_sample_rate, take_source_num_channels, samples_per_channel
+    if a_length <= 1 then a_length = 1 elseif a_length > 20 then a_length = 20 end
+
+    -- Get the number of channels in the source media.
+    local take_source_num_channels =  r.GetMediaSourceNumChannels(take_pcm_source)
+    if take_source_num_channels > 2 then take_source_num_channels = 2 end
+
+    -- Get the sample rate. MIDI source media will return zero.
+    local take_source_sample_rate = r.GetMediaSourceSampleRate(take_pcm_source)
+
+    -- How many samples are taken from audio accessor and put in the buffer
+    local samples_per_channel = take_source_sample_rate / 2
+
+    return aa, a_length, aa_start, aa_end, take_source_sample_rate, take_source_num_channels, samples_per_channel
 end
 
 function getStartPositionLouderThenThreshold(take, threshold)
-  if take == nil then return end
-  
-  local aa, a_length, aa_start, aa_end, take_source_sample_rate, take_source_num_channels, samples_per_channel = getDataForAccessor(take)
-  
-  local peak = 0
-  local peakTime = 0
-  
-  -- Samples are collected to this buffer
-  local buffer = r.new_array(samples_per_channel * take_source_num_channels)
-  local sample_count = 0
-  local offs = aa_start
-  local total_samples = (aa_end - aa_start) * (take_source_sample_rate/a_length)
+    if take == nil then return end
 
-  if total_samples < 1 then return end
-  
-  -- Loop through samples
-  while sample_count < total_samples do
-    -- Get a block of samples from the audio accessor.
-    -- Samples are extracted immediately pre-FX,
-    -- and returned interleaved (first sample of first channel, 
-    -- first sample of second channel...). Returns 0 if no audio, 1 if audio, -1 on error.
-    local aa_ret = r.GetAudioAccessorSamples(
-      aa,                       -- AudioAccessor accessor
-      take_source_sample_rate,  -- integer samplerate
-      take_source_num_channels, -- integer numchannels
-      offs,                     -- number starttime_sec
-      samples_per_channel,      -- integer numsamplesperchannel
-      buffer                    -- r.array samplebuffer
-    )
-    
-    if aa_ret == 1 then
-      for i = 1, #buffer, take_source_num_channels do
-        if sample_count == total_samples then
-          audio_end_reached = true
-          break
-        end
-      
-        for j = 1, take_source_num_channels do
-          local buf_pos = i + j - 1
-          local spl = buffer[buf_pos]
-          
-          if spl > -1 and spl < 1 then
-            local db = sample_to_db(spl)
-          
-            if db >= threshold then
-              peak = db
-              peakTime = offs + (buf_pos / (take_source_sample_rate * take_source_num_channels))
-              
-              goto done_start
+    local aa, a_length, aa_start, aa_end, take_source_sample_rate, take_source_num_channels, samples_per_channel = getDataForAccessor(take)
+
+    local peak = 0
+    local peakTime = 0
+
+    -- Samples are collected to this buffer
+    local buffer = r.new_array(samples_per_channel * take_source_num_channels)
+    local sample_count = 0
+    local offs = aa_start
+    local total_samples = (aa_end - aa_start) * (take_source_sample_rate/a_length)
+
+    if total_samples < 1 then return end
+
+    -- Loop through samples
+    while sample_count < total_samples do
+      -- Get a block of samples from the audio accessor.
+      -- Samples are extracted immediately pre-FX,
+      -- and returned interleaved (first sample of first channel,
+      -- first sample of second channel...). Returns 0 if no audio, 1 if audio, -1 on error.
+      local aa_ret = r.GetAudioAccessorSamples(
+        aa,                       -- AudioAccessor accessor
+        take_source_sample_rate,  -- integer samplerate
+        take_source_num_channels, -- integer numchannels
+        offs,                     -- number starttime_sec
+        samples_per_channel,      -- integer numsamplesperchannel
+        buffer                    -- r.array samplebuffer
+      )
+
+      if aa_ret == 1 then
+        for i = 1, #buffer, take_source_num_channels do
+          if sample_count == total_samples then
+            audio_end_reached = true
+            break
+          end
+
+          for j = 1, take_source_num_channels do
+            local buf_pos = i + j - 1
+            local spl = buffer[buf_pos]
+
+            if spl > -1 and spl < 1 then
+              local db = sample_to_db(spl)
+
+              if db >= threshold then
+                peak = db
+                peakTime = offs + (buf_pos / (take_source_sample_rate * take_source_num_channels))
+
+                goto done_start
+              end
             end
           end
+
+          sample_count = sample_count + 1
         end
-      
-        sample_count = sample_count + 1
+      elseif aa_ret == 0 then -- no audio in current buffer
+         sample_count = sample_count + samples_per_channel
+      else
+        return
       end
-    elseif aa_ret == 0 then -- no audio in current buffer
-       sample_count = sample_count + samples_per_channel
-    else
-      return
-    end
-     
-    offs = offs + samples_per_channel / take_source_sample_rate -- new offset in take source (seconds)
-  end -- end of while loop
-   
-  ::done_start::
-  
-  r.DestroyAudioAccessor(aa)
-  
-  Log("Start point detected: " .. round(peak, 2) .. "db " .. round(peakTime, 3) .. "s", ek_log_levels.Notice)
-  
-  return peakTime
+
+      offs = offs + samples_per_channel / take_source_sample_rate -- new offset in take source (seconds)
+    end -- end of while loop
+
+    ::done_start::
+
+    r.DestroyAudioAccessor(aa)
+
+    Log("Start point detected: " .. round(peak, 2) .. "db " .. round(peakTime, 3) .. "s", ek_log_levels.Notice)
+
+    return peakTime
 end
 
 function getEndPositionLouderThenThreshold(take, threshold)  
-  if take == nil then return end
-  
-  local aa, a_length, aa_start, aa_end, take_source_sample_rate, take_source_num_channels, samples_per_channel = getDataForAccessor(take)
-  
-  local peak = 0
-  local peakTime = 0
-  
-  -- Samples are collected to this buffer
-  local buffer = r.new_array(samples_per_channel * take_source_num_channels)
-  local offs = aa_end - samples_per_channel / take_source_sample_rate
-  local total_samples = (aa_end - aa_start) * (take_source_sample_rate/a_length)
-  local sample_count = total_samples
+    if take == nil then return end
 
-  if total_samples < 1 then return end
-  
-  -- Loop through samples
-  while sample_count > 0 do
-    -- Get a block of samples from the audio accessor.
-    -- Samples are extracted immediately pre-FX,
-    -- and returned interleaved (first sample of first channel, 
-    -- first sample of second channel...). Returns 0 if no audio, 1 if audio, -1 on error.
-    local aa_ret = r.GetAudioAccessorSamples(
-      aa,                       -- AudioAccessor accessor
-      take_source_sample_rate,  -- integer samplerate
-      take_source_num_channels, -- integer numchannels
-      offs,                     -- number starttime_sec
-      samples_per_channel,      -- integer numsamplesperchannel
-      buffer                    -- r.array samplebuffer
-    )
-    
-    if aa_ret == 1 then
-      local curPeak = nil
-      local curPeakTime = nil
-      
-      for i = 1, #buffer, take_source_num_channels do
-        if sample_count == 0 then
-          audio_end_reached = true
-          break
-        end
-      
-        for j = 1, take_source_num_channels do
-          local buf_pos = i + j - 1
-          local spl = buffer[buf_pos]
-          
-          if spl > -1 and spl < 1 then
-            local db = sample_to_db(spl)
-          
-            if db >= threshold then
-              curPeak = db
-              curPeakTime = offs + (buf_pos / (take_source_sample_rate * take_source_num_channels))
+    local aa, a_length, aa_start, aa_end, take_source_sample_rate, take_source_num_channels, samples_per_channel = getDataForAccessor(take)
+
+    local peak = 0
+    local peakTime = 0
+
+    -- Samples are collected to this buffer
+    local buffer = r.new_array(samples_per_channel * take_source_num_channels)
+    local offs = aa_end - samples_per_channel / take_source_sample_rate
+    local total_samples = (aa_end - aa_start) * (take_source_sample_rate/a_length)
+    local sample_count = total_samples
+
+    if total_samples < 1 then return end
+
+    -- Loop through samples
+    while sample_count > 0 do
+      -- Get a block of samples from the audio accessor.
+      -- Samples are extracted immediately pre-FX,
+      -- and returned interleaved (first sample of first channel,
+      -- first sample of second channel...). Returns 0 if no audio, 1 if audio, -1 on error.
+      local aa_ret = r.GetAudioAccessorSamples(
+        aa,                       -- AudioAccessor accessor
+        take_source_sample_rate,  -- integer samplerate
+        take_source_num_channels, -- integer numchannels
+        offs,                     -- number starttime_sec
+        samples_per_channel,      -- integer numsamplesperchannel
+        buffer                    -- r.array samplebuffer
+      )
+
+      if aa_ret == 1 then
+        local curPeak = nil
+        local curPeakTime = nil
+
+        for i = 1, #buffer, take_source_num_channels do
+          if sample_count == 0 then
+            audio_end_reached = true
+            break
+          end
+
+          for j = 1, take_source_num_channels do
+            local buf_pos = i + j - 1
+            local spl = buffer[buf_pos]
+
+            if spl > -1 and spl < 1 then
+              local db = sample_to_db(spl)
+
+              if db >= threshold then
+                curPeak = db
+                curPeakTime = offs + (buf_pos / (take_source_sample_rate * take_source_num_channels))
+              end
             end
           end
+
+          sample_count = sample_count - 1
         end
-      
-        sample_count = sample_count - 1
+
+        if curPeakTime ~= nil then
+          peak = curPeak
+          peakTime = curPeakTime
+
+          goto done_end
+        end
+
+      elseif aa_ret == 0 then -- no audio in current buffer
+         sample_count = sample_count - samples_per_channel
+      else
+        return
       end
-      
-      if curPeakTime ~= nil then
-        peak = curPeak
-        peakTime = curPeakTime
-        
-        goto done_end
-      end
-      
-    elseif aa_ret == 0 then -- no audio in current buffer
-       sample_count = sample_count - samples_per_channel
-    else
-      return
-    end
-     
-    offs = offs - samples_per_channel / take_source_sample_rate -- new offset in take source (seconds)
-  end -- end of while loop
-   
-  ::done_end::
-  
-  r.DestroyAudioAccessor(aa)
-  
-  Log("End point detected: " .. round(peak, 2) .. "db " .. round(peakTime, 3) .. "s", ek_log_levels.Notice)
-  
-  return peakTime
+
+      offs = offs - samples_per_channel / take_source_sample_rate -- new offset in take source (seconds)
+    end -- end of while loop
+
+    ::done_end::
+
+    r.DestroyAudioAccessor(aa)
+
+    Log("End point detected: " .. round(peak, 2) .. "db " .. round(peakTime, 3) .. "s", ek_log_levels.Notice)
+
+    return peakTime
 end
 
 function getTsParamValue(param)
@@ -233,36 +233,47 @@ function setTsParamValue(param, value)
     EK_SetExtState(param.key, value)
 end
 
-function trimLeadingPosition(take, startOffset)
-  startOffset = startOffset - getTsParamValue(tsParams.leading.pad)
-  
-  if startOffset < 0 then return end
-  
-  local item = r.GetMediaItemTake_Item(take)
-    
-  local offset = r.GetMediaItemTakeInfo_Value(take, "D_STARTOFFS")
-   
-  r.SetMediaItemTakeInfo_Value(take, "D_STARTOFFS", offset + startOffset)
-    
-  local position = r.GetMediaItemInfo_Value(item, "D_POSITION")
-  reaper.SetMediaItemInfo_Value(item, "D_POSITION", position + startOffset)
-    
-  local length = r.GetMediaItemInfo_Value(item, "D_LENGTH")
-  reaper.SetMediaItemInfo_Value(item, "D_LENGTH", length - startOffset)
-    
-  reaper.SetMediaItemInfo_Value(item, "D_FADEINLEN", getTsParamValue(tsParams.leading.fade))
+local function getOffsetConsiderPitchByRate(offset, rate)
+    local semiFactor = 2 ^ (1 / 12) -- Rate: 2.0 = Pitch * 12
+    local semitones = round(math.log(rate, semiFactor), 5)
+    local curSemiFactor = 2 ^ ((1 / 12) * math.abs(semitones))
+
+    -- reaper.ShowConsoleMsg(semitones .. "\n")
+
+    return semitones > 0 and (offset * curSemiFactor) or (offset / curSemiFactor)
 end
 
-function trimTrailingPosition(take, startOffset)
-  startOffset = startOffset + getTsParamValue(tsParams.trailing.pad)
+function trimLeadingPosition(take, startOffset)
+    startOffset = startOffset - getTsParamValue(tsParams.leading.pad)
   
-  local item = r.GetMediaItemTake_Item(take)
-  local length = r.GetMediaItemInfo_Value(item, "D_LENGTH")
+    if startOffset < 0 then return end
   
-  if startOffset > length then return end
-  
-  endOffset = length - startOffset
+    local item = r.GetMediaItemTake_Item(take)
+    local offset = r.GetMediaItemTakeInfo_Value(take, "D_STARTOFFS")
+    local rate = reaper.GetMediaItemTakeInfo_Value(take, "D_PLAYRATE")
+    local startOffsetAbs = getOffsetConsiderPitchByRate(startOffset, rate)
+
+    -- reaper.ShowConsoleMsg(semitones .. " " .. startOffset .. " " ..  startOffsetAbs .. "\n")
+
+    r.SetMediaItemTakeInfo_Value(take, "D_STARTOFFS", offset + startOffsetAbs)
     
-  reaper.SetMediaItemInfo_Value(item, "D_LENGTH", length - endOffset)
-  reaper.SetMediaItemInfo_Value(item, "D_FADEOUTLEN", getTsParamValue(tsParams.trailing.fade))
+    local position = r.GetMediaItemInfo_Value(item, "D_POSITION")
+    reaper.SetMediaItemInfo_Value(item, "D_POSITION", position + startOffset)
+    
+    local length = r.GetMediaItemInfo_Value(item, "D_LENGTH")
+    reaper.SetMediaItemInfo_Value(item, "D_LENGTH", length - startOffset)
+    
+    reaper.SetMediaItemInfo_Value(item, "D_FADEINLEN", getTsParamValue(tsParams.leading.fade))
+end
+
+function trimTrailingPosition(take, endOffset)
+    endOffset = endOffset + getTsParamValue(tsParams.trailing.pad)
+  
+    local item = r.GetMediaItemTake_Item(take)
+    local length = r.GetMediaItemInfo_Value(item, "D_LENGTH")
+
+    if endOffset > length then return end
+    
+    reaper.SetMediaItemInfo_Value(item, "D_LENGTH", endOffset)
+    reaper.SetMediaItemInfo_Value(item, "D_FADEOUTLEN", getTsParamValue(tsParams.trailing.fade))
 end

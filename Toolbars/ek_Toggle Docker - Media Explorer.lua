@@ -1,5 +1,5 @@
--- @description ek_Toggle Media Browser window
--- @version 1.0.1
+-- @description ek_Toggle Docker: Media Explorer
+-- @version 1.0.0
 -- @author Ed Kashinsky
 -- @about
 --   It remember Media Browser button for toggling docker window
@@ -21,13 +21,13 @@ end
 
 local loaded = CoreFunctionsLoaded()
 if not loaded then
-	if loaded == nil then  reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0) end
+	if loaded == nil then reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0) end
 	return
 end
 
--- Media explorer: Show/hide media explorer
-local actionId = 50124
-local s_new_value, filename, sectionID, cmdID = reaper.get_action_context()
+if not reaper.APIExists("JS_ReaScriptAPI_Version") then
+	reaper.MB("Please, install JS_ReaScriptAPI for this script to function. Thanks!", "JS_ReaScriptAPI is not installed", 0)
+	return
+end
 
-EK_StoreLastGroupedDockerWindow(sectionID, cmdID, actionId)
-EK_ToggleLastGroupedDockerWindow()
+TD_ToggleWindow("Media Explorer", 50124)

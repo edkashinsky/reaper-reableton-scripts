@@ -1,8 +1,10 @@
--- @description ek_Toggle last under docker window
--- @version 1.0.1
+-- @description ek_Toggle Docker: Render Matrix
+-- @version 1.0.0
 -- @author Ed Kashinsky
 -- @about
---   This script helps to join several windows (on one docker region as usual) to one shortcut for toggling view. It remembers last opened window and toggle it.
+--   It remember Render Matrix button for toggling docker window
+--
+--   For work please install ek_Toggle last under docker window
 -- @changelog
 --   - Added core functions
 
@@ -18,8 +20,13 @@ end
 
 local loaded = CoreFunctionsLoaded()
 if not loaded then
-	if loaded == nil then  reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0) end
+	if loaded == nil then reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0) end
 	return
 end
 
-EK_ToggleLastGroupedDockerWindow()
+if not reaper.APIExists("JS_ReaScriptAPI_Version") then
+	reaper.MB("Please, install JS_ReaScriptAPI for this script to function. Thanks!", "JS_ReaScriptAPI is not installed", 0)
+	return
+end
+
+TD_ToggleWindow("Region Render Matrix", 41888)
