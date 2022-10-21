@@ -265,6 +265,22 @@ This script helps live with Project Limit option is on. It makes zoom available 
 
 This script helps live with Project Limit option is on. It makes zoom available to places behind limits
 
+#### ek_Switch to next grid step (MIDI Editor)
+
+Switching to next grid step settings in MIDI Editor depending on adaptive or not
+
+#### ek_Switch to next grid step
+
+Switching to next grid step settings depending on adaptive or not
+
+#### ek_Switch to prev grid step (MIDI Editor)
+
+Switching to prev grid step settings in MIDI Editor depending on adaptive or not
+
+#### ek_Switch to prev grid step
+
+Switching to prev grid step settings depending on adaptive or not
+
 #### ek_Toggle Docker: FX Browser
 
 Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"
