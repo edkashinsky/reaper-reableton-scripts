@@ -1,5 +1,5 @@
 -- @description ek_Global startup action
--- @version 1.0.12
+-- @version 1.0.13
 -- @author Ed Kashinsky
 -- @about
 --   This is startup action brings some ableton-like features in realtime. You can control any option by 'ek_Global startup action settings' script.
@@ -13,7 +13,7 @@
 --      5. Restart Reaper
 --      6. Open 'ek_Global startup action settings' for customize options
 -- @changelog
---   - added toggle docker feature
+--   - added function for quick switching between grid settings
 -- @provides
 --   ek_Core functions startup.lua
 

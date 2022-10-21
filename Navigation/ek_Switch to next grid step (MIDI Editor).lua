@@ -1,0 +1,71 @@
+-- @description ek_Switch to next grid step (MIDI Editor)
+-- @version 1.0.0
+-- @author Ed Kashinsky
+-- @about
+--   Switching to next grid step settings in MIDI Editor depending on adaptive or not
+-- @changelog
+--   - Added script
+-- @provides [main=midi_editor] .
+
+function CoreFunctionsLoaded(script)
+	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
+	local root_path = debug.getinfo(1, 'S').source:sub(2, -5):match("(.*" .. sep .. ")")
+	local script_path = root_path .. ".." .. sep .. "Core" .. sep .. script
+	local file = io.open(script_path, 'r')
+
+	if file then file:close() dofile(script_path) else return nil end
+	return not not _G["EK_HasExtState"]
+end
+
+local loaded = CoreFunctionsLoaded("ek_Core functions.lua")
+if not loaded then
+	if loaded == nil then  reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0) end
+	return
+end
+
+if not CoreFunctionsLoaded("ek_Core functions startup.lua") then
+	reaper.MB('Global startup action is missing. Please install "ek_Global startup action" it via ReaPack (Action: Browse packages)', '', 0)
+	return
+end
+
+if not EK_IsGlobalActionEnabled() then
+	reaper.MB('Please add "ek_Global startup action" as Global startup action (Extenstions -> Startup Actions -> Set global startup action) for realtime highlighting of this button', '', 0)
+end
+
+local MidiEditor = reaper.MIDIEditor_GetActive()
+if not MidiEditor then return end
+
+local values = ga_settings.midi_grid_setting.select_values
+local value = tonumber(GA_GetSettingValue(ga_settings.midi_grid_setting))
+local isAdaptive = in_array(ga_settings.midi_grid_setting.adaptive_grid_values, value)
+local newValue = value + 1
+local availableValues = {}
+
+for i = 0, #values - 1 do
+	if isAdaptive and in_array(ga_settings.midi_grid_setting.adaptive_grid_values, i) then
+		table.insert(availableValues, i)
+	elseif not isAdaptive and not in_array(ga_settings.midi_grid_setting.adaptive_grid_values, i) then
+		table.insert(availableValues, i)
+	end
+end
+
+if in_array(availableValues, newValue) then
+	GA_SetSettingValue(ga_settings.midi_grid_setting, newValue)
+	Log("Set midi grid: " .. newValue)
+
+	local zoom_level = math.floor(GA_GetHZoomLevelForMidiEditor())
+	local id = tonumber(GA_GetSettingValue(ga_settings.midi_grid_setting))
+	local settings = GA_GetGridSettings(id)
+	local grid
+
+	if settings.is_adapt then
+		grid = GA_GetAdaptiveGridValue(zoom_level)
+		grid = grid * settings.ratio
+	else
+		grid = settings.ratio
+	end
+
+	-- Log(zoom_level .. " " .. grid)
+
+	reaper.SetMIDIEditorGrid(0, grid)
+end

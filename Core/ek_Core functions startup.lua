@@ -47,16 +47,18 @@ ga_settings = {
 		select_values = {
 			"Widest", "Wide", "Medium", "Narrow", "Narrowest", "4 bar", "2 bar", "1 bar", "1/2", "1/4", "1/8", "1/16", "1/32",
 		},
+		adaptive_grid_values = { 0, 1, 2, 3, 4 },
 		order = 2,
 	},
 	midi_grid_setting = {
 		key = "midi_grid_setting",
 		title = "Grid setting for MIDI Editor",
-		description = "Select which grid you want to have",
+		description = "Select which grid you want to have. For quick switching use scripts 'ek_Switch to next grid step'/'ek_Switch to prev grid step'",
 		default = 3,
 		select_values = {
 			"Widest", "Wide", "Medium", "Narrow", "Narrowest", "4 bar", "2 bar", "1 bar", "1/2", "1/4", "1/8", "1/16", "1/32",
 		},
+		adaptive_grid_values = { 0, 1, 2, 3, 4 },
 		order = 3,
 	},
 	project_limit = {
@@ -533,6 +535,61 @@ function GA_ObserveArrangeGrid()
 		cached_zoom_level = zoom_level
 		cached_config_id = id
 	end
+end
+
+function GA_GetHZoomLevelForMidiEditor()
+	local MidiEditor = reaper.MIDIEditor_GetActive()
+
+	if not MidiEditor then return end
+
+	local midiview = reaper.JS_Window_FindChildByID(MidiEditor, 0x3E9)
+  	local _, width = reaper.JS_Window_GetClientSize(midiview)
+ 	local take =  reaper.MIDIEditor_GetTake(MidiEditor)
+  	local guid = reaper.BR_GetMediaItemTakeGUID(take)
+  	local item =  reaper.GetMediaItemTake_Item(take)
+  	local _, chunk = reaper.GetItemStateChunk(item, "", false)
+  	local guidfound, editviewfound = false, false
+  	local leftmost_tick, hzoom, timebase
+
+  	local function setvalue(a)
+    	a = tonumber(a)
+    	if not leftmost_tick then leftmost_tick = a
+    	elseif not hzoom then hzoom = a
+    	else timebase = a
+    	end
+  	end
+
+  	for line in chunk:gmatch("[^\n]+") do
+    	if line == "GUID " .. guid then
+      	  	guidfound = true
+    	end
+
+    	if (not editviewfound) and guidfound then
+      		if line:find("CFGEDITVIEW ") then
+        		--reaper.ShowConsoleMsg(line .. "\n")
+        		line:gsub("([%-%d%.]+)", setvalue, 2)
+        		editviewfound = true
+      	  	end
+    	end
+
+    	if editviewfound then
+      	  	if line:find("CFGEDIT ") then
+        		--reaper.ShowConsoleMsg(line .. "\n")
+        		line:gsub("([%-%d%.]+)", setvalue, 19)
+        		break
+      	  	end
+    	end
+  	end
+
+  	local start_time, end_time, HZoom = reaper.MIDI_GetProjTimeFromPPQPos( take, leftmost_tick)
+
+  	if timebase == 0 or timebase == 4 then
+    	end_time = reaper.MIDI_GetProjTimeFromPPQPos( take, leftmost_tick + (width-1)/hzoom)
+  	else
+   		end_time = start_time + (width-1)/hzoom
+  	end
+
+  	return (width) / (end_time - start_time)
 end
 
 --
