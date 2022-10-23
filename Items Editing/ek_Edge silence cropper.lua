@@ -1,12 +1,12 @@
 -- @description ek_Edge silence cropper
--- @version 1.0.1
+-- @version 1.0.2
 -- @author Ed Kashinsky
 -- @about
 --   This script helps to remove silence at the start and at the end of selected items by individual thresholds, pads and fades.
 --
 --   Also it provides UI for configuration
 -- @changelog
---   - Bug fixes: script now follows to play rate and fades created before cropping
+--   - Bug fixes: preview mode follows to "Draw labels above the item, rather than within the item" setting
 -- @provides
 --   ../Core/ek_Edge silence cropper functions.lua
 
@@ -152,13 +152,14 @@ local function preview_result()
             local position = reaper.GetMediaItemInfo_Value(item, "D_POSITION")
             local item_length = reaper.GetMediaItemInfo_Value(item, "D_LENGTH")
             local startTime, endTime = getEdgePositionsByItem(item)
-            local track_height = reaper.GetMediaTrackInfo_Value(track, "I_TCPH")
 
             local item_offset_x = (position * zoom) - scrollposh
             local item_offset_y = reaper.GetMediaTrackInfo_Value(track, "I_TCPY")
             local item_length_px = item_length * zoom
 
-            if track_height >= headerShowingLimit then item_offset_y = item_offset_y + headerHeight end
+            if isItemHeaderShowing(item) then
+                item_offset_y = item_offset_y + headerHeight
+            end
 
             ------------- LEADING PART --------------
 
