@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="7935968f303a4437a36f269a7b0adea5a2c68db7">
+<index version="1" name="Reableton Scripts" commit="61f7779417701d122cb4e2f34f83c4f7c6abd43a">
   <category name="ColorThemes">
     <reapack name="Flat Madness Bright Remix.theme" type="theme" desc="Flat Madness Bright Remix">
       <metadata>
@@ -135,6 +135,12 @@
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7935968f303a4437a36f269a7b0adea5a2c68db7/Core/ek_Core%20functions.lua</source>
         <source file="ek_Core functions v1.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7935968f303a4437a36f269a7b0adea5a2c68db7/Core/ek_Core%20functions%20v1.lua</source>
         <source file="ek_Core functions GUI.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7935968f303a4437a36f269a7b0adea5a2c68db7/Core/ek_Core%20functions%20GUI.lua</source>
+      </version>
+      <version name="1.0.16" author="Ed Kashinsky" time="2022-10-23T14:34:48Z">
+        <changelog><![CDATA[bug fixes]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/61f7779417701d122cb4e2f34f83c4f7c6abd43a/Core/ek_Core%20functions.lua</source>
+        <source file="ek_Core functions v1.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/61f7779417701d122cb4e2f34f83c4f7c6abd43a/Core/ek_Core%20functions%20v1.lua</source>
+        <source file="ek_Core functions GUI.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/61f7779417701d122cb4e2f34f83c4f7c6abd43a/Core/ek_Core%20functions%20GUI.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Global startup action settings.lua" type="script" desc="ek_Global startup action settings">
