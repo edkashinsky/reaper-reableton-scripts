@@ -1,11 +1,11 @@
 -- @description ek_Separated actions for Media item in Mouse modifiers
--- @version 1.0.4
+-- @version 1.0.5
 -- @author Ed Kashinsky
 -- @about
 --   This script gives opportunity to attach 2 different actions on Media item context in Mouse modifiers - when we click on header of media item and part between header and middle of it.
 --   For installation open "Mouse Modifiers" preferences, find "Media item" context and select this script in any section. Also you can copy this script and use it in different hotkey-sections and actions.
 -- @changelog
---   Improved header position detect
+--   Bug fixes: script follows to "Draw labels above the item, rather than within the item" setting
 
 if not reaper.APIExists("JS_ReaScriptAPI_Version") then
 	local answer = reaper.MB("You have to install JS_ReaScriptAPI for this script to work. Would you like to open the relative web page in your browser?", "JS_ReaScriptAPI not installed", 4 )
@@ -86,10 +86,7 @@ end
 if not item then return end
 
 local track = reaper.GetMediaItem_Track(item)
-local track_height = reaper.GetMediaTrackInfo_Value(track, "I_TCPH")
-local track_y = reaper.GetMediaTrackInfo_Value(track, "I_TCPY")
-
-if track_height >= headerShowingLimit then track_y = track_y + headerHeight end
+local track_y = reaper.GetMediaTrackInfo_Value(track, "I_TCPY") + GetItemHeaderHeight(item)
 
 if ry < track_y then
 	-- Clicked on header

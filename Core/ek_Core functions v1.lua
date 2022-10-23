@@ -694,7 +694,7 @@ function in_array(tab, val)
     return false
 end
 
-function isItemHeaderShowing(item)
+function GetItemHeaderHeight(item)
 	local limit = 4
 	if gfx.ext_retina == 1 then limit = limit * 2 end
 
@@ -708,7 +708,8 @@ function isItemHeaderShowing(item)
 	local height = reaper.GetMediaItemInfo_Value(item, "I_LASTH")
 	local header_height = track_height - height > limit and track_height - height or 0
 
+	if header_height > 0 then header_height = header_height - limit end
 	-- Log(track_height .. "-" .. height .. "=" .. (track_height - height) .. " : " .. headerLabelLimit .. " " .. header_height)
 
-	return header_height > 0
+	return header_height
 end
