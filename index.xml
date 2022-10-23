@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="287ea53a9c0951c092fcd42f97d20ee2409ecf1e">
+<index version="1" name="Reableton Scripts" commit="9999093dba2a512fa71b38b0e9150e3aa236ae38">
   <category name="ColorThemes">
     <reapack name="Flat Madness Bright Remix.theme" type="theme" desc="Flat Madness Bright Remix">
       <metadata>
@@ -123,6 +123,12 @@
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/287ea53a9c0951c092fcd42f97d20ee2409ecf1e/Core/ek_Core%20functions.lua</source>
         <source file="ek_Core functions v1.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/287ea53a9c0951c092fcd42f97d20ee2409ecf1e/Core/ek_Core%20functions%20v1.lua</source>
         <source file="ek_Core functions GUI.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/287ea53a9c0951c092fcd42f97d20ee2409ecf1e/Core/ek_Core%20functions%20GUI.lua</source>
+      </version>
+      <version name="1.0.14" author="Ed Kashinsky" time="2022-10-23T10:48:15Z">
+        <changelog><![CDATA[bug fixes]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/9999093dba2a512fa71b38b0e9150e3aa236ae38/Core/ek_Core%20functions.lua</source>
+        <source file="ek_Core functions v1.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/9999093dba2a512fa71b38b0e9150e3aa236ae38/Core/ek_Core%20functions%20v1.lua</source>
+        <source file="ek_Core functions GUI.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/9999093dba2a512fa71b38b0e9150e3aa236ae38/Core/ek_Core%20functions%20GUI.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Global startup action settings.lua" type="script" desc="ek_Global startup action settings">
@@ -392,6 +398,11 @@
         <changelog><![CDATA[- Bug fixes: script now follows to play rate and fades created before cropping]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d47e8c9575f22bae0af853465d40bbd5f79d4733/Items%20Editing/ek_Edge%20silence%20cropper.lua</source>
         <source file="../Core/ek_Edge silence cropper functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d47e8c9575f22bae0af853465d40bbd5f79d4733/Core/ek_Edge%20silence%20cropper%20functions.lua</source>
+      </version>
+      <version name="1.0.2" author="Ed Kashinsky" time="2022-10-23T10:48:15Z">
+        <changelog><![CDATA[- Bug fixes: preview mode follows to "Draw labels above the item, rather than within the item" setting]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/9999093dba2a512fa71b38b0e9150e3aa236ae38/Items%20Editing/ek_Edge%20silence%20cropper.lua</source>
+        <source file="../Core/ek_Edge silence cropper functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/9999093dba2a512fa71b38b0e9150e3aa236ae38/Core/ek_Edge%20silence%20cropper%20functions.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Increase pitch or rate for selected items.lua" type="script" desc="ek_Increase pitch or rate for selected items">
