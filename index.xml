@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="9999093dba2a512fa71b38b0e9150e3aa236ae38">
+<index version="1" name="Reableton Scripts" commit="7935968f303a4437a36f269a7b0adea5a2c68db7">
   <category name="ColorThemes">
     <reapack name="Flat Madness Bright Remix.theme" type="theme" desc="Flat Madness Bright Remix">
       <metadata>
@@ -129,6 +129,12 @@
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/9999093dba2a512fa71b38b0e9150e3aa236ae38/Core/ek_Core%20functions.lua</source>
         <source file="ek_Core functions v1.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/9999093dba2a512fa71b38b0e9150e3aa236ae38/Core/ek_Core%20functions%20v1.lua</source>
         <source file="ek_Core functions GUI.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/9999093dba2a512fa71b38b0e9150e3aa236ae38/Core/ek_Core%20functions%20GUI.lua</source>
+      </version>
+      <version name="1.0.15" author="Ed Kashinsky" time="2022-10-23T14:23:06Z">
+        <changelog><![CDATA[bug fixes]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7935968f303a4437a36f269a7b0adea5a2c68db7/Core/ek_Core%20functions.lua</source>
+        <source file="ek_Core functions v1.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7935968f303a4437a36f269a7b0adea5a2c68db7/Core/ek_Core%20functions%20v1.lua</source>
+        <source file="ek_Core functions GUI.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7935968f303a4437a36f269a7b0adea5a2c68db7/Core/ek_Core%20functions%20GUI.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Global startup action settings.lua" type="script" desc="ek_Global startup action settings">
@@ -404,6 +410,11 @@
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/9999093dba2a512fa71b38b0e9150e3aa236ae38/Items%20Editing/ek_Edge%20silence%20cropper.lua</source>
         <source file="../Core/ek_Edge silence cropper functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/9999093dba2a512fa71b38b0e9150e3aa236ae38/Core/ek_Edge%20silence%20cropper%20functions.lua</source>
       </version>
+      <version name="1.0.3" author="Ed Kashinsky" time="2022-10-23T14:23:06Z">
+        <changelog><![CDATA[Bug fixes: preview mode follows to "Draw labels above the item, rather than within the item" setting]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7935968f303a4437a36f269a7b0adea5a2c68db7/Items%20Editing/ek_Edge%20silence%20cropper.lua</source>
+        <source file="../Core/ek_Edge silence cropper functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7935968f303a4437a36f269a7b0adea5a2c68db7/Core/ek_Edge%20silence%20cropper%20functions.lua</source>
+      </version>
     </reapack>
     <reapack name="ek_Increase pitch or rate for selected items.lua" type="script" desc="ek_Increase pitch or rate for selected items">
       <metadata>
@@ -486,6 +497,10 @@
       <version name="1.0.4" author="Ed Kashinsky" time="2022-10-14T10:50:00Z">
         <changelog><![CDATA[Improved header position detect]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/ac2935bf8c1148c34870a2db2e506fa0096dd9c0/Items%20Editing/ek_Separated%20actions%20for%20Media%20item%20in%20Mouse%20modifiers.lua</source>
+      </version>
+      <version name="1.0.5" author="Ed Kashinsky" time="2022-10-23T14:23:06Z">
+        <changelog><![CDATA[Bug fixes: script follows to "Draw labels above the item, rather than within the item" setting]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7935968f303a4437a36f269a7b0adea5a2c68db7/Items%20Editing/ek_Separated%20actions%20for%20Media%20item%20in%20Mouse%20modifiers.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Switch to next pitch mode for selected items.lua" type="script" desc="ek_Switch to next pitch mode for selected items">
