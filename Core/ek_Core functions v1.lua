@@ -698,17 +698,13 @@ function GetItemHeaderHeight(item)
 	local limit = 4
 	if gfx.ext_retina == 1 then limit = limit * 2 end
 
-	local settings = reaper.SNM_GetIntConfigVar("labelitems2", 0)
-	local isDrawLabels = (settings & 8 == 8)
-
-	if not isDrawLabels then return false end
-
 	local track = reaper.GetMediaItem_Track(item)
 	local track_height = reaper.GetMediaTrackInfo_Value(track, "I_TCPH")
 	local height = reaper.GetMediaItemInfo_Value(item, "I_LASTH")
 	local header_height = track_height - height > limit and track_height - height or 0
 
 	if header_height > 0 then header_height = header_height - limit end
+
 	-- Log(track_height .. "-" .. height .. "=" .. (track_height - height) .. " : " .. headerLabelLimit .. " " .. header_height)
 
 	return header_height
