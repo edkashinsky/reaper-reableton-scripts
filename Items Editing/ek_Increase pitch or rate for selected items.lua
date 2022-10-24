@@ -1,5 +1,5 @@
 -- @description ek_Increase pitch or rate for selected items
--- @version 1.0.3
+-- @version 1.0.4
 -- @author Ed Kashinsky
 -- @about
 --   This script increases pitch or rate of selected items depending on "Preserve Pitch" option.
@@ -35,6 +35,9 @@ reaper.Undo_BeginBlock()
 local proj = 0
 local delta = 1
 local isDelta = true
+local count_selected_items = reaper.CountSelectedMediaItems(proj)
+
+if count_selected_items == 0 then return end
 
 -- ctrl/cmd is pressed (smoother changes)
 if reaper.JS_Mouse_GetState(4) > 0 then
@@ -56,7 +59,7 @@ if reaper.JS_Mouse_GetState(8) > 0 then
 	isDelta = false
 end
 
-for i = 0, reaper.CountSelectedMediaItems(proj) - 1 do
+for i = 0, count_selected_items - 1 do
 	local item = reaper.GetSelectedMediaItem(proj, i)
 	local takeInd = reaper.GetMediaItemInfo_Value(item, "I_CURTAKE")
 

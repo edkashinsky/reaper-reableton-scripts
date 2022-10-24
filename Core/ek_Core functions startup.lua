@@ -779,7 +779,7 @@ end
 function setDfiItem(item)
 	local guid = ""
 
-	if item then
+	if reaper.ValidatePtr(item, "MediaItem*") then
 		_, guid = reaper.GetSetMediaItemInfo_String(item, "GUID", "", false)
 	end
 

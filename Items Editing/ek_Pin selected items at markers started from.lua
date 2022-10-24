@@ -1,12 +1,11 @@
 -- @description ek_Pin selected items at markers started from
--- @version 1.0.2
+-- @version 1.0.3
 -- @author Ed Kashinsky
 -- @about
 --   ![Preview](/Assets/images/pin_items_to_markers_preview.gif)
 --   This script pins selected items to markers started from specified number. It requires ReaImGui extension.
 -- @changelog
 --   - Small fixes
---   - GUI updated to ReaImGui
 
 function CoreFunctionsLoaded()
 	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
@@ -139,10 +138,10 @@ end
 
 function frame()
 	local markers = getOnlyMarkers()
-	local combo_list = ''
+	local combo_list = {}
 
 	for i = 1, #markers do
-		combo_list = combo_list .. markers[i].num .. '\31'
+		table.insert(combo_list, markers[i].num)
 
 		if combo_selected_id == nil and markers[i].num == closest_marker then
 			start_marker = markers[i].num
@@ -152,7 +151,7 @@ function frame()
 
 	reaper.ImGui_PushItemWidth(GUI_GetCtx(), 110)
 
-	local r, value = reaper.ImGui_Combo(GUI_GetCtx(), "Start marker number", combo_selected_id, combo_list)
+	local _, value = reaper.ImGui_Combo(GUI_GetCtx(), "Start marker number", combo_selected_id, join(combo_list, "\0") .. "\0")
 
 	if value ~= combo_selected_id then
 		start_marker = markers[value + 1].num

@@ -91,9 +91,10 @@ local function main()
 		GUI_CloseMainWindow()
 	end
 
-	--if default_enter_action and reaper.ImGui_IsKeyPressed(ctx, reaper.ImGui_Key_Enter()) then
-	--	default_enter_action()
-	--end
+	if default_enter_action and reaper.ImGui_IsKeyPressed(ctx, reaper.ImGui_Key_Space()) then
+		default_enter_action()
+		GUI_CloseMainWindow()
+	end
 
 	if window_opened then
 	    reaper.defer(main)
