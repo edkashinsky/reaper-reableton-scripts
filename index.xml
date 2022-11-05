@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="4908c5351c9672915e5b3e34524a7c68b2809ab2">
+<index version="1" name="Reableton Scripts" commit="b37f26b00642da62179ecfc5fcf33a1e8c539d6f">
   <category name="ColorThemes">
     <reapack name="Flat Madness Bright Remix.theme" type="theme" desc="Flat Madness Bright Remix">
       <metadata>
@@ -273,6 +273,11 @@
         <changelog><![CDATA[- added function for quick switching between grid settings]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/287ea53a9c0951c092fcd42f97d20ee2409ecf1e/Core/ek_Global%20startup%20action.lua</source>
         <source file="ek_Core functions startup.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/287ea53a9c0951c092fcd42f97d20ee2409ecf1e/Core/ek_Core%20functions%20startup.lua</source>
+      </version>
+      <version name="1.0.14" author="Ed Kashinsky" time="2022-11-05T08:14:12Z">
+        <changelog><![CDATA[- auto grid follows to setting "Show grid, line spacing"]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/b37f26b00642da62179ecfc5fcf33a1e8c539d6f/Core/ek_Global%20startup%20action.lua</source>
+        <source file="ek_Core functions startup.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/b37f26b00642da62179ecfc5fcf33a1e8c539d6f/Core/ek_Core%20functions%20startup.lua</source>
       </version>
     </reapack>
   </category>
