@@ -518,6 +518,12 @@ function GA_ObserveArrangeGrid()
 	local id = tonumber(GA_GetSettingValue(ga_settings.arrange_grid_setting))
 
 	if zoom_level ~= cached_zoom_level or cached_config_id ~= id then
+		cached_zoom_level = zoom_level
+		cached_config_id = id
+
+		local showGrid = reaper.SNM_GetIntConfigVar("projshowgrid", 0) & 1 > 0
+		if not showGrid then return end
+
 		local settings = GA_GetGridSettings(id)
 		local grid
 
@@ -531,9 +537,6 @@ function GA_ObserveArrangeGrid()
 		Log("Changed: {param}, setting: " .. id .. ", grid: " .. grid, ek_log_levels.Warning, ga_settings.auto_grid.key)
 
 		reaper.SetProjectGrid(proj, grid)
-
-		cached_zoom_level = zoom_level
-		cached_config_id = id
 	end
 end
 
