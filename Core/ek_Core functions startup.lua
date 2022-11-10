@@ -769,9 +769,12 @@ function getDfiItem()
 	if guid then
 		for i = 0, reaper.CountMediaItems(proj) - 1 do
 			local item = reaper.GetMediaItem(proj, i)
-			local _, id = reaper.GetSetMediaItemInfo_String(item, "GUID", "", false)
-			if guid == id then
-				return item
+
+			if reaper.ValidatePtr(item, "MediaItem*") then
+				local _, id = reaper.GetSetMediaItemInfo_String(item, "GUID", "", false)
+				if guid == id then
+					return item
+				end
 			end
 		end
 	else

@@ -1,11 +1,11 @@
 -- @description ek_Nudge volume for selected tracks up
--- @version 1.0.0
+-- @version 1.0.1
 -- @author Ed Kashinsky
 -- @about
 --   It increase volume for selected track a bit and shows tooltip with set volume
 -- @provides [main=main,midi_editor] .
 -- @changelog
---   - Small fixes
+--   - master track support
 
 reaper.Undo_BeginBlock()
 
@@ -26,11 +26,11 @@ end
 
 local function showToolbar()
 	local message = ""
-	local countSelectedTracks = reaper.CountSelectedTracks(proj)
+	local countSelectedTracks = reaper.CountSelectedTracks2(proj, true)
 	
 	if countSelectedTracks > 0 then
 		for i = 0, countSelectedTracks - 1 do
-			local track = reaper.GetSelectedTrack(proj, i)
+			local track = reaper.GetSelectedTrack2(proj, i, true)
 			
 			message = message .. getVolumeLine(track, countSelectedTracks > 1) .. "\n"
 		end
@@ -41,6 +41,11 @@ local function showToolbar()
 end
 
 reaper.Main_OnCommand(reaper.NamedCommandLookup("_XENAKIOS_NUDGSELTKVOLUP"), 0) -- Xenakios/SWS: Nudge volume of selected tracks up
+
+if reaper.IsTrackSelected(reaper.GetMasterTrack(proj)) then
+	reaper.Main_OnCommand(reaper.NamedCommandLookup("_XENAKIOS_NUDMASVOL1DBU"), 0) -- Xenakios/SWS: Nudge master volume 1 dB up
+end
+
 showToolbar()
 
 reaper.Undo_EndBlock("Nudge volume for selected tracks up", -1)
