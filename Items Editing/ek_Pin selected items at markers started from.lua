@@ -1,5 +1,5 @@
 -- @description ek_Pin selected items at markers started from
--- @version 1.0.3
+-- @version 1.0.4
 -- @author Ed Kashinsky
 -- @about
 --   ![Preview](/Assets/images/pin_items_to_markers_preview.gif)
@@ -35,11 +35,11 @@ local count_selected_items = reaper.CountSelectedMediaItems(proj)
 
 local function getOnlyMarkers()
 	local markers = {}
-	local retval, num_markers, num_regions = reaper.CountProjectMarkers(proj)
+	local _, num_markers, num_regions = reaper.CountProjectMarkers(proj)
 	
 	-- collect only markers
 	for i = 0, num_markers + num_regions - 1 do
-		local retval, isrgn, pos, rgnend, name, markrgnindexnumber = reaper.EnumProjectMarkers(i)
+		local _, isrgn, pos, _, _, markrgnindexnumber = reaper.EnumProjectMarkers(i)
 		
 		if isrgn == false then
 			table.insert(markers, {
@@ -67,12 +67,12 @@ local function findIndexByMarkerNumber(markers, number)
 end
 
 local function findNearestMarkerNum(position)
-	local retval, num_markers, num_regions = reaper.CountProjectMarkers(proj)
+	local _, num_markers, num_regions = reaper.CountProjectMarkers(proj)
 	local prevMarkerNum = 0
 	local prevMarkerPos = 0
 	
 	for i = 0, num_markers + num_regions - 1 do
-		local retval, isrgn, pos, rgnend, name, markrgnindexnumber = reaper.EnumProjectMarkers(i)
+		local _, isrgn, pos, _, _, markrgnindexnumber = reaper.EnumProjectMarkers(i)
 		
 		if isrgn == false then
 			if pos > position then
@@ -91,43 +91,50 @@ local function findNearestMarkerNum(position)
 	end
 end
 
-
-local function setPositionForItem(i, start, markers)
-	local item = reaper.GetSelectedMediaItem(proj, i)
-	local cur = reaper.GetMediaItemInfo_Value(item, "D_POSITION")
-		
-	-- reaper.ShowConsoleMsg((start + i) .. " " .. cur .. " => " .. markers[start + i].position .. "\n")
-	reaper.SetMediaItemInfo_Value(item, "D_POSITION", markers[start + i].position)
-end
-
-
 local function pin_items()
 	reaper.Undo_BeginBlock()
 
 	local count = reaper.CountSelectedMediaItems(proj)
 	local markers = getOnlyMarkers()
 	local startIndex = findIndexByMarkerNumber(markers, start_marker)
-	
+
 	if startIndex == nil then
 		EK_ShowTooltip("Please enter correct number of marker.")
 		return
 	end
-	
+
 	if count > #markers - startIndex + 1 then
 		EK_ShowTooltip("You have no available markers for pinning.")
 		return
 	end
-	
+
 	-- count direction
-	local item = reaper.GetSelectedMediaItem(proj, 0)
-	local position = reaper.GetMediaItemInfo_Value(item, "D_POSITION")
-	if markers[startIndex].position <= position then
-		for i = 0, count - 1 do
-			setPositionForItem(i, startIndex, markers)
+	local itemIds = {}
+	for i = 0, reaper.CountTracks(proj) - 1 do
+		local curIndex = startIndex
+		local track = reaper.GetTrack(proj, i)
+
+		for j = 0, reaper.CountTrackMediaItems(track) - 1 do
+			local item = reaper.GetTrackMediaItem(track, j)
+
+			if reaper.IsMediaItemSelected(item) then
+				local _, guid = reaper.GetSetMediaItemInfo_String(item, "GUID", "", false)
+				itemIds[guid] = markers[curIndex].position
+				curIndex = curIndex + 1
+			end
 		end
-	else
-		for i = count - 1, 0, -1 do
-			setPositionForItem(i, startIndex, markers)
+	end
+
+	for i = 0, reaper.CountTracks(proj) - 1 do
+		local track = reaper.GetTrack(proj, i)
+
+		for j = 0, reaper.CountTrackMediaItems(track) - 1 do
+			local item = reaper.GetTrackMediaItem(track, j)
+			local _, guid = reaper.GetSetMediaItemInfo_String(item, "GUID", "", false)
+
+			if itemIds[guid] then
+				reaper.SetMediaItemInfo_Value(item, "D_POSITION", itemIds[guid])
+			end
 		end
 	end
 
