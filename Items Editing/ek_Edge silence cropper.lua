@@ -1,12 +1,12 @@
 -- @description ek_Edge silence cropper
--- @version 1.0.3
+-- @version 1.0.4
 -- @author Ed Kashinsky
 -- @about
 --   This script helps to remove silence at the start and at the end of selected items by individual thresholds, pads and fades.
 --
 --   Also it provides UI for configuration
 -- @changelog
---   Bug fixes: preview mode follows to "Draw labels above the item, rather than within the item" setting
+--   - Improved stability
 -- @provides
 --   ../Core/ek_Edge silence cropper functions.lua
 

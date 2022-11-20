@@ -197,7 +197,7 @@ function EK_SetPitchModeForSelectionItems(newPitchMode)
 
 			reaper.SetMediaItemTakeInfo_Value(itemTake, "I_PITCHMODE", newPitchMode)
 
-			Log("Item had: " .. mode .. " and new mode is: " .. newPitchMode)
+			Log("Item had: " .. mode .. " and new mode is: " .. newPitchMode, ek_debug_levels.Warning)
 		end
 	end
 end
@@ -222,6 +222,8 @@ local function TD_GetWindowByTitle(title)
 	--	local hwnd = reaper.JS_Window_HandleFromAddress(address)
 	--	reaper.ShowConsoleMsg(reaper.JS_Window_GetTitle(hwnd) .. '\n')
 	--end
+	--
+	--reaper.ShowConsoleMsg('=====\n')
 
 	if title == "Edit MIDI" then
 		return reaper.MIDIEditor_GetActive()
@@ -289,7 +291,7 @@ local function TD_HideAllInDockerExcept(title)
 
 	local dockerId = windows[title] and windows[title][1] or -1
 
-	Log("\nClicked: " .. title .. " (" .. dockerId .. ')')
+	Log("\nClicked: " .. title .. " (" .. dockerId .. ')', ek_debug_levels.Warning)
 
 	for wTitle, data in pairs(windows) do
 		local wDockedId = data[1]
@@ -301,7 +303,7 @@ local function TD_HideAllInDockerExcept(title)
 			local isVisible = TD_IsWindowVisible(wTitle)
 			local state = reaper.GetToggleCommandState(wActionId)
 
-			Log("\t" .. wTitle .. " (" .. wDockedId .. ") -> " .. (isVisible and 1 or 0) .. " " .. state)
+			Log("\t" .. wTitle .. " (" .. wDockedId .. ") -> " .. (isVisible and 1 or 0) .. " " .. state, ek_debug_levels.Warning)
 
 			if isVisible then
 				reaper.Main_OnCommand(wActionId, 0)
@@ -332,16 +334,46 @@ function TD_ToggleWindow(title, actionId)
 end
 
 function TD_ToggleLastWindow(dockerId)
+	local title
 	local windows = EK_GetExtState(key_td_windows_stack)
 	windows = windows ~= nil and unserializeTable(windows) or {}
 
 	local dockers = EK_GetExtState(key_td_last_windows)
 	dockers = dockers ~= nil and unserializeTable(dockers) or {}
 
-	local title = dockers[dockerId]
+	local getOpenedWindow = function()
+		local opened
+
+		for wTitle, _ in pairs(windows) do
+			if TD_IsWindowVisible(wTitle) then
+				local wnd = TD_GetWindowByTitle(wTitle)
+				local did, _ = reaper.DockIsChildOfDock(wnd)
+
+				if did == dockerId then
+					opened = wTitle
+					goto end_searching_window
+				end
+			end
+		end
+
+		::end_searching_window::
+
+		return opened
+	end
+
+	local opened_window = getOpenedWindow()
+
+	if opened_window then
+		title = opened_window
+		dockers[dockerId] = title
+		EK_SetExtState(key_td_last_windows, serializeTable(dockers))
+	else
+		title = dockers[dockerId]
+	end
+
 	if not title then return end
 
-	Log("Toggling " .. title)
+	Log("Toggling " .. title, ek_debug_levels.Warning)
 
 	TD_HideAllInDockerExcept(title)
 
@@ -427,17 +459,6 @@ end
 
 function log10(x)
   	return math.log(x, 10)
-end
-
-function sample_to_db(sample)
-  --returns -150 for any 0.0 sample point (since you can't take the log of 0)
-  if sample == 0 then
-    return -150.0
-  else
-    local db = 20 * log10(math.abs(sample))
-
-    if db > 0 then return 0 else return db end
-  end
 end
 
 function modifyTime(dt, mdParams)
@@ -708,4 +729,91 @@ function GetItemHeaderHeight(item)
 	-- Log(track_height .. "-" .. height .. "=" .. (track_height - height) .. " : " .. headerLabelLimit .. " " .. header_height)
 
 	return header_height
+end
+
+function getAbsolutePath(path)
+	if reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32" then
+		if path:sub(2, 2) == ":" .. dir_sep then
+			return path
+		else
+			return reaper.GetProjectPath() .. dir_sep .. ".." .. dir_sep .. path
+		end
+	else
+		if path:sub(1, 1) == sep then
+			return path
+		else
+			return reaper.GetProjectPath() .. dir_sep .. ".." .. dir_sep .. path
+		end
+	end
+
+end
+
+function getReaperIniValue(section, key)
+	local fileName = reaper.GetResourcePath() .. dir_sep .. "reaper.ini"
+
+	local file = assert(io.open(fileName, 'r'), 'Error loading file : ' .. fileName);
+	local data = {};
+	local sect;
+
+	for line in file:lines() do
+		local tempSection = line:match('^%[([^%[%]]+)%]$');
+		if (tempSection) then
+			sect = tonumber(tempSection) and tonumber(tempSection) or tempSection;
+			data[sect] = data[sect] or {};
+		end
+
+		local param, value = line:match('^([%w|_]+)%s-=%s-(.+)$');
+		if (param and value ~= nil) then
+			if (tonumber(value)) then
+				value = tonumber(value);
+			elseif (value == 'true') then
+				value = true;
+			elseif (value == 'false') then
+				value = false;
+			end
+
+			if (tonumber(param)) then
+				param = tonumber(param);
+			end
+			data[sect][param] = value;
+		end
+	end
+
+	file:close();
+
+	if data[section] then
+		return data[section][key];
+	else
+		return nil;
+	end
+end
+
+function GetMediaItemByGUID(guid)
+	for i = 0, reaper.CountMediaItems(proj) - 1 do
+		local item = reaper.GetMediaItem(proj, i)
+
+		if reaper.ValidatePtr(item, "MediaItem*") then
+			local _, id = reaper.GetSetMediaItemInfo_String(item, "GUID", "", false)
+			if guid == id then
+				return item
+			end
+		end
+	end
+
+	return nil
+end
+
+function GetMediaTrackByGUID(guid)
+	for i = 0, reaper.CountTracks(proj) - 1 do
+		local track = reaper.GetTrack(proj, i)
+
+		if reaper.ValidatePtr(track, "MediaTrack*") then
+			local _, id = reaper.GetSetMediaTrackInfo_String(track, "GUID", "", false)
+			if guid == id then
+				return track
+			end
+		end
+	end
+
+	return nil
 end

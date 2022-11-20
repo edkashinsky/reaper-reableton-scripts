@@ -157,7 +157,7 @@ end
 function GA_GetOrderedSettings()
 	local ordered_settings = {}
 
-	for key, setting in pairs(ga_settings) do
+	for _, setting in pairs(ga_settings) do
 		ordered_settings[setting.order] = setting
 	end
 
@@ -276,12 +276,14 @@ function GA_ObservePreservePitchForSelectedItems(changes, values)
 
 				local itemTake = reaper.GetMediaItemTake(item, takeInd)
 
-				local mode = reaper.GetMediaItemTakeInfo_Value(itemTake, "B_PPITCH")
+				if itemTake then
+					local mode = reaper.GetMediaItemTakeInfo_Value(itemTake, "B_PPITCH")
 
-				if mode == 1 then
-					count_On = count_On + 1
-				else
-					count_Off = count_Off + 1
+					if mode == 1 then
+						count_On = count_On + 1
+					else
+						count_Off = count_Off + 1
+					end
 				end
 			end
 
@@ -635,26 +637,23 @@ function GA_ObserveAndRemoveOldBackupFiles(changes, values)
 	if not enabledBackups then return end
 
 	local time = reaper.time_precise()
-	if time > cached_backup_last_time + backup_timer_limit then
-		Log("Changed: {param}", ek_log_levels.Warning, ga_settings.backup_files.key)
-
-		cached_backup_last_time = time + backup_timer_limit
-
+	local removeBackupFilesIfNeeded = function(root)
 		local i = 0
 		local file
 		local backup_files = {}
 
-		local root = reaper.GetProjectPath() .. "/../"
 		local project = reaper.GetProjectName(proj)
+
+		if root:sub(-1) ~= dir_sep then root = root .. dir_sep end
 
 		project = string.gsub(project, ".[rR][pP][pP]", "")
 		project = string.gsub(project, '[$().*+?^%-%[%]%%]', '[%1]')
 
 		local pattern = project .. "[0-9_-]+[.]rpp[-]bak"
 
-		if string.len(project) == 0 then
-			return
-		end
+		Log("Watching backup in: " .. root, ek_log_levels.Notice)
+
+		if string.len(project) == 0 then return end
 
 		while file ~= nil or i == 0 do
 			file = reaper.EnumerateFiles(root, i)
@@ -674,6 +673,25 @@ function GA_ObserveAndRemoveOldBackupFiles(changes, values)
 				Log("To delete " .. backup_files[j], ek_log_levels.Notice)
 
 				os.remove(root .. backup_files[j])
+			end
+		end
+	end
+	if time > cached_backup_last_time + backup_timer_limit then
+		Log("Changed: {param}", ek_log_levels.Warning, ga_settings.backup_files.key)
+
+		cached_backup_last_time = time + backup_timer_limit
+
+		-- Save to timestamped file in project directory
+		if (opts & 4 > 0) then
+			removeBackupFilesIfNeeded(reaper.GetProjectPath() .. dir_sep .. "..")
+		end
+
+		-- Save to timestamped file in additional directory
+		if (opts & 8 > 0) then
+			local dir = getReaperIniValue("REAPER", "autosavedir")
+
+			if dir then
+				removeBackupFilesIfNeeded(getAbsolutePath(dir))
 			end
 		end
 	end

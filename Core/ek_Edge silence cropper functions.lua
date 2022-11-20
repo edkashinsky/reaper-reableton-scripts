@@ -37,6 +37,17 @@ tsParams = {
 
 local r = reaper
 
+local function sampleToDb(sample)
+  -- returns -150 for any 0.0 sample point (since you can't take the log of 0)
+  if sample == 0 then
+    return -150.0
+  else
+    local db = 20 * log10(math.abs(sample))
+
+    if db > 0 then return 0 else return db end
+  end
+end
+
 local function getDataForAccessor(take)
     -- Get media source of media item take
     local take_pcm_source = r.GetMediaItemTake_Source(take)
@@ -111,7 +122,7 @@ function getStartPositionLouderThenThreshold(take, threshold)
             local spl = buffer[buf_pos]
 
             if spl > -1 and spl < 1 then
-              local db = sample_to_db(spl)
+              local db = sampleToDb(spl)
 
               if db >= threshold then
                 peak = db
@@ -188,7 +199,7 @@ function getEndPositionLouderThenThreshold(take, threshold)
             local spl = buffer[buf_pos]
 
             if spl > -1 and spl < 1 then
-              local db = sample_to_db(spl)
+              local db = sampleToDb(spl)
 
               if db >= threshold then
                 curPeak = db

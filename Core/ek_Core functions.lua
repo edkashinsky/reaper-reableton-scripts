@@ -1,12 +1,12 @@
 -- @description ek_Core functions
 -- @author Ed Kashinsky
 -- @about Base functions used by ek-scripts.
--- @version 1.0.17
+-- @version 1.0.18
 -- @provides
 --   ek_Core functions v1.lua
 --   ek_Core functions GUI.lua
 -- @changelog
---    When you press Space key in GUI, you apply changes in it
+--    stability improves
 
 function CoreLoadFunctions()
     local info = debug.getinfo(1,'S');
