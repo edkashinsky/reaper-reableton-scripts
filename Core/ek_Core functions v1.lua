@@ -2,18 +2,20 @@
 -- @author Ed Kashinsky
 -- @noindex
 
-ek_log_levels = {
-	Notice = 1,
-	Warning = 2,
-	Important = 3,
-}
-
 local ek_debug_levels = {
 	All = 0,
 	Notice = 1,
 	Warning = 2,
 	Important = 3,
 	Off = 4,
+	Debug = 5,
+}
+
+ek_log_levels = {
+	Notice = ek_debug_levels.Notice,
+	Warning = ek_debug_levels.Warning,
+	Important = ek_debug_levels.Important,
+	Debug = ek_debug_levels.Debug,
 }
 
 proj = 0
@@ -197,7 +199,7 @@ function EK_SetPitchModeForSelectionItems(newPitchMode)
 
 			reaper.SetMediaItemTakeInfo_Value(itemTake, "I_PITCHMODE", newPitchMode)
 
-			Log("Item had: " .. mode .. " and new mode is: " .. newPitchMode, ek_debug_levels.Warning)
+			Log("Item had: " .. mode .. " and new mode is: " .. newPitchMode, ek_log_levels.Warning)
 		end
 	end
 end
@@ -291,7 +293,7 @@ local function TD_HideAllInDockerExcept(title)
 
 	local dockerId = windows[title] and windows[title][1] or -1
 
-	Log("\nClicked: " .. title .. " (" .. dockerId .. ')', ek_debug_levels.Warning)
+	Log("\nClicked: " .. title .. " (" .. dockerId .. ')', ek_log_levels.Warning)
 
 	for wTitle, data in pairs(windows) do
 		local wDockedId = data[1]
@@ -303,7 +305,7 @@ local function TD_HideAllInDockerExcept(title)
 			local isVisible = TD_IsWindowVisible(wTitle)
 			local state = reaper.GetToggleCommandState(wActionId)
 
-			Log("\t" .. wTitle .. " (" .. wDockedId .. ") -> " .. (isVisible and 1 or 0) .. " " .. state, ek_debug_levels.Warning)
+			Log("\t" .. wTitle .. " (" .. wDockedId .. ") -> " .. (isVisible and 1 or 0) .. " " .. state, ek_log_levels.Warning)
 
 			if isVisible then
 				reaper.Main_OnCommand(wActionId, 0)
@@ -373,7 +375,7 @@ function TD_ToggleLastWindow(dockerId)
 
 	if not title then return end
 
-	Log("Toggling " .. title, ek_debug_levels.Warning)
+	Log("Toggling " .. title, ek_log_levels.Warning)
 
 	TD_HideAllInDockerExcept(title)
 
