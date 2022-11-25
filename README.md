@@ -173,6 +173,10 @@ Hotkeys:
 ![Preview](/Assets/images/pin_items_to_markers_preview.gif)
 This script pins selected items to markers started from specified number. It requires ReaImGui extension.
 
+#### ek_Pin selected items to closest markers
+
+This script pins selected items to closest markers for first selected item. It requires script "ek_Pin selected items at markers started from.lua"
+
 #### ek_Separated actions for Media item in Mouse modifiers
 
 This script gives opportunity to attach 2 different actions on Media item context in Mouse modifiers - when we click on header of media item and part between header and middle of it.
