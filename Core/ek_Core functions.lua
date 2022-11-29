@@ -1,12 +1,12 @@
 -- @description ek_Core functions
 -- @author Ed Kashinsky
 -- @about Base functions used by ek-scripts.
--- @version 1.0.18
+-- @version 1.0.19
 -- @provides
 --   ek_Core functions v1.lua
 --   ek_Core functions GUI.lua
 -- @changelog
---    stability improves
+--    added support of ReaImGui 0.8
 
 function CoreLoadFunctions()
     local info = debug.getinfo(1,'S');

@@ -13,6 +13,7 @@ local font_name = 'arial'
 local font_size = 15
 local default_enter_action = nil
 local cached_fonts = nil
+local _, imgui_version_num, _ = reaper.ImGui_GetVersion()
 
 gui_font_types = {
 	None = 1,
@@ -67,8 +68,15 @@ end
 -- Show main window
 --
 local function main()
-	for flag, font in pairs(GUI_GetFonts()) do
-		reaper.ImGui_AttachFont(ctx, font)
+	local attachFonts = function(func_name)
+		for _, font in pairs(GUI_GetFonts()) do func_name(ctx, font) end
+	end
+
+	-- ImGui_AttachFont renamed to ImGui_Attach
+	if imgui_version_num >= 18910 then
+		if not window_opened then attachFonts(reaper.ImGui_Attach) end
+	else
+		attachFonts(reaper.ImGui_AttachFont)
 	end
 
 	reaper.ImGui_PushFont(ctx, GUI_GetFont(gui_font_types.None))
