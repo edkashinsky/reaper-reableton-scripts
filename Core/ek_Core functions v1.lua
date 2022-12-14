@@ -26,8 +26,8 @@ local ek_debug_level = ek_debug_levels.Off
 
 local key_ext_prefix = "ek_stuff"
 local key_ext_global = "ek_global_action_enabled"
-local key_td_windows_stack = "td_windows_stack"
-local key_td_last_windows = "td_last_windows"
+local key_td_windows_stack = "td_windows_stack_1"
+local key_td_last_windows = "td_last_windows_1"
 local key_table_prefix = "__ek_t:"
 
 local _, dpi = reaper.ThemeLayout_GetLayout("tcp", -3)
@@ -84,7 +84,7 @@ function EK_GetExtState(key, default, for_project)
     if value == '' then return default end
 	if value == 'true' then value = true end
 	if value == 'false' then value = false end
-	if value:sub(0, #key_table_prefix) == key_table_prefix then value = unserializeTable(value:sub(#key_table_prefix + 1)) end
+	if type(value) == 'string' and value:sub(0, #key_table_prefix) == key_table_prefix then value = unserializeTable(value:sub(#key_table_prefix + 1)) end
 
     return value
 end
