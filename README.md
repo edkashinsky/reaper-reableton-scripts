@@ -397,6 +397,10 @@ It increase volume for selected track a bit and shows tooltip with set volume
 
 Renaming stuff for takes, items and tracks depending on focus
 
+#### ek_Set volume for selected tracks
+
+Script shows window with input to set volume
+
 #### ek_Toggle mute and offline FX for selected tracks
 
 This script makes fx offline when selected track is muted
@@ -408,6 +412,10 @@ This script toggles mute for selected tracks and makes fx online if it is offine
 #### ek_Toggle single solo for selected tracks
 
 Toggles selected track soloed
+
+#### ek_Toggle trim mode for all tracks
+
+Toggles trim mode for selected tracks and shows current state as button highlight
 
 #### ek_Toggle trim mode for selected trackes
 
