@@ -28,6 +28,7 @@ local key_ext_prefix = "ek_stuff"
 local key_ext_global = "ek_global_action_enabled"
 local key_td_windows_stack = "td_windows_stack"
 local key_td_last_windows = "td_last_windows"
+local key_table_prefix = "__ek_t:"
 
 local _, dpi = reaper.ThemeLayout_GetLayout("tcp", -3)
 if reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32" then
@@ -71,27 +72,43 @@ function EK_HasExtState(key)
 	return reaper.HasExtState(key_ext_prefix, key)
 end
 
-function EK_GetExtState(key, default)
-    local value = reaper.GetExtState(key_ext_prefix, key)
+function EK_GetExtState(key, default, for_project)
+	local value
+
+	if for_project then
+		_, value = reaper.GetProjExtState(proj, key_ext_prefix, key)
+	else
+		value = reaper.GetExtState(key_ext_prefix, key)
+	end
 
     if value == '' then return default end
 	if value == 'true' then value = true end
 	if value == 'false' then value = false end
+	if value:sub(0, #key_table_prefix) == key_table_prefix then value = unserializeTable(value:sub(#key_table_prefix + 1)) end
 
     return value
 end
 
-function EK_SetExtState(key, value)
+function EK_SetExtState(key, value, for_project)
 	if not key then return end
 
 	if type(value) == 'boolean' then value = value and 'true' or 'false' end
+	if type(value) == 'table' then value = key_table_prefix .. serializeTable(value) end
 	if not value then value = "" end
 
-	reaper.SetExtState(key_ext_prefix, key, value, true)
+	if for_project then
+		reaper.SetProjExtState(proj, key_ext_prefix, key, value)
+	else
+		reaper.SetExtState(key_ext_prefix, key, value, true)
+	end
 end
 
-function EK_DeleteExtState(key)
-	reaper.DeleteExtState(key_ext_prefix, key, true)
+function EK_DeleteExtState(key, for_project)
+	if for_project then
+		reaper.SetProjExtState(proj, key_ext_prefix, key, nil)
+	else
+		reaper.DeleteExtState(key_ext_prefix, key, true)
+	end
 end
 
 function EK_IsGlobalActionEnabled()
@@ -256,8 +273,7 @@ local function TD_StoreWindow(data, title)
 
 	-- if wnd == reaper.GetMainHwnd() or string.len(title) == 0 then return end
 
-	local windows = EK_GetExtState(key_td_windows_stack)
-	windows = windows ~= nil and unserializeTable(windows) or {}
+	local windows = EK_GetExtState(key_td_windows_stack, {})
 
 	if dockerId == -1 then return end
 
@@ -268,13 +284,9 @@ local function TD_StoreWindow(data, title)
 		data.actionId
 	}
 
-	windows = serializeTable(windows)
-
-	local last_windows = EK_GetExtState(key_td_last_windows)
-	last_windows = last_windows ~= nil and unserializeTable(last_windows) or {}
+	local last_windows = EK_GetExtState(key_td_last_windows, {})
 
 	last_windows[dockerId] = title
-	last_windows = serializeTable(last_windows)
 
 	Log("=== Toggle Docker ===", ek_log_levels.Warning)
 	Log("Store window: " .. title, ek_log_levels.Warning)
@@ -288,8 +300,7 @@ local function TD_StoreWindow(data, title)
 end
 
 local function TD_HideAllInDockerExcept(title)
-	local windows = EK_GetExtState(key_td_windows_stack)
-	windows = windows ~= nil and unserializeTable(windows) or {}
+	local windows = EK_GetExtState(key_td_windows_stack, {})
 
 	local dockerId = windows[title] and windows[title][1] or -1
 
@@ -337,11 +348,8 @@ end
 
 function TD_ToggleLastWindow(dockerId)
 	local title
-	local windows = EK_GetExtState(key_td_windows_stack)
-	windows = windows ~= nil and unserializeTable(windows) or {}
-
-	local dockers = EK_GetExtState(key_td_last_windows)
-	dockers = dockers ~= nil and unserializeTable(dockers) or {}
+	local windows = EK_GetExtState(key_td_windows_stack, {})
+	local dockers = EK_GetExtState(key_td_last_windows, {})
 
 	local getOpenedWindow = function()
 		local opened
@@ -368,7 +376,7 @@ function TD_ToggleLastWindow(dockerId)
 	if opened_window then
 		title = opened_window
 		dockers[dockerId] = title
-		EK_SetExtState(key_td_last_windows, serializeTable(dockers))
+		EK_SetExtState(key_td_last_windows, dockers)
 	else
 		title = dockers[dockerId]
 	end
@@ -393,8 +401,7 @@ function TD_ToggleLastWindow(dockerId)
 end
 
 function TD_SyncOpenedWindows()
-	local windows = EK_GetExtState(key_td_windows_stack)
-	windows = windows ~= nil and unserializeTable(windows) or {}
+	local windows = EK_GetExtState(key_td_windows_stack, {})
 
 	for wTitle, data in pairs(windows) do
 		local wSectionId = data[2]
@@ -818,4 +825,26 @@ function GetMediaTrackByGUID(guid)
 	end
 
 	return nil
+end
+
+function EK_Vol2Db(x, reduce)
+	if not x or x < 0.0000000298023223876953125 then
+		return -150.0
+	end
+
+	local v = math.log(x) * 8.6858896380650365530225783783321
+
+	if v < -150.0 then
+		return -150.0
+	else
+		if reduce then
+			return string.format('%.2f', v)
+   		else
+			return v
+  		end
+	end
+end
+
+function EK_Db2Vol(x)
+	return math.exp(x * 0.11512925464970228420089957273422)
 end
