@@ -1,5 +1,5 @@
 -- @description ek_Save project with a check of unused media files
--- @version 1.0.3
+-- @version 1.0.4
 -- @author Ed Kashinsky
 -- @about
 --   Attach this script on save and this script checks if unused media exists in the project
@@ -92,7 +92,7 @@ EK_SetExtState(ignored_files_key, ignored_list, true)
 if hasAnyUnusedFile then
 	Log(files, ek_log_levels.Important)
 
-	local res = reaper.MB("There are some unused files in the project. Open \"Clean current project directory\" before save?\n\n If you press No, you just save project.", "Save project", 3)
+	local res = reaper.MB("There are some unused files in the project. Open \"Project directory cleanup\" before save?\n\n If you press No, you just save project.", "Save project", 3)
 
 	if res == 6 then -- YES
 		reaper.Main_OnCommand(reaper.NamedCommandLookup(40098), 0) -- File: Clean current project directory...
