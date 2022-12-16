@@ -99,7 +99,9 @@ This helps to keep track of file garbage in your projects. It shows a special wa
 
 <img src="/Assets/images/save_project_check_unused.jpeg" alt="save_project_check_unused" width="281"/>
 
-Just attach it on Cmd/Ctrl+S instead of saving by default.
+Installation:
+1. Install script **ek_Save project with a check of unused media files**
+2. Just attach it on Cmd/Ctrl+S instead of saving by default.
 
 ### Theme
 
