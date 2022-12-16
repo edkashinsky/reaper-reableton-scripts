@@ -2,7 +2,7 @@
 -- @version 1.0.4
 -- @author Ed Kashinsky
 -- @about
---   Attach this script on save and this script checks if unused media exists in the project
+--   This helps to keep track of file garbage in your projects. It shows a special warning if you have unused files in the project when saving.
 -- @changelog
 --   - Improved stability
 

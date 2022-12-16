@@ -15,9 +15,9 @@ This scripts makes Reaper a bit close to Ableton workflow. Also it brings useful
 ```
 https://raw.githubusercontent.com/edkashinsky/reaper-reableton-scripts/master/index.xml
 ```
-4. Done! You can find all new scripts in **Extensions** -> **ReaPack** -> **Browse Packages**
-5. Install script **ek_Core functions**, because many of scripts require this base script with common functions 
-6. From time to time please execute **Extensions** -> **ReaPack** -> **Synchronize Packages** to get new versions of scripts.
+7. Done! You can find all new scripts in **Extensions** -> **ReaPack** -> **Browse Packages**
+8. Install script **ek_Core functions**, because many of scripts require this base script with common functions 
+9. From time to time please execute **Extensions** -> **ReaPack** -> **Synchronize Packages** to get new versions of scripts.
 
 ## Main useful scripts
 
@@ -92,6 +92,14 @@ Installation:
 3. Open **Preferences** -> **Mouse modifiers**
 4. Select **Media item** in Context and **left click**
 5. Select this script in **Default action** in main section
+
+### Save project with a check of unused media files
+
+This helps to keep track of file garbage in your projects. It shows a special warning if you have unused files in the project when saving.
+
+<img src="/Assets/images/save_project_check_unused.jpeg" alt="save_project_check_unused" width="281"/>
+
+Just attach it on Cmd/Ctrl+S instead of saving by default.
 
 ### Theme
 
