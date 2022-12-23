@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="2395059a845a35a72c32a25f93af911d795fb701">
+<index version="1" name="Reableton Scripts" commit="226eed45122674a7d50309e1c5225581fa1745f6">
   <category name="ColorThemes">
     <reapack name="Flat Madness Bright Remix.theme" type="theme" desc="Flat Madness Bright Remix">
       <metadata>
@@ -313,6 +313,11 @@
 - "Save to timestamped file in additional directory" support for backup observing]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/75e21ec826cd14dd34a35541d4263884935ac2e8/Core/ek_Global%20startup%20action.lua</source>
         <source file="ek_Core functions startup.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/75e21ec826cd14dd34a35541d4263884935ac2e8/Core/ek_Core%20functions%20startup.lua</source>
+      </version>
+      <version name="1.0.17" author="Ed Kashinsky" time="2022-12-23T17:12:06Z">
+        <changelog><![CDATA[- fixes small bugs]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/226eed45122674a7d50309e1c5225581fa1745f6/Core/ek_Global%20startup%20action.lua</source>
+        <source file="ek_Core functions startup.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/226eed45122674a7d50309e1c5225581fa1745f6/Core/ek_Core%20functions%20startup.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Save project with a check of unused media files.lua" type="script" desc="ek_Save project with a check of unused media files">
