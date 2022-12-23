@@ -550,6 +550,9 @@ function GA_GetHZoomLevelForMidiEditor()
 	local midiview = reaper.JS_Window_FindChildByID(MidiEditor, 0x3E9)
   	local _, width = reaper.JS_Window_GetClientSize(midiview)
  	local take =  reaper.MIDIEditor_GetTake(MidiEditor)
+
+	if not reaper.ValidatePtr(take, "MediaTake*") then return end
+
   	local guid = reaper.BR_GetMediaItemTakeGUID(take)
   	local item =  reaper.GetMediaItemTake_Item(take)
   	local _, chunk = reaper.GetItemStateChunk(item, "", false)
@@ -586,7 +589,7 @@ function GA_GetHZoomLevelForMidiEditor()
     	end
   	end
 
-  	local start_time, end_time, HZoom = reaper.MIDI_GetProjTimeFromPPQPos( take, leftmost_tick)
+  	local start_time, end_time, _ = reaper.MIDI_GetProjTimeFromPPQPos( take, leftmost_tick)
 
   	if timebase == 0 or timebase == 4 then
     	end_time = reaper.MIDI_GetProjTimeFromPPQPos( take, leftmost_tick + (width-1)/hzoom)
