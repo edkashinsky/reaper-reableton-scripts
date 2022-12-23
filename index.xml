@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="ceea2f0b9fea2ad042e3d572365be86f252915b5">
+<index version="1" name="Reableton Scripts" commit="2395059a845a35a72c32a25f93af911d795fb701">
   <category name="ColorThemes">
     <reapack name="Flat Madness Bright Remix.theme" type="theme" desc="Flat Madness Bright Remix">
       <metadata>
@@ -321,7 +321,7 @@
 {\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
 \widowctrl\hyphauto
 
-{\pard \ql \f0 \sa180 \li0 \fi0 Attach this script on save and this script checks if unused media exists in the project\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 This helps to keep track of file garbage in your projects. It shows a special warning if you have unused files in the project when saving.\par}
 }
 ]]></description>
       </metadata>
@@ -470,6 +470,10 @@
       <version name="1.0.1" author="Ed Kashinsky" time="2022-10-14T23:10:01Z">
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2707144ae82085d46f885a989b5425e843c36b0f/Items%20Editing/ek_Edge%20silence%20cropper%20(no%20prompt).lua</source>
       </version>
+      <version name="1.0.2" author="Ed Kashinsky" time="2022-12-23T13:31:22Z">
+        <changelog><![CDATA[- Fixed bug with MIDI items]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2395059a845a35a72c32a25f93af911d795fb701/Items%20Editing/ek_Edge%20silence%20cropper%20(no%20prompt).lua</source>
+      </version>
     </reapack>
     <reapack name="ek_Edge silence cropper.lua" type="script" desc="ek_Edge silence cropper">
       <metadata>
@@ -506,6 +510,11 @@
         <changelog><![CDATA[- Improved stability]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/75e21ec826cd14dd34a35541d4263884935ac2e8/Items%20Editing/ek_Edge%20silence%20cropper.lua</source>
         <source file="../Core/ek_Edge silence cropper functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/75e21ec826cd14dd34a35541d4263884935ac2e8/Core/ek_Edge%20silence%20cropper%20functions.lua</source>
+      </version>
+      <version name="1.0.5" author="Ed Kashinsky" time="2022-12-23T13:31:22Z">
+        <changelog><![CDATA[- Fixed bug with MIDI items]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2395059a845a35a72c32a25f93af911d795fb701/Items%20Editing/ek_Edge%20silence%20cropper.lua</source>
+        <source file="../Core/ek_Edge silence cropper functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2395059a845a35a72c32a25f93af911d795fb701/Core/ek_Edge%20silence%20cropper%20functions.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Increase pitch or rate for selected items.lua" type="script" desc="ek_Increase pitch or rate for selected items">
