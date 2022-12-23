@@ -1,12 +1,12 @@
 -- @description ek_Edge silence cropper
--- @version 1.0.4
+-- @version 1.0.5
 -- @author Ed Kashinsky
 -- @about
 --   This script helps to remove silence at the start and at the end of selected items by individual thresholds, pads and fades.
 --
 --   Also it provides UI for configuration
 -- @changelog
---   - Improved stability
+--   - Fixed bug with MIDI items
 -- @provides
 --   ../Core/ek_Edge silence cropper functions.lua
 
@@ -49,7 +49,7 @@ local function getEdgePositionsByItem(item)
     local _, guid = reaper.GetSetMediaItemInfo_String(item, "GUID", "", false)
     local rate = reaper.GetMediaItemTakeInfo_Value(take, "D_PLAYRATE")
 
-    if not take or not guid then return end
+    if not take or not guid or reaper.TakeIsMIDI(take) then return end
 
     local startTime, endTime
     local p_l_threshold = getTsParamValue(tsParams.leading.threshold)
@@ -138,8 +138,9 @@ local function preview_result()
 
     for i = 0, reaper.CountMediaItems(proj) - 1 do
         local item = reaper.GetMediaItem(proj, i)
+         local take = reaper.GetActiveTake(item)
 
-        if reaper.IsMediaItemSelected(item) and p_preview == 1 then
+        if reaper.IsMediaItemSelected(item) and not reaper.TakeIsMIDI(take) and p_preview == 1 then
             local track = reaper.GetMediaItem_Track(item)
             local item_height = reaper.GetMediaItemInfo_Value(item, "I_LASTH")
             local position = reaper.GetMediaItemInfo_Value(item, "D_POSITION")
@@ -251,11 +252,13 @@ local function trimSilenceResult()
         local item = reaper.GetSelectedMediaItem(proj, i)
         local take = reaper.GetActiveTake(item)
 
-        local startTime = getStartPositionLouderThenThreshold(take, getTsParamValue(tsParams.leading.threshold))
-        if startTime > 0 then trimLeadingPosition(take, startTime) end
+        if take ~= nil and not reaper.TakeIsMIDI(take) then
+            local startTime = getStartPositionLouderThenThreshold(take, getTsParamValue(tsParams.leading.threshold))
+            if startTime > 0 then trimLeadingPosition(take, startTime) end
 
-        local endTime = getEndPositionLouderThenThreshold(take, getTsParamValue(tsParams.trailing.threshold))
-        if endTime > 0 then trimTrailingPosition(take, endTime) end
+            local endTime = getEndPositionLouderThenThreshold(take, getTsParamValue(tsParams.trailing.threshold))
+            if endTime > 0 then trimTrailingPosition(take, endTime) end
+        end
     end
 
     reaper.UpdateArrange()
