@@ -1,12 +1,11 @@
 -- @description ek_Rename selected tracks or takes
--- @version 1.0.1
+-- @version 1.0.2
 -- @author Ed Kashinsky
 -- @about
 --   Renaming stuff for takes, items, markers, regions and tracks depending on focus
 -- @changelog
 --   Added support of renaming markers and regions:
 --    - If position of marker or starting position of region is equal with edit cursor, you can rename name of marker
---    - (!) There should also be no selected items around
 --	  - As usual, you can click on marker or region in header of arrange and cursor position become equal with marker/region
 
 function CoreFunctionsLoaded(script)
@@ -33,6 +32,9 @@ end
 reaper.Undo_BeginBlock()
 
 local countSelectedItems = reaper.CountSelectedMediaItems(proj)
+local cursorPosition = reaper.GetCursorPosition()
+local s_isrgn, s_pos, s_rgnend, s_name, s_markrgnindexnumber
+local _, num_markers, num_regions = reaper.CountProjectMarkers(proj)
 
 local function renameProjectMarker(markrgnindexnumber, isrgn, pos, rgnend, name)
 	local result = EK_AskUser((isrgn and "Rename region" or "Rename marker") .. " #" .. markrgnindexnumber, {
@@ -48,36 +50,30 @@ local function renameProjectMarker(markrgnindexnumber, isrgn, pos, rgnend, name)
 	reaper.SetProjectMarker(markrgnindexnumber, isrgn, pos, rgnend, new_name)
 end
 
-if countSelectedItems == 1 then
+for i = 0, num_markers + num_regions - 1 do
+	local _, isrgn, pos, rgnend, name, markrgnindexnumber = reaper.EnumProjectMarkers(i)
+
+	if pos == cursorPosition then
+		s_markrgnindexnumber = markrgnindexnumber
+		s_isrgn = isrgn
+		s_pos = pos
+		s_rgnend = rgnend
+		s_name = name
+	end
+end
+
+if s_markrgnindexnumber ~= nil then
+	-- rename marker title
+	renameProjectMarker(s_markrgnindexnumber, s_isrgn, s_pos, s_rgnend, s_name)
+elseif countSelectedItems == 1 then
 	-- Xenakios/SWS: Rename takes...
 	reaper.Main_OnCommand(reaper.NamedCommandLookup("_XENAKIOS_RENMTAKE"), 0)
 elseif countSelectedItems > 1 then
 	-- Xenakios/SWS: Rename takes with same name...	
 	reaper.Main_OnCommand(reaper.NamedCommandLookup("_XENAKIOS_RENMTAKEALL"), 0)
 else
-	local cursorPosition = reaper.GetCursorPosition()
-	local s_isrgn, s_pos, s_rgnend, s_name, s_markrgnindexnumber
-	local _, num_markers, num_regions = reaper.CountProjectMarkers(proj)
-
-	for i = 0, num_markers + num_regions - 1 do
-		local _, isrgn, pos, rgnend, name, markrgnindexnumber = reaper.EnumProjectMarkers(i)
-
-		if pos == cursorPosition then
-			s_markrgnindexnumber = markrgnindexnumber
-			s_isrgn = isrgn
-			s_pos = pos
-			s_rgnend = rgnend
-			s_name = name
-		end
-	end
-
-	-- rename marker title
-	if s_markrgnindexnumber ~= nil then
-		renameProjectMarker(s_markrgnindexnumber, s_isrgn, s_pos, s_rgnend, s_name)
-	else
-		-- Xenakios/SWS: Rename selected tracks...
-		reaper.Main_OnCommand(reaper.NamedCommandLookup("_XENAKIOS_RENAMETRAXDLG"), 0)
-	end
+	-- Xenakios/SWS: Rename selected tracks...
+	reaper.Main_OnCommand(reaper.NamedCommandLookup("_XENAKIOS_RENAMETRAXDLG"), 0)
 end
 
 reaper.Undo_EndBlock("Rename selected tracks or takes", -1)
