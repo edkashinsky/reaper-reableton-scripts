@@ -1,0 +1,29 @@
+;
+; Keyboard map for Virtual MIDI Keyboard like in Ableton
+;
+; just put this file in the same place your reaper.ini is and restart Reaper
+;
+; oh and edit it for your keyboard, if you want. you can add additional keys/etc
+; First item is the key (ASCII) or can be a number to define the scancode (i.e. 27 is Escape).
+; second item is offset from current center of keyboard
+;
+; You can change octaves by arrow left/right on keyboard
+
+A -12    ;  C
+W -11    ;  C#
+S -10    ;  D
+E -9     ;  D#
+D -8     ;  E
+F -7     ;  F
+T -6     ;  F#
+G -5     ;  G
+Y -4     ;  G#
+H -3     ;  A
+U -2     ;  A#
+J -1     ;  B
+K 0      ;  C
+O +1     ;  C#
+L +2     ;  D
+P +3     ;  D#
+59 +4    ;  E
+
