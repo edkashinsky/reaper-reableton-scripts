@@ -405,7 +405,7 @@ It increase volume for selected track a bit and shows tooltip with set volume
 
 #### ek_Rename selected tracks or takes
 
-Renaming stuff for takes, items and tracks depending on focus
+Renaming stuff for takes, items, markers, regions and tracks depending on focus
 
 #### ek_Set volume for selected tracks
 
@@ -422,10 +422,6 @@ This script toggles mute for selected tracks and makes fx online if it is offine
 #### ek_Toggle single solo for selected tracks
 
 Toggles selected track soloed
-
-#### ek_Toggle trim mode for all tracks
-
-Toggles trim mode for selected tracks and shows current state as button highlight
 
 #### ek_Toggle trim mode for selected trackes
 
