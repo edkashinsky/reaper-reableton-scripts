@@ -325,6 +325,12 @@ Toggle Docker tool allows you to have just one opened window in one docker. When
 
 This script toggles "Mixer" window
 
+#### ek_Toggle Docker: Project Bay
+
+Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"
+
+This script toggles "Project Bay" window
+
 #### ek_Toggle Docker: Render Matrix
 
 Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"
