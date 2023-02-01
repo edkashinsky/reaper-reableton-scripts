@@ -53,11 +53,11 @@ local function FetchItemsMap()
 	local getIndex = function(position, length)
 		for i = 1, #result do
 			for j = 1, #result[i] do
-				if position > result[i][j].position and position < result[i][j].position + result[i][j].length then
+				if position >= result[i][j].position and position <= result[i][j].position + result[i][j].length then
 					return i
 				end
 
-				if position + length > result[i][j].position and position + length < result[i][j].position + result[i][j].length then
+				if position + length >= result[i][j].position and position + length <= result[i][j].position + result[i][j].length then
 					return i
 				end
 			end

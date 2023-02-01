@@ -1,11 +1,11 @@
 -- @description ek_Pin selected items at markers started from
--- @version 1.0.5
+-- @version 1.0.6
 -- @author Ed Kashinsky
 -- @about
 --   ![Preview](/Assets/images/pin_items_to_markers_preview.gif)
 --   This script pins selected items to markers started from specified number. It requires ReaImGui extension.
 -- @changelog
---   - Small fixes
+--   - Small fix
 -- @provides
 --   ../Core/ek_Pin selected items functions.lua
 
