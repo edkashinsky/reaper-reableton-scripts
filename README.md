@@ -429,4 +429,4 @@ Toggles trim mode for selected tracks and shows current state as button highligh
 
 ## P.S.
 
-If you like my scripts and would like to support me, please subscribe to my profile on [Soundcloud](https://soundcloud.com/edkashinsky) 
+If you like scripts and would like to support me, please subscribe to my [Soundcloud](https://soundcloud.com/edkashinsky) and check out my stuff. 
