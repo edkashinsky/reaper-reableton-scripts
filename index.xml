@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="226eed45122674a7d50309e1c5225581fa1745f6">
+<index version="1" name="Reableton Scripts" commit="6f03ee4926af5534156ad3d4698e100f1555e1aa">
   <category name="ColorThemes">
     <reapack name="Flat Madness Bright Remix.theme" type="theme" desc="Flat Madness Bright Remix">
       <metadata>
@@ -594,6 +594,11 @@
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f3784d631421a3ae98bddf51b8a3a1fcb095d853/Items%20Editing/ek_Pin%20selected%20items%20at%20markers%20started%20from.lua</source>
         <source file="../Core/ek_Pin selected items functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f3784d631421a3ae98bddf51b8a3a1fcb095d853/Core/ek_Pin%20selected%20items%20functions.lua</source>
       </version>
+      <version name="1.0.6" author="Ed Kashinsky" time="2023-02-01T13:34:59Z">
+        <changelog><![CDATA[- Small fix]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/6f03ee4926af5534156ad3d4698e100f1555e1aa/Items%20Editing/ek_Pin%20selected%20items%20at%20markers%20started%20from.lua</source>
+        <source file="../Core/ek_Pin selected items functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/6f03ee4926af5534156ad3d4698e100f1555e1aa/Core/ek_Pin%20selected%20items%20functions.lua</source>
+      </version>
     </reapack>
     <reapack name="ek_Pin selected items to closest markers.lua" type="script" desc="ek_Pin selected items to closest markers">
       <metadata>
@@ -994,6 +999,22 @@
       <version name="1.0.0" author="Ed Kashinsky" time="2022-10-21T08:24:24Z">
         <changelog><![CDATA[- Added script]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/287ea53a9c0951c092fcd42f97d20ee2409ecf1e/Navigation/ek_Switch%20to%20prev%20grid%20step.lua</source>
+      </version>
+    </reapack>
+  </category>
+  <category name="Regions">
+    <reapack name="ek_Create region depending on selection.lua" type="script" desc="ek_Create region depending on selection">
+      <metadata>
+        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \ql \f0 \sa180 \li0 \fi0 Create region based on razor, selected items or time selection\par}
+}
+]]></description>
+      </metadata>
+      <version name="1.0.0" author="Ed Kashinsky" time="2023-02-01T13:34:59Z">
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/6f03ee4926af5534156ad3d4698e100f1555e1aa/Regions/ek_Create%20region%20depending%20on%20selection.lua</source>
       </version>
     </reapack>
   </category>
@@ -1440,12 +1461,18 @@
 {\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
 \widowctrl\hyphauto
 
-{\pard \ql \f0 \sa180 \li0 \fi0 Renaming stuff for takes, items and tracks depending on focus\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Renaming stuff for takes, items, markers, regions and tracks depending on focus\par}
 }
 ]]></description>
       </metadata>
       <version name="1.0.0" author="Ed Kashinsky" time="2022-05-30T09:42:49Z">
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Tracks%20Properties/ek_Rename%20selected%20tracks%20or%20takes.lua</source>
+      </version>
+      <version name="1.0.1" author="Ed Kashinsky" time="2023-02-01T13:34:59Z">
+        <changelog><![CDATA[Added support of renaming markers and regions:
+ - If position of marker or starting position of region is equal with edit cursor, you can rename name of marker
+ - (!) There should also be no selected items around]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/6f03ee4926af5534156ad3d4698e100f1555e1aa/Tracks%20Properties/ek_Rename%20selected%20tracks%20or%20takes.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Set volume for selected tracks.lua" type="script" desc="ek_Set volume for selected tracks">
