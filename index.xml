@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="6f03ee4926af5534156ad3d4698e100f1555e1aa">
+<index version="1" name="Reableton Scripts" commit="40707dd2382d8d9d7912594d9db100ae709caab2">
   <category name="ColorThemes">
     <reapack name="Flat Madness Bright Remix.theme" type="theme" desc="Flat Madness Bright Remix">
       <metadata>
@@ -1473,6 +1473,11 @@
  - If position of marker or starting position of region is equal with edit cursor, you can rename name of marker
  - (!) There should also be no selected items around]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/6f03ee4926af5534156ad3d4698e100f1555e1aa/Tracks%20Properties/ek_Rename%20selected%20tracks%20or%20takes.lua</source>
+      </version>
+      <version name="1.0.2" author="Ed Kashinsky" time="2023-02-01T14:44:36Z">
+        <changelog><![CDATA[Added support of renaming markers and regions:
+ - If position of marker or starting position of region is equal with edit cursor, you can rename name of marker]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/40707dd2382d8d9d7912594d9db100ae709caab2/Tracks%20Properties/ek_Rename%20selected%20tracks%20or%20takes.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Set volume for selected tracks.lua" type="script" desc="ek_Set volume for selected tracks">
