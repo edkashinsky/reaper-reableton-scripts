@@ -10,6 +10,7 @@ class Intro:
     __rootPath = __assetsPath + "/.."
     __rmFilename = "README.md"
     __introductionFile = 'intro.md'
+    __outroFile = 'outro.md'
 
     __pathCategories = [
         'Items Editing',
@@ -25,10 +26,15 @@ class Intro:
     def fill_readme(self):
         self.__fill_introduction()
         self.__fill_scripts()
+        self.__fill_outro()
         self.__readMeFile.close()
 
     def __fill_introduction(self):
         with open(self.__assetsPath + "/" + self.__introductionFile) as f:
+            self.__readMeFile.write(f.read() + "\n")
+
+    def __fill_outro(self):
+        with open(self.__assetsPath + "/" + self.__outroFile) as f:
             self.__readMeFile.write(f.read() + "\n")
 
     def __fill_scripts(self):
