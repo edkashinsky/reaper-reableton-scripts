@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="ead73023edd837715ed73c6231e2a4d9a5fdbeb6">
+<index version="1" name="Reableton Scripts" commit="fdabafb2484f70f3d210674a7e0b9af0a45fd002">
   <category name="ColorThemes">
     <reapack name="Flat Madness Bright Remix.theme" type="theme" desc="Flat Madness Bright Remix">
       <metadata>
@@ -172,6 +172,12 @@
         <source file="ek_Core functions v1.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/4a7d2b2af4c961d8eb924fc69fe5112a993afd77/Core/ek_Core%20functions%20v1.lua</source>
         <source file="ek_Core functions GUI.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/4a7d2b2af4c961d8eb924fc69fe5112a993afd77/Core/ek_Core%20functions%20GUI.lua</source>
       </version>
+      <version name="1.0.22" author="Ed Kashinsky" time="2023-02-08T10:07:32Z">
+        <changelog><![CDATA[improves GUI and added new functions]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fdabafb2484f70f3d210674a7e0b9af0a45fd002/Core/ek_Core%20functions.lua</source>
+        <source file="ek_Core functions v1.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fdabafb2484f70f3d210674a7e0b9af0a45fd002/Core/ek_Core%20functions%20v1.lua</source>
+        <source file="ek_Core functions GUI.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fdabafb2484f70f3d210674a7e0b9af0a45fd002/Core/ek_Core%20functions%20GUI.lua</source>
+      </version>
     </reapack>
     <reapack name="ek_Global startup action settings.lua" type="script" desc="ek_Global startup action settings">
       <metadata>
@@ -202,6 +208,10 @@
       <version name="1.0.4" author="Ed Kashinsky" time="2022-10-14T23:10:01Z">
         <changelog><![CDATA[- Added grid modes like in Ableton]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2707144ae82085d46f885a989b5425e843c36b0f/Core/ek_Global%20startup%20action%20settings.lua</source>
+      </version>
+      <version name="1.0.5" author="Ed Kashinsky" time="2023-02-08T10:07:32Z">
+        <changelog><![CDATA[improves GUI and added new functions]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fdabafb2484f70f3d210674a7e0b9af0a45fd002/Core/ek_Global%20startup%20action%20settings.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Global startup action.lua" type="script" desc="ek_Global startup action">
@@ -318,6 +328,11 @@
         <changelog><![CDATA[- fixes small bugs]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/226eed45122674a7d50309e1c5225581fa1745f6/Core/ek_Global%20startup%20action.lua</source>
         <source file="ek_Core functions startup.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/226eed45122674a7d50309e1c5225581fa1745f6/Core/ek_Core%20functions%20startup.lua</source>
+      </version>
+      <version name="1.0.18" author="Ed Kashinsky" time="2023-02-08T10:07:32Z">
+        <changelog><![CDATA[improves GUI and added new functions]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fdabafb2484f70f3d210674a7e0b9af0a45fd002/Core/ek_Global%20startup%20action.lua</source>
+        <source file="ek_Core functions startup.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fdabafb2484f70f3d210674a7e0b9af0a45fd002/Core/ek_Core%20functions%20startup.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Save project with a check of unused media files.lua" type="script" desc="ek_Save project with a check of unused media files">
@@ -646,6 +661,21 @@
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7935968f303a4437a36f269a7b0adea5a2c68db7/Items%20Editing/ek_Separated%20actions%20for%20Media%20item%20in%20Mouse%20modifiers.lua</source>
       </version>
     </reapack>
+    <reapack name="ek_Smart split items by mouse cursor.lua" type="script" desc="ek_Smart split items by mouse cursor">
+      <metadata>
+        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \ql \f0 \sa180 \li0 \fi0 Remake of amazing script by AZ and it works a bit different way. You can split by edit cursor if mouse position on it (or in Tolerance range in pixels). If you move mouse on transport panel and execute script, you will see settings window\par}
+}
+]]></description>
+      </metadata>
+      <version name="1.0.0" author="Ed Kashinsky" time="2023-02-08T10:07:32Z">
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fdabafb2484f70f3d210674a7e0b9af0a45fd002/Items%20Editing/ek_Smart%20split%20items%20by%20mouse%20cursor.lua</source>
+        <source file="../Core/ek_Smart split items by mouse cursor functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fdabafb2484f70f3d210674a7e0b9af0a45fd002/Core/ek_Smart%20split%20items%20by%20mouse%20cursor%20functions.lua</source>
+      </version>
+    </reapack>
     <reapack name="ek_Switch to next pitch mode for selected items.lua" type="script" desc="ek_Switch to next pitch mode for selected items">
       <metadata>
         <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
@@ -751,6 +781,10 @@
       <version name="1.0.2" author="Ed Kashinsky" time="2022-10-21T08:24:24Z">
         <changelog><![CDATA[- Small fix]]></changelog>
         <source main="midi_editor">https://github.com/edkashinsky/reaper-reableton-scripts/raw/287ea53a9c0951c092fcd42f97d20ee2409ecf1e/Navigation/ek_Auto%20grid%20for%20MIDI%20Editor.lua</source>
+      </version>
+      <version name="1.0.3" author="Ed Kashinsky" time="2023-02-08T10:07:32Z">
+        <changelog><![CDATA[Small fix]]></changelog>
+        <source main="midi_editor">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fdabafb2484f70f3d210674a7e0b9af0a45fd002/Navigation/ek_Auto%20grid%20for%20MIDI%20Editor.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Move cursor or selected items left by grid.lua" type="script" desc="ek_Move cursor or selected items left by grid">
@@ -955,6 +989,10 @@
         <changelog><![CDATA[- Added script]]></changelog>
         <source main="midi_editor">https://github.com/edkashinsky/reaper-reableton-scripts/raw/287ea53a9c0951c092fcd42f97d20ee2409ecf1e/Navigation/ek_Switch%20to%20next%20grid%20step%20(MIDI%20Editor).lua</source>
       </version>
+      <version name="1.0.1" author="Ed Kashinsky" time="2023-02-08T10:07:32Z">
+        <changelog><![CDATA[Small fixes]]></changelog>
+        <source main="midi_editor">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fdabafb2484f70f3d210674a7e0b9af0a45fd002/Navigation/ek_Switch%20to%20next%20grid%20step%20(MIDI%20Editor).lua</source>
+      </version>
     </reapack>
     <reapack name="ek_Switch to next grid step.lua" type="script" desc="ek_Switch to next grid step">
       <metadata>
@@ -969,6 +1007,10 @@
       <version name="1.0.0" author="Ed Kashinsky" time="2022-10-21T08:24:24Z">
         <changelog><![CDATA[- Added script]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/287ea53a9c0951c092fcd42f97d20ee2409ecf1e/Navigation/ek_Switch%20to%20next%20grid%20step.lua</source>
+      </version>
+      <version name="1.0.1" author="Ed Kashinsky" time="2023-02-08T10:07:32Z">
+        <changelog><![CDATA[Small fixes]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fdabafb2484f70f3d210674a7e0b9af0a45fd002/Navigation/ek_Switch%20to%20next%20grid%20step.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Switch to prev grid step (MIDI Editor).lua" type="script" desc="ek_Switch to prev grid step (MIDI Editor)">
@@ -985,6 +1027,10 @@
         <changelog><![CDATA[- Added script]]></changelog>
         <source main="midi_editor">https://github.com/edkashinsky/reaper-reableton-scripts/raw/287ea53a9c0951c092fcd42f97d20ee2409ecf1e/Navigation/ek_Switch%20to%20prev%20grid%20step%20(MIDI%20Editor).lua</source>
       </version>
+      <version name="1.0.1" author="Ed Kashinsky" time="2023-02-08T10:07:32Z">
+        <changelog><![CDATA[Small fixes]]></changelog>
+        <source main="midi_editor">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fdabafb2484f70f3d210674a7e0b9af0a45fd002/Navigation/ek_Switch%20to%20prev%20grid%20step%20(MIDI%20Editor).lua</source>
+      </version>
     </reapack>
     <reapack name="ek_Switch to prev grid step.lua" type="script" desc="ek_Switch to prev grid step">
       <metadata>
@@ -999,6 +1045,10 @@
       <version name="1.0.0" author="Ed Kashinsky" time="2022-10-21T08:24:24Z">
         <changelog><![CDATA[- Added script]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/287ea53a9c0951c092fcd42f97d20ee2409ecf1e/Navigation/ek_Switch%20to%20prev%20grid%20step.lua</source>
+      </version>
+      <version name="1.0.1" author="Ed Kashinsky" time="2023-02-08T10:07:32Z">
+        <changelog><![CDATA[Small fixes]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fdabafb2484f70f3d210674a7e0b9af0a45fd002/Navigation/ek_Switch%20to%20prev%20grid%20step.lua</source>
       </version>
     </reapack>
   </category>
