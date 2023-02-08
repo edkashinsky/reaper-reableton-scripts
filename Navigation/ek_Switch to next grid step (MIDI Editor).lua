@@ -1,10 +1,10 @@
 -- @description ek_Switch to next grid step (MIDI Editor)
--- @version 1.0.0
+-- @version 1.0.1
 -- @author Ed Kashinsky
 -- @about
 --   Switching to next grid step settings in MIDI Editor depending on adaptive or not
 -- @changelog
---   - Added script
+--   Small fixes
 -- @provides [main=midi_editor] .
 
 function CoreFunctionsLoaded(script)
@@ -35,26 +35,27 @@ end
 local MidiEditor = reaper.MIDIEditor_GetActive()
 if not MidiEditor then return end
 
-local values = ga_settings.midi_grid_setting.select_values
-local value = tonumber(GA_GetSettingValue(ga_settings.midi_grid_setting))
-local isAdaptive = in_array(ga_settings.midi_grid_setting.adaptive_grid_values, value)
+local s_config = ga_settings.midi_grid_setting
+local values = s_config.select_values
+local value = EK_GetExtState(s_config.key, s_config.default)
+local isAdaptive = in_array(s_config.adaptive_grid_values, value)
 local newValue = value + 1
 local availableValues = {}
 
 for i = 0, #values - 1 do
-	if isAdaptive and in_array(ga_settings.midi_grid_setting.adaptive_grid_values, i) then
+	if isAdaptive and in_array(s_config.adaptive_grid_values, i) then
 		table.insert(availableValues, i)
-	elseif not isAdaptive and not in_array(ga_settings.midi_grid_setting.adaptive_grid_values, i) then
+	elseif not isAdaptive and not in_array(s_config.adaptive_grid_values, i) then
 		table.insert(availableValues, i)
 	end
 end
 
 if in_array(availableValues, newValue) then
-	GA_SetSettingValue(ga_settings.midi_grid_setting, newValue)
+	EK_SetExtState(s_config.key, newValue)
 	Log("Set midi grid: " .. newValue)
 
 	local zoom_level = math.floor(GA_GetHZoomLevelForMidiEditor())
-	local id = tonumber(GA_GetSettingValue(ga_settings.midi_grid_setting))
+	local id = EK_GetExtState(s_config.key, s_config.default)
 	local settings = GA_GetGridSettings(id)
 	local grid
 

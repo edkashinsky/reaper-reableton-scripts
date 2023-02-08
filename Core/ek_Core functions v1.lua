@@ -84,6 +84,7 @@ function EK_GetExtState(key, default, for_project)
     if value == '' then return default end
 	if value == 'true' then value = true end
 	if value == 'false' then value = false end
+	if value == tostring(tonumber(value)) then value = tonumber(value) end
 	if type(value) == 'string' and value:sub(0, #key_table_prefix) == key_table_prefix then value = unserializeTable(value:sub(#key_table_prefix + 1)) end
 
     return value
@@ -847,4 +848,16 @@ end
 
 function EK_Db2Vol(x)
 	return math.exp(x * 0.11512925464970228420089957273422)
+end
+
+function EK_SortTableByKey(table, sortKey)
+	if not sortKey then sortKey = "order" end
+
+	local ordered_table = {}
+
+	for _, setting in pairs(table) do
+		ordered_table[setting[sortKey]] = setting
+	end
+
+	return ordered_table
 end

@@ -33,14 +33,16 @@ local ga_slots_data = {
 
 ga_settings = {
 	auto_grid = {
-		key = "auto_grid",
+		key = "ga_auto_grid",
+		type = gui_widget_types.Checkbox,
 		title = "Automatically adjust grid to zoom",
 		description = "Feature from Ableton: when you change zoom level, grid adjusts to it. By the way, if you want to have this feature in MIDI-editor, install script 'ek_Auto grid for MIDI Editor'.",
 		default = true,
 		order = 1,
 	},
 	arrange_grid_setting = {
-		key = "arrange_grid_setting",
+		key = "ga_arrange_grid_setting",
+		type = gui_widget_types.Combo,
 		title = "Grid setting for Arrange view",
 		--description = "Select which grid you want to have in Arrange view",
 		default = 3,
@@ -51,7 +53,8 @@ ga_settings = {
 		order = 2,
 	},
 	midi_grid_setting = {
-		key = "midi_grid_setting",
+		key = "ga_midi_grid_setting",
+		type = gui_widget_types.Combo,
 		title = "Grid setting for MIDI Editor",
 		description = "Select which grid you want to have. For quick switching use scripts 'ek_Switch to next grid step'/'ek_Switch to prev grid step'",
 		default = 3,
@@ -62,84 +65,99 @@ ga_settings = {
 		order = 3,
 	},
 	project_limit = {
-		key = "project_limit",
+		key = "ga_project_limit",
+		type = gui_widget_types.Checkbox,
 		title = "Automatically limit zoom to content of project",
 		description = "Feature from Ableton: max zoom level limits by the farthest item in the project.",
 		default = true,
 		order = 4,
 	},
 	focus_midi_editor = {
-		key = "focus_midi_editor",
+		key = "ga_focus_midi_editor",
+		type = gui_widget_types.Checkbox,
 		title = "Automatically focus to MIDI editor when you click on an item",
 		description = "Feature from Ableton: when you single click on item, you see only one MIDI editor and focus on this particular item.",
 		default = true,
 		order = 5,
 	},
 	highlight_buttons = {
-		key = "highlight_buttons",
+		key = "ga_highlight_buttons",
+		type = gui_widget_types.Checkbox,
 		title = "Automatically highlight buttons",
 		description = "This option highlights toolbar buttons in real-time. This applies to scripts: 'ek_Toggle preserve pitch for selected items', 'ek_Toggle trim mode for selected trackes', 'ek_Toggle monitoring fx plugin'",
 		default = true,
 		order = 6,
 	},
 	mfx_slots_exclusive = {
-		key = "mfx_slots_exclusive",
+		key = "ga_mfx_slots_exclusive",
+		type = gui_widget_types.Checkbox,
 		title = "Toggle monitoring fx slots in exclusive mode",
 		description = "If you use script 'ek_Toggle monitoring FX on slot 1-5' and want to toggle plugins between slots in monitoring chain exclusively (when you turn on some plugin, others are turning off)",
 		default = false,
 		order = 7,
 	},
 	rec_sample_rate = {
-		key = "rec_sample_rate",
+		key = "ga_rec_sample_rate",
+		type = gui_widget_types.Checkbox,
 		title = "Different sample rate for recording",
 		description = "This option useful for sound designers, who usually uses 48kHz and forget to increase the sampling rate before recording to get better recording quality.",
 		default = false,
 		order = 8,
 	},
 	rec_sample_rate_value = {
-		key = "rec_sample_rate_value",
+		key = "ga_rec_sample_rate_value",
+		type = gui_widget_types.Combo,
 		title = "Sample rate for recording",
 		description = "Specify your recording sample rate",
-		default = 96000,
+		select_values = {
+			48000, 96000, 176400, 192000,
+		},
+		default = 1,
 		order = 9,
 	},
 	backup_files = {
-		key = "backup_files",
+		key = "ga_backup_files",
+		type = gui_widget_types.Checkbox,
 		title = "Automatic limit timestamp backup files",
 		description = "If you want to keep only last limited amount of backup files, you can enable this option. Make sure that option 'Timestamp backup' is on in general preferences.",
 		default = false,
 		order = 10,
 	},
 	backup_files_limit = {
-		key = "backup_files_limit",
+		key = "ga_backup_files_limit",
+		type = gui_widget_types.Number,
 		title = "Amount of backup files",
 		description = "Specify count of fresh backup files you want to keep.",
 		default = 5,
 		order = 11,
 	},
 	dark_mode = {
-		key = "dark_mode",
+		key = "ga_dark_mode",
+		type = gui_widget_types.Checkbox,
 		title = "Use dark mode theme",
 		description = "If you want to use special theme for dark mode, turn on this option.",
 		default = false,
 		order = 12,
 	},
 	dark_mode_theme = {
-		key = "dark_mode_theme",
+		key = "ga_dark_mode_theme",
+		type = gui_widget_types.Text,
 		title = "Name of theme for dark mode",
 		description = "Specify title of theme for dark mode. Note that, this theme should be in the same folder as a regular theme. Name should be with \".ReaperTheme\" extension",
 		default = "",
 		order = 13,
 	},
 	dark_mode_time = {
-		key = "dark_mode_time",
+		key = "ga_dark_mode_time",
+		type = gui_widget_types.Text,
 		title = "Dark mode time interval",
 		description = "Specify time interval for dark mode. Format: \"HH:mm-HH:mm\"",
 		default = "20:00-09:00",
 		order = 14,
 	},
 	additional_action = {
-		key = "additional_action",
+		key = "ga_additional_action",
+		type = gui_widget_types.Text,
 		title = "Additional global startup action",
 		description = "If you have your own action on startup, you can specified command Id and it will be executed on startup.",
 		default = "",
@@ -154,22 +172,8 @@ else
 	gfx.ext_retina = dpi > "512" and 1 or 0
 end
 
-function GA_GetOrderedSettings()
-	local ordered_settings = {}
-
-	for _, setting in pairs(ga_settings) do
-		ordered_settings[setting.order] = setting
-	end
-
-	return ordered_settings
-end
-
 function GA_GetSettingValue(param)
-	return EK_GetExtState(ga_key_prefix .. param.key, param.default)
-end
-
-function GA_SetSettingValue(param, value)
-	EK_SetExtState(ga_key_prefix .. param.key, value)
+	return EK_GetExtState(param.key, param.default)
 end
 
 --
@@ -609,11 +613,15 @@ function GA_ObserveArmRec(changes, values)
 	if values.first_selected_track ~= nil and values.first_selected_track ~= cached_first_selected_track_sample_rate_marked then
 		local isArmed = reaper.GetMediaTrackInfo_Value(values.first_selected_track, "I_RECARM")
 		local _, desc = reaper.GetAudioDeviceInfo("SRATE")
-		local setting = GA_GetSettingValue(ga_settings.rec_sample_rate_value)
+		local s_config = ga_settings.rec_sample_rate_value
+		local setting = GA_GetSettingValue(s_config)
 		local hasMidiProgram = reaper.HasTrackMIDIProgramsEx(proj, values.first_selected_track)
 
+		setting = s_config.select_values[setting + 1]
+		if not setting then setting = s_config.select_values[s_config.default + 1] end
+
 		if isArmed == 1 and desc ~= setting and hasMidiProgram == nil then
-			Log("Changed: {param}", ek_log_levels.Warning, ga_settings.rec_sample_rate.key)
+			Log("Changed: {param}", ek_log_levels.Warning, s_config.key)
 
 			reaper.SNM_SetIntConfigVar("projsrate", setting)
 			reaper.SNM_SetIntConfigVar("projsrateuse", 1)

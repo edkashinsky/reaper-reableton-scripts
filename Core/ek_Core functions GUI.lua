@@ -32,6 +32,15 @@ gui_buttons_types = {
 	Cancel = 2,
 }
 
+gui_widget_types = {
+	Text = 1,
+	Number = 2,
+	NumberDrag = 3,
+	NumberSlider = 4,
+	Checkbox = 5,
+	Combo = 6,
+}
+
 GUI_OnWindowClose = nil
 
 
@@ -41,7 +50,7 @@ local function GetWindowFlags()
 		reaper.ImGui_WindowFlags_TopMost()
 end
 
-function GUI_GetInputFlags()
+local function GUI_GetInputFlags()
 	return reaper.ImGui_InputTextFlags_AutoSelectAll() |
 		reaper.ImGui_InputTextFlags_AllowTabInput() |
 		reaper.ImGui_InputTextFlags_AlwaysOverwrite()
@@ -187,4 +196,58 @@ end
 
 function GUI_GetCtx()
 	return ctx
+end
+
+function GUI_DrawSettingsTable(settingsTable)
+	local input_flags = GUI_GetInputFlags()
+	local r = reaper
+
+	for i = 1, #settingsTable do
+		local newVal
+		local s = settingsTable[i]
+		local curVal = EK_GetExtState(s.key, s.default)
+
+		reaper.ImGui_PushItemWidth(ctx, 200)
+		reaper.ImGui_PushFont(ctx, GUI_GetFont(gui_font_types.Bold))
+
+
+		if s.type == gui_widget_types.Text then
+			_, newVal = r.ImGui_InputText(ctx, s.title, curVal, input_flags)
+		elseif s.type == gui_widget_types.Number then
+			if s.number_precision then
+ 				_, newVal = r.ImGui_InputDouble(ctx, s.title, curVal, nil, nil, s.number_precision, input_flags)
+			else
+				_, newVal = r.ImGui_InputInt(ctx, s.title, curVal, nil, nil, input_flags)
+			end
+		elseif s.type == gui_widget_types.NumberDrag then
+			if s.number_min and not s.number_max then s.number_max = 0x7fffffff end
+
+			if s.number_precision then
+ 				_, newVal = r.ImGui_DragDouble(ctx, s.title, curVal, nil, s.number_min, s.number_max, s.number_precision, input_flags)
+			else
+				_, newVal = r.ImGui_DragInt(ctx, s.title, curVal, nil, s.number_min, s.number_max, nil, input_flags)
+			end
+		elseif s.type == gui_widget_types.NumberSlider then
+			if s.number_precision then
+ 				_, newVal = r.ImGui_SliderDouble(ctx, s.title, curVal, s.number_min, s.number_max, s.number_precision, input_flags)
+			else
+				_, newVal = r.ImGui_SliderInt(ctx, s.title, curVal, s.number_min, s.number_max, nil, input_flags)
+			end
+		elseif s.type == gui_widget_types.Checkbox then
+			_, newVal = r.ImGui_Checkbox(ctx, s.title, curVal)
+		elseif s.type == gui_widget_types.Combo then
+			_, newVal = r.ImGui_Combo(ctx, s.title, curVal, join(s.select_values, "\0") .. "\0")
+		end
+
+		if curVal ~= newVal then EK_SetExtState(s.key, newVal) end
+
+		r.ImGui_PopFont(ctx)
+		r.ImGui_PopItemWidth(ctx)
+
+		if s.description then
+			GUI_DrawText(s.description, GUI_GetFont(gui_font_types.Italic))
+
+			if i < #settingsTable then GUI_DrawGap() end
+		end
+	end
 end

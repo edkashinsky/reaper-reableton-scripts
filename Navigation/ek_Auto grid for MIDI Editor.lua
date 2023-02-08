@@ -1,5 +1,5 @@
 -- @description ek_Auto grid for MIDI Editor
--- @version 1.0.2
+-- @version 1.0.3
 -- @author Ed Kashinsky
 -- @about
 --   It changes grid depending on zoom level in MIDI Editor.
@@ -11,7 +11,7 @@
 --     3. Add to this custom script MultiZoom shortcut hotkey
 --     4. Have fun!
 -- @changelog
---    - Small fix
+--    Small fix
 -- @provides [main=midi_editor] .
 
 function CoreFunctionsLoaded(script)
@@ -39,7 +39,7 @@ local MidiEditor = reaper.MIDIEditor_GetActive()
 if not MidiEditor then return end
 
 local zoom_level = math.floor(GA_GetHZoomLevelForMidiEditor())
-local id = tonumber(GA_GetSettingValue(ga_settings.midi_grid_setting))
+local id = EK_GetExtState(ga_settings.midi_grid_setting.key, ga_settings.midi_grid_setting.default)
 local settings = GA_GetGridSettings(id)
 local grid
 

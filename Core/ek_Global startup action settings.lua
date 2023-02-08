@@ -1,10 +1,10 @@
 -- @description ek_Global startup action settings
--- @version 1.0.4
+-- @version 1.0.5
 -- @author Ed Kashinsky
 -- @about
 --   Here you can set features for global startup actions
 -- @changelog
---   - Added grid modes like in Ableton
+--   improves GUI and added new functions
 
 function CoreFunctionsLoaded(script)
 	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
@@ -32,60 +32,25 @@ if not reaper.APIExists("ImGui_WindowFlags_NoCollapse") then
 	return
 end
 
-local ordered_settings = GA_GetOrderedSettings()
+local ordered_settings = EK_SortTableByKey(ga_settings)
 
 function frame()
-	local is_enabled = EK_IsGlobalActionEnabled()
-	local input_flags = GUI_GetInputFlags()
-
 	GUI_DrawText("Settings for 'ek_Global startup action'", GUI_GetFont(gui_font_types.Bold))
 
 	reaper.ImGui_TextWrapped(GUI_GetCtx(), "Status:")
 	reaper.ImGui_SameLine(GUI_GetCtx())
 
-	if is_enabled then
+	if EK_IsGlobalActionEnabled() then
 		reaper.ImGui_TextColored(GUI_GetCtx(), gui_colors.Green, "Enabled")
 	else
 		reaper.ImGui_TextColored(GUI_GetCtx(), gui_colors.Red, "Disabled")
 		GUI_DrawGap()
 		GUI_DrawText("Open 'Extensions' => 'Startup actions' => 'Set global startup action' and paste command id of 'ek_Global startup action' and re-open Reaper", GUI_GetFont(gui_font_types.Bold), gui_colors.Red)
-
-		input_flags = input_flags | reaper.ImGui_InputTextFlags_ReadOnly()
 	end
 
 	GUI_DrawGap()
 
-	for i = 1, #ordered_settings do
-		local r, newVal
-		local setting = ordered_settings[i]
-		local curVal = GA_GetSettingValue(setting)
-
-		reaper.ImGui_PushItemWidth(GUI_GetCtx(), 200)
-
-		reaper.ImGui_PushFont(GUI_GetCtx(), GUI_GetFont(gui_font_types.Bold))
-
-		if setting.select_values then
-			r, newVal = reaper.ImGui_Combo(GUI_GetCtx(), setting.title, curVal, join(setting.select_values, "\0") .. "\0")
-		elseif type(curVal) == 'boolean' then
-			r, newVal = reaper.ImGui_Checkbox(GUI_GetCtx(), setting.title, curVal)
-		elseif type(curVal) == 'number' then
-			r, newVal = reaper.ImGui_InputInt(GUI_GetCtx(), setting.title, curVal, nil, nil, input_flags)
-		else
-			r, newVal = reaper.ImGui_InputText(GUI_GetCtx(), setting.title, curVal, input_flags)
-		end
-
-		if curVal ~= newVal then
-			GA_SetSettingValue(setting, newVal)
-		end
-
-		reaper.ImGui_PopFont(GUI_GetCtx())
-		reaper.ImGui_PopItemWidth(GUI_GetCtx())
-
-		if setting.description then
-			GUI_DrawText(setting.description, GUI_GetFont(gui_font_types.Italic))
-			GUI_DrawGap()
-		end
-	end
+	GUI_DrawSettingsTable(ordered_settings)
 end
 
 GUI_ShowMainWindow(490, 670)
