@@ -192,6 +192,11 @@ This script pins selected items to closest markers for first selected item. It r
 This script gives opportunity to attach 2 different actions on Media item context in Mouse modifiers - when we click on header of media item and part between header and middle of it.
 For installation open "Mouse Modifiers" preferences, find "Media item" context and select this script in any section. Also you can copy this script and use it in different hotkey-sections and actions.
 
+#### ek_Smart split items by mouse cursor
+
+Remake of amazing script by AZ and it works a bit different way. You can split by edit cursor if mouse position on it (or in Tolerance range in pixels).
+If you move mouse on transport panel and execute script, you will see settings window
+
 #### ek_Switch to next pitch mode for selected items
 
 This script helps to switch between pitch modes quicker just in one click.
