@@ -72,9 +72,30 @@ function SelectItemsOnTrackInRange(track, rStart, rEnd)
     end
 end
 
-function SelectItemsOnEdge(track, position)
+function SelectItemsOnEdge(track, position, selectByMousePosition)
     local s_config = split_settings.selectAfter
     local selectAfter = EK_GetExtState(s_config.key, s_config.default)
+
+    -- For cursor cutting use mouse position
+    if selectAfter ~= 2 and selectByMousePosition == true then
+        local MainHwnd = reaper.GetMainHwnd()
+        local ArrangeHwnd = reaper.JS_Window_FindChildByID(MainHwnd, 0x3E8)
+        local zoom = reaper.GetHZoomLevel()
+        local _, scrollOffsetPx = reaper.JS_Window_GetScrollInfo(ArrangeHwnd, "h")
+        local scrollOffsetTime = scrollOffsetPx / zoom
+
+        local eCurPosition = reaper.GetCursorPosition()
+        local x, y = reaper.GetMousePosition()
+        local arr_x, _ = reaper.JS_Window_ScreenToClient(ArrangeHwnd, x, y)
+        local eCurOffsetPx = (eCurPosition - scrollOffsetTime) * zoom
+
+        if (arr_x > eCurOffsetPx) then
+            selectAfter = 1 -- RIGHT SIDE
+        else
+            selectAfter = 0 -- LEFT SIDE
+        end
+    end
+
     local needToSelect = selectAfter == 0 or selectAfter == 1
 
     for j = 0, reaper.CountTrackMediaItems(track) - 1 do
@@ -101,7 +122,7 @@ function CutAllItemsOnPosition(position)
 
             if IsPositionOnItem(item, position) then
                 reaper.SplitMediaItem(item, position)
-                SelectItemsOnEdge(track, position)
+                SelectItemsOnEdge(track, position, true)
                 isAnyCutDone = true
             end
         end
