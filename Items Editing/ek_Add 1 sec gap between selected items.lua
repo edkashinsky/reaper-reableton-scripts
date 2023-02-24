@@ -1,48 +1,51 @@
 -- @description ek_Add 1 sec gap between selected items
--- @version 1.0.0
+-- @version 1.1.0
 -- @author Ed Kashinsky
 -- @about
 --   Script just adds 1 second gap between selected items without any GUI
 -- @changelog
---   - Fixed for toolbar on Windows
+--   - Script follow to item stems situated on different tracks
+--   - If press cmd/ctrl and execute script, gap will be 0.1 sec
+
+function CoreFunctionsLoaded(script)
+	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
+	local root_path = debug.getinfo(1, 'S').source:sub(2, -5):match("(.*" .. sep .. ")")
+	local script_path = root_path .. ".." .. sep .. "Core" .. sep .. script
+	local file = io.open(script_path, 'r')
+
+	if file then file:close() dofile(script_path) else return nil end
+	return not not _G["EK_HasExtState"]
+end
+
+local loaded = CoreFunctionsLoaded("ek_Core functions.lua")
+if not loaded then
+	if loaded == nil then reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0) end
+	return
+end
 
 reaper.Undo_BeginBlock()
 
-local proj = 0
 local gap = 1
-local count = reaper.CountSelectedMediaItems(proj)
+local stems = EK_GetSelectedItemsAsGroupedStems()
+
+-- ctrl/cmd is pressed (smoother changes)
+if reaper.JS_Mouse_GetState(4) > 0 then
+	gap = 0.1
+end
 
 local function add_gap()
-	local tracks = {}
-	
-	-- group items by tracks
-	for i = 0, count - 1 do
-		local item = reaper.GetSelectedMediaItem(proj, i)
-		local i_id = reaper.GetMediaItemInfo_Value(item, "IP_ITEMNUMBER")
-		
-		local track = reaper.GetMediaItemTrack(item)
-		local t_id = reaper.GetMediaTrackInfo_Value(track, "IP_TRACKNUMBER")
-		
-		if tracks[t_id] == nil then
-			tracks[t_id] = {}
-		end
-		
-		table.insert(tracks[t_id], i_id)
-	end
-	
-	for t_id, i_ids in pairs(tracks) do 
-		local track = reaper.GetTrack(proj, t_id - 1)
-		
-		for i = #i_ids, 2, -1 do
-			local item = reaper.GetTrackMediaItem(track, i_ids[i])
-			
-			local position = reaper.GetMediaItemInfo_Value(item, "D_POSITION")
-	 		reaper.SetMediaItemPosition(item, position + (gap * (i - 1)), i == 0)
+	for i = 2, #stems do
+		for j = 1, #stems[i] do
+			local item = EK_GetMediaItemByGUID(stems[i][j].item_id)
+
+			if item ~= nil then
+				reaper.SetMediaItemInfo_Value(item, "D_POSITION", stems[i][j].position + gap)
+			end
 		end
 	end
 end
 
-if count > 1 then
+if #stems > 1 then
 	add_gap()
 	reaper.UpdateArrange()
 else

@@ -1,5 +1,5 @@
 -- @description ek_Pin selected items at markers started from
--- @version 1.0.6
+-- @version 1.0.7
 -- @author Ed Kashinsky
 -- @about
 --   ![Preview](/Assets/images/pin_items_to_markers_preview.gif)

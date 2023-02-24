@@ -798,7 +798,7 @@ function getReaperIniValue(section, key)
 	end
 end
 
-function GetMediaItemByGUID(guid)
+function EK_GetMediaItemByGUID(guid)
 	for i = 0, reaper.CountMediaItems(proj) - 1 do
 		local item = reaper.GetMediaItem(proj, i)
 
@@ -813,7 +813,7 @@ function GetMediaItemByGUID(guid)
 	return nil
 end
 
-function GetMediaTrackByGUID(guid)
+function EK_GetMediaTrackByGUID(guid)
 	for i = 0, reaper.CountTracks(proj) - 1 do
 		local track = reaper.GetTrack(proj, i)
 
@@ -860,4 +860,58 @@ function EK_SortTableByKey(table, sortKey)
 	end
 
 	return ordered_table
+end
+
+function EK_GetSelectedItemsAsGroupedStems()
+	local result = {}
+
+	local getIndex = function(position, length)
+		for i = 1, #result do
+			for j = 1, #result[i] do
+				if position >= result[i][j].position and position <= result[i][j].position + result[i][j].length then
+					return i
+				end
+
+				if position + length >= result[i][j].position and position + length <= result[i][j].position + result[i][j].length then
+					return i
+				end
+			end
+		end
+
+		return nil
+	end
+
+	for i = 0, reaper.CountTracks(proj) - 1 do
+		local track = reaper.GetTrack(proj, i)
+		local t_guid = reaper.GetTrackGUID(track)
+
+		for j = 0, reaper.CountTrackMediaItems(track) - 1 do
+			local item = reaper.GetTrackMediaItem(track, j)
+
+			if reaper.IsMediaItemSelected(item) then
+				local _, guid = reaper.GetSetMediaItemInfo_String(item, "GUID", "", false)
+				local position = reaper.GetMediaItemInfo_Value(item, "D_POSITION")
+				local length = reaper.GetMediaItemInfo_Value(item, "D_LENGTH")
+				local ind = getIndex(position, length)
+				local data = {
+					item_id = guid,
+					track_id = t_guid,
+					position = position,
+					length = length
+				}
+
+				if ind == nil then
+					table.insert(result, #result + 1, { data })
+				else
+					table.insert(result[ind], #result[ind] + 1, data)
+				end
+			end
+		end
+	end
+
+	table.sort(result, function(a, b)
+		return a[1].position < b[1].position
+	end)
+
+	return result
 end

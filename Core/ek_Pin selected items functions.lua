@@ -47,65 +47,11 @@ local function GetMinPosition(item)
 	return minPosition
 end
 
-local function FetchItemsMap()
-	local result = {}
-
-	local getIndex = function(position, length)
-		for i = 1, #result do
-			for j = 1, #result[i] do
-				if position >= result[i][j].position and position <= result[i][j].position + result[i][j].length then
-					return i
-				end
-
-				if position + length >= result[i][j].position and position + length <= result[i][j].position + result[i][j].length then
-					return i
-				end
-			end
-		end
-
-		return nil
-	end
-
-	for i = 0, reaper.CountTracks(proj) - 1 do
-		local track = reaper.GetTrack(proj, i)
-		local t_guid = reaper.GetTrackGUID(track)
-
-		for j = 0, reaper.CountTrackMediaItems(track) - 1 do
-			local item = reaper.GetTrackMediaItem(track, j)
-
-			if reaper.IsMediaItemSelected(item) then
-				local _, guid = reaper.GetSetMediaItemInfo_String(item, "GUID", "", false)
-				local position = reaper.GetMediaItemInfo_Value(item, "D_POSITION")
-				local length = reaper.GetMediaItemInfo_Value(item, "D_LENGTH")
-				local ind = getIndex(position, length)
-				local data = {
-					item_id = guid,
-					track_id = t_guid,
-					position = position,
-					length = length
-				}
-
-				if ind == nil then
-					table.insert(result, #result + 1, { data })
-				else
-					table.insert(result[ind], #result[ind] + 1, data)
-				end
-			end
-		end
-	end
-
-	table.sort(result, function(a, b)
-		return a[1].position < b[1].position
-	end)
-
-	return result
-end
-
 local function CreateNewTracksForItemsGroup(index)
 	local curItemGroup = items_map[index]
 	local getNewTrackIndex = function()
 		local prevItemGroup = items_map[index - 1]
-		local lastTrackInPrevItemGroup = GetMediaTrackByGUID(prevItemGroup[#prevItemGroup].track_id)
+		local lastTrackInPrevItemGroup = EK_GetMediaTrackByGUID(prevItemGroup[#prevItemGroup].track_id)
 
 		return reaper.GetMediaTrackInfo_Value(lastTrackInPrevItemGroup, "IP_TRACKNUMBER")
 	end
@@ -113,8 +59,8 @@ local function CreateNewTracksForItemsGroup(index)
 	local newTrackIndex = getNewTrackIndex()
 
 	for i = 1, #curItemGroup do
-		local track = GetMediaTrackByGUID(curItemGroup[i].track_id)
-		local item = GetMediaItemByGUID(curItemGroup[i].item_id)
+		local track = EK_GetMediaTrackByGUID(curItemGroup[i].track_id)
+		local item = EK_GetMediaItemByGUID(curItemGroup[i].item_id)
 
 		reaper.InsertTrackAtIndex(newTrackIndex, false)
 		local newTrack = reaper.GetTrack(proj, newTrackIndex)
@@ -174,7 +120,7 @@ function PinItems(marker_num, save_relative_position, items_on_track)
 		return
 	end
 
-	items_map = FetchItemsMap()
+	items_map = EK_GetSelectedItemsAsGroupedStems()
 
 	local curIndex = startIndex
 
@@ -199,7 +145,7 @@ function PinItems(marker_num, save_relative_position, items_on_track)
 		end
 
 		for j = 1, #items_map[i] do
-			local item = GetMediaItemByGUID(items_map[i][j].item_id)
+			local item = EK_GetMediaItemByGUID(items_map[i][j].item_id)
 
 			if item ~= nil then
 				local newPosition
