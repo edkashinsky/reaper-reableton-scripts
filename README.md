@@ -120,7 +120,7 @@ For installation:
 
 #### ek_Add 1 sec gap between selected items
 
-![Preview](/Assets/images/add_gap_between_items.gif)
+<img src="/Assets/images/add_gap_between_items.gif" alt="add_gap_between_items" width="500"/>
 
 Script adds 1 second gap between selected items. Press CMD/CTRL to add 0.1 seconds gap.
 
