@@ -2,7 +2,7 @@
 -- @version 1.1.0
 -- @author Ed Kashinsky
 -- @about
---   ![Preview](/Assets/images/add_gap_between_items.gif)
+--   <img src="/Assets/images/add_gap_between_items.gif" alt="add_gap_between_items" width="281"/>
 --
 --   Script adds 1 second gap between selected items. Press CMD/CTRL to add 0.1 seconds gap.
 -- @changelog
