@@ -2,10 +2,11 @@
 -- @version 1.1.0
 -- @author Ed Kashinsky
 -- @about
---   Script just adds 1 second gap between selected items without any GUI
+--   ![Preview](/Assets/images/add_gap_between_items.gif)
+--
+--   Script adds 1 second gap between selected items. Press CMD/CTRL to add 0.1 seconds gap.
 -- @changelog
---   - Script follow to item stems situated on different tracks
---   - If press cmd/ctrl and execute script, gap will be 0.1 sec
+--   - small bug fix
 
 function CoreFunctionsLoaded(script)
 	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
@@ -39,7 +40,7 @@ local function add_gap()
 			local item = EK_GetMediaItemByGUID(stems[i][j].item_id)
 
 			if item ~= nil then
-				reaper.SetMediaItemInfo_Value(item, "D_POSITION", stems[i][j].position + gap)
+				reaper.SetMediaItemInfo_Value(item, "D_POSITION", stems[i][j].position + (gap * (i - 1)))
 			end
 		end
 	end
@@ -49,14 +50,7 @@ if #stems > 1 then
 	add_gap()
 	reaper.UpdateArrange()
 else
-	local x, y = reaper.GetMousePosition()
-
-	if reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32" then
-		x = x - 30
-		y = y + 50
-	end
-
-	reaper.TrackCtl_SetToolTip("Select 2 items at least", x, y, true)
+	EK_ShowTooltip("Select 2 separated items at least")
 end
 
 reaper.Undo_EndBlock("Add 1 sec gap between selected items", -1)

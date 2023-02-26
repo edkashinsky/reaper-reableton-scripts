@@ -120,7 +120,9 @@ For installation:
 
 #### ek_Add 1 sec gap between selected items
 
-Script just adds 1 second gap between selected items without any GUI
+![Preview](/Assets/images/add_gap_between_items.gif)
+
+Script adds 1 second gap between selected items. Press CMD/CTRL to add 0.1 seconds gap.
 
 #### ek_Change pitch mode for selected items
 

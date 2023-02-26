@@ -863,16 +863,27 @@ function EK_SortTableByKey(table, sortKey)
 end
 
 function EK_GetSelectedItemsAsGroupedStems()
+	local sortedData = {}
 	local result = {}
+	local decimal = 7
 
 	local getIndex = function(position, length)
+		local position_end = round(position + length, decimal) - (1 / decimal)
+
+		position = round(position, decimal) + (1 / decimal)
+		length = round(length, decimal) - (1 / decimal)
+
 		for i = 1, #result do
 			for j = 1, #result[i] do
-				if position >= result[i][j].position and position <= result[i][j].position + result[i][j].length then
+				local item_pos = round(result[i][j].position, decimal)
+				local item_len = round(result[i][j].length, decimal)
+				local item_pos_end = round(item_pos + item_len, decimal)
+
+				if position > item_pos and position < item_pos_end then
 					return i
 				end
 
-				if position + length >= result[i][j].position and position + length <= result[i][j].position + result[i][j].length then
+				if position_end > item_pos and position_end < item_pos_end then
 					return i
 				end
 			end
@@ -892,7 +903,6 @@ function EK_GetSelectedItemsAsGroupedStems()
 				local _, guid = reaper.GetSetMediaItemInfo_String(item, "GUID", "", false)
 				local position = reaper.GetMediaItemInfo_Value(item, "D_POSITION")
 				local length = reaper.GetMediaItemInfo_Value(item, "D_LENGTH")
-				local ind = getIndex(position, length)
 				local data = {
 					item_id = guid,
 					track_id = t_guid,
@@ -900,18 +910,25 @@ function EK_GetSelectedItemsAsGroupedStems()
 					length = length
 				}
 
-				if ind == nil then
-					table.insert(result, #result + 1, { data })
-				else
-					table.insert(result[ind], #result[ind] + 1, data)
-				end
+				table.insert(sortedData, data)
 			end
 		end
 	end
 
-	table.sort(result, function(a, b)
-		return a[1].position < b[1].position
+	table.sort(sortedData, function(a, b)
+		return a.position < b.position
 	end)
+
+	for i = 1, #sortedData do
+		local data = sortedData[i]
+		local ind = getIndex(data.position, data.length)
+
+		if ind == nil then
+			table.insert(result, #result + 1, { data })
+		else
+			table.insert(result[ind], #result[ind] + 1, data)
+		end
+	end
 
 	return result
 end
