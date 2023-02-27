@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="a530cb7e970a7fe283eac4f18484a6c9ffad5eec">
+<index version="1" name="Reableton Scripts" commit="eb62f35282fbc27a33a4537b98fa6553c3e7f1d6">
   <category name="ColorThemes">
     <reapack name="Flat Madness Bright Remix.theme" type="theme" desc="Flat Madness Bright Remix">
       <metadata>
@@ -386,7 +386,6 @@
 {\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
 \widowctrl\hyphauto
 
-{\pard \ql \f0 \sa180 \li0 \fi0 {\cf1 [image: /Assets/images/add_gap_between_items.gif]\cf0}\par}
 {\pard \ql \f0 \sa180 \li0 \fi0 Script adds 1 second gap between selected items. Press CMD/CTRL to add 0.1 seconds gap.\par}
 }
 ]]></description>
