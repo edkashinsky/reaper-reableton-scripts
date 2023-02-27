@@ -1,5 +1,5 @@
 -- @description ek_Add 1 sec gap between selected items
--- @version 1.1.0
+-- @version 1.1.1
 -- @author Ed Kashinsky
 -- @about
 --   <img src="/Assets/images/add_gap_between_items.gif" alt="add_gap_between_items" width="500"/>
