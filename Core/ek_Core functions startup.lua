@@ -12,7 +12,8 @@ ga_highlight_buttons = {
 	mfx_slot_2 = "mfx_slot_2",
 	mfx_slot_3 = "mfx_slot_3",
 	mfx_slot_4 = "mfx_slot_4",
-	mfx_slot_5 = "mfx_slot_5"
+	mfx_slot_5 = "mfx_slot_5",
+	mfx_slot_custom = "mfx_slot_custom"
 }
 
 ga_mfx_slots = {
@@ -196,7 +197,7 @@ end
 function GA_ToggleMfxBtnOnSlot(slot, btn, sectionID, cmdID)
 	if GA_GetSettingValue(ga_settings.mfx_slots_exclusive) then
 		local isAnySlotsEnabled = false
-		for k, row in pairs(ga_slots_data) do
+		for _, row in pairs(ga_slots_data) do
 			if slot ~= row.slot then
 				if not isAnySlotsEnabled and GA_GetEnabledMfxOnSlot(row.slot) then
 					isAnySlotsEnabled = true
@@ -230,7 +231,7 @@ end
 --
 function GA_SetButtonForHighlight(buttonKey, sectionID, cmdID)
 	-- drop existed key
-	for key, value in pairs(ga_highlight_buttons) do
+	for _, value in pairs(ga_highlight_buttons) do
 		if buttonKey ~= value then
 			local sid = tonumber(EK_GetExtState(ga_key_prefix .. ":" .. value .. ":section_id"))
 			local cid = tonumber(EK_GetExtState(ga_key_prefix .. ":" .. value .. ":command_id"))
@@ -387,10 +388,16 @@ end
 --
 function GA_ObserveMonitoringFx(changes, values)
 	if changes.play_state then
-		for k, row in pairs(ga_slots_data) do
+		for _, row in pairs(ga_slots_data) do
             local isEnabled = GA_GetEnabledMfxOnSlot(row.slot)
 			GA_UpdateStateForButton(row.btn, isEnabled == true and 1 or 0)
         end
+
+		local slot_id = EK_GetExtState(ga_highlight_buttons.mfx_slot_custom)
+		if slot_id then
+			local isEnabled = GA_GetEnabledMfxOnSlot(slot_id)
+			GA_UpdateStateForButton(ga_highlight_buttons.mfx_slot_custom, isEnabled == true and 1 or 0)
+		end
 
 		Log("Changed: {param} - monitoring fx", ek_log_levels.Warning, ga_settings.highlight_buttons.key)
 	end
