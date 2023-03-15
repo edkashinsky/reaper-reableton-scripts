@@ -29,5 +29,5 @@ if not reaper.APIExists("JS_ReaScriptAPI_Version") then
 	return
 end
 
-local bottomDockerId = 0
+local bottomDockerId = 5
 TD_ToggleLastWindow(bottomDockerId)

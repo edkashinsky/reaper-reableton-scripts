@@ -1,5 +1,5 @@
 -- @description ek_Toggle monitoring fx plugin on custom slot
--- @version 1.0.0
+-- @version 1.0.1
 -- @author Ed Kashinsky
 -- @about
 --   This script monitors a custom fx slot in the monitoring chain and switches the bypass on it. For realtime highlighting install 'Global startup action'
