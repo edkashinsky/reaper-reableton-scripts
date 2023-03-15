@@ -338,6 +338,12 @@ Toggle Docker tool allows you to have just one opened window in one docker. When
 
 This script toggles "Project Bay" window
 
+#### ek_Toggle Docker: Region manager
+
+Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"
+
+This script toggles "Region manager" window
+
 #### ek_Toggle Docker: Render Matrix
 
 Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"
@@ -361,6 +367,10 @@ This script helps to toggle last opened window situated in bottom docker
 Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"
 
 This script helps to toggle last opened window situated in right docker
+
+#### ek_Toggle monitoring fx plugin on custom slot
+
+This script monitors a custom fx slot in the monitoring chain and switches the bypass on it. For realtime highlighting install 'Global startup action'
 
 #### ek_Toggle monitoring fx plugin on slot 1
 

@@ -2,7 +2,7 @@
 -- @version 1.0.0
 -- @author Ed Kashinsky
 -- @about
---   This script monitors a certain fx slot in the monitoring chain and switches the bypass on it. For realtime highlighting install 'Global startup action'
+--   This script monitors a custom fx slot in the monitoring chain and switches the bypass on it. For realtime highlighting install 'Global startup action'
 -- @changelog
 --   - Added script
 
