@@ -1,10 +1,10 @@
--- @description ek_Toggle Docker: Project Bay
+-- @description ek_Toggle Docker: Region manager
 -- @version 1.0.0
 -- @author Ed Kashinsky
 -- @about
 --   Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"
 --
---   This script toggles "Project Bay" window
+--   This script toggles "Region manager" window
 -- @changelog
 --   - Added script
 
