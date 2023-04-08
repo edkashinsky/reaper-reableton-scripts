@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="5e26b7cdad0441e4634bdc8b46e0a99b5b4dfe28">
+<index version="1" name="Reableton Scripts" commit="afc4fd920760f4095055add9ffeabd7089bffd3c">
   <category name="ColorThemes">
     <reapack name="Flat Madness Bright Remix.theme" type="theme" desc="Flat Madness Bright Remix">
       <metadata>
@@ -659,6 +659,20 @@
       <version name="1.0.0" author="Ed Kashinsky" time="2022-11-25T21:14:37Z">
         <changelog><![CDATA[- Added script]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f3784d631421a3ae98bddf51b8a3a1fcb095d853/Items%20Editing/ek_Pin%20selected%20items%20to%20closest%20markers.lua</source>
+      </version>
+    </reapack>
+    <reapack name="ek_Remove 1 sec gap between selected items.lua" type="script" desc="ek_Remove 1 sec gap between selected items">
+      <metadata>
+        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \ql \f0 \sa180 \li0 \fi0 Script removes 1 second gap between selected items. Press CMD/CTRL to remove 0.1 seconds gap.\par}
+}
+]]></description>
+      </metadata>
+      <version name="1.0.0" author="Ed Kashinsky" time="2023-04-08T14:27:50Z">
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/afc4fd920760f4095055add9ffeabd7089bffd3c/Items%20Editing/ek_Remove%201%20sec%20gap%20between%20selected%20items.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Separated actions for Media item in Mouse modifiers.lua" type="script" desc="ek_Separated actions for Media item in Mouse modifiers">
