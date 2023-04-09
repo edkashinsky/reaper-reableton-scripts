@@ -69,9 +69,18 @@ ga_settings = {
 		key = "ga_project_limit",
 		type = gui_widget_types.Checkbox,
 		title = "Automatically limit zoom to content of project",
-		description = "Feature from Ableton: max zoom level limits by the farthest item in the project.",
 		default = true,
 		order = 4,
+	},
+	project_limit_offset = {
+		key = "ga_project_limit_offset",
+		type = gui_widget_types.NumberDrag,
+		title = "Offset from the edge item",
+		description = "Feature from Ableton: max zoom level limits by the farthest item in the project.",
+		default = 0,
+		number_precision = "%.0f%%",
+		number_min = 0,
+		order = 5,
 	},
 	focus_midi_editor = {
 		key = "ga_focus_midi_editor",
@@ -79,7 +88,7 @@ ga_settings = {
 		title = "Automatically focus to MIDI editor when you click on an item",
 		description = "Feature from Ableton: when you single click on item, you see only one MIDI editor and focus on this particular item.",
 		default = true,
-		order = 5,
+		order = 6,
 	},
 	highlight_buttons = {
 		key = "ga_highlight_buttons",
@@ -87,7 +96,7 @@ ga_settings = {
 		title = "Automatically highlight buttons",
 		description = "This option highlights toolbar buttons in real-time. This applies to scripts: 'ek_Toggle preserve pitch for selected items', 'ek_Toggle trim mode for selected trackes', 'ek_Toggle monitoring fx plugin'",
 		default = true,
-		order = 6,
+		order = 7,
 	},
 	mfx_slots_exclusive = {
 		key = "ga_mfx_slots_exclusive",
@@ -95,7 +104,7 @@ ga_settings = {
 		title = "Toggle monitoring fx slots in exclusive mode",
 		description = "If you use script 'ek_Toggle monitoring FX on slot 1-5' and want to toggle plugins between slots in monitoring chain exclusively (when you turn on some plugin, others are turning off)",
 		default = false,
-		order = 7,
+		order = 8,
 	},
 	rec_sample_rate = {
 		key = "ga_rec_sample_rate",
@@ -103,7 +112,7 @@ ga_settings = {
 		title = "Different sample rate for recording",
 		description = "This option useful for sound designers, who usually uses 48kHz and forget to increase the sampling rate before recording to get better recording quality.",
 		default = false,
-		order = 8,
+		order = 9,
 	},
 	rec_sample_rate_value = {
 		key = "ga_rec_sample_rate_value",
@@ -114,7 +123,7 @@ ga_settings = {
 			48000, 96000, 176400, 192000,
 		},
 		default = 1,
-		order = 9,
+		order = 10,
 	},
 	backup_files = {
 		key = "ga_backup_files",
@@ -122,7 +131,7 @@ ga_settings = {
 		title = "Automatic limit timestamp backup files",
 		description = "If you want to keep only last limited amount of backup files, you can enable this option. Make sure that option 'Timestamp backup' is on in general preferences.",
 		default = false,
-		order = 10,
+		order = 11,
 	},
 	backup_files_limit = {
 		key = "ga_backup_files_limit",
@@ -130,7 +139,7 @@ ga_settings = {
 		title = "Amount of backup files",
 		description = "Specify count of fresh backup files you want to keep.",
 		default = 5,
-		order = 11,
+		order = 12,
 	},
 	dark_mode = {
 		key = "ga_dark_mode",
@@ -138,7 +147,7 @@ ga_settings = {
 		title = "Use dark mode theme",
 		description = "If you want to use special theme for dark mode, turn on this option.",
 		default = false,
-		order = 12,
+		order = 13,
 	},
 	dark_mode_theme = {
 		key = "ga_dark_mode_theme",
@@ -146,7 +155,7 @@ ga_settings = {
 		title = "Name of theme for dark mode",
 		description = "Specify title of theme for dark mode. Note that, this theme should be in the same folder as a regular theme. Name should be with \".ReaperTheme\" extension",
 		default = "",
-		order = 13,
+		order = 14,
 	},
 	dark_mode_time = {
 		key = "ga_dark_mode_time",
@@ -154,7 +163,7 @@ ga_settings = {
 		title = "Dark mode time interval",
 		description = "Specify time interval for dark mode. Format: \"HH:mm-HH:mm\"",
 		default = "20:00-09:00",
-		order = 14,
+		order = 15,
 	},
 	additional_action = {
 		key = "ga_additional_action",
@@ -162,7 +171,7 @@ ga_settings = {
 		title = "Additional global startup action",
 		description = "If you have your own action on startup, you can specified command Id and it will be executed on startup.",
 		default = "",
-		order = 15,
+		order = 16,
 	},
 }
 
@@ -374,6 +383,13 @@ function GA_ObserveProjectLimit(changes, values)
 		if (pos + len > maxLen) then
 			maxLen = pos + len
 		end
+	end
+
+	local offset = GA_GetSettingValue(ga_settings.project_limit_offset)
+	if offset > 0 then
+		offset = maxLen * (offset / 100)
+
+		maxLen = maxLen + offset
 	end
 
 	if maxLen < 10 then
