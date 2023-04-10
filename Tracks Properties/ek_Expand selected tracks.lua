@@ -1,10 +1,10 @@
 -- @description ek_Expand selected tracks
--- @version 1.0.5
+-- @version 1.0.6
 -- @author Ed Kashinsky
 -- @about
 --   It expands selected tracks/envelope lanes between 2 states: small, large. Put height values you like to 'Extensions' -> 'Command parameters' -> 'Track Height A' (for small size) and 'Track Height B' (for large size)
 -- @changelog
---   - retina detection fix
+--   toggle displaying of tracks in MCP
 
 reaper.Undo_BeginBlock()
 
@@ -48,13 +48,21 @@ else
 			reaper.TrackList_AdjustWindows(false)
 		elseif isFolder == 1 and state == tinyChildrenState then
 			reaper.SetMediaTrackInfo_Value(track, "I_FOLDERCOMPACT", 0)
-		
-			-- reaper.Main_OnCommand(reaper.NamedCommandLookup("_SWS_SAVESEL"), 0)           -- SWS: Save current track selection
-			-- reaper.Main_OnCommand(reaper.NamedCommandLookup("_SWS_SELCHILDREN"), 0)          -- SWS: Select only children of selected folders
-			-- reaper.Main_OnCommand(reaper.NamedCommandLookup("_SWSTL_BOTH"), 0)               -- SWS: Show selected track(s) in TCP and MCP
-			-- reaper.Main_OnCommand(reaper.NamedCommandLookup("_SWS_RESTORESEL"), 0)          -- SWS: Restore saved track selection
+
+			-- show children in MCP
+			reaper.Main_OnCommand(reaper.NamedCommandLookup("_SWS_SAVESEL"), 0)
+			reaper.Main_OnCommand(reaper.NamedCommandLookup("_SWS_SELCHILDREN"), 0)
+			reaper.Main_OnCommand(reaper.NamedCommandLookup("_SWSTL_SHOWMCP"), 0)
+			reaper.Main_OnCommand(reaper.NamedCommandLookup("_SWS_RESTORESEL"), 0)
 		elseif height <= minHeight then
 			reaper.Main_OnCommand(reaper.NamedCommandLookup("_XENAKIOS_SELTRAXHEIGHTB"), 0) -- Xenakios/SWS: Set selected tracks heights to B
+
+			if height == reaper.GetMediaTrackInfo_Value(track, "I_TCPH") then
+				reaper.MB('Please set heights for track states.\n\nGo to "Extensions" -> "Command parameters" and set "Track height A" for collapsed state (as usual equals 1) and "Track height B" for extended state (as usual 80 or more)', 'ek_Expand selected tracks', 0)
+			end
+
+			-- todo учитывать настройку отображения автоматизаций
+			-- reaper.Main_OnCommand(reaper.NamedCommandLookup("_BR_SHOW_FX_ENV_SEL_TRACK"), 0) -- SWS/BR: Show all FX envelopes for selected tracks
 		end
 	end
 end

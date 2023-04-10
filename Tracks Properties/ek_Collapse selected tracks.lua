@@ -1,10 +1,10 @@
 -- @description ek_Collapse selected tracks
--- @version 1.0.3
+-- @version 1.0.4
 -- @author Ed Kashinsky
 -- @about
 --   It collapses selected tracks/envelope lanes between 3 states: small, large. Put height values you like to 'Extensions' -> 'Command parameters' -> 'Track Height A' (for small size) and 'Track Height B' (for large size)
 -- @changelog
---   - retina detection fix
+--   toggle displaying of tracks in MCP
 
 reaper.Undo_BeginBlock()
 
@@ -43,13 +43,21 @@ else
 		elseif height > minHeight then
 			reaper.Main_OnCommand(reaper.NamedCommandLookup("_XENAKIOS_SELTRAXHEIGHTA"), 0) -- Xenakios/SWS: Set selected tracks heights to A
 			--reaper.Main_OnCommand(reaper.NamedCommandLookup("_SWS_MINTRACKS"), 0) -- SWS: Minimize selected track(s)
+
+			if height == reaper.GetMediaTrackInfo_Value(track, "I_TCPH") then
+				reaper.MB('Please set heights for track states.\n\nGo to "Extensions" -> "Command parameters" and set "Track height A" for collapsed state (as usual equals 1) and "Track height B" for extended state (as usual 80 or more)', 'ek_Collapse selected tracks', 0)
+			end
+
+			-- todo учитывать настройку отображения автоматизаций
+			-- reaper.Main_OnCommand(reaper.NamedCommandLookup("_BR_ENV_HIDE_ALL_BUT_ACTIVE_SEL"), 0) -- SWS/BR: Hide all but selected track envelope for selected tracks
 		elseif isFolder == 1 and state ~= tinyChildrenState then
 			reaper.SetMediaTrackInfo_Value(track, "I_FOLDERCOMPACT", tinyChildrenState)
-		
-			-- reaper.Main_OnCommand(reaper.NamedCommandLookup("_SWS_SAVESEL"), 0)
-			-- reaper.Main_OnCommand(reaper.NamedCommandLookup("_SWS_SELCHILDREN"), 0)
-			-- reaper.Main_OnCommand(reaper.NamedCommandLookup(41593), 0)
-			-- reaper.Main_OnCommand(reaper.NamedCommandLookup("_SWS_RESTORESEL"), 0)		
+
+			-- hide children in MCP
+			reaper.Main_OnCommand(reaper.NamedCommandLookup("_SWS_SAVESEL"), 0)
+			reaper.Main_OnCommand(reaper.NamedCommandLookup("_SWS_SELCHILDREN"), 0)
+			reaper.Main_OnCommand(reaper.NamedCommandLookup("_SWSTL_HIDEMCP"), 0)
+			reaper.Main_OnCommand(reaper.NamedCommandLookup("_SWS_RESTORESEL"), 0)
 		end
 	end
 end
