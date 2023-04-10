@@ -1,5 +1,5 @@
 -- @description ek_Collapse selected tracks
--- @version 1.0.4
+-- @version 1.0.5
 -- @author Ed Kashinsky
 -- @about
 --   It collapses selected tracks/envelope lanes between 3 states: small, large. Put height values you like to 'Extensions' -> 'Command parameters' -> 'Track Height A' (for small size) and 'Track Height B' (for large size)
@@ -8,15 +8,20 @@
 
 reaper.Undo_BeginBlock()
 
-local retval, dpi = reaper.ThemeLayout_GetLayout("tcp", -3)
+local minHeight
+local defaultMinHeight = 25
+local _, dpi = reaper.ThemeLayout_GetLayout("tcp", -3)
+dpi = tonumber(dpi)
+
 if reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32" then
-	gfx.ext_retina = dpi >= "512" and 1 or 0
+	gfx.ext_retina = dpi >= 512 and 1 or 0
+	minHeight = defaultMinHeight * (dpi / 256)
 else
-	gfx.ext_retina = dpi > "512" and 1 or 0
+	gfx.ext_retina = dpi > 512 and 1 or 0
+	minHeight = defaultMinHeight
 end
 
 local proj = 0
-local minHeight = gfx.ext_retina == 0 and 30 or 30 * 2
 local tinyChildrenState = 2
 local envelope = reaper.GetSelectedTrackEnvelope(proj)
 
