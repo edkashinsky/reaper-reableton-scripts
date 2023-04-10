@@ -1,5 +1,5 @@
 -- @description ek_Collapse selected tracks
--- @version 1.0.5
+-- @version 1.0.6
 -- @author Ed Kashinsky
 -- @about
 --   It collapses selected tracks/envelope lanes between 3 states: small, large. Put height values you like to 'Extensions' -> 'Command parameters' -> 'Track Height A' (for small size) and 'Track Height B' (for large size)
@@ -41,7 +41,8 @@ else
 		local state = reaper.GetMediaTrackInfo_Value(track, "I_FOLDERCOMPACT")
 		local isFolder = reaper.GetMediaTrackInfo_Value(track, "I_FOLDERDEPTH")
 		local isMaster = reaper.GetMediaTrackInfo_Value(track,  "IP_TRACKNUMBER") == -1
-	
+		local isArmed = reaper.GetMediaTrackInfo_Value(track, "I_RECARM") == 1
+
 		if isMaster then
 			reaper.SetMediaTrackInfo_Value(track, "I_HEIGHTOVERRIDE", 1)
 			reaper.TrackList_AdjustWindows(false)
@@ -49,7 +50,7 @@ else
 			reaper.Main_OnCommand(reaper.NamedCommandLookup("_XENAKIOS_SELTRAXHEIGHTA"), 0) -- Xenakios/SWS: Set selected tracks heights to A
 			--reaper.Main_OnCommand(reaper.NamedCommandLookup("_SWS_MINTRACKS"), 0) -- SWS: Minimize selected track(s)
 
-			if height == reaper.GetMediaTrackInfo_Value(track, "I_TCPH") then
+			if not isArmed and height == reaper.GetMediaTrackInfo_Value(track, "I_TCPH") then
 				reaper.MB('Please set heights for track states.\n\nGo to "Extensions" -> "Command parameters" and set "Track height A" for collapsed state (as usual equals 1) and "Track height B" for extended state (as usual 80 or more)', 'ek_Collapse selected tracks', 0)
 			end
 

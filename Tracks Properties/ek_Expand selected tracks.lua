@@ -1,5 +1,5 @@
 -- @description ek_Expand selected tracks
--- @version 1.0.7
+-- @version 1.0.8
 -- @author Ed Kashinsky
 -- @about
 --   It expands selected tracks/envelope lanes between 2 states: small, large. Put height values you like to 'Extensions' -> 'Command parameters' -> 'Track Height A' (for small size) and 'Track Height B' (for large size)
@@ -42,6 +42,7 @@ else
 		local state = reaper.GetMediaTrackInfo_Value(track, "I_FOLDERCOMPACT")
 		local isFolder = reaper.GetMediaTrackInfo_Value(track, "I_FOLDERDEPTH")
 		local isMaster = reaper.GetMediaTrackInfo_Value(track,  "IP_TRACKNUMBER") == -1
+		local isArmed = reaper.GetMediaTrackInfo_Value(track, "I_RECARM") == 1
 		
 		if isMaster then
 			local masterHeight = 80
@@ -62,7 +63,7 @@ else
 		elseif height <= minHeight then
 			reaper.Main_OnCommand(reaper.NamedCommandLookup("_XENAKIOS_SELTRAXHEIGHTB"), 0) -- Xenakios/SWS: Set selected tracks heights to B
 
-			if height == reaper.GetMediaTrackInfo_Value(track, "I_TCPH") then
+			if not isArmed and height == reaper.GetMediaTrackInfo_Value(track, "I_TCPH") then
 				reaper.MB('Please set heights for track states.\n\nGo to "Extensions" -> "Command parameters" and set "Track height A" for collapsed state (as usual equals 1) and "Track height B" for extended state (as usual 80 or more)', 'ek_Expand selected tracks', 0)
 			end
 
