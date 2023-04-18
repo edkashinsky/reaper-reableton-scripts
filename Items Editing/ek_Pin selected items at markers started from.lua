@@ -32,11 +32,6 @@ end
 
 CoreFunctionsLoaded("ek_Pin selected items functions.lua")
 
-if not reaper.APIExists("ImGui_WindowFlags_NoCollapse") then
-    reaper.MB('Please install "ReaImGui: ReaScript binding for Dear ImGui" via ReaPack', '', 0)
-	return
-end
-
 local markers = GetMarkers()
 local start_marker = nil
 local count_on_track = nil

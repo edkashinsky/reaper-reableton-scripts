@@ -2,6 +2,8 @@
 -- @author Ed Kashinsky
 -- @noindex
 
+SCRIPT_NAME = ({reaper.get_action_context()})[2]:match("([^/\\_]+)%.lua$")
+
 local ek_debug_levels = {
 	All = 0,
 	Notice = 1,
@@ -16,6 +18,26 @@ ek_log_levels = {
 	Warning = ek_debug_levels.Warning,
 	Important = ek_debug_levels.Important,
 	Debug = ek_debug_levels.Debug,
+}
+
+ek_js_wnd_classes = {
+	Main = "REAPERwnd",
+	Transport = "REAPERVirtWndDlgHost",
+	TransportStatus = "REAPERstatusdisp",
+	Arrange = "REAPERTrackListWindow",
+	Timeline = "REAPERTimeDisplay",
+	Midi = "MIDIWindow",
+	TCP = "REAPERTCPDisplay",
+	MCP = "REAPERMCPDisplay",
+	PerformanceMeter = "Static"
+}
+
+ek_js_wnd_ids = {
+	Arrange = 1000,
+	Timeline = 1005,
+	Midi = 1001,
+	TransportStatus = 1010,
+	PerformanceMeter = 1174,
 }
 
 proj = 0
@@ -931,4 +953,10 @@ function EK_GetSelectedItemsAsGroupedStems()
 	end
 
 	return result
+end
+
+function EK_IsWindow(hwnd, className)
+	local class = reaper.JS_Window_GetClassName(hwnd)
+
+	return class == className
 end

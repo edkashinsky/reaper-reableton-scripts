@@ -2,11 +2,10 @@
 -- @author Ed Kashinsky
 -- @noindex
 
-local SCRIPT_NAME = ({reaper.get_action_context()})[2]:match("([^/\\_]+)%.lua$")
-
 local ctx
 local window_visible = false
 local window_opened = false
+local window_after_opened = false
 local window_width = 0
 local window_height = 0
 local font_name = 'arial'
@@ -39,12 +38,15 @@ gui_widget_types = {
 	NumberSlider = 4,
 	Checkbox = 5,
 	Combo = 6,
+	Color = 7,
+	ColorView = 8
 }
 
 GUI_OnWindowClose = nil
 
+local GUI_DefaultColor = reaper.ColorToNative(84, 84, 84)
 
-local function GetWindowFlags()
+local function GUI_GetWindowFlags()
 	return reaper.ImGui_WindowFlags_NoCollapse() |
 		reaper.ImGui_WindowFlags_NoResize() |
 		reaper.ImGui_WindowFlags_TopMost()
@@ -56,6 +58,16 @@ local function GUI_GetInputFlags()
 		reaper.ImGui_InputTextFlags_AlwaysOverwrite()
 end
 
+function GUI_GetColorFlags()
+	return reaper.ImGui_InputTextFlags_AutoSelectAll() |
+		reaper.ImGui_InputTextFlags_AllowTabInput() |
+		reaper.ImGui_InputTextFlags_AlwaysOverwrite() |
+		reaper.ImGui_ColorEditFlags_NoOptions() |
+		reaper.ImGui_ColorEditFlags_DisplayHex() |
+		reaper.ImGui_ColorEditFlags_NoSidePreview() |
+		reaper.ImGui_ColorEditFlags_NoTooltip() |
+		reaper.ImGui_ColorEditFlags_NoAlpha()
+end
 
 local function GUI_GetFonts()
 	if not cached_fonts then
@@ -94,10 +106,11 @@ local function main()
 
 	reaper.ImGui_SetNextWindowSize(ctx, window_width, window_height)
 
-	window_visible, window_opened = reaper.ImGui_Begin(ctx, SCRIPT_NAME, true, GetWindowFlags())
+	window_visible, window_opened = reaper.ImGui_Begin(ctx, SCRIPT_NAME, true, GUI_GetWindowFlags())
 
 	if window_visible then
 	    frame()
+		window_after_opened = true
 	    reaper.ImGui_End(ctx)
 	end
 
@@ -105,11 +118,6 @@ local function main()
 	reaper.ImGui_PopFont(ctx)
 
 	if reaper.ImGui_IsKeyPressed(ctx, reaper.ImGui_Key_Escape()) then
-		GUI_CloseMainWindow()
-	end
-
-	if default_enter_action and reaper.ImGui_IsKeyPressed(ctx, reaper.ImGui_Key_Space()) then
-		default_enter_action()
 		GUI_CloseMainWindow()
 	end
 
@@ -199,9 +207,6 @@ function GUI_GetCtx()
 end
 
 function GUI_DrawSettingsTable(settingsTable)
-	local input_flags = GUI_GetInputFlags()
-	local r = reaper
-
 	for i = 1, #settingsTable do
 		local newVal
 		local s = settingsTable[i]
@@ -210,44 +215,71 @@ function GUI_DrawSettingsTable(settingsTable)
 		reaper.ImGui_PushItemWidth(ctx, 200)
 		reaper.ImGui_PushFont(ctx, GUI_GetFont(gui_font_types.Bold))
 
-
-		if s.type == gui_widget_types.Text then
-			_, newVal = r.ImGui_InputText(ctx, s.title, curVal, input_flags)
-		elseif s.type == gui_widget_types.Number then
-			if s.number_precision then
- 				_, newVal = r.ImGui_InputDouble(ctx, s.title, curVal, nil, nil, s.number_precision, input_flags)
-			else
-				_, newVal = r.ImGui_InputInt(ctx, s.title, curVal, nil, nil, input_flags)
-			end
-		elseif s.type == gui_widget_types.NumberDrag then
-			if s.number_min and not s.number_max then s.number_max = 0x7fffffff end
-
-			if s.number_precision then
- 				_, newVal = r.ImGui_DragDouble(ctx, s.title, curVal, nil, s.number_min, s.number_max, s.number_precision, input_flags)
-			else
-				_, newVal = r.ImGui_DragInt(ctx, s.title, curVal, nil, s.number_min, s.number_max, nil, input_flags)
-			end
-		elseif s.type == gui_widget_types.NumberSlider then
-			if s.number_precision then
- 				_, newVal = r.ImGui_SliderDouble(ctx, s.title, curVal, s.number_min, s.number_max, s.number_precision, input_flags)
-			else
-				_, newVal = r.ImGui_SliderInt(ctx, s.title, curVal, s.number_min, s.number_max, nil, input_flags)
-			end
-		elseif s.type == gui_widget_types.Checkbox then
-			_, newVal = r.ImGui_Checkbox(ctx, s.title, curVal)
-		elseif s.type == gui_widget_types.Combo then
-			_, newVal = r.ImGui_Combo(ctx, s.title, curVal, join(s.select_values, "\0") .. "\0")
-		end
+		newVal = GUI_DrawWidget(s.type, s.title, curVal, s)
 
 		if curVal ~= newVal then EK_SetExtState(s.key, newVal) end
 
-		r.ImGui_PopFont(ctx)
-		r.ImGui_PopItemWidth(ctx)
+		reaper.ImGui_PopFont(ctx)
+		reaper.ImGui_PopItemWidth(ctx)
 
 		if s.description then
 			GUI_DrawText(s.description, GUI_GetFont(gui_font_types.Italic))
 
 			if i < #settingsTable then GUI_DrawGap() end
 		end
+	end
+end
+
+function GUI_DrawWidget(type, label, value, settings)
+	local newVal
+	local input_flags = GUI_GetInputFlags()
+
+	if type == gui_widget_types.Text then
+		_, newVal = reaper.ImGui_InputText(ctx, label, value, input_flags)
+	elseif type == gui_widget_types.Number then
+		if settings.number_precision then
+			_, newVal = reaper.ImGui_InputDouble(ctx, label, value, nil, nil, settings.number_precision, input_flags)
+		else
+			_, newVal = reaper.ImGui_InputInt(ctx, label, value, nil, nil, input_flags)
+		end
+	elseif type == gui_widget_types.NumberDrag then
+		if settings.number_min and not settings.number_max then settings.number_max = 0x7fffffff end
+
+		if settings.number_precision then
+			_, newVal = reaper.ImGui_DragDouble(ctx, label, value, nil, settings.number_min, settings.number_max, settings.number_precision, input_flags)
+		else
+			_, newVal = reaper.ImGui_DragInt(ctx, label, value, nil, settings.number_min, settings.number_max, nil, input_flags)
+		end
+	elseif type == gui_widget_types.NumberSlider then
+		if settings.number_precision then
+			_, newVal = reaper.ImGui_SliderDouble(ctx, label, value, settings.number_min, settings.number_max, settings.number_precision, input_flags)
+		else
+			_, newVal = reaper.ImGui_SliderInt(ctx, label, value, settings.number_min, settings.number_max, nil, input_flags)
+		end
+	elseif type == gui_widget_types.Checkbox then
+		_, newVal = reaper.ImGui_Checkbox(ctx, label, value)
+	elseif type == gui_widget_types.Combo then
+		_, newVal = reaper.ImGui_Combo(ctx, label, value, join(settings.select_values, "\0") .. "\0")
+	elseif type == gui_widget_types.Color then
+		if value == 0 then value = nil end
+
+		_, newVal = reaper.ImGui_ColorPicker3(ctx, label, value, GUI_GetColorFlags())
+	elseif type == gui_widget_types.ColorView then
+		if value == 0 then value = GUI_DefaultColor end
+
+		newVal = reaper.ImGui_ColorButton(ctx, label, value, GUI_GetColorFlags())
+	end
+	
+	return newVal
+end
+
+function GUI_SetWindowSize(width, height)
+	window_width = width
+	window_height = height
+end
+
+function GUI_SetFocusOnWidget()
+	if window_after_opened == false then
+		reaper.ImGui_SetKeyboardFocusHere(ctx)
 	end
 end
