@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="42a29473b455910446d01dfd51ead01b59bcb538">
+<index version="1" name="Reableton Scripts" commit="656009a1990d9dea3ec7975b084954a3137e91f8">
   <category name="ColorThemes">
     <reapack name="Flat Madness Bright Remix.theme" type="theme" desc="Flat Madness Bright Remix">
       <metadata>
@@ -202,6 +202,12 @@
         <source file="ek_Core functions v1.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/42a29473b455910446d01dfd51ead01b59bcb538/Core/ek_Core%20functions%20v1.lua</source>
         <source file="ek_Core functions GUI.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/42a29473b455910446d01dfd51ead01b59bcb538/Core/ek_Core%20functions%20GUI.lua</source>
       </version>
+      <version name="1.0.27" author="Ed Kashinsky" time="2023-04-20T12:49:59Z">
+        <changelog><![CDATA[added support of JS_Windows detection]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/656009a1990d9dea3ec7975b084954a3137e91f8/Core/ek_Core%20functions.lua</source>
+        <source file="ek_Core functions v1.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/656009a1990d9dea3ec7975b084954a3137e91f8/Core/ek_Core%20functions%20v1.lua</source>
+        <source file="ek_Core functions GUI.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/656009a1990d9dea3ec7975b084954a3137e91f8/Core/ek_Core%20functions%20GUI.lua</source>
+      </version>
     </reapack>
     <reapack name="ek_Global startup action settings.lua" type="script" desc="ek_Global startup action settings">
       <metadata>
@@ -403,6 +409,10 @@
       <version name="1.0.4" author="Ed Kashinsky" time="2022-12-16T09:16:08Z">
         <changelog><![CDATA[- Improved stability]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/ceea2f0b9fea2ad042e3d572365be86f252915b5/Core/ek_Save%20project%20with%20a%20check%20of%20unused%20media%20files.lua</source>
+      </version>
+      <version name="1.0.5" author="Ed Kashinsky" time="2023-04-20T12:49:59Z">
+        <changelog><![CDATA[- Improved stability]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/656009a1990d9dea3ec7975b084954a3137e91f8/Core/ek_Save%20project%20with%20a%20check%20of%20unused%20media%20files.lua</source>
       </version>
     </reapack>
   </category>
@@ -1709,6 +1719,15 @@
       <version name="1.0.0" author="Ed Kashinsky" time="2023-04-18T15:32:36Z">
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/42a29473b455910446d01dfd51ead01b59bcb538/Tracks%20Properties/ek_Smart%20renaming%20depending%20on%20focus.lua</source>
         <source file="../Core/ek_Smart renaming functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/42a29473b455910446d01dfd51ead01b59bcb538/Core/ek_Smart%20renaming%20functions.lua</source>
+      </version>
+      <version name="1.0.1" author="Ed Kashinsky" time="2023-04-20T12:49:59Z">
+        <changelog><![CDATA[- Added live mode. Now focus is being updated in realtime with open window
+- Added last used colors list
+- Improved advanced mode
+- Fixed crash with ReaImGui on 0.7.2 and below
+- Fixed bug with color setting on different platforms]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/656009a1990d9dea3ec7975b084954a3137e91f8/Tracks%20Properties/ek_Smart%20renaming%20depending%20on%20focus.lua</source>
+        <source file="../Core/ek_Smart renaming functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/656009a1990d9dea3ec7975b084954a3137e91f8/Core/ek_Smart%20renaming%20functions.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Toggle mute and offline FX for selected tracks.lua" type="script" desc="ek_Toggle mute and offline FX for selected tracks">
