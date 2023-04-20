@@ -1,10 +1,10 @@
 -- @description ek_Smart renaming depending on focus
--- @version 1.0.3
+-- @version 1.0.4
 -- @author Ed Kashinsky
 -- @about
 --   Renaming stuff for takes, items, markers, regions and tracks depending on focus
 -- @changelog
---   - Fixed: When you change only color, title won't be changed
+--   - Small fixes
 -- @provides
 --   ../Core/ek_Smart renaming functions.lua
 
@@ -229,6 +229,4 @@ function frame()
 	GUI_DrawButton('Cancel', nil, gui_buttons_types.Cancel)
 end
 
-if element.type ~= rename_types.Nothing then
-	GUI_ShowMainWindow(wndWidth, 0)
-end
+GUI_ShowMainWindow(wndWidth, 0)

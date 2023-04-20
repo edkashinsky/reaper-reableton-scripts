@@ -1025,6 +1025,8 @@ end
 
 function EK_IsWindowFocusedByTitle(title)
 	local wnd = reaper.JS_Window_GetFocus()
+	title = reaper.JS_Localize(title, "common")
+
 	return EK_IsWindow(wnd, ek_js_wnd_types.title, title)
 end
 
@@ -1036,6 +1038,7 @@ end
 function EK_IsWindowHoveredByTitle(title)
 	local x, y = reaper.GetMousePosition()
     local wnd = reaper.JS_Window_FromPoint(x, y)
+	title = reaper.JS_Localize(title, "common")
 
 	return EK_IsWindow(wnd, ek_js_wnd_types.title, title)
 end

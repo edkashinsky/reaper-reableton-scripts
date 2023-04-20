@@ -39,7 +39,7 @@ rename_advanced_config = {
 		text = "Format",
 		fields = {
 			{ key = "sr_format_title", title = "Name format", type = gui_widget_types.Combo, default = 0, select_values = { "Name and Index", "Name and ID" } },
-			{ key = "sr_format_custom", title = "Custom Format", type = gui_widget_types.Text },
+			{ key = "sr_format_custom", title = "Custom Name", type = gui_widget_types.Text },
 			{ key = "sr_format_where", title = "Where", type = gui_widget_types.Combo, default = 0, select_values = { "After name", "Before name" } },
 			{ key = "sr_format_start", title = "Start numbers at", type = gui_widget_types.Text, default = 1 },
 		}
@@ -218,7 +218,7 @@ function GetFocusedElement()
     ---              MARKERS/REGIONS (Region Manager)
     ---------------------------------------------------------------
     local selectedMarkersInManager = GetSelectedMarkers()
-    if (EK_IsWindowFocusedByTitle(ek_js_wnd.titles.RegionManager) and #selectedMarkersInManager > 0) then
+    if (#selectedMarkersInManager > 0 and EK_IsWindowFocusedByTitle(ek_js_wnd.titles.RegionManager)) then
         local number, isRegion, name, markrgnindexnumber, color, title
         local data = {}
 
