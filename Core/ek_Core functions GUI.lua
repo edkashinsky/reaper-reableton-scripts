@@ -5,7 +5,7 @@
 local ctx
 local window_visible = false
 local window_opened = false
-local window_after_opened = false
+local window_first_frame_showed = false
 local window_width = 0
 local window_height = 0
 local font_name = 'arial'
@@ -110,7 +110,7 @@ local function main()
 
 	if window_visible then
 	    frame()
-		window_after_opened = true
+		window_first_frame_showed = true
 	    reaper.ImGui_End(ctx)
 	end
 
@@ -161,7 +161,7 @@ function GUI_DrawText(text, font, color)
 	end
 end
 
-function GUI_DrawButton(label, action, btn_type, prevent_close_wnd)
+function GUI_DrawButton(label, action, btn_type, prevent_close_wnd, keyboard_key_action)
 	if not btn_type then btn_type = gui_buttons_types.Action end
 
 	local gui_btn_padding = 12
@@ -181,7 +181,7 @@ function GUI_DrawButton(label, action, btn_type, prevent_close_wnd)
 		default_enter_action = action
 	end
 
-	if reaper.ImGui_Button(ctx, label, width, gui_btn_height) then
+	local button_action = function()
 		if type(action) == 'function' then
 			action()
 		end
@@ -189,7 +189,15 @@ function GUI_DrawButton(label, action, btn_type, prevent_close_wnd)
 		if not prevent_close_wnd then
 			GUI_CloseMainWindow()
 		end
+	end
+
+	if reaper.ImGui_Button(ctx, label, width, gui_btn_height) then
+		button_action()
     end
+
+	if keyboard_key_action and reaper.ImGui_IsKeyPressed(ctx, keyboard_key_action) then
+		button_action()
+	end
 
 	if btn_type == gui_buttons_types.Action then
 
@@ -212,7 +220,7 @@ function GUI_DrawSettingsTable(settingsTable)
 		local s = settingsTable[i]
 		local curVal = EK_GetExtState(s.key, s.default)
 
-		reaper.ImGui_PushItemWidth(ctx, 200)
+		reaper.ImGui_PushItemWidth(ctx, 224)
 		reaper.ImGui_PushFont(ctx, GUI_GetFont(gui_font_types.Bold))
 
 		newVal = GUI_DrawWidget(s.type, s.title, curVal, s)
@@ -279,7 +287,7 @@ function GUI_SetWindowSize(width, height)
 end
 
 function GUI_SetFocusOnWidget()
-	if window_after_opened == false then
+	if window_first_frame_showed == false then
 		reaper.ImGui_SetKeyboardFocusHere(ctx)
 	end
 end

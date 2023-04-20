@@ -60,7 +60,7 @@ function showMenu()
 		end
 		
 		-- On Windows reaper must create new window
-		if reaper.GetOS() == "Win64" then 
+		if IS_WINDOWS then
 			gfx.init("", 0, 0, 0)
       
 			gfx.x = gfx.mouse_x
@@ -88,7 +88,7 @@ function showMenu()
 			end
 	    end
    
-		if reaper.GetOS() == "Win64" then 
+		if IS_WINDOWS then
 			gfx.quit()
 		end
 	end

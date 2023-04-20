@@ -3,6 +3,7 @@
 -- @noindex
 
 SCRIPT_NAME = ({reaper.get_action_context()})[2]:match("([^/\\_]+)%.lua$")
+IS_WINDOWS = reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32"
 
 local ek_debug_levels = {
 	All = 0,
@@ -20,29 +21,39 @@ ek_log_levels = {
 	Debug = ek_debug_levels.Debug,
 }
 
-ek_js_wnd_classes = {
-	Main = "REAPERwnd",
-	Transport = "REAPERVirtWndDlgHost",
-	TransportStatus = "REAPERstatusdisp",
-	Arrange = "REAPERTrackListWindow",
-	Timeline = "REAPERTimeDisplay",
-	Midi = "MIDIWindow",
-	TCP = "REAPERTCPDisplay",
-	MCP = "REAPERMCPDisplay",
-	PerformanceMeter = "Static"
+ek_js_wnd = {
+	classes = {
+		Main = "REAPERwnd",
+		TransportStatus = "REAPERstatusdisp",
+		Arrange = "REAPERTrackListWindow",
+		Timeline = "REAPERTimeDisplay",
+		Midi = "MIDIWindow",
+		TCP = "REAPERTCPDisplay",
+		MCP = "REAPERMCPDisplay",
+		ReaImGui = "reaper_imgui_context"
+	},
+	ids = {
+		Arrange = 1000,
+		Timeline = 1005,
+		Midi = 1001,
+		TransportStatus = 1010,
+		PerformanceMeter = 1174,
+	},
+	titles = {
+		RegionManager = "Region/Marker Manager",
+		ScriptSmartRenaming = "Smart renaming depending on focus"
+	}
 }
 
-ek_js_wnd_ids = {
-	Arrange = 1000,
-	Timeline = 1005,
-	Midi = 1001,
-	TransportStatus = 1010,
-	PerformanceMeter = 1174,
+local ek_js_wnd_types = {
+	class = 1,
+	id = 2,
+	title = 3
 }
 
 proj = 0
 defProjPitchMode = -1
-dir_sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
+dir_sep = IS_WINDOWS and "\\" or "/"
 
 local ek_debug_level = ek_debug_levels.Off
 
@@ -53,7 +64,7 @@ local key_td_last_windows = "td_last_windows_1"
 local key_table_prefix = "__ek_t:"
 
 local _, dpi = reaper.ThemeLayout_GetLayout("tcp", -3)
-if reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32" then
+if IS_WINDOWS then
 	gfx.ext_retina = tonumber(dpi) >= 512 and 1 or 0
 else
 	gfx.ext_retina = tonumber(dpi) > 512 and 1 or 0
@@ -82,7 +93,7 @@ end
 function EK_ShowTooltip(fmt)
 	local x, y = reaper.GetMousePosition()
 
-	if reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32" then
+	if IS_WINDOWS then
 		x = x - 30
 		y = y + 50
 	end
@@ -482,6 +493,16 @@ function round(number, decimals)
     return math.ceil(number * power) / power
 end
 
+function isEmpty(value)
+	if value == nil then return true end
+	if type(value) == 'boolean' and value == false then return true end
+	if type(value) == 'table' and next(value) == nil then return true end
+	if type(value) == 'number' and value == 0 then return true end
+	if type(value) == 'string' and string.len(value) == 0 then return true end
+
+	return false
+end
+
 function ShowPitchTooltip(semi)
 	semi = round(semi, 1)
 
@@ -764,7 +785,7 @@ function GetItemHeaderHeight(item)
 end
 
 function getAbsolutePath(path)
-	if reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32" then
+	if IS_WINDOWS then
 		if path:sub(2, 2) == ":" .. dir_sep then
 			return path
 		else
@@ -955,8 +976,73 @@ function EK_GetSelectedItemsAsGroupedStems()
 	return result
 end
 
-function EK_IsWindow(hwnd, className)
-	local class = reaper.JS_Window_GetClassName(hwnd)
+local function EK_IsWindow(wnd, w_type, w_name)
+	-- local debug = {}
 
-	return class == className
+	local WindowInFocus = function(f_wnd)
+		if not f_wnd then return false end
+
+		local compareName
+
+		if w_type == ek_js_wnd_types.class then
+			compareName = reaper.JS_Window_GetClassName(f_wnd)
+		elseif w_type == ek_js_wnd_types.title then
+			compareName = reaper.JS_Window_GetTitle(f_wnd)
+		elseif w_type == ek_js_wnd_types.id then
+			local id = tostring(reaper.JS_Window_GetLongPtr(f_wnd, "ID"))
+			compareName = string.gsub(id, "userdata: ", "")
+		else
+			return false
+		end
+
+		-- table.insert(debug, compareName)
+
+		if type(w_name) == "table" then
+			for i = 1, #w_name do
+				if w_name[i] == tostring(compareName) then return true end
+			end
+
+			return false
+		else
+			return w_name == tostring(compareName)
+		end
+	end
+
+	if WindowInFocus(wnd) then return true end
+
+	local parentWnd = reaper.JS_Window_GetParent(wnd)
+
+	while parentWnd ~= nil do
+		if WindowInFocus(parentWnd) then return true end
+
+		parentWnd = reaper.JS_Window_GetParent(parentWnd)
+	end
+
+	-- Log(debug, ek_log_levels.Debug)
+
+	return false
+end
+
+function EK_IsWindowFocusedByTitle(title)
+	local wnd = reaper.JS_Window_GetFocus()
+	return EK_IsWindow(wnd, ek_js_wnd_types.title, title)
+end
+
+function EK_IsWindowFocusedByClass(class)
+	local wnd = reaper.JS_Window_GetFocus()
+	return EK_IsWindow(wnd, ek_js_wnd_types.class, class)
+end
+
+function EK_IsWindowHoveredByTitle(title)
+	local x, y = reaper.GetMousePosition()
+    local wnd = reaper.JS_Window_FromPoint(x, y)
+
+	return EK_IsWindow(wnd, ek_js_wnd_types.title, title)
+end
+
+function EK_IsWindowHoveredByClass(class)
+	local x, y = reaper.GetMousePosition()
+    local wnd = reaper.JS_Window_FromPoint(x, y)
+
+	return EK_IsWindow(wnd, ek_js_wnd_types.class, class)
 end

@@ -1,5 +1,5 @@
 -- @description ek_Save project with a check of unused media files
--- @version 1.0.4
+-- @version 1.0.5
 -- @author Ed Kashinsky
 -- @about
 --   This helps to keep track of file garbage in your projects. It shows a special warning if you have unused files in the project when saving.
@@ -96,6 +96,7 @@ if hasAnyUnusedFile then
 
 	if res == 6 then -- YES
 		reaper.Main_OnCommand(reaper.NamedCommandLookup(40098), 0) -- File: Clean current project directory...
+		SaveProject()
 	elseif res == 7 then -- NO
 		reaper.defer(SaveProject)
 	end

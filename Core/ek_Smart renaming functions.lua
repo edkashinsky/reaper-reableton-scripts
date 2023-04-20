@@ -16,6 +16,7 @@ rename_advanced_types = {
 }
 
 rename_advanced_types_key = "sr_advanced_type"
+rename_last_colors_list_key = "sr_last_colors_list"
 rename_advanced_config = {
 	{
 		id = rename_advanced_types.Replace,
@@ -46,6 +47,42 @@ rename_advanced_config = {
 }
 
 local advanced_format_iterator = 0
+local tf_data = {}
+
+local function UpdateTimelineFocusData()
+    tf_data = {
+        is_hovered = EK_IsWindowHoveredByClass(ek_js_wnd.classes.Timeline),
+        count_tracks = reaper.CountSelectedTracks2(proj, true),
+        count_items = reaper.CountSelectedMediaItems(proj),
+        first_track = reaper.GetSelectedTrack(proj, 0),
+        first_item = reaper.GetSelectedMediaItem(proj, 0),
+        focus_window = reaper.JS_Window_GetFocus()
+    }
+end
+
+local function TimelineSectionIsFocused()
+    if isEmpty(tf_data) then UpdateTimelineFocusData() end
+
+    if not tf_data.is_hovered then
+        if EK_IsWindowHoveredByClass(ek_js_wnd.classes.Timeline) then
+            UpdateTimelineFocusData()
+        else
+            return false
+        end
+    end
+
+    if
+        tf_data.first_item ~= reaper.GetSelectedMediaItem(proj, 0) or
+        tf_data.first_track ~= reaper.GetSelectedTrack(proj, 0) or
+        tf_data.focus_window ~= reaper.JS_Window_GetFocus() or
+        tf_data.count_items ~= reaper.CountSelectedMediaItems(proj) or
+        tf_data.count_tracks ~= reaper.CountSelectedTracks2(proj, true)
+    then
+        tf_data.is_hovered = false
+    end
+
+    return tf_data.is_hovered
+end
 
 local function GetRegionManager()
 	local title = reaper.JS_Localize("Region/Marker Manager", "common")
@@ -81,29 +118,18 @@ local function GetSelectedMarkers()
 	return result
 end
 
-local function IsRegionManagerFocused()
-	local hWnd = GetRegionManager()
-	local focusWnd = reaper.JS_Window_GetFocus()
-
-	if hWnd == nil or focusWnd == nil then return false end
-
-	local isFocus = hWnd == focusWnd
-	local parentWnd = reaper.JS_Window_GetParent(focusWnd)
-
-	while isFocus == false and parentWnd ~= nil do
-		if hWnd == parentWnd then isFocus = true end
-
-		parentWnd = reaper.JS_Window_GetParent(parentWnd)
-	end
-
-	return isFocus
-end
-
-local function GetHeaderLabel(title, count)
+local function GetHeaderLabel(type, title, count)
     if count == 1 then
         return title
     else
-         return count .. " selected elements"
+        local typeTitle
+
+        if type == rename_types.Item then typeTitle = "items"
+        elseif type == rename_types.Track then typeTitle = "tracks"
+        elseif type == rename_types.Marker then typeTitle = "markers/regions"
+        else typeTitle = "elements" end
+
+        return count .. " selected " .. typeTitle
     end
 end
 
@@ -121,21 +147,21 @@ end
 
 function GetProcessedTitleByAdvanced(title, id)
     local config = {}
-    local type = EK_GetExtState(rename_advanced_types_key, rename_advanced_types.Replace)
+    local a_type = EK_GetExtState(rename_advanced_types_key, rename_advanced_types.Replace)
 
     for _, a_config in pairs(rename_advanced_config) do
-        if type == a_config.id then
+        if a_type == a_config.id then
             for _, f_config in pairs(a_config.fields) do
                 config[f_config.key] = EK_GetExtState(f_config.key, f_config.default)
             end
 
-            goto end_looking
+            goto gp_end_looking
         end
 	end
 
-    ::end_looking::
+    ::gp_end_looking::
 
-    if type == rename_advanced_types.Replace then
+    if a_type == rename_advanced_types.Replace then
         local find = config.sr_replace_find
         local replace = config.sr_replace_replace
 
@@ -144,7 +170,7 @@ function GetProcessedTitleByAdvanced(title, id)
         local str, _ = string.gsub(title, find, replace)
 
         return str
-    elseif type == rename_advanced_types.Add then
+    elseif a_type == rename_advanced_types.Add then
         local prefix = config.sr_add_prefix
         local where = config.sr_add_where
 
@@ -155,23 +181,28 @@ function GetProcessedTitleByAdvanced(title, id)
         else
             return prefix .. title
         end
-    elseif type == rename_advanced_types.Format then
+    elseif a_type == rename_advanced_types.Format then
         local format = config.sr_format_title
         local custom = config.sr_format_custom
         local where = config.sr_format_where
-        local index = tonumber(config.sr_format_start)
+        local index = config.sr_format_start
+        local indexMask, curIndex
         local newTitle = custom ~= nil and custom or title
         local prefix
 
-        if not custom then return title end
         if not index then index = 1 end
 
-        index = index + advanced_format_iterator
+        -- to add abititty "_001"
+        indexMask = string.gsub(index, "[^0-9]+", "")
+        indexMask = tonumber(indexMask)
+        if not indexMask then indexMask = 1 end
+
+        curIndex = indexMask + advanced_format_iterator
 
         if format == 0 then -- Name and index
-            prefix = index
+            prefix = string.gsub(index, indexMask, curIndex)
         elseif format == 1 then -- Name and ID
-            prefix = id
+            prefix = " " .. id
         end
 
         if where == 0 then -- after name
@@ -183,15 +214,12 @@ function GetProcessedTitleByAdvanced(title, id)
 end
 
 function GetFocusedElement()
-    local x, y = reaper.GetMousePosition()
-    local hoveredWnd = reaper.JS_Window_FromPoint(x, y)
-
     ---------------------------------------------------------------
     ---              MARKERS/REGIONS (Region Manager)
     ---------------------------------------------------------------
     local selectedMarkersInManager = GetSelectedMarkers()
-    if (IsRegionManagerFocused() and #selectedMarkersInManager > 0) then
-        local number, isRegion, name, color
+    if (EK_IsWindowFocusedByTitle(ek_js_wnd.titles.RegionManager) and #selectedMarkersInManager > 0) then
+        local number, isRegion, name, markrgnindexnumber, color, title
         local data = {}
 
         for i = 1, #selectedMarkersInManager do
@@ -199,7 +227,8 @@ function GetFocusedElement()
             isRegion = string.sub(selectedMarkersInManager[i], 1, 1) == "R"
 
             if i == 1 then
-                _, _, name, _, color = GetProjectMarkerByNumber(number, isRegion)
+                _, _, name, markrgnindexnumber, color = GetProjectMarkerByNumber(number, isRegion)
+                title = not isEmpty(name) and name or ((isRegion and "Region" or "Marker") .. " #" .. markrgnindexnumber)
             end
 
             table.insert(data, {
@@ -212,8 +241,8 @@ function GetFocusedElement()
             type = rename_types.Marker,
             typeTitle = #selectedMarkersInManager == 1 and (isRegion and "Region" or "Marker") or "Markers/regions",
             value = name,
-            title = GetHeaderLabel(name, #selectedMarkersInManager),
-            color = color,
+            title = GetHeaderLabel(rename_types.Marker, title, #selectedMarkersInManager),
+            color = reaper.ImGui_ColorConvertNative(color),
             data = data,
         }
     end
@@ -221,8 +250,8 @@ function GetFocusedElement()
     ---------------------------------------------------------------
     ---           MARKERS/REGIONS (hovered on timeline)
     ---------------------------------------------------------------
-    if EK_IsWindow(hoveredWnd, ek_js_wnd_classes.Timeline) then
-        local s_isrgn, s_pos, s_rgnend, s_name, s_markrgnindexnumber, s_color
+    if TimelineSectionIsFocused() then
+        local s_isrgn, s_pos, s_rgnend, s_name, s_markrgnindexnumber, s_color, title
         local _, num_markers, num_regions = reaper.CountProjectMarkers(proj)
         local cursorPosition = reaper.GetCursorPosition()
 
@@ -236,6 +265,7 @@ function GetFocusedElement()
                 s_rgnend = rgnend
                 s_name = name
                 s_color = clr
+                title = not isEmpty(s_name) and s_name or ((s_isrgn and "Region" or "Marker") .. " #" .. s_markrgnindexnumber)
             end
         end
 
@@ -251,8 +281,8 @@ function GetFocusedElement()
                 type = rename_types.Marker,
                 typeTitle = s_isrgn and "Region" or "Marker",
                 value = s_name,
-                title = s_name,
-                color = s_color,
+                title = title,
+                color = reaper.ImGui_ColorConvertNative(s_color),
                 data = data,
             }
         end
@@ -264,7 +294,7 @@ function GetFocusedElement()
     local countSelectedTracks = reaper.CountSelectedTracks2(proj, true)
     local countSelectedItems = reaper.CountSelectedMediaItems(proj)
 
-    if countSelectedTracks > 0 and (countSelectedItems == 0 or EK_IsWindow(hoveredWnd, ek_js_wnd_classes.TCP)) then
+    if countSelectedTracks > 0 and (countSelectedItems == 0 or EK_IsWindowFocusedByClass(ek_js_wnd.classes.TCP)) then
         local value, title, color
         local data = {}
         for i = 0, countSelectedTracks - 1 do
@@ -284,8 +314,8 @@ function GetFocusedElement()
             type = rename_types.Track,
             typeTitle = countSelectedTracks == 1 and "Track" or "Tracks",
             value = value,
-            title = GetHeaderLabel(title, countSelectedTracks),
-            color = color,
+            title = GetHeaderLabel(rename_types.Track, title, countSelectedTracks),
+            color = reaper.ImGui_ColorConvertNative(color),
             data = data,
         }
     end
@@ -307,8 +337,13 @@ function GetFocusedElement()
                 value = title
                 color = reaper.GetMediaItemTakeInfo_Value(take, "I_CUSTOMCOLOR")
 
-                if color == 0 then
+                if isEmpty(color) then
                     color = reaper.GetMediaItemInfo_Value(item, "I_CUSTOMCOLOR")
+                end
+
+                 if isEmpty(title) then
+                    local pos = reaper.GetMediaItemInfo_Value(item, "D_POSITION")
+                    title = "Item at " .. round(pos, 2) .. "s"
                 end
             end
 
@@ -319,8 +354,8 @@ function GetFocusedElement()
             type = rename_types.Item,
             typeTitle = countSelectedItems == 1 and "Item" or "Items",
             value = value,
-            title = GetHeaderLabel(title, countSelectedItems),
-            color = color,
+            title = GetHeaderLabel(rename_types.Item, title, countSelectedItems),
+            color = reaper.ImGui_ColorConvertNative(color),
             data = data,
         }
     end
@@ -339,6 +374,8 @@ function GetFocusedElement()
 end
 
 function SaveData(element, isColorSet, isAdvanced)
+    local color = isColorSet and reaper.ImGui_ColorConvertNative(element.color) or 0
+
     for _, guid in pairs(element.data) do
         if element.type == rename_types.Marker then
             ---------------------------------------------------------------
@@ -349,15 +386,18 @@ function SaveData(element, isColorSet, isAdvanced)
 
             if isAdvanced then
                 newTitle = GetProcessedTitleByAdvanced(name, markrgnindexnumber)
-                advanced_format_iterator = advanced_format_iterator + 1
             else
                 newTitle = element.value
             end
 
             if isColorSet then
-                reaper.SetProjectMarker3(proj, markrgnindexnumber, guid.isRegion, pos, rgnend, newTitle, element.color | 0x1000000)
+                reaper.SetProjectMarker3(proj, markrgnindexnumber, guid.isRegion, pos, rgnend, newTitle, color | 0x1000000)
             else
                 reaper.SetProjectMarker2(proj, markrgnindexnumber, guid.isRegion, pos, rgnend, newTitle)
+            end
+
+            if isEmpty(newTitle) then
+                reaper.SetProjectMarker4(proj, markrgnindexnumber, guid.isRegion, pos, rgnend, newTitle, 0, 0x1)
             end
         elseif element.type == rename_types.Track then
             ---------------------------------------------------------------
@@ -369,10 +409,9 @@ function SaveData(element, isColorSet, isAdvanced)
             if track ~= nil then
                 if isAdvanced then
                     local _, title = reaper.GetTrackName(track)
-                    local id = reaper.GetMediaTrackInfo_Value(track, "IP_TRACKNUMBER")
+                    local id = math.floor(reaper.GetMediaTrackInfo_Value(track, "IP_TRACKNUMBER"))
 
                     newTitle = GetProcessedTitleByAdvanced(title, id)
-                    advanced_format_iterator = advanced_format_iterator + 1
                 else
                     newTitle = element.value
                 end
@@ -380,7 +419,7 @@ function SaveData(element, isColorSet, isAdvanced)
                 reaper.GetSetMediaTrackInfo_String(track, "P_NAME", newTitle, true)
 
                 if isColorSet then
-                    reaper.SetTrackColor(track, element.color)
+                    reaper.SetTrackColor(track, color)
                 end
             end
         elseif element.type == rename_types.Item then
@@ -395,7 +434,7 @@ function SaveData(element, isColorSet, isAdvanced)
 
                 if isAdvanced then
                     local title = reaper.GetTakeName(take)
-                    local id = reaper.GetMediaItemInfo_Value(item, "IP_ITEMNUMBER")
+                    local id = math.floor(reaper.GetMediaItemInfo_Value(item, "IP_ITEMNUMBER")) + 1
 
                     newTitle = GetProcessedTitleByAdvanced(title, id)
                 else
@@ -409,10 +448,10 @@ function SaveData(element, isColorSet, isAdvanced)
                         reaper.GetSetMediaItemTakeInfo_String(i_take, "P_NAME", newTitle, true)
 
                         if isColorSet then
-                            reaper.SetMediaItemTakeInfo_Value(i_take, "I_CUSTOMCOLOR", element.color | 0x1000000)
+                            reaper.SetMediaItemTakeInfo_Value(i_take, "I_CUSTOMCOLOR", color | 0x1000000)
 
                             if element.applyToAllTakes then
-                                reaper.SetMediaItemInfo_Value(item, "I_CUSTOMCOLOR", element.color | 0x1000000)
+                                reaper.SetMediaItemInfo_Value(item, "I_CUSTOMCOLOR", color | 0x1000000)
                             end
                         end
                     end
@@ -423,5 +462,8 @@ function SaveData(element, isColorSet, isAdvanced)
         if isAdvanced then
             advanced_format_iterator = advanced_format_iterator + 1
         end
+
+        Log("SAVING DATA", ek_log_levels.Notice)
+        Log(element, ek_log_levels.Notice)
     end
 end

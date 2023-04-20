@@ -1,8 +1,14 @@
 -- @description ek_Smart renaming depending on focus
--- @version 1.0.0
+-- @version 1.0.1
 -- @author Ed Kashinsky
 -- @about
 --   Renaming stuff for takes, items, markers, regions and tracks depending on focus
+-- @changelog
+--   - Added live mode. Now focus is being updated in realtime with open window
+--   - Added last used colors list
+--   - Improved advanced mode
+--   - Fixed crash with ReaImGui on 0.7.2 and below
+--   - Fixed bug with color setting on different platforms
 -- @provides
 --   ../Core/ek_Smart renaming functions.lua
 
@@ -29,14 +35,43 @@ end
 
 CoreFunctionsLoaded("ek_Smart renaming functions.lua")
 
-local wndWidth = 330
+local wndWidth = 347
 local element = GetFocusedElement()
 local isColorTreeShowed = false
 local isColorTreeShowedChanged = false
 local isAdvanced = false
+local isTitleSet = false
 local isColorSet = false
+local lastColorsList = EK_GetExtState(rename_last_colors_list_key, {})
 local applyToAllTakes = true
 local value, color
+
+local function UpdateLastColorsList(newColor)
+	local list = {}
+	local i = 1
+	local limit = 8
+
+	table.insert(list, newColor)
+
+	while #list < limit and lastColorsList[i] ~= nil do
+		local isExists = false
+
+		for _, val in pairs(list) do
+			if val == lastColorsList[i] then
+				isExists = true
+				goto end_looking
+			end
+		end
+
+		::end_looking::
+
+		if not isExists then table.insert(list, lastColorsList[i]) end
+
+		i = i + 1
+	end
+
+	EK_SetExtState(rename_last_colors_list_key, list)
+end
 
 local function frameForAdvancedForm()
 	local a_key = 0
@@ -52,7 +87,7 @@ local function frameForAdvancedForm()
 		end
 	end
 
-	reaper.ImGui_PushItemWidth(GUI_GetCtx(), 200)
+	reaper.ImGui_PushItemWidth(GUI_GetCtx(), 224)
 	reaper.ImGui_PushFont(GUI_GetCtx(), GUI_GetFont(gui_font_types.Bold))
 
 	local newVal = GUI_DrawWidget(gui_widget_types.Combo, "Type", a_key, settings)
@@ -62,7 +97,6 @@ local function frameForAdvancedForm()
 
 	reaper.ImGui_PopFont(GUI_GetCtx())
 	reaper.ImGui_PopItemWidth(GUI_GetCtx())
-
 	GUI_DrawSettingsTable(a_fields)
 
 	reaper.ImGui_Text(GUI_GetCtx(), "Example:")
@@ -74,12 +108,15 @@ local function frameForAdvancedForm()
 end
 
 function frame()
-	-- local newElement = GetFocusedElement()
+	if not EK_IsWindowFocusedByTitle(ek_js_wnd.titles.ScriptSmartRenaming) then
+		element = GetFocusedElement()
+	end
+
 	local newVal
 
 	-- if newElement.type == element.type then element = newElement end
-	if value == nil then value = element.value end
-	if color == nil then color = element.color end
+	if not isTitleSet then value = element.value end
+	if not isColorSet then color = element.color end
 
 	--
 	-- HEADER
@@ -108,12 +145,13 @@ function frame()
 
 	reaper.ImGui_BeginDisabled(GUI_GetCtx(), isAdvanced == true)
 
-	reaper.ImGui_PushItemWidth(GUI_GetCtx(), 210)
+	reaper.ImGui_PushItemWidth(GUI_GetCtx(), 195)
 	reaper.ImGui_PushFont(GUI_GetCtx(), GUI_GetFont(gui_font_types.Bold))
 
 	newVal = GUI_DrawWidget(gui_widget_types.Text, "New Title", value)
 	if newVal ~= value then
 		value = newVal
+		isTitleSet = true
 	end
 
 	reaper.ImGui_PopFont(GUI_GetCtx())
@@ -125,12 +163,21 @@ function frame()
 	-- COLOR
 	--
 	if isColorTreeShowed then
-		reaper.ImGui_StyleVar_SeparatorTextPadding()
-
+		reaper.ImGui_PushItemWidth(GUI_GetCtx(), 224)
 		newVal = GUI_DrawWidget(gui_widget_types.Color, "Color", color)
 		if newVal ~= color then
 			color = newVal
 			isColorSet = true
+		end
+		reaper.ImGui_PopItemWidth(GUI_GetCtx())
+
+		for i = 1, #lastColorsList do
+			if GUI_DrawWidget(gui_widget_types.ColorView, "Last Color #" .. i, lastColorsList[i]) then
+				color = lastColorsList[i]
+				isColorSet = true
+			end
+
+			if i < #lastColorsList then reaper.ImGui_SameLine(GUI_GetCtx()) end
 		end
 	end
 
@@ -171,12 +218,14 @@ function frame()
 			element.applyToAllTakes = applyToAllTakes
 		end
 
+		if isColorSet then
+			UpdateLastColorsList(color)
+		end
+
 		SaveData(element, isColorSet, isAdvanced)
 
-		GUI_CloseMainWindow()
-
 		reaper.Undo_EndBlock(SCRIPT_NAME, -1)
-	end, gui_buttons_types.Action, true)
+	end, gui_buttons_types.Action, false, reaper.ImGui_Key_Enter())
 
 	reaper.ImGui_EndDisabled(GUI_GetCtx())
 
