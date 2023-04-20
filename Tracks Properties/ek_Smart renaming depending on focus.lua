@@ -1,14 +1,10 @@
 -- @description ek_Smart renaming depending on focus
--- @version 1.0.1
+-- @version 1.0.2
 -- @author Ed Kashinsky
 -- @about
 --   Renaming stuff for takes, items, markers, regions and tracks depending on focus
 -- @changelog
---   - Added live mode. Now focus is being updated in realtime with open window
---   - Added last used colors list
---   - Improved advanced mode
---   - Fixed crash with ReaImGui on 0.7.2 and below
---   - Fixed bug with color setting on different platforms
+--   - Fixed: When you change only color, title won't be changed
 -- @provides
 --   ../Core/ek_Smart renaming functions.lua
 
@@ -222,7 +218,7 @@ function frame()
 			UpdateLastColorsList(color)
 		end
 
-		SaveData(element, isColorSet, isAdvanced)
+		SaveData(element, isTitleSet, isColorSet, isAdvanced)
 
 		reaper.Undo_EndBlock(SCRIPT_NAME, -1)
 	end, gui_buttons_types.Action, false, reaper.ImGui_Key_Enter())

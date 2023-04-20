@@ -373,7 +373,7 @@ function GetFocusedElement()
     }
 end
 
-function SaveData(element, isColorSet, isAdvanced)
+function SaveData(element, isTitleSet, isColorSet, isAdvanced)
     local color = isColorSet and reaper.ImGui_ColorConvertNative(element.color) or 0
 
     for _, guid in pairs(element.data) do
@@ -384,10 +384,10 @@ function SaveData(element, isColorSet, isAdvanced)
             local pos, rgnend, name, markrgnindexnumber, _ = GetProjectMarkerByNumber(guid.number, guid.isRegion)
             local newTitle
 
-            if isAdvanced then
-                newTitle = GetProcessedTitleByAdvanced(name, markrgnindexnumber)
+            if isTitleSet then
+                newTitle = isAdvanced and GetProcessedTitleByAdvanced(name, markrgnindexnumber) or element.value
             else
-                newTitle = element.value
+                newTitle = name
             end
 
             if isColorSet then
@@ -407,16 +407,18 @@ function SaveData(element, isColorSet, isAdvanced)
             local newTitle
 
             if track ~= nil then
-                if isAdvanced then
-                    local _, title = reaper.GetTrackName(track)
-                    local id = math.floor(reaper.GetMediaTrackInfo_Value(track, "IP_TRACKNUMBER"))
+                if isTitleSet then
+                    if isAdvanced then
+                        local _, title = reaper.GetTrackName(track)
+                        local id = math.floor(reaper.GetMediaTrackInfo_Value(track, "IP_TRACKNUMBER"))
 
-                    newTitle = GetProcessedTitleByAdvanced(title, id)
-                else
-                    newTitle = element.value
+                        newTitle = GetProcessedTitleByAdvanced(title, id)
+                    else
+                        newTitle = element.value
+                    end
+
+                    reaper.GetSetMediaTrackInfo_String(track, "P_NAME", newTitle, true)
                 end
-
-                reaper.GetSetMediaTrackInfo_String(track, "P_NAME", newTitle, true)
 
                 if isColorSet then
                     reaper.SetTrackColor(track, color)
@@ -445,7 +447,9 @@ function SaveData(element, isColorSet, isAdvanced)
                     local i_take = reaper.GetTake(item, i)
 
                     if element.applyToAllTakes or i_take == take then
-                        reaper.GetSetMediaItemTakeInfo_String(i_take, "P_NAME", newTitle, true)
+                        if isTitleSet then
+                             reaper.GetSetMediaItemTakeInfo_String(i_take, "P_NAME", newTitle, true)
+                        end
 
                         if isColorSet then
                             reaper.SetMediaItemTakeInfo_Value(i_take, "I_CUSTOMCOLOR", color | 0x1000000)
