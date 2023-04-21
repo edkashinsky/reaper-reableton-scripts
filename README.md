@@ -109,7 +109,7 @@ The script helps to rename an unlimited number of elements of different types wi
 
 <img src="/Assets/images/smart_renaming_depending_on_focus.png" alt="smart_renaming_depending_on_focus" width="400"/>
 
-InstallationL
+Installation:
 1. Install script **ek_Smart renaming depending on focus**
 2. Just attach it on Cmd/Ctrl+R instead of renaming by default.
 
