@@ -186,21 +186,35 @@ function GetProcessedTitleByAdvanced(title, id)
         local custom = config.sr_format_custom
         local where = config.sr_format_where
         local index = config.sr_format_start
-        local indexMask, curIndex
+        local initIndexMask, startIterator, curIndex, initDigitCount
         local newTitle = custom ~= nil and custom or title
+        local value = ""
         local prefix
 
         if not index then index = 1 end
 
-        -- to add abititty "_001"
-        indexMask = string.gsub(index, "[^0-9]+", "")
-        indexMask = tonumber(indexMask)
-        if not indexMask then indexMask = 1 end
+        -- to add abititty "_007"
+        initIndexMask = string.gsub(index, "[^0-9]+", "") -- "007"
+        startIterator = tonumber(initIndexMask) -- "7"
 
-        curIndex = indexMask + advanced_format_iterator
+        if not startIterator then startIterator = 1 end
+
+        initDigitCount = string.len(initIndexMask)
+
+        curIndex = startIterator + advanced_format_iterator
+
+        if initDigitCount > string.len(tostring(curIndex)) then
+            for _ = 1, initDigitCount - string.len(tostring(curIndex)) do value = value .. "0" end
+        end
+
+        value = value .. curIndex
 
         if format == 0 then -- Name and index
-            prefix = string.gsub(index, indexMask, curIndex)
+            if not isEmpty(initIndexMask) then
+                prefix = string.gsub(index, initIndexMask, value)
+            else
+                prefix = ""
+            end
         elseif format == 1 then -- Name and ID
             prefix = " " .. id
         end
@@ -303,7 +317,7 @@ function GetFocusedElement()
 
             if i == 0 then
                 _, title = reaper.GetTrackName(track)
-                value = title
+                _, value = reaper.GetSetMediaTrackInfo_String(track, "P_NAME", "", false)
                 color = reaper.GetTrackColor(track)
             end
 

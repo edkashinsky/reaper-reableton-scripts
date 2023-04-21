@@ -1,10 +1,10 @@
 -- @description ek_Smart renaming depending on focus
--- @version 1.0.4
+-- @version 1.0.5
 -- @author Ed Kashinsky
 -- @about
 --   Renaming stuff for takes, items, markers, regions and tracks depending on focus
 -- @changelog
---   - Small fixes
+--   - Improved advanced: Format mode - you can add flexible counters in "Start numbers at", like "_001"
 -- @provides
 --   ../Core/ek_Smart renaming functions.lua
 
