@@ -103,6 +103,16 @@ Installation:
 1. Install script **ek_Save project with a check of unused media files**
 2. Just attach it on Cmd/Ctrl+S instead of saving by default.
 
+### Smart renaming depending on focus
+
+The script helps to rename an unlimited number of elements of different types with one click. You can also change their color. In addition, script has advanced mode for replacing, additing, changing titles of elements.
+
+<img src="/Assets/images/smart_renaming_depending_on_focus.jpeg" alt="save_project_check_unused" width="281"/>
+
+InstallationL
+1. Install script **ek_Smart renaming depending on focus**
+2. Just attach it on Cmd/Ctrl+R instead of renaming by default.
+
 ### Theme
 
 #### Flat Madness Remix
@@ -188,6 +198,10 @@ This script pins selected items to markers started from specified number. It req
 #### ek_Pin selected items to closest markers
 
 This script pins selected items to closest markers for first selected item. It requires script "ek_Pin selected items at markers started from.lua"
+
+#### ek_Remove 1 sec gap between selected items
+
+Script removes 1 second gap between selected items. Press CMD/CTRL to remove 0.1 seconds gap.
 
 #### ek_Separated actions for Media item in Mouse modifiers
 
@@ -433,6 +447,10 @@ Renaming stuff for takes, items, markers, regions and tracks depending on focus
 #### ek_Set volume for selected tracks
 
 Script shows window with input to set volume
+
+#### ek_Smart renaming depending on focus
+
+Renaming stuff for takes, items, markers, regions and tracks depending on focus
 
 #### ek_Toggle mute and offline FX for selected tracks
 
