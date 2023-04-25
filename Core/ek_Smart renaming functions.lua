@@ -30,7 +30,7 @@ rename_advanced_config = {
 		id = rename_advanced_types.Add,
 		text = "Add Text",
 		fields = {
-			{ key = "sr_add_prefix", title = "Prefix", type = gui_widget_types.Text },
+			{ key = "sr_add_prefix", title = "Prefix/Postfix", type = gui_widget_types.Text },
 			{ key = "sr_add_where", title = "Where", type = gui_widget_types.Combo, default = 0, select_values = { "After name", "Before name" } }
 		}
 	},
@@ -227,12 +227,47 @@ function GetProcessedTitleByAdvanced(title, id)
     end
 end
 
-function GetFocusedElement()
+local function GetRegionOrTCPWindowFocusedData()
+    local wnd = reaper.JS_Window_GetFocus()
+    local result = {
+        region_manager = false,
+        tcp = false,
+        gui = false
+    }
+
+	local UpdateFocusData = function(f_wnd)
+        local className = reaper.JS_Window_GetClassName(f_wnd)
+        local title = reaper.JS_Window_GetTitle(f_wnd)
+
+        if className == ek_js_wnd.classes.TCP then
+            result.tcp = true
+        end
+
+        if title == ek_js_wnd.titles.RegionManager then
+            result.region_manager = true
+        end
+
+        if title == ek_js_wnd.titles.ScriptSmartRenaming then
+            result.gui = true
+        end
+	end
+
+	while wnd ~= nil do
+        UpdateFocusData(wnd)
+        if result.region_manager or result.tcp or result.gui then return result end
+
+		wnd = reaper.JS_Window_GetParent(wnd)
+	end
+
+	return result
+end
+
+local function FindFocusedElement(focused_data)
     ---------------------------------------------------------------
     ---              MARKERS/REGIONS (Region Manager)
     ---------------------------------------------------------------
     local selectedMarkersInManager = GetSelectedMarkers()
-    if (#selectedMarkersInManager > 0 and EK_IsWindowFocusedByTitle(ek_js_wnd.titles.RegionManager)) then
+    if #selectedMarkersInManager > 0 and focused_data.region_manager then
         local number, isRegion, name, markrgnindexnumber, color, title
         local data = {}
 
@@ -308,7 +343,7 @@ function GetFocusedElement()
     local countSelectedTracks = reaper.CountSelectedTracks2(proj, true)
     local countSelectedItems = reaper.CountSelectedMediaItems(proj)
 
-    if countSelectedTracks > 0 and (countSelectedItems == 0 or EK_IsWindowFocusedByClass(ek_js_wnd.classes.TCP)) then
+    if countSelectedTracks > 0 and (countSelectedItems == 0 or focused_data.tcp) then
         local value, title, color
         local data = {}
         for i = 0, countSelectedTracks - 1 do
@@ -484,4 +519,15 @@ function SaveData(element, isTitleSet, isColorSet, isAdvanced)
         Log("SAVING DATA", ek_log_levels.Notice)
         Log(element, ek_log_levels.Notice)
     end
+end
+
+local cached_element
+function GetFocusedElement()
+    local focused_data = GetRegionOrTCPWindowFocusedData()
+
+    if focused_data.gui and not isEmpty(cached_element) then return cached_element end
+
+    cached_element = FindFocusedElement(focused_data)
+
+    return cached_element
 end

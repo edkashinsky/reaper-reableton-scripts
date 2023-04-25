@@ -1,10 +1,10 @@
 -- @description ek_Smart renaming depending on focus
--- @version 1.0.5
+-- @version 1.0.6
 -- @author Ed Kashinsky
 -- @about
 --   Renaming stuff for takes, items, markers, regions and tracks depending on focus
 -- @changelog
---   - Improved advanced: Format mode - you can add flexible counters in "Start numbers at", like "_001"
+--   - Performance improved with opened window
 -- @provides
 --   ../Core/ek_Smart renaming functions.lua
 
@@ -103,8 +103,20 @@ local function frameForAdvancedForm()
 
 end
 
+local start_time = reaper.time_precise()
+local cooldown = 0.5
+local function NeedToUpdateFocusedElement()
+	local time = reaper.time_precise()
+	if time > start_time + cooldown then
+		start_time = time
+		return true
+	else
+		return false
+	end
+end
+
 function frame()
-	if not EK_IsWindowFocusedByTitle(ek_js_wnd.titles.ScriptSmartRenaming) then
+	if NeedToUpdateFocusedElement() then
 		element = GetFocusedElement()
 	end
 
@@ -218,6 +230,7 @@ function frame()
 		if isAdvanced then isTitleSet = true end
 
 		SaveData(element, isTitleSet, isColorSet, isAdvanced)
+		reaper.UpdateArrange()
 
 		reaper.Undo_EndBlock(SCRIPT_NAME, -1)
 	end, gui_buttons_types.Action, false, reaper.ImGui_Key_Enter())
