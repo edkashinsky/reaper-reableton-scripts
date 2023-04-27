@@ -1,11 +1,10 @@
 -- @description ek_Smart renaming depending on focus
--- @version 1.0.7
+-- @version 1.0.8
 -- @author Ed Kashinsky
 -- @about
 --   Renaming stuff for takes, items, markers, regions and tracks depending on focus
 -- @changelog
---   - GUI Refactoring
---   - Added color palette
+--   - Improved color palette
 -- @provides
 --   ../Core/ek_Smart renaming functions.lua
 
@@ -327,7 +326,6 @@ function frame()
 			element.applyToAllTakes = applyToAllTakes
 		end
 
-		if isColorSet then UpdateLastColorsList(color) end
 		if isAdvanced then isTitleSet = true end
 
 		SaveData(element, isTitleSet, isColorSet, isAdvanced)
