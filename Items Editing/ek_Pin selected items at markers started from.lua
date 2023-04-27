@@ -1,11 +1,11 @@
 -- @description ek_Pin selected items at markers started from
--- @version 1.0.7
+-- @version 1.0.8
 -- @author Ed Kashinsky
 -- @about
 --   ![Preview](/Assets/images/pin_items_to_markers_preview.gif)
 --   This script pins selected items to markers started from specified number. It requires ReaImGui extension.
 -- @changelog
---   - Small fix
+--   - GUI Refactoring
 -- @provides
 --   ../Core/ek_Pin selected items functions.lua
 
@@ -113,5 +113,5 @@ else
 		start_marker = FindNearestMarkerNum(position)
 	end
 
-	GUI_ShowMainWindow(270, 140)
+	GUI_ShowMainWindow(260, 0)
 end

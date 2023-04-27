@@ -1,10 +1,10 @@
 -- @description ek_Global startup action settings
--- @version 1.0.5
+-- @version 1.0.6
 -- @author Ed Kashinsky
 -- @about
 --   Here you can set features for global startup actions
 -- @changelog
---   improves GUI and added new functions
+--   GUI refactoring
 
 function CoreFunctionsLoaded(script)
 	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
@@ -50,7 +50,9 @@ function frame()
 
 	GUI_DrawGap()
 
+	reaper.ImGui_PushItemWidth(GUI_GetCtx(), 224)
 	GUI_DrawSettingsTable(ordered_settings)
+	reaper.ImGui_PopItemWidth(GUI_GetCtx())
 end
 
 GUI_ShowMainWindow(490, 670)

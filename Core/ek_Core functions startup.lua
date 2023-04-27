@@ -37,7 +37,7 @@ ga_settings = {
 		key = "ga_auto_grid",
 		type = gui_widget_types.Checkbox,
 		title = "Automatically adjust grid to zoom",
-		description = "Feature from Ableton: when you change zoom level, grid adjusts to it. By the way, if you want to have this feature in MIDI-editor, install script 'ek_Auto grid for MIDI Editor'.",
+		description = "Feature from Ableton: when you change zoom level, grid adjusts to it. By the way, if you want to have this feature in MIDI-editor, install script 'ek_Auto grid for MIDI Editor' and set it on zoom shortcut.",
 		default = true,
 		order = 1,
 	},
@@ -57,7 +57,7 @@ ga_settings = {
 		key = "ga_midi_grid_setting",
 		type = gui_widget_types.Combo,
 		title = "Grid setting for MIDI Editor",
-		description = "Select which grid you want to have. For quick switching use scripts 'ek_Switch to next grid step'/'ek_Switch to prev grid step'",
+		description = "Select which grid you want to have. For quick switching use scripts 'ek_Switch to next grid step' and 'ek_Switch to prev grid step'",
 		default = 3,
 		select_values = {
 			"Widest", "Wide", "Medium", "Narrow", "Narrowest", "4 bar", "2 bar", "1 bar", "1/2", "1/4", "1/8", "1/16", "1/32",
@@ -70,6 +70,9 @@ ga_settings = {
 		type = gui_widget_types.Checkbox,
 		title = "Automatically limit zoom to content of project",
 		default = true,
+		callback = function(val)
+			GA_UpdateProjectLimitSetting(val)
+		end,
 		order = 4,
 	},
 	project_limit_offset = {
@@ -347,17 +350,21 @@ function GA_ObserveAutomationModeForSelectedTracks(changes, values)
 	end
 end
 
+function GA_UpdateProjectLimitSetting(isSet)
+	local value = isSet and 1 or 0
 
+	local use = reaper.SNM_GetIntConfigVar("projmaxlenuse", 0)
+	if use ~= value then
+		reaper.SNM_SetIntConfigVar("projmaxlenuse", value)
+	end
+end
 --
 -- Observe Project Limit
 --
 function GA_ObserveProjectLimit(changes, values)
 	Log("Changed: {param}", ek_log_levels.Warning, ga_settings.project_limit.key)
 
-	local use = reaper.SNM_GetIntConfigVar("projmaxlenuse", 1)
-	if use == 0 then
-		reaper.SNM_SetIntConfigVar("projmaxlenuse", 1)
-	end
+	GA_UpdateProjectLimitSetting(true)
 
 	if changes.play_state then
 		local playingByte = 1
@@ -374,15 +381,23 @@ function GA_ObserveProjectLimit(changes, values)
 
 	local maxLen = 0
 
+	-- ITEMS --
 	for i = 0, values.count_items - 1 do
 		local item = reaper.GetMediaItem(proj, i)
 
 		local pos = reaper.GetMediaItemInfo_Value(item, "D_POSITION")
 		local len = reaper.GetMediaItemInfo_Value(item, "D_LENGTH")
 
-		if (pos + len > maxLen) then
-			maxLen = pos + len
-		end
+		if (pos + len > maxLen) then maxLen = pos + len end
+	end
+
+	-- MARKERS/REGIONS --
+	local _, num_markers, num_regions = reaper.CountProjectMarkers(proj)
+	for i = 0, num_markers + num_regions - 1 do
+		local _, isrgn, pos, rgnend = reaper.EnumProjectMarkers(i)
+		local r_pos = isrgn == true and rgnend or pos
+
+		if (r_pos > maxLen) then maxLen = r_pos end
 	end
 
 	local offset = GA_GetSettingValue(ga_settings.project_limit_offset)

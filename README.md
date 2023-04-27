@@ -62,6 +62,7 @@ For installation:
 4. Open **Extensions** -> **Startup Actions** -> **Set Global Startup Action...** and paste copied command ID
 5. Restart Reaper
 6. Install and run 'ek_Global startup action settings' and configure the parameters you want to use
+7. If you want to use auto-grid for MIDI Editor, install script **ek_Auto grid for MIDI Editor** and set it on zoom shortcut.
 
 <img src="/Assets/images/auto_grid_preview.gif" alt="Global Functions preview" width="500"/>
 

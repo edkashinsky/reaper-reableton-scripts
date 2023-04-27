@@ -8,8 +8,8 @@ local window_opened = false
 local window_first_frame_showed = false
 local window_width = 0
 local window_height = 0
-local font_name = 'arial'
-local font_size = 15
+local font_name = 'Helvetica'
+local font_size = 12
 local default_enter_action = nil
 local cached_fonts = nil
 local _, imgui_version_num, _ = reaper.ImGui_GetVersion()
@@ -24,6 +24,18 @@ gui_colors = {
 	White = 0xffffffff,
 	Green = 0x6CCA3Cff,
 	Red = 0xEB5852ff,
+	Blue = 0x1f6fcbff,
+	Background = 0x2c2c2cff,
+	Text = 0xffffffff,
+	Input = {
+		Background = 0x686868ff,
+		Hover = 0x686868bb,
+		Text = 0xe9e9e9ff,
+		Label = 0xffffffff,
+	},
+	Button = {
+
+	}
 }
 
 gui_buttons_types = {
@@ -43,8 +55,6 @@ gui_widget_types = {
 }
 
 GUI_OnWindowClose = nil
-
-local GUI_DefaultColor = reaper.ColorToNative(84, 84, 84)
 
 local function GUI_GetWindowFlags()
 	return reaper.ImGui_WindowFlags_NoCollapse() |
@@ -101,8 +111,12 @@ local function main()
 	end
 
 	reaper.ImGui_PushFont(ctx, GUI_GetFont(gui_font_types.None))
-	reaper.ImGui_PushStyleColor(ctx, reaper.ImGui_Col_WindowBg(), 0x1a1b1bff)
-	reaper.ImGui_PushStyleColor(ctx, reaper.ImGui_Col_FrameBg(), 0x545454ff)
+	reaper.ImGui_PushStyleColor(ctx, reaper.ImGui_Col_WindowBg(), gui_colors.Background)
+	reaper.ImGui_PushStyleColor(ctx, reaper.ImGui_Col_Separator(), gui_colors.Background)
+	reaper.ImGui_PushStyleColor(ctx, reaper.ImGui_Col_FrameBg(), gui_colors.Input.Background)
+	reaper.ImGui_PushStyleColor(ctx, reaper.ImGui_Col_FrameBgHovered(), gui_colors.Input.Hover)
+	reaper.ImGui_PushStyleColor(ctx, reaper.ImGui_Col_FrameBgActive(), gui_colors.Input.Hover)
+	reaper.ImGui_PushStyleColor(ctx, reaper.ImGui_Col_Text(), gui_colors.Text)
 
 	reaper.ImGui_SetNextWindowSize(ctx, window_width, window_height)
 
@@ -114,7 +128,7 @@ local function main()
 	    reaper.ImGui_End(ctx)
 	end
 
-	reaper.ImGui_PopStyleColor(ctx, 2)
+	reaper.ImGui_PopStyleColor(ctx, 6)
 	reaper.ImGui_PopFont(ctx)
 
 	if reaper.ImGui_IsKeyPressed(ctx, reaper.ImGui_Key_Escape()) then
@@ -137,6 +151,8 @@ function GUI_ShowMainWindow(w, h)
 	window_height = h
 
 	ctx = reaper.ImGui_CreateContext(SCRIPT_NAME)
+
+	reaper.ImGui_SetConfigVar(ctx, reaper.ImGui_ConfigVar_ViewportsNoDecoration(), 0)
 
     reaper.defer(main)
 end
@@ -164,8 +180,8 @@ end
 function GUI_DrawButton(label, action, btn_type, prevent_close_wnd, keyboard_key_action)
 	if not btn_type then btn_type = gui_buttons_types.Action end
 
-	local gui_btn_padding = 12
-	local gui_btn_height = 27
+	local gui_btn_padding = 10
+	local gui_btn_height = 25
 	local width = reaper.ImGui_CalcTextSize(ctx, label)
 	width = width + (gui_btn_padding * 2)
 
@@ -220,15 +236,13 @@ function GUI_DrawSettingsTable(settingsTable)
 		local s = settingsTable[i]
 		local curVal = EK_GetExtState(s.key, s.default)
 
-		reaper.ImGui_PushItemWidth(ctx, 224)
-		reaper.ImGui_PushFont(ctx, GUI_GetFont(gui_font_types.Bold))
+		newVal = GUI_DrawInput(s.type, s.title, curVal, s)
 
-		newVal = GUI_DrawWidget(s.type, s.title, curVal, s)
+		if curVal ~= newVal then
+			EK_SetExtState(s.key, newVal)
 
-		if curVal ~= newVal then EK_SetExtState(s.key, newVal) end
-
-		reaper.ImGui_PopFont(ctx)
-		reaper.ImGui_PopItemWidth(ctx)
+			if type(s.callback) == "function" then s.callback(newVal) end
+		end
 
 		if s.description then
 			GUI_DrawText(s.description, GUI_GetFont(gui_font_types.Italic))
@@ -238,46 +252,80 @@ function GUI_DrawSettingsTable(settingsTable)
 	end
 end
 
-function GUI_DrawWidget(type, label, value, settings)
+function GUI_DrawInput(type, label, value, settings)
+	if not settings then settings = {} end
+
 	local newVal
-	local input_flags = GUI_GetInputFlags()
+	local input_flags = settings.flags and settings.flags or GUI_GetInputFlags()
+	local needLabel = true
+	local inner_spacing_x = reaper.ImGui_GetStyleVar(ctx, reaper.ImGui_StyleVar_ItemInnerSpacing())
+
+	reaper.ImGui_PushFont(ctx, GUI_GetFont(gui_font_types.Bold))
+	reaper.ImGui_PushStyleColor(ctx, reaper.ImGui_Col_Text(), gui_colors.Input.Text)
 
 	if type == gui_widget_types.Text then
-		_, newVal = reaper.ImGui_InputText(ctx, label, value, input_flags)
+		_, newVal = reaper.ImGui_InputText(ctx, '##' .. label, value, input_flags)
 	elseif type == gui_widget_types.Number then
 		if settings.number_precision then
-			_, newVal = reaper.ImGui_InputDouble(ctx, label, value, nil, nil, settings.number_precision, input_flags)
+			_, newVal = reaper.ImGui_InputDouble(ctx, '##' .. label, value, nil, nil, settings.number_precision, input_flags)
 		else
-			_, newVal = reaper.ImGui_InputInt(ctx, label, value, nil, nil, input_flags)
+			_, newVal = reaper.ImGui_InputInt(ctx, '##' .. label, value, nil, nil, input_flags)
 		end
 	elseif type == gui_widget_types.NumberDrag then
 		if settings.number_min and not settings.number_max then settings.number_max = 0x7fffffff end
 
 		if settings.number_precision then
-			_, newVal = reaper.ImGui_DragDouble(ctx, label, value, nil, settings.number_min, settings.number_max, settings.number_precision, input_flags)
+			_, newVal = reaper.ImGui_DragDouble(ctx, '##' .. label, value, nil, settings.number_min, settings.number_max, settings.number_precision, input_flags)
 		else
-			_, newVal = reaper.ImGui_DragInt(ctx, label, value, nil, settings.number_min, settings.number_max, nil, input_flags)
+			_, newVal = reaper.ImGui_DragInt(ctx, '##' .. label, value, nil, settings.number_min, settings.number_max, nil, input_flags)
 		end
 	elseif type == gui_widget_types.NumberSlider then
 		if settings.number_precision then
-			_, newVal = reaper.ImGui_SliderDouble(ctx, label, value, settings.number_min, settings.number_max, settings.number_precision, input_flags)
+			_, newVal = reaper.ImGui_SliderDouble(ctx, '##' .. label, value, settings.number_min, settings.number_max, settings.number_precision, input_flags)
 		else
-			_, newVal = reaper.ImGui_SliderInt(ctx, label, value, settings.number_min, settings.number_max, nil, input_flags)
+			_, newVal = reaper.ImGui_SliderInt(ctx, '##' .. label, value, settings.number_min, settings.number_max, nil, input_flags)
 		end
 	elseif type == gui_widget_types.Checkbox then
-		_, newVal = reaper.ImGui_Checkbox(ctx, label, value)
+		_, newVal = reaper.ImGui_Checkbox(ctx, '##' .. label, value)
 	elseif type == gui_widget_types.Combo then
-		_, newVal = reaper.ImGui_Combo(ctx, label, value, join(settings.select_values, "\0") .. "\0")
+		_, newVal = reaper.ImGui_Combo(ctx, '##' .. label, value, join(settings.select_values, "\0") .. "\0")
 	elseif type == gui_widget_types.Color then
 		if value == 0 then value = nil end
 
-		_, newVal = reaper.ImGui_ColorPicker3(ctx, label, value, GUI_GetColorFlags())
+		_, newVal = reaper.ImGui_ColorPicker3(ctx, '##' .. label, value, GUI_GetColorFlags())
 	elseif type == gui_widget_types.ColorView then
-		if value == 0 then value = GUI_DefaultColor end
+		if value == 0 then value = tonumber(gui_colors.Input.Background >> 8) end
 
-		newVal = reaper.ImGui_ColorButton(ctx, label, value, GUI_GetColorFlags())
+		local flags = settings.flags and settings.flags or GUI_GetColorFlags()
+
+		reaper.ImGui_PushStyleColor(ctx, reaper.ImGui_Col_FrameBg(), gui_colors.White)
+		if settings.selected then
+			newVal = reaper.ImGui_ColorButton(ctx, '##' .. label, value, flags & ~reaper.ImGui_InputTextFlags_AllowTabInput())
+		else
+			newVal = reaper.ImGui_ColorButton(ctx, '##' .. label, value, flags)
+		end
+		reaper.ImGui_PopStyleColor(ctx)
+
+		needLabel = false
 	end
-	
+
+	reaper.ImGui_PopStyleColor(ctx)
+	reaper.ImGui_PopFont(ctx)
+
+	--
+	-- LABEL
+	--
+	if needLabel then
+		reaper.ImGui_SameLine(ctx, nil, inner_spacing_x)
+		reaper.ImGui_PushStyleColor(ctx, reaper.ImGui_Col_Text(),  gui_colors.Input.Label)
+		if settings.label_not_bold ~= true then reaper.ImGui_PushFont(ctx, GUI_GetFont(gui_font_types.Bold)) end
+
+		reaper.ImGui_Text(ctx, label)
+
+		if settings.label_not_bold ~= true then reaper.ImGui_PopFont(ctx) end
+		reaper.ImGui_PopStyleColor(ctx)
+	end
+
 	return newVal
 end
 

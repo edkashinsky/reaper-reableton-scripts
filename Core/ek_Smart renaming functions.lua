@@ -140,7 +140,7 @@ local function GetProjectMarkerByNumber(number, is_region)
         local _, isrgn, pos, rgnend, name, markrgnindexnumber, color = reaper.EnumProjectMarkers3(proj, i)
 
         if is_region == isrgn and number == markrgnindexnumber then
-            return pos, rgnend, name, markrgnindexnumber, color
+            return pos, rgnend, name, markrgnindexnumber, color, i
         end
     end
 end
@@ -291,7 +291,7 @@ local function FindFocusedElement(focused_data)
             typeTitle = #selectedMarkersInManager == 1 and (isRegion and "Region" or "Marker") or "Markers/regions",
             value = name,
             title = GetHeaderLabel(rename_types.Marker, title, #selectedMarkersInManager),
-            color = reaper.ImGui_ColorConvertNative(color),
+            color = reaper.ImGui_ColorConvertNative(color) & ~0x1000000,
             data = data,
         }
     end
@@ -331,7 +331,7 @@ local function FindFocusedElement(focused_data)
                 typeTitle = s_isrgn and "Region" or "Marker",
                 value = s_name,
                 title = title,
-                color = reaper.ImGui_ColorConvertNative(s_color),
+                color = reaper.ImGui_ColorConvertNative(s_color) & ~0x1000000,
                 data = data,
             }
         end
@@ -364,7 +364,7 @@ local function FindFocusedElement(focused_data)
             typeTitle = countSelectedTracks == 1 and "Track" or "Tracks",
             value = value,
             title = GetHeaderLabel(rename_types.Track, title, countSelectedTracks),
-            color = reaper.ImGui_ColorConvertNative(color),
+            color = reaper.ImGui_ColorConvertNative(color) & ~0x1000000,
             data = data,
         }
     end
@@ -404,7 +404,7 @@ local function FindFocusedElement(focused_data)
             typeTitle = countSelectedItems == 1 and "Item" or "Items",
             value = value,
             title = GetHeaderLabel(rename_types.Item, title, countSelectedItems),
-            color = reaper.ImGui_ColorConvertNative(color),
+            color = reaper.ImGui_ColorConvertNative(color) & ~0x1000000,
             data = data,
         }
     end
@@ -430,7 +430,7 @@ function SaveData(element, isTitleSet, isColorSet, isAdvanced)
             ---------------------------------------------------------------
             ---                   MARKERS/REGIONS
             ---------------------------------------------------------------
-            local pos, rgnend, name, markrgnindexnumber, _ = GetProjectMarkerByNumber(guid.number, guid.isRegion)
+            local pos, rgnend, name, markrgnindexnumber, _, i = GetProjectMarkerByNumber(guid.number, guid.isRegion)
             local newTitle
 
             if isTitleSet then
@@ -440,7 +440,12 @@ function SaveData(element, isTitleSet, isColorSet, isAdvanced)
             end
 
             if isColorSet then
-                reaper.SetProjectMarker3(proj, markrgnindexnumber, guid.isRegion, pos, rgnend, newTitle, color | 0x1000000)
+                if color == 0 then
+                    reaper.DeleteProjectMarkerByIndex(proj, i)
+                    reaper.AddProjectMarker(proj, guid.isRegion, pos, rgnend, newTitle, math.max(markrgnindexnumber, 1))
+                else
+                    reaper.SetProjectMarker3(proj, markrgnindexnumber, guid.isRegion, pos, rgnend, newTitle, color | 0x1000000)
+                end
             else
                 reaper.SetProjectMarker2(proj, markrgnindexnumber, guid.isRegion, pos, rgnend, newTitle)
             end
@@ -470,7 +475,9 @@ function SaveData(element, isTitleSet, isColorSet, isAdvanced)
                 end
 
                 if isColorSet then
-                    reaper.SetTrackColor(track, color)
+                    if color ~= 0 then color = color | 0x1000000 end
+
+                    reaper.SetMediaTrackInfo_Value(track, "I_CUSTOMCOLOR", color)
                 end
             end
         elseif element.type == rename_types.Item then
@@ -501,10 +508,12 @@ function SaveData(element, isTitleSet, isColorSet, isAdvanced)
                         end
 
                         if isColorSet then
-                            reaper.SetMediaItemTakeInfo_Value(i_take, "I_CUSTOMCOLOR", color | 0x1000000)
+                            if color ~= 0 then color = color | 0x1000000 end
+
+                            reaper.SetMediaItemTakeInfo_Value(i_take, "I_CUSTOMCOLOR", color)
 
                             if element.applyToAllTakes then
-                                reaper.SetMediaItemInfo_Value(item, "I_CUSTOMCOLOR", color | 0x1000000)
+                                reaper.SetMediaItemInfo_Value(item, "I_CUSTOMCOLOR", color)
                             end
                         end
                     end

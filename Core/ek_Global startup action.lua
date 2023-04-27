@@ -1,5 +1,5 @@
 -- @description ek_Global startup action
--- @version 1.0.21
+-- @version 1.0.22
 -- @author Ed Kashinsky
 -- @about
 --   This is startup action brings some ableton-like features in realtime. You can control any option by 'ek_Global startup action settings' script.
@@ -12,8 +12,10 @@
 --      4. Open **Extensions** -> **Startup Actions** -> **Set Global Startup Action...** and paste copied command ID
 --      5. Restart Reaper
 --      6. Open 'ek_Global startup action settings' for customize options
+--      7. If you want to use auto-grid for MIDI Editor, install script **ek_Auto grid for MIDI Editor** and set it on zoom shortcut.
 -- @changelog
---   bug fix of defining of retina on Windows
+--   - added support project markers/regions for automatically limit zoom to content feature
+--   - if you uncheck "Automatically limit zoom to content of project" option, limit turns off automatically
 -- @provides
 --   ek_Core functions startup.lua
 
@@ -87,7 +89,7 @@ local function observeGlobalAction()
 		first_selected_item = isChanged(reaper.GetSelectedMediaItem(proj, 0), "first_selected_item"),
 	}
 
-	for key, is_changed in pairs(changes) do
+	for _, is_changed in pairs(changes) do
 		if is_changed then
 			something_is_changed = true
 			goto end_of_changes
