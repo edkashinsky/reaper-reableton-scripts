@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="4c6fb827800a1bddbf39e534587b240e9bcb35d0">
+<index version="1" name="Reableton Scripts" commit="939bfd5a67f1d01caae5612a8db360190141b569">
   <category name="ColorThemes">
     <reapack name="Flat Madness Bright Remix.theme" type="theme" desc="Flat Madness Bright Remix">
       <metadata>
@@ -789,6 +789,11 @@
         <changelog><![CDATA[GUI Refactoring]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/4c6fb827800a1bddbf39e534587b240e9bcb35d0/Items%20Editing/ek_Smart%20split%20items%20by%20mouse%20cursor.lua</source>
         <source file="../Core/ek_Smart split items by mouse cursor functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/4c6fb827800a1bddbf39e534587b240e9bcb35d0/Core/ek_Smart%20split%20items%20by%20mouse%20cursor%20functions.lua</source>
+      </version>
+      <version name="1.0.3" author="Ed Kashinsky" time="2023-04-27T15:53:24Z">
+        <changelog><![CDATA[GUI Refactoring]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/939bfd5a67f1d01caae5612a8db360190141b569/Items%20Editing/ek_Smart%20split%20items%20by%20mouse%20cursor.lua</source>
+        <source file="../Core/ek_Smart split items by mouse cursor functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/939bfd5a67f1d01caae5612a8db360190141b569/Core/ek_Smart%20split%20items%20by%20mouse%20cursor%20functions.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Switch to next pitch mode for selected items.lua" type="script" desc="ek_Switch to next pitch mode for selected items">
