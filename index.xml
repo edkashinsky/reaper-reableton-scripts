@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="baad8d54272f12b85306ce52ef374b704e4e20aa">
+<index version="1" name="Reableton Scripts" commit="4c6fb827800a1bddbf39e534587b240e9bcb35d0">
   <category name="ColorThemes">
     <reapack name="Flat Madness Bright Remix.theme" type="theme" desc="Flat Madness Bright Remix">
       <metadata>
@@ -214,6 +214,13 @@
         <source file="ek_Core functions v1.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/9b7865e5299c547b771bb3361f8d8a7d8281b898/Core/ek_Core%20functions%20v1.lua</source>
         <source file="ek_Core functions GUI.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/9b7865e5299c547b771bb3361f8d8a7d8281b898/Core/ek_Core%20functions%20GUI.lua</source>
       </version>
+      <version name="1.0.29" author="Ed Kashinsky" time="2023-04-27T15:50:53Z">
+        <changelog><![CDATA[- refactoring GUI core
+- added new functions]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/4c6fb827800a1bddbf39e534587b240e9bcb35d0/Core/ek_Core%20functions.lua</source>
+        <source file="ek_Core functions v1.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/4c6fb827800a1bddbf39e534587b240e9bcb35d0/Core/ek_Core%20functions%20v1.lua</source>
+        <source file="ek_Core functions GUI.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/4c6fb827800a1bddbf39e534587b240e9bcb35d0/Core/ek_Core%20functions%20GUI.lua</source>
+      </version>
     </reapack>
     <reapack name="ek_Global startup action settings.lua" type="script" desc="ek_Global startup action settings">
       <metadata>
@@ -248,6 +255,10 @@
       <version name="1.0.5" author="Ed Kashinsky" time="2023-02-08T10:07:32Z">
         <changelog><![CDATA[improves GUI and added new functions]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fdabafb2484f70f3d210674a7e0b9af0a45fd002/Core/ek_Global%20startup%20action%20settings.lua</source>
+      </version>
+      <version name="1.0.6" author="Ed Kashinsky" time="2023-04-27T15:50:53Z">
+        <changelog><![CDATA[GUI refactoring]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/4c6fb827800a1bddbf39e534587b240e9bcb35d0/Core/ek_Global%20startup%20action%20settings.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Global startup action.lua" type="script" desc="ek_Global startup action">
@@ -384,6 +395,12 @@
         <changelog><![CDATA[bug fix of defining of retina on Windows]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/6ebb9602c0e63422848c28f052aeb04d21663f44/Core/ek_Global%20startup%20action.lua</source>
         <source file="ek_Core functions startup.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/6ebb9602c0e63422848c28f052aeb04d21663f44/Core/ek_Core%20functions%20startup.lua</source>
+      </version>
+      <version name="1.0.22" author="Ed Kashinsky" time="2023-04-27T15:50:53Z">
+        <changelog><![CDATA[- added support project markers/regions for automatically limit zoom to content feature
+- if you uncheck "Automatically limit zoom to content of project" option, limit turns off automatically]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/4c6fb827800a1bddbf39e534587b240e9bcb35d0/Core/ek_Global%20startup%20action.lua</source>
+        <source file="ek_Core functions startup.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/4c6fb827800a1bddbf39e534587b240e9bcb35d0/Core/ek_Core%20functions%20startup.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Save project with a check of unused media files.lua" type="script" desc="ek_Save project with a check of unused media files">
@@ -683,6 +700,11 @@
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/4d6888e3d68d5146aa6f2ebca962d8699994c78c/Items%20Editing/ek_Pin%20selected%20items%20at%20markers%20started%20from.lua</source>
         <source file="../Core/ek_Pin selected items functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/4d6888e3d68d5146aa6f2ebca962d8699994c78c/Core/ek_Pin%20selected%20items%20functions.lua</source>
       </version>
+      <version name="1.0.8" author="Ed Kashinsky" time="2023-04-27T15:50:53Z">
+        <changelog><![CDATA[- GUI Refactoring]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/4c6fb827800a1bddbf39e534587b240e9bcb35d0/Items%20Editing/ek_Pin%20selected%20items%20at%20markers%20started%20from.lua</source>
+        <source file="../Core/ek_Pin selected items functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/4c6fb827800a1bddbf39e534587b240e9bcb35d0/Core/ek_Pin%20selected%20items%20functions.lua</source>
+      </version>
     </reapack>
     <reapack name="ek_Pin selected items to closest markers.lua" type="script" desc="ek_Pin selected items to closest markers">
       <metadata>
@@ -762,6 +784,11 @@
         <changelog><![CDATA[If you cut on edit cursor, final item selection will be calculated on relation of positions between edit cursor and mouse position. If mouse position is to the left relative to edit cursor, then items on the left are highlighted and otherwise.]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/181de95e05a7c24bb2b0d1bf63509d170c24bcd2/Items%20Editing/ek_Smart%20split%20items%20by%20mouse%20cursor.lua</source>
         <source file="../Core/ek_Smart split items by mouse cursor functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/181de95e05a7c24bb2b0d1bf63509d170c24bcd2/Core/ek_Smart%20split%20items%20by%20mouse%20cursor%20functions.lua</source>
+      </version>
+      <version name="1.0.2" author="Ed Kashinsky" time="2023-04-27T15:50:53Z">
+        <changelog><![CDATA[GUI Refactoring]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/4c6fb827800a1bddbf39e534587b240e9bcb35d0/Items%20Editing/ek_Smart%20split%20items%20by%20mouse%20cursor.lua</source>
+        <source file="../Core/ek_Smart split items by mouse cursor functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/4c6fb827800a1bddbf39e534587b240e9bcb35d0/Core/ek_Smart%20split%20items%20by%20mouse%20cursor%20functions.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Switch to next pitch mode for selected items.lua" type="script" desc="ek_Switch to next pitch mode for selected items">
@@ -1759,6 +1786,12 @@
         <changelog><![CDATA[- Performance improved with opened window]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/baad8d54272f12b85306ce52ef374b704e4e20aa/Tracks%20Properties/ek_Smart%20renaming%20depending%20on%20focus.lua</source>
         <source file="../Core/ek_Smart renaming functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/baad8d54272f12b85306ce52ef374b704e4e20aa/Core/ek_Smart%20renaming%20functions.lua</source>
+      </version>
+      <version name="1.0.7" author="Ed Kashinsky" time="2023-04-27T15:50:53Z">
+        <changelog><![CDATA[- GUI Refactoring
+- Added color palette]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/4c6fb827800a1bddbf39e534587b240e9bcb35d0/Tracks%20Properties/ek_Smart%20renaming%20depending%20on%20focus.lua</source>
+        <source file="../Core/ek_Smart renaming functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/4c6fb827800a1bddbf39e534587b240e9bcb35d0/Core/ek_Smart%20renaming%20functions.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Toggle mute and offline FX for selected tracks.lua" type="script" desc="ek_Toggle mute and offline FX for selected tracks">
