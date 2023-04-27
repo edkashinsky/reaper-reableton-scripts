@@ -1,5 +1,5 @@
 -- @description ek_Smart split items by mouse cursor
--- @version 1.0.2
+-- @version 1.0.3
 -- @author Ed Kashinsky
 -- @about
 --   Remake of amazing script by AZ and it works a bit different way. You can split by edit cursor if mouse position on it (or in Tolerance range in pixels).
@@ -42,7 +42,11 @@ local window, _, _ = reaper.BR_GetMouseCursorContext()
 if window == "transport" then
 	local settings = EK_SortTableByKey(split_settings)
 
-	function frame() GUI_DrawSettingsTable(settings) end
+	function frame()
+		reaper.ImGui_PushItemWidth(GUI_GetCtx(), 224)
+		GUI_DrawSettingsTable(settings)
+		reaper.ImGui_PopItemWidth(GUI_GetCtx())
+	end
 
 	GUI_ShowMainWindow(610, 0)
 	return
