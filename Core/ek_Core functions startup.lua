@@ -82,7 +82,7 @@ ga_settings = {
 		description = "Feature from Ableton: max zoom level limits by the farthest item in the project.",
 		default = 0,
 		number_precision = "%.0f%%",
-		number_min = -99,
+		number_min = 0,
 		order = 5,
 	},
 	focus_midi_editor = {
