@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="c6505a0a2f6698eb92149402d9ba29dc581799ca">
+<index version="1" name="Reableton Scripts" commit="1341d614f2a2812b266729613faee3f060ffe62f">
   <category name="ColorThemes">
     <reapack name="Flat Madness Bright Remix.theme" type="theme" desc="Flat Madness Bright Remix">
       <metadata>
@@ -411,6 +411,11 @@
         <changelog><![CDATA[- Fix: if you record with turned on "Automatically limit zoom to content of project" option, recording is continue over project limit]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/c6505a0a2f6698eb92149402d9ba29dc581799ca/Core/ek_Global%20startup%20action.lua</source>
         <source file="ek_Core functions startup.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/c6505a0a2f6698eb92149402d9ba29dc581799ca/Core/ek_Core%20functions%20startup.lua</source>
+      </version>
+      <version name="1.0.25" author="Ed Kashinsky" time="2023-04-29T12:34:03Z">
+        <changelog><![CDATA[- Fix: if you record with turned on "Automatically limit zoom to content of project" option, recording is continue over project limit]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/1341d614f2a2812b266729613faee3f060ffe62f/Core/ek_Global%20startup%20action.lua</source>
+        <source file="ek_Core functions startup.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/1341d614f2a2812b266729613faee3f060ffe62f/Core/ek_Core%20functions%20startup.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Save project with a check of unused media files.lua" type="script" desc="ek_Save project with a check of unused media files">
