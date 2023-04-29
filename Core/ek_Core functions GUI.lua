@@ -43,7 +43,7 @@ gui_buttons_types = {
 	Cancel = 2,
 }
 
-gui_widget_types = {
+gui_input_types = {
 	Text = 1,
 	Number = 2,
 	NumberDrag = 3,
@@ -263,15 +263,15 @@ function GUI_DrawInput(type, label, value, settings)
 	reaper.ImGui_PushFont(ctx, GUI_GetFont(gui_font_types.Bold))
 	reaper.ImGui_PushStyleColor(ctx, reaper.ImGui_Col_Text(), gui_colors.Input.Text)
 
-	if type == gui_widget_types.Text then
+	if type == gui_input_types.Text then
 		_, newVal = reaper.ImGui_InputText(ctx, '##' .. label, value, input_flags)
-	elseif type == gui_widget_types.Number then
+	elseif type == gui_input_types.Number then
 		if settings.number_precision then
 			_, newVal = reaper.ImGui_InputDouble(ctx, '##' .. label, value, nil, nil, settings.number_precision, input_flags)
 		else
 			_, newVal = reaper.ImGui_InputInt(ctx, '##' .. label, value, nil, nil, input_flags)
 		end
-	elseif type == gui_widget_types.NumberDrag then
+	elseif type == gui_input_types.NumberDrag then
 		if settings.number_min and not settings.number_max then settings.number_max = 0x7fffffff end
 
 		if settings.number_precision then
@@ -279,21 +279,21 @@ function GUI_DrawInput(type, label, value, settings)
 		else
 			_, newVal = reaper.ImGui_DragInt(ctx, '##' .. label, value, nil, settings.number_min, settings.number_max, nil, input_flags)
 		end
-	elseif type == gui_widget_types.NumberSlider then
+	elseif type == gui_input_types.NumberSlider then
 		if settings.number_precision then
 			_, newVal = reaper.ImGui_SliderDouble(ctx, '##' .. label, value, settings.number_min, settings.number_max, settings.number_precision, input_flags)
 		else
 			_, newVal = reaper.ImGui_SliderInt(ctx, '##' .. label, value, settings.number_min, settings.number_max, nil, input_flags)
 		end
-	elseif type == gui_widget_types.Checkbox then
+	elseif type == gui_input_types.Checkbox then
 		_, newVal = reaper.ImGui_Checkbox(ctx, '##' .. label, value)
-	elseif type == gui_widget_types.Combo then
+	elseif type == gui_input_types.Combo then
 		_, newVal = reaper.ImGui_Combo(ctx, '##' .. label, value, join(settings.select_values, "\0") .. "\0")
-	elseif type == gui_widget_types.Color then
+	elseif type == gui_input_types.Color then
 		if value == 0 then value = nil end
 
 		_, newVal = reaper.ImGui_ColorPicker3(ctx, '##' .. label, value, GUI_GetColorFlags())
-	elseif type == gui_widget_types.ColorView then
+	elseif type == gui_input_types.ColorView then
 		if value == 0 then value = tonumber(gui_colors.Input.Background >> 8) end
 
 		local flags = settings.flags and settings.flags or GUI_GetColorFlags()

@@ -489,8 +489,17 @@ function join(list, delimiter)
 end
 
 function round(number, decimals)
-    local power = 10 ^ decimals
-    return math.ceil(number * power) / power
+	if not decimals then decimals = 0 end
+
+	local power = 10 ^ decimals
+	return math.ceil(number * power) / power
+end
+
+function clamp(number, min, max)
+	if number < min then return min end
+	if number > max then return max end
+
+	return number
 end
 
 function isEmpty(value)

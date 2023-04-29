@@ -1,10 +1,10 @@
 -- @description ek_Smart renaming depending on focus
--- @version 1.0.8
+-- @version 1.0.9
 -- @author Ed Kashinsky
 -- @about
 --   Renaming stuff for takes, items, markers, regions and tracks depending on focus
 -- @changelog
---   - Improved color palette
+--   - Added customization to default color palette (click the plus button in the color palette to check)
 -- @provides
 --   ../Core/ek_Smart renaming functions.lua
 
@@ -31,7 +31,9 @@ end
 
 CoreFunctionsLoaded("ek_Smart renaming functions.lua")
 
-local defaultColors = { 0xc93b10, 0xc95a10, 0xc9a510, 0xcaca11, 0x80ca0d, 0x51a31a, 0x5bc910, 0x10c92e, 0x13ca5a, 0x12caa5, 0x0ea5ca, 0x2696cf, 0x3682d4, 0x4644d8, 0x4341b0, 0x5e40d5, 0x7738d3, 0x902ed1, 0xa40fc9, 0xca11c9, }
+local defaultPalette = {
+	0xc93b10, 0xc95a10, 0xc9a510, 0xcaca11, 0x80ca0d, 0x51a31a, 0x5bc910, 0x10c92e, 0x13ca5a, 0x12caa5, 0x0ea5ca, 0x2696cf, 0x3682d4, 0x4644d8, 0x4341b0, 0x5e40d5, 0x7738d3, 0x902ed1, 0xa40fc9, 0xca11c9,
+}
 local wndWidth = 330
 local element = GetFocusedElement()
 local isColorTreeShowed = false
@@ -42,6 +44,64 @@ local isColorSet = false
 local lastColorsList = EK_GetExtState(rename_last_colors_list_key, {})
 local applyToAllTakes = true
 local value, color, newColor
+local defaultColorsList
+
+local function GetDefaultColor(id)
+	if not defaultColorsList then
+		defaultColorsList = EK_GetExtState(rename_default_colors_list_key, defaultPalette)
+	end
+
+	return id and defaultColorsList[id] or defaultColorsList
+end
+
+local function GetUpdatedDefaultColor(rgb)
+	local hue = EK_GetExtState(rename_default_colors_config[1].key, 0)
+	local saturation = EK_GetExtState(rename_default_colors_config[2].key, 0)
+	local brightness = EK_GetExtState(rename_default_colors_config[3].key, 0)
+
+	local r, g, b, h, s, v
+
+	r, g, b = reaper.ColorFromNative(rgb)
+
+	r = r / 255
+	g = g / 255
+	b = b / 255
+
+	h, s, v = reaper.ImGui_ColorConvertRGBtoHSV(r, g, b)
+
+	-- Log("RGB: " .. round(r, 2) .. " : " .. round(g, 2) .. " : " .. round(b, 2), ek_log_levels.Debug)
+	-- Log("HSV: " .. round(h, 2) .. " : " .. round(s, 2) .. " : " .. round(v, 2), ek_log_levels.Debug)
+
+	h = clamp(h + hue, 0.01, 0.99)
+	s = clamp(s + saturation, 0.01, 0.99)
+	v = clamp(v + brightness, 0.01, 0.99)
+
+	r, g, b = reaper.ImGui_ColorConvertHSVtoRGB(h, s, v)
+
+	r = round(r * 255)
+	g = round(g * 255)
+	b = round(b * 255)
+
+	-- Log("NEW RGB: " .. r .. " : " .. g .. " : " .. b, ek_log_levels.Debug)
+	-- Log("NEW HSV: " .. round(h, 2) .. " : " .. round(s, 2) .. " : " .. round(v, 2), ek_log_levels.Debug)
+
+	-- Log("=", ek_log_levels.Debug)
+
+	return reaper.ColorToNative(round(r), round(g), round(b))
+end
+
+function UpdateDefaultColorsPalette()
+	local new_palette = {}
+
+	for i = 1, #defaultPalette do
+		local new_color = GetUpdatedDefaultColor(defaultPalette[i])
+
+		table.insert(new_palette, new_color)
+	end
+
+	EK_SetExtState(rename_default_colors_list_key, new_palette)
+	defaultColorsList = nil
+end
 
 local function UpdateLastColorsList(new_color)
 	local list = {}
@@ -49,8 +109,8 @@ local function UpdateLastColorsList(new_color)
 
 	if new_color == 0 then new_color = 1 end
 
-	for i = 1, #defaultColors do
-		if defaultColors[i] == new_color then return false end
+	for i = 1, #GetDefaultColor() do
+		if GetDefaultColor(i) == new_color then return false end
 	end
 
 	for i = 1, #lastColorsList do
@@ -129,12 +189,12 @@ local function drawAddColorButton()
 	end
 
 	if reaper.ImGui_BeginPopup(GUI_GetCtx(), 'mypicker') then
-		local newVal = GUI_DrawInput(gui_widget_types.Color, "Add new color", newColor)
+		local newVal = GUI_DrawInput(gui_input_types.Color, "Add new color", newColor)
 		if newVal ~= newColor then
 			newColor = newVal
 		end
 
-		GUI_DrawInput(gui_widget_types.ColorView, "Add new color", newColor)
+		GUI_DrawInput(gui_input_types.ColorView, "Add new color", newColor)
 
 		reaper.ImGui_SameLine(GUI_GetCtx())
 
@@ -149,6 +209,12 @@ local function drawAddColorButton()
 			reaper.ImGui_CloseCurrentPopup(GUI_GetCtx())
 		end, gui_buttons_types.Cancel, true)
 
+		GUI_DrawText()
+		GUI_DrawText( 'Default color palette settings', GUI_GetFont(gui_font_types.Bold))
+		reaper.ImGui_Separator(GUI_GetCtx())
+
+		GUI_DrawSettingsTable(rename_default_colors_config)
+
 		reaper.ImGui_EndPopup(GUI_GetCtx())
 	end
 end
@@ -161,7 +227,7 @@ local function frameForColorSection()
 	reaper.ImGui_SameLine(GUI_GetCtx(), nil, 4)
 
 	for i = 1, #lastColorsList do
-		if GUI_DrawInput(gui_widget_types.ColorView, "Last Color #" .. i, lastColorsList[i], { selected = color == lastColorsList[i] }) then
+		if GUI_DrawInput(gui_input_types.ColorView, "Last Color #" .. i, lastColorsList[i], { selected = color == lastColorsList[i] }) then
 			color = lastColorsList[i]
 			isColorSet = true
 		end
@@ -171,14 +237,14 @@ local function frameForColorSection()
 
 	drawAddColorButton()
 
-	for i = 1, #defaultColors do
-		local clr = reaper.ImGui_GetColorEx(GUI_GetCtx(), defaultColors[i])
-		if GUI_DrawInput(gui_widget_types.ColorView, "Default Color #" .. i, clr, { selected = color == clr }) then
+	for i = 1, #GetDefaultColor() do
+		local clr = tonumber(GetDefaultColor(i))
+		if GUI_DrawInput(gui_input_types.ColorView, "Default Color #" .. i, clr, { selected = color == clr }) then
 			color = clr
 			isColorSet = true
 		end
 
-		if i ~= #defaultColors and i % 10 ~= 0 then reaper.ImGui_SameLine(GUI_GetCtx(), nil, 4) end
+		if i ~= #GetDefaultColor() and i % 10 ~= 0 then reaper.ImGui_SameLine(GUI_GetCtx(), nil, 4) end
 	end
 
 	reaper.ImGui_Separator(GUI_GetCtx())
@@ -200,7 +266,7 @@ local function frameForAdvancedForm()
 
 	reaper.ImGui_PushItemWidth(GUI_GetCtx(), 216)
 
-	local newVal = GUI_DrawInput(gui_widget_types.Combo, "Type", a_key, settings)
+	local newVal = GUI_DrawInput(gui_input_types.Combo, "Type", a_key, settings)
 	if newVal ~= a_key then
 		EK_SetExtState(rename_advanced_types_key, rename_advanced_config[newVal + 1].id)
 	end
@@ -211,10 +277,11 @@ local function frameForAdvancedForm()
 
 	reaper.ImGui_Separator(GUI_GetCtx())
 
-	reaper.ImGui_Text(GUI_GetCtx(), "Example:")
+	GUI_DrawText('Example:')
 	reaper.ImGui_SameLine(GUI_GetCtx())
 	reaper.ImGui_PushFont(GUI_GetCtx(), GUI_GetFont(gui_font_types.Bold))
-	reaper.ImGui_Text(GUI_GetCtx(), GetProcessedTitleByAdvanced(element.value, 1))
+	GUI_DrawText(GetProcessedTitleByAdvanced(element.value, 1))
+
 	reaper.ImGui_PopFont(GUI_GetCtx())
 end
 
@@ -244,11 +311,10 @@ function frame()
 	--
 	-- HEADER
 	--
-	reaper.ImGui_Text(GUI_GetCtx(), element.typeTitle .. ":")
-
+	GUI_DrawText(element.typeTitle .. ":")
 	reaper.ImGui_SameLine(GUI_GetCtx())
 	reaper.ImGui_PushFont(GUI_GetCtx(), GUI_GetFont(gui_font_types.Bold))
-	reaper.ImGui_Text(GUI_GetCtx(), element.title)
+	GUI_DrawText(element.title)
 	reaper.ImGui_PopFont(GUI_GetCtx())
 
 	reaper.ImGui_BeginDisabled(GUI_GetCtx(), element.type == rename_types.Nothing)
@@ -257,7 +323,7 @@ function frame()
 	-- NEW TITLE
 	--
 
-	if GUI_DrawInput(gui_widget_types.ColorView, "Color view", color) then
+	if GUI_DrawInput(gui_input_types.ColorView, "Color view", color) then
 		isColorTreeShowed = not isColorTreeShowed
 		isColorTreeShowedChanged = true
 	end
@@ -270,7 +336,7 @@ function frame()
 
 	GUI_SetFocusOnWidget()
 
-	newVal = GUI_DrawInput(gui_widget_types.Text, "New Title", value)
+	newVal = GUI_DrawInput(gui_input_types.Text, "New Title", value)
 	if newVal ~= value then
 		value = newVal
 		isTitleSet = true
@@ -293,7 +359,7 @@ function frame()
 	end
 
 	if element.type == rename_types.Item then
-		newVal = GUI_DrawInput(gui_widget_types.Checkbox, "Apply to all takes", applyToAllTakes)
+		newVal = GUI_DrawInput(gui_input_types.Checkbox, "Apply to all takes", applyToAllTakes)
 		if newVal ~= applyToAllTakes then
 			applyToAllTakes = newVal
 		end
@@ -302,7 +368,7 @@ function frame()
 	--
 	-- ADVANCED
 	--
-	newVal = GUI_DrawInput(gui_widget_types.Checkbox, "Advanced", isAdvanced, { label_not_bold = true })
+	newVal = GUI_DrawInput(gui_input_types.Checkbox, "Advanced", isAdvanced, { label_not_bold = true })
 	if newVal ~= isAdvanced then
 		isAdvanced = newVal
 		GUI_SetWindowSize(wndWidth, 0)

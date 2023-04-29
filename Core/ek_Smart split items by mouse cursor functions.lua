@@ -7,7 +7,7 @@ local proj = 0
 split_settings = {
     offset = {
         key = "ss_offset",
-        type = gui_widget_types.NumberDrag,
+        type = gui_input_types.NumberDrag,
         number_precision = '%.2f',
         title = "Offset of edit cursor after split (in seconds)",
         description = "You can put edit cursor in front of the first split item. If number is negative, edit cursor moves to left",
@@ -16,7 +16,7 @@ split_settings = {
     },
     selectAfter = {
         key = "ss_selectAfter",
-        type = gui_widget_types.Combo,
+        type = gui_input_types.Combo,
         title = "Resulting item selection",
         description = "Choose which side of the cut line the items will be selected after split",
         select_values = {
@@ -27,7 +27,7 @@ split_settings = {
     },
     inaccuracy = {
         key = "ss_inaccuracy",
-        type = gui_widget_types.NumberDrag,
+        type = gui_input_types.NumberDrag,
         number_min = 0,
         title = "Tolerance between mouse position and edit cursor (in pixels)",
         description = "Enter how far from edit cursor you can click so that the cut line is on edit cursor (not on mouse position)",

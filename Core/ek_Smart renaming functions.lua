@@ -17,31 +17,66 @@ rename_advanced_types = {
 
 rename_advanced_types_key = "sr_advanced_type"
 rename_last_colors_list_key = "sr_last_colors_list"
+rename_default_colors_list_key = "sr_default_colors_list"
+
+rename_default_colors_config = {
+    {
+        key = "sr_dc_hue",
+        title = "Hue",
+        type = gui_input_types.NumberSlider,
+        number_min = -1.0,
+        number_max = 1.0,
+        default = 0,
+        number_precision = "%.2f",
+        callback = function() UpdateDefaultColorsPalette() end
+    },
+    {
+        key = "sr_dc_saturation",
+        title = "Saturation",
+        type = gui_input_types.NumberSlider,
+        number_min = -1,
+        number_max = 1,
+        default = 0,
+        number_precision = "%.2f",
+        callback = function() UpdateDefaultColorsPalette() end
+    },
+    {
+        key = "sr_dc_brightness",
+        title = "Brightness",
+        type = gui_input_types.NumberSlider,
+        number_min = -1,
+        number_max = 1,
+        default = 0,
+        number_precision = "%.2f",
+        callback = function() UpdateDefaultColorsPalette() end
+    },
+}
+
 rename_advanced_config = {
 	{
 		id = rename_advanced_types.Replace,
 		text = "Replace Text",
 		fields = {
-			{ key = "sr_replace_find", title = "Find", type = gui_widget_types.Text },
-			{ key = "sr_replace_replace", title = "Replace with", type = gui_widget_types.Text }
+			{ key = "sr_replace_find", title = "Find", type = gui_input_types.Text },
+			{ key = "sr_replace_replace", title = "Replace with", type = gui_input_types.Text }
 		}
 	},
 	{
 		id = rename_advanced_types.Add,
 		text = "Add Text",
 		fields = {
-			{ key = "sr_add_prefix", title = "Prefix/Postfix", type = gui_widget_types.Text },
-			{ key = "sr_add_where", title = "Where", type = gui_widget_types.Combo, default = 0, select_values = { "After name", "Before name" } }
+			{ key = "sr_add_prefix", title = "Prefix/Postfix", type = gui_input_types.Text },
+			{ key = "sr_add_where", title = "Where", type = gui_input_types.Combo, default = 0, select_values = { "After name", "Before name" } }
 		}
 	},
 	{
 		id = rename_advanced_types.Format,
 		text = "Format",
 		fields = {
-			{ key = "sr_format_title", title = "Name format", type = gui_widget_types.Combo, default = 0, select_values = { "Name and Index", "Name and ID" } },
-			{ key = "sr_format_custom", title = "Custom Name", type = gui_widget_types.Text },
-			{ key = "sr_format_where", title = "Where", type = gui_widget_types.Combo, default = 0, select_values = { "After name", "Before name" } },
-			{ key = "sr_format_start", title = "Start numbers at", type = gui_widget_types.Text, default = 1 },
+			{ key = "sr_format_title", title = "Name format", type = gui_input_types.Combo, default = 0, select_values = { "Name and Index", "Name and ID" } },
+			{ key = "sr_format_custom", title = "Custom Name", type = gui_input_types.Text },
+			{ key = "sr_format_where", title = "Where", type = gui_input_types.Combo, default = 0, select_values = { "After name", "Before name" } },
+			{ key = "sr_format_start", title = "Start numbers at", type = gui_input_types.Text, default = 1 },
 		}
 	},
 }

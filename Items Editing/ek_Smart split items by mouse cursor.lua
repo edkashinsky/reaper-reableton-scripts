@@ -1,11 +1,11 @@
 -- @description ek_Smart split items by mouse cursor
--- @version 1.0.3
+-- @version 1.0.4
 -- @author Ed Kashinsky
 -- @about
 --   Remake of amazing script by AZ and it works a bit different way. You can split by edit cursor if mouse position on it (or in Tolerance range in pixels).
 --   If you move mouse on transport panel and execute script, you will see settings window
 -- @changelog
---   GUI Refactoring
+--   Small fixes
 -- @provides
 --   ../Core/ek_Smart split items by mouse cursor functions.lua
 
