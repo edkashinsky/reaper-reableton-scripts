@@ -1,5 +1,5 @@
 -- @description ek_Global startup action
--- @version 1.0.22
+-- @version 1.0.23
 -- @author Ed Kashinsky
 -- @about
 --   This is startup action brings some ableton-like features in realtime. You can control any option by 'ek_Global startup action settings' script.
@@ -14,8 +14,7 @@
 --      6. Open 'ek_Global startup action settings' for customize options
 --      7. If you want to use auto-grid for MIDI Editor, install script **ek_Auto grid for MIDI Editor** and set it on zoom shortcut.
 -- @changelog
---   - added support project markers/regions for automatically limit zoom to content feature
---   - if you uncheck "Automatically limit zoom to content of project" option, limit turns off automatically
+--   - Fix: if you record with turned on "Automatically limit zoom to content of project" option, recording is continue over project limit
 -- @provides
 --   ek_Core functions startup.lua
 

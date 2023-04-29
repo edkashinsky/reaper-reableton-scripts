@@ -364,20 +364,19 @@ end
 function GA_ObserveProjectLimit(changes, values)
 	Log("Changed: {param}", ek_log_levels.Warning, ga_settings.project_limit.key)
 
-	GA_UpdateProjectLimitSetting(true)
+	local playingByte = 1
+	local recordingByte = 4
+	local playState = reaper.GetPlayState()
+	local isPlayingOverLimit = playState & playingByte == playingByte and reaper.GetPlayPosition2() >= reaper.SNM_GetDoubleConfigVar("projmaxlen", 0)
+	local isRecording = playState & recordingByte == recordingByte
 
-	if changes.play_state then
-		local playingByte = 1
-		local limit = reaper.SNM_GetDoubleConfigVar("projmaxlen", 0)
-		local cursorPosition = reaper.GetPlayPosition2()
-
-		-- IF PLAYING WITH TURNED ON "Limit project length, stop playback/recording at"
-		if values.play_state & playingByte == playingByte and cursorPosition >= limit then
-			reaper.SNM_SetIntConfigVar("projmaxlenuse", 0)
-		elseif values.play_state & playingByte ~= playingByte then
-			reaper.SNM_SetIntConfigVar("projmaxlenuse", 1)
-		end
+	-- NO LIMITS HERE
+	if isRecording or isPlayingOverLimit then
+		reaper.SNM_SetIntConfigVar("projmaxlenuse", 0)
+		return
 	end
+
+	GA_UpdateProjectLimitSetting(true)
 
 	local maxLen = 0
 
