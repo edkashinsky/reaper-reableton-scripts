@@ -82,7 +82,7 @@ ga_settings = {
 		description = "Feature from Ableton: max zoom level limits by the farthest item in the project.",
 		default = 0,
 		number_precision = "%.0f%%",
-		number_min = 0,
+		number_min = -100,
 		order = 5,
 	},
 	focus_midi_editor = {
@@ -400,15 +400,13 @@ function GA_ObserveProjectLimit(changes, values)
 	end
 
 	local offset = GA_GetSettingValue(ga_settings.project_limit_offset)
-	if offset > 0 then
+	if offset ~= 0 then
 		offset = maxLen * (offset / 100)
 
 		maxLen = maxLen + offset
 	end
 
-	if maxLen < 10 then
-		maxLen = 10
-	end
+	if maxLen < 10 then maxLen = 10 end
 
 	reaper.SNM_SetDoubleConfigVar("projmaxlen", maxLen)
 end
