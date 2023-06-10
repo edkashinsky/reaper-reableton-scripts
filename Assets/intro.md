@@ -5,7 +5,7 @@ This scripts makes Reaper a bit close to Ableton workflow. Also it brings useful
 ## Installation
 
 1. Install [ReaPack](https://reapack.com)
-2. Install [SMS Extension](https://sws-extension.org)
+2. Install [SWS Extension](https://sws-extension.org)
 3. Restart Reaper
 4. Open **Extensions** -> **ReaPack** -> **Browse Packages** and install common API extensions: 
    - js_ReaScriptAPI: API functions for ReaScripts
