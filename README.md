@@ -94,6 +94,8 @@ Installation:
 4. Select **Media item** in Context and **left click**
 5. Select this script in **Default action** in main section
 
+If you want to attach different actions on different mouse modifiers (for example, on left click, left drag or double click), please make copy of this script manually and add it with new unique name to Reaper (via Action list window: New action... -> Load ReaScript...) and put new script instance on new action in Mouse modifiers 
+
 ### Save project with a check of unused media files
 
 This helps to keep track of file garbage in your projects. It shows a special warning if you have unused files in the project when saving.
@@ -225,6 +227,10 @@ Work with script ek_Switch to prev pitch mode for selected items.lua
 This script helps to switch between pitch modes quicker just in one click.
 
 Work with script ek_Switch to next pitch mode for selected items.lua
+
+#### ek_Toggle group for selected items
+
+This script makes group disable, if any selected item is grouped and otherwise if not.
 
 #### ek_Toggle overlaping items vertically option
 

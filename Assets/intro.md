@@ -94,6 +94,8 @@ Installation:
 4. Select **Media item** in Context and **left click**
 5. Select this script in **Default action** in main section
 
+If you want to attach different actions on different mouse modifiers (for example, on left click, left drag or double click), please make copy of this script manually and add it with new unique name to Reaper (via Action list window: New action... -> Load ReaScript...) and put new script instance on new action in Mouse modifiers 
+
 ### Save project with a check of unused media files
 
 This helps to keep track of file garbage in your projects. It shows a special warning if you have unused files in the project when saving.
