@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="967be14c6b6d98e1b7245aa706f6bd59bda6aeed">
+<index version="1" name="Reableton Scripts" commit="0cf80c0498901f4fa3c3ec2f0de046131c0fcf7c">
   <category name="ColorThemes">
     <reapack name="Flat Madness Bright Remix.theme" type="theme" desc="Flat Madness Bright Remix">
       <metadata>
@@ -437,6 +437,14 @@
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f7b45610487af62f672f17e4f517844245244485/Core/ek_Global%20startup%20action.lua</source>
         <source file="ek_Core functions startup.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f7b45610487af62f672f17e4f517844245244485/Core/ek_Core%20functions%20startup.lua</source>
       </version>
+      <version name="1.0.28" author="Ed Kashinsky" time="2023-06-19T13:40:44Z">
+        <changelog><![CDATA[- Added themes combobox for Dark Mode in Global startup action settings
+- Refactoring of Dark Mode Observing
+
+Please restart Repear to take effect]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/0cf80c0498901f4fa3c3ec2f0de046131c0fcf7c/Core/ek_Global%20startup%20action.lua</source>
+        <source file="ek_Core functions startup.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/0cf80c0498901f4fa3c3ec2f0de046131c0fcf7c/Core/ek_Core%20functions%20startup.lua</source>
+      </version>
     </reapack>
     <reapack name="ek_Save project with a check of unused media files.lua" type="script" desc="ek_Save project with a check of unused media files">
       <metadata>
@@ -834,6 +842,11 @@
         <changelog><![CDATA[Small fixes]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f7b45610487af62f672f17e4f517844245244485/Items%20Editing/ek_Smart%20split%20items%20by%20mouse%20cursor.lua</source>
         <source file="../Core/ek_Smart split items by mouse cursor functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f7b45610487af62f672f17e4f517844245244485/Core/ek_Smart%20split%20items%20by%20mouse%20cursor%20functions.lua</source>
+      </version>
+      <version name="1.0.5" author="Ed Kashinsky" time="2023-06-19T13:40:44Z">
+        <changelog><![CDATA[Cut grouped items too with original item]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/0cf80c0498901f4fa3c3ec2f0de046131c0fcf7c/Items%20Editing/ek_Smart%20split%20items%20by%20mouse%20cursor.lua</source>
+        <source file="../Core/ek_Smart split items by mouse cursor functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/0cf80c0498901f4fa3c3ec2f0de046131c0fcf7c/Core/ek_Smart%20split%20items%20by%20mouse%20cursor%20functions.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Switch to next pitch mode for selected items.lua" type="script" desc="ek_Switch to next pitch mode for selected items">
