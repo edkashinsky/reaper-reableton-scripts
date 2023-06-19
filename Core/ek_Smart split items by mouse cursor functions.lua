@@ -45,6 +45,41 @@ function IsPositionOnItem(item, position)
     return position > iPos and position < iPos + iLen
 end
 
+function GetItemIdsByGroupId(groupId)
+    local result = {}
+
+    if groupId == 0 then return result end
+
+    for i = 0, reaper.CountMediaItems(proj) - 1 do
+        local item = reaper.GetMediaItem(proj, i)
+
+        if reaper.GetMediaItemInfo_Value(item, "I_GROUPID") == groupId then
+             local _, id = reaper.GetSetMediaItemInfo_String(item, "GUID", "", false)
+
+            table.insert(result, id)
+        end
+    end
+
+    return result
+end
+
+function SplitItem(item, position)
+    reaper.SplitMediaItem(item, position)
+
+    local groupId = reaper.GetMediaItemInfo_Value(item, "I_GROUPID")
+    if groupId ~= 0 then
+        local itemIds = GetItemIdsByGroupId(groupId)
+
+        for _, guid in pairs(itemIds) do
+            local groupItem = EK_GetMediaItemByGUID(guid)
+
+            if groupItem ~= nil and groupItem ~= item and IsPositionOnItem(groupItem, position) then
+                reaper.SplitMediaItem(groupItem, position)
+            end
+        end
+    end
+end
+
 function HasAnyRazorEdit()
     for i = 0, reaper.CountTracks(proj) - 1 do
 	    local track = reaper.GetTrack(proj, i)

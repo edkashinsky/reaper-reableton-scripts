@@ -32,6 +32,42 @@ local ga_slots_data = {
 	{ btn = ga_highlight_buttons.mfx_slot_5, slot = ga_mfx_slots.mfx_slot_5 },
 }
 
+local function GA_GetThemesList()
+	local result = {}
+	local themeName
+	local i = 0
+	local curThemeNamePath = reaper.GetLastColorThemeFile()
+	local curThemeNamePathPart = split(curThemeNamePath, dir_sep)
+
+	local curThemeName = curThemeNamePathPart[#curThemeNamePathPart]
+	if not curThemeName then curThemeName = "" end
+	local themePath = string.gsub(curThemeNamePath, curThemeName, "")
+
+	while themeName ~= nil or i == 0 do
+		themeName = reaper.EnumerateFiles(themePath, i)
+
+		if themeName ~= nil and string.match(themeName, "[%g]+[.][Rr][Ee][Aa][Pp][Ee][Rr][Tt][Hh][Ee][Mm][Ee]") then
+			local name = ""
+			local nameParts = split(themeName, "[.]")
+
+			for j = 1, #nameParts - 1 do
+				name = name .. nameParts[j]
+				if j < #nameParts - 1 then name = name .. "." end
+			end
+
+			if not in_array(result, name) then
+				table.insert(result, name)
+			end
+		end
+
+		i = i + 1
+	end
+
+	table.sort(result)
+
+	return result
+end
+
 ga_settings = {
 	auto_grid = {
 		key = "ga_auto_grid",
@@ -153,11 +189,12 @@ ga_settings = {
 		order = 13,
 	},
 	dark_mode_theme = {
-		key = "ga_dark_mode_theme",
-		type = gui_input_types.Text,
+		key = "ga_dark_mode_theme_combo",
+		type = gui_input_types.Combo,
 		title = "Name of theme for dark mode",
 		description = "Specify title of theme for dark mode. Note that, this theme should be in the same folder as a regular theme. Name should be with \".ReaperTheme\" extension",
-		default = "",
+		default = 0,
+		select_values = GA_GetThemesList(),
 		order = 14,
 	},
 	dark_mode_time = {
@@ -778,11 +815,19 @@ local function inTimeInterval(stParam, edParam)
 	return time >= startTime and time <= endTime
 end
 
-function GA_ObserveDarkMode(changes, values)
-	local timeInterval = GA_GetSettingValue(ga_settings.dark_mode_time)
-	local themeName = GA_GetSettingValue(ga_settings.dark_mode_theme)
+local observe_dark_mode_last_time = 0
+local observe_dark_mode_cooldown = 60
 
-	if not timeInterval or not themeName then return end
+function GA_ObserveDarkMode(changes, values)
+	local time = reaper.time_precise()
+	if time < observe_dark_mode_last_time + observe_dark_mode_cooldown then
+		return
+	end
+
+	observe_dark_mode_last_time = time
+
+	local timeInterval = GA_GetSettingValue(ga_settings.dark_mode_time)
+	if not timeInterval then return end
 
 	local hours = split(timeInterval, "-")
 	if not hours[1] or not hours[2] then return end
@@ -803,26 +848,40 @@ function GA_ObserveDarkMode(changes, values)
 		min = tonumber(endHours[2])
 	}
 
+	local inInterval = inTimeInterval(startParam, endParam)
+	local themeId = GA_GetSettingValue(ga_settings.dark_mode_theme) + 1
+	local themeList = GA_GetThemesList()
+	local themeName = not isEmpty(themeList[themeId]) and themeList[themeId] or themeList[1]
+
 	local theme_key = ga_key_prefix .. "cached_dark_mode_theme"
 	local curThemeNamePath = reaper.GetLastColorThemeFile()
 	local curThemeNamePathPart = split(curThemeNamePath, dir_sep)
 	local curThemeName = curThemeNamePathPart[#curThemeNamePathPart]
 	if not curThemeName then curThemeName = "" end
-	local inInterval = inTimeInterval(startParam, endParam)
 	local themePath = string.gsub(curThemeNamePath, curThemeName, "")
 
-	-- Log((inInterval and 1 or 0) .. " " .. themeName .. " " .. curThemeName .. " " .. EK_GetExtState(theme_key), ek_log_levels.Notice)
+	Log("[DARK THEME] Observing...")
+	Log({ inInterval and 1 or 0, themeId, themeName, curThemeName, EK_GetExtState(theme_key) })
+
+	if reaper.file_exists(themePath .. themeName .. ".ReaperTheme") then
+		themeName = themeName .. ".ReaperTheme"
+	elseif reaper.file_exists(themePath .. themeName .. ".ReaperThemeZip") then
+		themeName = themeName .. ".ReaperThemeZip"
+	else
+		Log("[DARK THEME] Theme \"" .. themePath .. themeName .. "\" does not exists")
+		return
+	end
 
 	if inInterval and curThemeName ~= themeName then
 		EK_SetExtState(theme_key, curThemeName)
-		reaper.OpenColorThemeFile(themePath .. "/" .. themeName)
-		Log("Turn on dark mode to " .. themeName)
+		reaper.OpenColorThemeFile(themePath .. themeName)
+		Log("[DARK THEME] Turn on dark mode to \"" .. themeName .. "\"")
 	elseif not inInterval and curThemeName == themeName then
 		local curThemeNameCached = EK_GetExtState(theme_key)
 
 		if curThemeNameCached ~= nil and curThemeNameCached ~= curThemeName then
-			reaper.OpenColorThemeFile(themePath .. "/" .. curThemeNameCached)
-			Log("Turn on light mode to " .. curThemeNameCached)
+			reaper.OpenColorThemeFile(themePath .. curThemeNameCached)
+			Log("[DARK THEME] Turn on light mode to \"" .. curThemeNameCached .. "\"")
 		end
 	end
 end

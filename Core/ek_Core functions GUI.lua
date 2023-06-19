@@ -252,57 +252,65 @@ function GUI_DrawSettingsTable(settingsTable)
 	end
 end
 
-function GUI_DrawInput(type, label, value, settings)
-	if not settings then settings = {} end
+function GUI_DrawInput(i_type, i_label, i_value, i_settings)
+	if not i_settings then i_settings = {} end
 
 	local newVal
-	local input_flags = settings.flags and settings.flags or GUI_GetInputFlags()
+	local input_flags = i_settings.flags and i_settings.flags or GUI_GetInputFlags()
 	local needLabel = true
 	local inner_spacing_x = reaper.ImGui_GetStyleVar(ctx, reaper.ImGui_StyleVar_ItemInnerSpacing())
 
 	reaper.ImGui_PushFont(ctx, GUI_GetFont(gui_font_types.Bold))
 	reaper.ImGui_PushStyleColor(ctx, reaper.ImGui_Col_Text(), gui_colors.Input.Text)
 
-	if type == gui_input_types.Text then
-		_, newVal = reaper.ImGui_InputText(ctx, '##' .. label, value, input_flags)
-	elseif type == gui_input_types.Number then
-		if settings.number_precision then
-			_, newVal = reaper.ImGui_InputDouble(ctx, '##' .. label, value, nil, nil, settings.number_precision, input_flags)
+	if i_type == gui_input_types.Text then
+		_, newVal = reaper.ImGui_InputText(ctx, '##' .. i_label, i_value, input_flags)
+	elseif i_type == gui_input_types.Number then
+		if i_settings.number_precision then
+			_, newVal = reaper.ImGui_InputDouble(ctx, '##' .. i_label, i_value, nil, nil, i_settings.number_precision, input_flags)
 		else
-			_, newVal = reaper.ImGui_InputInt(ctx, '##' .. label, value, nil, nil, input_flags)
+			_, newVal = reaper.ImGui_InputInt(ctx, '##' .. i_label, i_value, nil, nil, input_flags)
 		end
-	elseif type == gui_input_types.NumberDrag then
-		if settings.number_min and not settings.number_max then settings.number_max = 0x7fffffff end
+	elseif i_type == gui_input_types.NumberDrag then
+		if i_settings.number_min and not i_settings.number_max then i_settings.number_max = 0x7fffffff end
 
-		if settings.number_precision then
-			_, newVal = reaper.ImGui_DragDouble(ctx, '##' .. label, value, nil, settings.number_min, settings.number_max, settings.number_precision, input_flags)
+		if i_settings.number_precision then
+			_, newVal = reaper.ImGui_DragDouble(ctx, '##' .. i_label, i_value, nil, i_settings.number_min, i_settings.number_max, i_settings.number_precision, input_flags)
 		else
-			_, newVal = reaper.ImGui_DragInt(ctx, '##' .. label, value, nil, settings.number_min, settings.number_max, nil, input_flags)
+			_, newVal = reaper.ImGui_DragInt(ctx, '##' .. i_label, i_value, nil, i_settings.number_min, i_settings.number_max, nil, input_flags)
 		end
-	elseif type == gui_input_types.NumberSlider then
-		if settings.number_precision then
-			_, newVal = reaper.ImGui_SliderDouble(ctx, '##' .. label, value, settings.number_min, settings.number_max, settings.number_precision, input_flags)
+	elseif i_type == gui_input_types.NumberSlider then
+		if i_settings.number_precision then
+			_, newVal = reaper.ImGui_SliderDouble(ctx, '##' .. i_label, i_value, i_settings.number_min, i_settings.number_max, i_settings.number_precision, input_flags)
 		else
-			_, newVal = reaper.ImGui_SliderInt(ctx, '##' .. label, value, settings.number_min, settings.number_max, nil, input_flags)
+			_, newVal = reaper.ImGui_SliderInt(ctx, '##' .. i_label, i_value, i_settings.number_min, i_settings.number_max, nil, input_flags)
 		end
-	elseif type == gui_input_types.Checkbox then
-		_, newVal = reaper.ImGui_Checkbox(ctx, '##' .. label, value)
-	elseif type == gui_input_types.Combo then
-		_, newVal = reaper.ImGui_Combo(ctx, '##' .. label, value, join(settings.select_values, "\0") .. "\0")
-	elseif type == gui_input_types.Color then
-		if value == 0 then value = nil end
+	elseif i_type == gui_input_types.Checkbox then
+		_, newVal = reaper.ImGui_Checkbox(ctx, '##' .. i_label, i_value)
+	elseif i_type == gui_input_types.Combo then
+		local select_values
 
-		_, newVal = reaper.ImGui_ColorPicker3(ctx, '##' .. label, value, GUI_GetColorFlags())
-	elseif type == gui_input_types.ColorView then
-		if value == 0 then value = tonumber(gui_colors.Input.Background >> 8) end
+		if type(i_settings.select_values) == "function" then
+			select_values = i_settings.select_values()
+		else
+			select_values = i_settings.select_values
+		end
 
-		local flags = settings.flags and settings.flags or GUI_GetColorFlags()
+		_, newVal = reaper.ImGui_Combo(ctx, '##' .. i_label, i_value, join(i_settings.select_values, "\0") .. "\0")
+	elseif i_type == gui_input_types.Color then
+		if i_value == 0 then i_value = nil end
+
+		_, newVal = reaper.ImGui_ColorPicker3(ctx, '##' .. i_label, i_value, GUI_GetColorFlags())
+	elseif i_type == gui_input_types.ColorView then
+		if i_value == 0 then i_value = tonumber(gui_colors.Input.Background >> 8) end
+
+		local flags = i_settings.flags and i_settings.flags or GUI_GetColorFlags()
 
 		reaper.ImGui_PushStyleColor(ctx, reaper.ImGui_Col_FrameBg(), gui_colors.White)
-		if settings.selected then
-			newVal = reaper.ImGui_ColorButton(ctx, '##' .. label, value, flags & ~reaper.ImGui_InputTextFlags_AllowTabInput())
+		if i_settings.selected then
+			newVal = reaper.ImGui_ColorButton(ctx, '##' .. i_label, i_value, flags & ~reaper.ImGui_InputTextFlags_AllowTabInput())
 		else
-			newVal = reaper.ImGui_ColorButton(ctx, '##' .. label, value, flags)
+			newVal = reaper.ImGui_ColorButton(ctx, '##' .. i_label, i_value, flags)
 		end
 		reaper.ImGui_PopStyleColor(ctx)
 
@@ -318,11 +326,11 @@ function GUI_DrawInput(type, label, value, settings)
 	if needLabel then
 		reaper.ImGui_SameLine(ctx, nil, inner_spacing_x)
 		reaper.ImGui_PushStyleColor(ctx, reaper.ImGui_Col_Text(),  gui_colors.Input.Label)
-		if settings.label_not_bold ~= true then reaper.ImGui_PushFont(ctx, GUI_GetFont(gui_font_types.Bold)) end
+		if i_settings.label_not_bold ~= true then reaper.ImGui_PushFont(ctx, GUI_GetFont(gui_font_types.Bold)) end
 
-		reaper.ImGui_Text(ctx, label)
+		reaper.ImGui_Text(ctx, i_label)
 
-		if settings.label_not_bold ~= true then reaper.ImGui_PopFont(ctx) end
+		if i_settings.label_not_bold ~= true then reaper.ImGui_PopFont(ctx) end
 		reaper.ImGui_PopStyleColor(ctx)
 	end
 

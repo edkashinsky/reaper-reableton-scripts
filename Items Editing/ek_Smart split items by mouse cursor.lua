@@ -1,11 +1,11 @@
 -- @description ek_Smart split items by mouse cursor
--- @version 1.0.4
+-- @version 1.0.5
 -- @author Ed Kashinsky
 -- @about
 --   Remake of amazing script by AZ and it works a bit different way. You can split by edit cursor if mouse position on it (or in Tolerance range in pixels).
 --   If you move mouse on transport panel and execute script, you will see settings window
 -- @changelog
---   Small fixes
+--   Cut grouped items too with original item
 -- @provides
 --   ../Core/ek_Smart split items by mouse cursor functions.lua
 
@@ -77,12 +77,11 @@ local function processEditCursorCutting()
 			local item = reaper.GetSelectedMediaItem(proj, i)
 
 			if IsPositionOnItem(item, eCurPosition) then
-				reaper.SplitMediaItem(item, eCurPosition)
+				SplitItem(item, eCurPosition)
 				local track = reaper.GetMediaItemTrack(item)
 
 				SelectItemsOnEdge(track, eCurPosition, true)
 				isCutDone = true
-
 				finalCutPosition = eCurPosition
 			end
 		end
@@ -115,7 +114,7 @@ if HasAnyRazorEdit() then
 				local item = reaper.GetTrackMediaItem(track, j)
 
 				if IsMediaItemInRazorEdit(item, rStart, rEnd) then
-					reaper.SplitMediaItem(item, curCut)
+					SplitItem(item, curCut)
 
 					if curCut ~= rEnd then
 						curCut = rEnd
@@ -153,7 +152,7 @@ else
 				local item = reaper.GetTrackMediaItem(track, j)
 
 				if IsPositionOnItem(item, mousePosition) then
-					reaper.SplitMediaItem(item, mousePosition)
+					SplitItem(item, mousePosition)
 					SelectItemsOnEdge(track, mousePosition)
 					isCutDone = true
 					finalCutPosition = mousePosition
