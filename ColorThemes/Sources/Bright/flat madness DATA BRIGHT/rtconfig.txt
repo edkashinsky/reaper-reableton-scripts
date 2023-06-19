@@ -371,7 +371,7 @@ TRACK CONTROL PANEL
 
 
                   set tcp.fxembed.label.font + fontsize [5]
-                  set tcpfont         + fontsize [11 9]
+                  set tcpfont         + fontsize [0 9]
                   set tcp.label.font             [tcpfont{0}]
                   set tcp.trackidx.font          [tcpfont{1}]
                   set tcp.pan.label.font         [tcpfont{1}]
