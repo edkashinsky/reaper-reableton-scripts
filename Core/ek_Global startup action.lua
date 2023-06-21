@@ -1,5 +1,5 @@
 -- @description ek_Global startup action
--- @version 1.0.28
+-- @version 1.0.29
 -- @author Ed Kashinsky
 -- @about
 --   This is startup action brings some ableton-like features in realtime. You can control any option by 'ek_Global startup action settings' script.
@@ -14,9 +14,7 @@
 --      6. Open 'ek_Global startup action settings' for customize options
 --      7. If you want to use auto-grid for MIDI Editor, install script **ek_Auto grid for MIDI Editor** and set it on zoom shortcut.
 -- @changelog
---   - Added themes combobox for Dark Mode in Global startup action settings
---   - Refactoring of Dark Mode Observing
---
+--   - Small fix for Dark Mode
 --   Please restart Repear to take effect
 -- @provides
 --   ek_Core functions startup.lua

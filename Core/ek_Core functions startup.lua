@@ -854,11 +854,13 @@ function GA_ObserveDarkMode(changes, values)
 	local themeName = not isEmpty(themeList[themeId]) and themeList[themeId] or themeList[1]
 
 	local theme_key = ga_key_prefix .. "cached_dark_mode_theme"
+	local is_executed_key = ga_key_prefix .. "is_executed_dark_switch"
 	local curThemeNamePath = reaper.GetLastColorThemeFile()
 	local curThemeNamePathPart = split(curThemeNamePath, dir_sep)
 	local curThemeName = curThemeNamePathPart[#curThemeNamePathPart]
 	if not curThemeName then curThemeName = "" end
 	local themePath = string.gsub(curThemeNamePath, curThemeName, "")
+	local isExecutedToday = EK_GetExtState(is_executed_key)
 
 	Log("[DARK THEME] Observing...")
 	Log({ inInterval and 1 or 0, themeId, themeName, curThemeName, EK_GetExtState(theme_key) })
@@ -876,12 +878,14 @@ function GA_ObserveDarkMode(changes, values)
 		EK_SetExtState(theme_key, curThemeName)
 		reaper.OpenColorThemeFile(themePath .. themeName)
 		Log("[DARK THEME] Turn on dark mode to \"" .. themeName .. "\"")
-	elseif not inInterval and curThemeName == themeName then
+		EK_DeleteExtState(is_executed_key, false)
+	elseif not inInterval and not isExecutedToday and curThemeName == themeName then
 		local curThemeNameCached = EK_GetExtState(theme_key)
 
 		if curThemeNameCached ~= nil and curThemeNameCached ~= curThemeName then
 			reaper.OpenColorThemeFile(themePath .. curThemeNameCached)
 			Log("[DARK THEME] Turn on light mode to \"" .. curThemeNameCached .. "\"")
+			EK_SetExtState(is_executed_key, true, false, true)
 		end
 	end
 end

@@ -123,7 +123,7 @@ function EK_GetExtState(key, default, for_project)
     return value
 end
 
-function EK_SetExtState(key, value, for_project)
+function EK_SetExtState(key, value, for_project, not_persist)
 	if not key then return end
 
 	if type(value) == 'boolean' then value = value and 'true' or 'false' end
@@ -133,7 +133,7 @@ function EK_SetExtState(key, value, for_project)
 	if for_project then
 		reaper.SetProjExtState(proj, key_ext_prefix, key, value)
 	else
-		reaper.SetExtState(key_ext_prefix, key, value, true)
+		reaper.SetExtState(key_ext_prefix, key, value, not not_persist)
 	end
 end
 
