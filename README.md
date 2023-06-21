@@ -169,6 +169,11 @@ Hotkeys:
 - CMD/CTRL: Adjusting by 0.1 semitone (and 1 semitone without hotkey)
 - SHIFT: You can enter absolute value for pitch
 
+#### ek_Delete selected items with color of item under mouse position
+
+![Preview](/Assets/images/delete_selected_items_with_color_of_item_under_mouse_position.gif)
+This script deletes selected items with the same color of item under mouse position
+
 #### ek_Edge silence cropper (no prompt)
 
 ![Preview](/Assets/images/trim_silence_edges_preview.gif)
