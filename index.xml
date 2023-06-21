@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="f59ae7d74fb4a9d2d18ffa59f65f9de0fb546012">
+<index version="1" name="Reableton Scripts" commit="423b2c5316eee36a31e2640dc1c6c7c732870885">
   <category name="ColorThemes">
     <reapack name="Flat Madness Bright Remix.theme" type="theme" desc="Flat Madness Bright Remix">
       <metadata>
@@ -235,6 +235,12 @@
         <source file="ek_Core functions v1.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f7b45610487af62f672f17e4f517844245244485/Core/ek_Core%20functions%20v1.lua</source>
         <source file="ek_Core functions GUI.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f7b45610487af62f672f17e4f517844245244485/Core/ek_Core%20functions%20GUI.lua</source>
       </version>
+      <version name="1.0.31" author="Ed Kashinsky" time="2023-06-21T11:05:42Z">
+        <changelog><![CDATA[- added new functions]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/423b2c5316eee36a31e2640dc1c6c7c732870885/Core/ek_Core%20functions.lua</source>
+        <source file="ek_Core functions v1.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/423b2c5316eee36a31e2640dc1c6c7c732870885/Core/ek_Core%20functions%20v1.lua</source>
+        <source file="ek_Core functions GUI.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/423b2c5316eee36a31e2640dc1c6c7c732870885/Core/ek_Core%20functions%20GUI.lua</source>
+      </version>
     </reapack>
     <reapack name="ek_Global startup action settings.lua" type="script" desc="ek_Global startup action settings">
       <metadata>
@@ -448,6 +454,12 @@
 Please restart Repear to take effect]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/0cf80c0498901f4fa3c3ec2f0de046131c0fcf7c/Core/ek_Global%20startup%20action.lua</source>
         <source file="ek_Core functions startup.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/0cf80c0498901f4fa3c3ec2f0de046131c0fcf7c/Core/ek_Core%20functions%20startup.lua</source>
+      </version>
+      <version name="1.0.29" author="Ed Kashinsky" time="2023-06-21T11:05:42Z">
+        <changelog><![CDATA[- Small fix for Dark Mode
+Please restart Repear to take effect]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/423b2c5316eee36a31e2640dc1c6c7c732870885/Core/ek_Global%20startup%20action.lua</source>
+        <source file="ek_Core functions startup.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/423b2c5316eee36a31e2640dc1c6c7c732870885/Core/ek_Core%20functions%20startup.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Save project with a check of unused media files.lua" type="script" desc="ek_Save project with a check of unused media files">
@@ -794,6 +806,20 @@ Please restart Repear to take effect]]></changelog>
       </metadata>
       <version name="1.0.0" author="Ed Kashinsky" time="2023-04-08T14:27:50Z">
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/afc4fd920760f4095055add9ffeabd7089bffd3c/Items%20Editing/ek_Remove%201%20sec%20gap%20between%20selected%20items.lua</source>
+      </version>
+    </reapack>
+    <reapack name="ek_Select items on track with color of item under mouse position.lua" type="script" desc="ek_Select items on track with color of item under mouse position">
+      <metadata>
+        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \ql \f0 \sa180 \li0 \fi0 This script selects items with the same color and on same track of item under mouse position\par}
+}
+]]></description>
+      </metadata>
+      <version name="1.0.0" author="Ed Kashinsky" time="2023-06-21T11:05:42Z">
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/423b2c5316eee36a31e2640dc1c6c7c732870885/Items%20Editing/ek_Select%20items%20on%20track%20with%20color%20of%20item%20under%20mouse%20position.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Separated actions for Media item in Mouse modifiers.lua" type="script" desc="ek_Separated actions for Media item in Mouse modifiers">
