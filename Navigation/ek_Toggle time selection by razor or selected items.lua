@@ -1,5 +1,5 @@
 -- @description ek_Toggle time selection by razor or selected items
--- @version 1.0.4
+-- @version 1.0.5
 -- @author Ed Kashinsky
 -- @changelog
 --   Added toggle behaviour like in Ableton (thanks @tvm79 for feature request)
@@ -62,8 +62,8 @@ ToggleTransportRepeat(true)
 if rStart and rEnd then
 	reaper.GetSet_LoopTimeRange(true, true, rStart, rEnd, true)
 elseif (reaper.CountSelectedMediaItems(proj) > 0) then
-	-- Time selection: Set time selection to items
-	reaper.Main_OnCommand(40290, 0)
+	-- Loop points: Set loop points to items
+	reaper.Main_OnCommand(41039, 0)
 elseif sEnd == 0 then
 	-- take current position
 	local cursorPosition = reaper.GetCursorPosition()
@@ -75,10 +75,13 @@ end
 local sStartNew, sEndNew = reaper.GetSet_LoopTimeRange(false, true, 0, 0, false)
 
 -- toggle if needs
-if sEnd ~= 0 and (sStart == sStartNew or sEnd == sEndNew) then
+if sEnd ~= 0 and (sStart == sStartNew and sEnd == sEndNew) then
 	ToggleTransportRepeat(false)
-	-- Time selection: Remove (unselect) time selection
-    reaper.Main_OnCommand(40635, 0)
+	-- Loop points: Remove (unselect) loop point selection
+	reaper.Main_OnCommand(40634, 0)
 end
+
+-- Time selection: Copy loop points to time selection
+reaper.Main_OnCommand(40623, 0)
 
 reaper.Undo_EndBlock("Toggle time selection by razor or selected items", -1)
