@@ -1,9 +1,10 @@
--- @description ek_Set time selection to razor edit or items
+-- @description ek_Toggle time selection by razor or selected items
 -- @version 1.0.0
 -- @author Ed Kashinsky
--- @wip
+-- @changelog
+--   Added toggle behaviour like in Ableton (thanks @tvm79 for feature request)
 -- @about
---   If any item is selected, this script moves it to left by grid size. And moves cursor by grid in other case
+--   This script toggle time selection by razor or selected items. Also it toggles transport repeat like in Ableton
 
 function CoreFunctionsLoaded()
 	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
@@ -22,6 +23,15 @@ if not loaded then
 end
 
 reaper.Undo_BeginBlock()
+
+local function ToggleTransportRepeat(enable)
+	local state = reaper.GetToggleCommandState(1068) -- Transport: Toggle repeat
+
+	if (enable == true and state == 0) or (enable ~= true and state == 1) then
+		-- Transport: Toggle repeat
+		reaper.Main_OnCommand(1068, 0)
+	end
+end
 
 local proj = 0
 local rStart, rEnd
@@ -43,6 +53,10 @@ for i = 0, reaper.CountTracks(proj) - 1 do
 	end
 end
 
+local sStart, sEnd = reaper.GetSet_LoopTimeRange(false, true, 0, 0, false)
+
+ToggleTransportRepeat(true)
+
 if rStart and rEnd then
 	reaper.GetSet_LoopTimeRange(true, true, rStart, rEnd, true)
 else
@@ -50,4 +64,15 @@ else
     reaper.Main_OnCommand(40290, 0)
 end
 
-reaper.Undo_EndBlock("Set time selection to razor edit or items", -1)
+local sStartNew, sEndNew = reaper.GetSet_LoopTimeRange(false, true, 0, 0, false)
+
+-- toggle if needs
+if sEnd ~= 0 and (sStart == sStartNew or sEnd == sEndNew) then
+	Log("TOGGLE NEEDS", ek_log_levels.Debug)
+	ToggleTransportRepeat(false)
+	-- Time selection: Remove (unselect) time selection
+    reaper.Main_OnCommand(40635, 0)
+
+end
+
+reaper.Undo_EndBlock("Toggle time selection by razor or selected items", -1)
