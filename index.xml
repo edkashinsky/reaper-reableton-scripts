@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="596c40db0fda88850680653f97666f6ca1251f03">
+<index version="1" name="Reableton Scripts" commit="cb7b6243093160f85a398630b5663c36d2e05790">
   <category name="ColorThemes">
     <reapack name="Flat Madness Bright Remix.theme" type="theme" desc="Flat Madness Bright Remix">
       <metadata>
@@ -1315,6 +1315,10 @@ Please restart Repear to take effect]]></changelog>
       <version name="1.0.4" author="Ed Kashinsky" time="2023-06-29T12:46:34Z">
         <changelog><![CDATA[Added toggle behaviour like in Ableton (thanks @tvm79 for feature request)]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/596c40db0fda88850680653f97666f6ca1251f03/Navigation/ek_Toggle%20time%20selection%20by%20razor%20or%20selected%20items.lua</source>
+      </version>
+      <version name="1.0.5" author="Ed Kashinsky" time="2023-06-29T14:27:52Z">
+        <changelog><![CDATA[Added toggle behaviour like in Ableton (thanks @tvm79 for feature request)]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/cb7b6243093160f85a398630b5663c36d2e05790/Navigation/ek_Toggle%20time%20selection%20by%20razor%20or%20selected%20items.lua</source>
       </version>
     </reapack>
   </category>
