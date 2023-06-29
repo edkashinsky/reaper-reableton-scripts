@@ -1,5 +1,5 @@
 -- @description ek_Toggle time selection by razor or selected items
--- @version 1.0.2
+-- @version 1.0.3
 -- @author Ed Kashinsky
 -- @changelog
 --   Added toggle behaviour like in Ableton (thanks @tvm79 for feature request)
@@ -62,7 +62,7 @@ if rStart and rEnd then
 elseif (reaper.CountSelectedMediaItems(proj) > 0) then
 	-- Time selection: Set time selection to items
 	reaper.Main_OnCommand(40290, 0)
-else
+elseif sEnd == 0 then
 	-- take current position
 	local cursorPosition = reaper.GetCursorPosition()
 	local endPosition = cursorPosition + 10
