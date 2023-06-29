@@ -1,5 +1,5 @@
 -- @description ek_Toggle time selection by razor or selected items
--- @version 1.0.3
+-- @version 1.0.4
 -- @author Ed Kashinsky
 -- @changelog
 --   Added toggle behaviour like in Ableton (thanks @tvm79 for feature request)
@@ -43,12 +43,14 @@ for i = 0, reaper.CountTracks(proj) - 1 do
 	if string.len(razorStr) > 0 then
 		local razor = split(razorStr, " ")
 
-		if not rStart or razor[1] < rStart then
-			rStart = razor[1]
-		end
+		for j = 1, #razor do
+			if razor[j] ~= nil and (j - 1) % 3 == 0 and (not rStart or razor[j] < rStart) then
+				rStart = razor[j]
+			end
 
-		if not rEnd or razor[2] > rEnd then
-			rEnd = razor[2]
+			if razor[j] ~= nil and (j + 1) % 3 == 0 and (not rEnd or razor[j] > rEnd) then
+				rEnd = razor[j]
+			end
 		end
 	end
 end
