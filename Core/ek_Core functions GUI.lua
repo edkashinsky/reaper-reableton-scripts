@@ -64,14 +64,12 @@ end
 
 local function GUI_GetInputFlags()
 	return reaper.ImGui_InputTextFlags_AutoSelectAll() |
-		reaper.ImGui_InputTextFlags_AllowTabInput() |
-		reaper.ImGui_InputTextFlags_AlwaysOverwrite()
+		reaper.ImGui_InputTextFlags_AllowTabInput()
 end
 
 function GUI_GetColorFlags()
 	return reaper.ImGui_InputTextFlags_AutoSelectAll() |
 		reaper.ImGui_InputTextFlags_AllowTabInput() |
-		reaper.ImGui_InputTextFlags_AlwaysOverwrite() |
 		reaper.ImGui_ColorEditFlags_NoOptions() |
 		reaper.ImGui_ColorEditFlags_DisplayHex() |
 		reaper.ImGui_ColorEditFlags_NoSidePreview() |

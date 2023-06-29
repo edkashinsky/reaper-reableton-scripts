@@ -1,12 +1,12 @@
 -- @description ek_Core functions
 -- @author Ed Kashinsky
 -- @about Base functions used by ek-scripts.
--- @version 1.0.31
+-- @version 1.0.32
 -- @provides
 --   ek_Core functions v1.lua
 --   ek_Core functions GUI.lua
 -- @changelog
---    - added new functions
+--    - small GUI fix
 
 function CoreLoadFunctions()
     local info = debug.getinfo(1,'S');
