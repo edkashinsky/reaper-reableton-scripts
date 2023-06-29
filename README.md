@@ -211,6 +211,10 @@ This script pins selected items to closest markers for first selected item. It r
 
 Script removes 1 second gap between selected items. Press CMD/CTRL to remove 0.1 seconds gap.
 
+#### ek_Select items on track with color of item under mouse position
+
+This script selects items with the same color and on same track of item under mouse position
+
 #### ek_Separated actions for Media item in Mouse modifiers
 
 This script gives opportunity to attach 2 different actions on Media item context in Mouse modifiers - when we click on header of media item and part between header and middle of it.
@@ -327,6 +331,10 @@ Switching to prev grid step settings in MIDI Editor depending on adaptive or not
 #### ek_Switch to prev grid step
 
 Switching to prev grid step settings depending on adaptive or not
+
+#### ek_Toggle time selection by razor or selected items
+
+This script toggle time selection by razor or selected items. Also it toggles transport repeat like in Ableton
 
 #### ek_Toggle Docker: FX Browser
 
