@@ -1,10 +1,11 @@
 -- @description ek_Toggle time selection by razor or selected items
--- @version 1.0.5
+-- @version 1.0.6
 -- @author Ed Kashinsky
 -- @changelog
---   Added toggle behaviour like in Ableton (thanks @tvm79 for feature request)
+--   - Improved behaviour when loop points and time selection is unlinked
+--   - Added saving last time selection position
 -- @about
---   This script toggle time selection by razor or selected items. Also it toggles transport repeat like in Ableton
+--   This script toggle time selection by razor or selected items. Actually it works with loop points, so it supports behaviour when loop points and time selection is unlinked. Also it toggles transport repeat like in Ableton
 
 function CoreFunctionsLoaded()
 	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
@@ -55,33 +56,50 @@ for i = 0, reaper.CountTracks(proj) - 1 do
 	end
 end
 
+local sStartTS, sEndTS = reaper.GetSet_LoopTimeRange(false, false, 0, 0, false)
 local sStart, sEnd = reaper.GetSet_LoopTimeRange(false, true, 0, 0, false)
+local needToLinkTS = false
+local availableForToggle = true
+local lastSelection = EK_GetExtState("last_selected_ts", {}, true)
 
-ToggleTransportRepeat(true)
-
-if rStart and rEnd then
+if sEndTS ~= 0 and (sStartTS ~= sStart or sEndTS ~= sEnd) then
+	--- Link loop points and time selection
+	reaper.GetSet_LoopTimeRange(true, true, sStartTS, sEndTS, true)
+elseif rStart and rEnd then
+	--- Razor edit
 	reaper.GetSet_LoopTimeRange(true, true, rStart, rEnd, true)
+
+	needToLinkTS = true
 elseif (reaper.CountSelectedMediaItems(proj) > 0) then
+	--- Selected items
 	-- Loop points: Set loop points to items
 	reaper.Main_OnCommand(41039, 0)
-elseif sEnd == 0 then
-	-- take current position
-	local cursorPosition = reaper.GetCursorPosition()
-	local endPosition = cursorPosition + 10
 
-	reaper.GetSet_LoopTimeRange(true, true, cursorPosition, endPosition, true)
+	needToLinkTS = true
+elseif sEnd == 0 and lastSelection[2] ~= nil then
+	--- Link loop points and time selection
+	reaper.GetSet_LoopTimeRange(true, true, lastSelection[1], lastSelection[2], true)
+elseif sEnd == 0 then
+	availableForToggle = false
 end
 
 local sStartNew, sEndNew = reaper.GetSet_LoopTimeRange(false, true, 0, 0, false)
+EK_SetExtState("last_selected_ts", {sStartNew, sEndNew}, true, true)
 
--- toggle if needs
-if sEnd ~= 0 and (sStart == sStartNew and sEnd == sEndNew) then
-	ToggleTransportRepeat(false)
-	-- Loop points: Remove (unselect) loop point selection
-	reaper.Main_OnCommand(40634, 0)
+--- Disable if needs
+if availableForToggle then
+	ToggleTransportRepeat(true)
+
+	if sEnd ~= 0 and (sStart == sStartNew and sEnd == sEndNew) then
+		ToggleTransportRepeat(false)
+		-- Loop points: Remove (unselect) loop point selection
+		reaper.Main_OnCommand(40634, 0)
+	end
 end
 
--- Time selection: Copy loop points to time selection
-reaper.Main_OnCommand(40623, 0)
+if needToLinkTS then
+	-- Time selection: Copy loop points to time selection
+	reaper.Main_OnCommand(40623, 0)
+end
 
 reaper.Undo_EndBlock("Toggle time selection by razor or selected items", -1)
