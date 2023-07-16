@@ -1,9 +1,8 @@
 -- @description ek_Toggle time selection by razor or selected items
--- @version 1.0.6
+-- @version 1.0.7
 -- @author Ed Kashinsky
 -- @changelog
---   - Improved behaviour when loop points and time selection is unlinked
---   - Added saving last time selection position
+--   Now script follows the option "Options: Move edit cursor to start of time selection, when time selection changes". If it's true, edit cursor moves to start of time selection after script execution
 -- @about
 --   This script toggle time selection by razor or selected items. Actually it works with loop points, so it supports behaviour when loop points and time selection is unlinked. Also it toggles transport repeat like in Ableton
 
@@ -94,6 +93,9 @@ if availableForToggle then
 		ToggleTransportRepeat(false)
 		-- Loop points: Remove (unselect) loop point selection
 		reaper.Main_OnCommand(40634, 0)
+	elseif reaper.GetToggleCommandState(40276) == 1 then
+		-- Options: Move edit cursor to start of time selection, when time selection changes
+		reaper.SetEditCurPos(sStartNew, false, false)
 	end
 end
 
