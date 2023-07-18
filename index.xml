@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="f6e6802fb4595f5de25f6563e4d95a56894b3e56">
+<index version="1" name="Reableton Scripts" commit="103fcf47f888384d3de631c7c4a7a39b2fe7d528">
   <category name="ColorThemes">
     <reapack name="Flat Madness Bright Remix.theme" type="theme" desc="Flat Madness Bright Remix">
       <metadata>
@@ -1112,6 +1112,10 @@ Please restart Repear to take effect]]></changelog>
         <changelog><![CDATA[- Small fixes]]></changelog>
         <source main="midi_editor">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Navigation/ek_Move%20cursor%20or%20selected%20MIDI%20notes%20left%20by%20grid.lua</source>
       </version>
+      <version name="1.0.1" author="Ed Kashinsky" time="2023-07-18T13:40:49Z">
+        <changelog><![CDATA[Bug fix: when item is unselected in arrange view, selected notes in MIDI Editor aren't moved]]></changelog>
+        <source main="midi_editor">https://github.com/edkashinsky/reaper-reableton-scripts/raw/103fcf47f888384d3de631c7c4a7a39b2fe7d528/Navigation/ek_Move%20cursor%20or%20selected%20MIDI%20notes%20left%20by%20grid.lua</source>
+      </version>
     </reapack>
     <reapack name="ek_Move cursor or selected MIDI notes right by grid.lua" type="script" desc="ek_Move cursor or selected MIDI notes right by grid">
       <metadata>
@@ -1126,6 +1130,10 @@ Please restart Repear to take effect]]></changelog>
       <version name="1.0.0" author="Ed Kashinsky" time="2022-05-30T09:42:49Z">
         <changelog><![CDATA[- Small fixes]]></changelog>
         <source main="midi_editor">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Navigation/ek_Move%20cursor%20or%20selected%20MIDI%20notes%20right%20by%20grid.lua</source>
+      </version>
+      <version name="1.0.1" author="Ed Kashinsky" time="2023-07-18T13:40:49Z">
+        <changelog><![CDATA[Bug fix: when item is unselected in arrange view, selected notes in MIDI Editor aren't moved]]></changelog>
+        <source main="midi_editor">https://github.com/edkashinsky/reaper-reableton-scripts/raw/103fcf47f888384d3de631c7c4a7a39b2fe7d528/Navigation/ek_Move%20cursor%20or%20selected%20MIDI%20notes%20right%20by%20grid.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Move cursor to start of item under mouse.lua" type="script" desc="ek_Move cursor to start of item under mouse">
