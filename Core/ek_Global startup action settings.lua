@@ -1,16 +1,6 @@
 -- @description ek_Global startup action settings
--- @version 1.0.7
 -- @author Ed Kashinsky
--- @about
---   Here you can set features for global startup actions
--- @changelog
---   - Easier set up for new users. Now you need just turn option "Enable global action" via "ek_Global startup action settings". No more work with SWS Startup actions
---   - Tracking of working time on a project. Check it out in "ek_Global startup action settings"
---   - Showing script name of "Additional global startup action" in "ek_Global startup action settings"
---   - Global refactoring of adaptive grid. Now there are collected in new script "ek_Adaptive grid" with even context menu. Check it out in ReaPack scripts
---   - Improved work with Dark Mode
---   - Many small bug fixes
---   - GUI refactoring
+-- @noindex
 
 function CoreFunctionsLoaded(script)
 	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
