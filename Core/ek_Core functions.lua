@@ -1,14 +1,14 @@
 -- @description ek_Core functions
 -- @author Ed Kashinsky
 -- @about Base functions used by ek-scripts.
--- @version 1.0.32
+-- @version 1.0.33
 -- @provides
 --   ek_Core functions v1.lua
 --   ek_Core functions GUI.lua
 -- @changelog
 --    - small GUI fix
 
-function CoreLoadFunctions()
+local function CoreLoadFunctions()
     local info = debug.getinfo(1,'S');
     local script_path = info.source:match([[^@?(.*[\/])[^\/]-$]])
 

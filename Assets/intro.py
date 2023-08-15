@@ -53,7 +53,7 @@ class Intro:
                             isWip = False
 
                             for comment in lua.body.body[0].comments:
-                                if comment.s.find("@wip") >= 0:
+                                if comment.s.find("@readme_skip") >= 0:
                                     isWip = True
                                     break
                                 if comment.s.find("@description") >= 0:

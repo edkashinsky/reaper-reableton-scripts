@@ -1,5 +1,5 @@
 -- @description ek_Global startup action
--- @version 1.0.29
+-- @version 1.0.30
 -- @author Ed Kashinsky
 -- @about
 --   This is startup action brings some ableton-like features in realtime. You can control any option by 'ek_Global startup action settings' script.
@@ -7,17 +7,21 @@
 --   For installation:
 --      1. Install 'ek_Core functions.lua'
 --		2. Install this script via **Extensions** -> **ReaPack** -> **Browse Packages**
---      2. Open **Actions** -> **Action List**
---      3. Find "Script: ek_Global startup action" in list and select "Copy selected action command ID" by right mouse click
---      4. Open **Extensions** -> **Startup Actions** -> **Set Global Startup Action...** and paste copied command ID
---      5. Restart Reaper
---      6. Open 'ek_Global startup action settings' for customize options
---      7. If you want to use auto-grid for MIDI Editor, install script **ek_Auto grid for MIDI Editor** and set it on zoom shortcut.
+--	    3. Open script 'ek_Global startup action settings' and turn on "Enable global action"
+--      4. Restart Reaper
+--      5. Open 'ek_Global startup action settings' again for customize options
+--      6. If you want to use auto-grid for MIDI Editor, install script **ek_Auto grid for MIDI Editor** and set it on zoom shortcut.
 -- @changelog
---   - Small fix for Dark Mode
---   Please restart Repear to take effect
+--   - Easier set up for new users. Now you need just turn option "Enable global action" via "ek_Global startup action settings". No more work with SWS Startup actions
+--   - Tracking of working time on a project. Check it out in "ek_Global startup action settings"
+--   - Showing script name of "Additional global startup action" in "ek_Global startup action settings"
+--   - Global refactoring of adaptive grid. Now there are collected in new script "ek_Adaptive grid" with even context menu. Check it out in ReaPack scripts
+--   - Improved work with Dark Mode
+--   - Many small bug fixes
 -- @provides
 --   ek_Core functions startup.lua
+--   ek_Adaptive grid functions.lua
+--   ek_Global startup action settings.lua
 
 function CoreFunctionsLoaded(script)
 	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
@@ -38,6 +42,7 @@ end
 CoreFunctionsLoaded("ek_Core functions startup.lua")
 
 local cached_changes = {
+	project_path = nil,
 	play_state = 0,
 	count_items = 0,
 	count_selected_tracks = 0,
@@ -81,6 +86,7 @@ end
 local function observeGlobalAction()
 	local something_is_changed = false
 	local changes = {
+		project_path = isChanged(reaper.GetProjectPath(), "project_path"),
 		play_state = isChanged(reaper.GetPlayState(), "play_state"),
 		count_items = isChanged(reaper.CountMediaItems(proj), "count_items"),
 		count_selected_tracks = isChanged(reaper.CountSelectedTracks(proj), "count_selected_tracks"),
@@ -99,7 +105,7 @@ local function observeGlobalAction()
 	::end_of_changes::
 
 	if something_is_changed then
-		Log("Something has changed: \n {param}", ek_log_levels.Notice, changes)
+		Log("[GLOBAL] Something has changed: \n {param}", ek_log_levels.Notice, changes)
 
 		-- Highlighting of buttons
 		if GA_GetSettingValue(ga_settings.highlight_buttons) then
@@ -117,6 +123,11 @@ local function observeGlobalAction()
 		-- Project Limit
 		if GA_GetSettingValue(ga_settings.project_limit) then
 			GA_ObserveProjectLimit(changes, cached_changes)
+		end
+
+		-- Toggle docker
+		if changes.project_path or changes.play_state then
+			TD_SyncOpenedWindows()
 		end
 	end
 
@@ -140,8 +151,9 @@ local function observeGlobalAction()
 		GA_ObserveDarkMode(changes, cached_changes)
 	end
 
-	if changes.play_state then
-		TD_SyncOpenedWindows()
+	-- Track working time
+	if GA_GetSettingValue(ga_settings.track_time) then
+		GA_ObserveProjectWorkingTime(something_is_changed, cached_changes)
 	end
 
 	reaper.defer(observeGlobalAction)
@@ -151,7 +163,7 @@ observeGlobalAction()
 
 local command = reaper.NamedCommandLookup(GA_GetSettingValue(ga_settings.additional_action))
 if command ~= 0 then
-	Log("Additional actions has been executed: {param}", ek_log_levels.Notice, command)
+	Log("[GLOBAL] Additional actions has been executed: {param}", ek_log_levels.Notice, command)
 	reaper.Main_OnCommand(command, 0)
 end
 

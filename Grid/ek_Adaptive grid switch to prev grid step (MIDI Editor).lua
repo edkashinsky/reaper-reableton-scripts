@@ -1,12 +1,7 @@
--- @description ek_Toggle monitoring fx plugin on slot 1
--- @version 1.0.1
 -- @author Ed Kashinsky
--- @about
---   ![Preview](/Assets/images/mfx_slots_preview.gif)
---
---   This script monitors a certain fx slot in the monitoring chain and switches the bypass on it. For realtime highlighting install 'Global startup action'
--- @changelog
---   - Added script
+-- @noindex
+-- @about ek_Adaptive grid switch to prev grid step (MIDI Editor)
+-- @readme_skip
 
 function CoreFunctionsLoaded(script)
 	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
@@ -29,14 +24,12 @@ if not CoreFunctionsLoaded("ek_Core functions startup.lua") then
 	return
 end
 
-if not EK_IsGlobalActionEnabled() then
-	reaper.MB('Please execute script "ek_Global startup action settings" and enable "Enable global action" checkbox in the window', '', 0)
-	return
+local MidiEditor = reaper.MIDIEditor_GetActive()
+if not MidiEditor then return end
+
+AG_QuickToggleGrid(false, true)
+
+if AG_IsSyncedWithMidiEditor() then
+	local _, id = AG_GetCurrentGrid(true)
+	AG_SetCurrentGrid(false, id)
 end
-
-reaper.Undo_BeginBlock()
-
-local s_new_value, filename, sectionID, cmdID = reaper.get_action_context()
-GA_ToggleMfxBtnOnSlot(ga_mfx_slots.mfx_slot_1, ga_highlight_buttons.mfx_slot_1, sectionID, cmdID)
-
-reaper.Undo_EndBlock("Toggle monitoring fx plugin on slot 1", -1)

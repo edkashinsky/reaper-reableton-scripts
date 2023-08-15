@@ -230,23 +230,41 @@ end
 
 function GUI_DrawSettingsTable(settingsTable)
 	for i = 1, #settingsTable do
-		local newVal
+		local newVal, curVal
 		local s = settingsTable[i]
-		local curVal = EK_GetExtState(s.key, s.default)
+		local disabled = s.disabled == true or (type(s.disabled) == "function" and s.disabled())
+
+		if type(s.value) == "function" then curVal = s.value()
+		elseif s.value then curVal = s.value
+		else curVal = EK_GetExtState(s.key, s.default) end
+
+		if disabled then reaper.ImGui_BeginDisabled(ctx, true) end
 
 		newVal = GUI_DrawInput(s.type, s.title, curVal, s)
 
 		if curVal ~= newVal then
 			EK_SetExtState(s.key, newVal)
 
-			if type(s.callback) == "function" then s.callback(newVal) end
+			if type(s.on_change) == "function" then s.on_change(newVal) end
 		end
 
 		if s.description then
-			GUI_DrawText(s.description, GUI_GetFont(gui_font_types.Italic))
+			local descr
 
-			if i < #settingsTable then GUI_DrawGap() end
+			if type(s.description) == "function" then
+				descr = s.description(newVal)
+			else
+				descr = s.description
+			end
+
+			if descr ~= nil then
+				GUI_DrawText(descr, GUI_GetFont(gui_font_types.Italic))
+
+				if i < #settingsTable then GUI_DrawGap() end
+			end
 		end
+
+		if disabled then reaper.ImGui_EndDisabled(ctx) end
 	end
 end
 

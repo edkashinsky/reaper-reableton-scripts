@@ -28,10 +28,6 @@ if not CoreFunctionsLoaded("ek_Core functions startup.lua") then
 	return
 end
 
-if not EK_IsGlobalActionEnabled() then
-	reaper.MB('Please add "ek_Global startup action" as Global startup action (Extenstions -> Startup Actions -> Set global startup action) for realtime highlighting of this button', '', 0)
-end
-
 local MidiEditor = reaper.MIDIEditor_GetActive()
 if not MidiEditor then return end
 

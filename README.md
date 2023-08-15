@@ -45,26 +45,44 @@ In two words, script changes pitch, if item has **preserve pitch** option and ch
 
 This function has many useful perks that processed in real-time:
 
-1. **Automatically adjust grid to zoom**. When you change zoom level, grid adjusts to it. Also you can choose grid level like in Ableton (adaptive or fixed)
-2. **Automatically limit zoom to size of project**. Max zoom level limits by the farthest item in the project.
-3. **Automatically focus to MIDI editor when you click on an item**. When you single click on item, you see only one MIDI editor and focus on this particular item.
-4. **Automatically highlight buttons**. This option highlights toolbar buttons in real-time. This applies to scripts: 'ek_Toggle preserve pitch for selected items', 'ek_Toggle trim mode for selected trackes', 'ek_Toggle monitoring fx plugin'
-5. **Toggle monitoring fx slots in exclusive mode**. If you use spectrum correction plugins (such as Realphones, Sonarworks Reference 4, SoundID Reference and etc.) on Monitoring FX when using headphones, you can always see if the plugin is enabled. For using it, add script 'ek_Toggle monitoring FX on slot 1-5' to your toolbar and this button will be highlighted automatically when the plugin on monitoring FX in particular slot is enabled.
-6. **Different sample rate for recording**. This option useful for sound designers, who usually uses 48kHz and forget to increase the sampling rate before recording to get better recording quality.
-7. **Automatic limit timestamp backup files**. Useful, if you want to keep only last limited amount of backup files.
-8. **Dark mode theme**. If you want to turn on special dark theme in night hours, you can use this feature
-9. **Additional global startup action**. If you have your own action on startup, you can specified command Id and it will be executed on startup.
+1. **Track working time on a project**. You can control how much time you spend on every particular project. It works automatically, when checkbox is enabled
+2. **Automatically adjust grid to zoom**. When you change zoom level, grid adjusts to it. Also you can choose grid level like in Ableton (adaptive or fixed). For detailed control recommended to install 'ek_Adaptive grid settings' script
+3. **Automatically limit zoom to size of project**. Max zoom level limits by the farthest item in the project.
+4. **Automatically focus to MIDI editor when you click on an item**. When you single click on item, you see only one MIDI editor and focus on this particular item.
+5. **Automatically highlight buttons**. This option highlights toolbar buttons in real-time. This applies to scripts: 'ek_Toggle preserve pitch for selected items', 'ek_Toggle trim mode for selected trackes', 'ek_Toggle monitoring fx plugin'
+6. **Toggle monitoring fx slots in exclusive mode**. If you use spectrum correction plugins (such as Realphones, Sonarworks Reference 4, SoundID Reference and etc.) on Monitoring FX when using headphones, you can always see if the plugin is enabled. For using it, add script 'ek_Toggle monitoring FX on slot 1-5' to your toolbar and this button will be highlighted automatically when the plugin on monitoring FX in particular slot is enabled.
+7. **Different sample rate for recording**. This option useful for sound designers, who usually uses 48kHz and forget to increase the sampling rate before recording to get better recording quality.
+8. **Automatic limit timestamp backup files**. Useful, if you want to keep only last limited amount of backup files.
+9. **Dark mode theme**. If you want to turn on special dark theme in night hours, you can use this feature
+10. **Additional global startup action**. If you have your own action on startup, you can specified command Id and it will be executed on startup.
 
 For installation:
-1. Install 'ek_Global startup action' script via **Extensions** -> **ReaPack** -> **Browse Packages**
-2. Open **Actions** -> **Action List**
-3. Find this script in list and select "Copy selected action command ID" by right mouse click
-4. Open **Extensions** -> **Startup Actions** -> **Set Global Startup Action...** and paste copied command ID
-5. Restart Reaper
-6. Install and run 'ek_Global startup action settings' and configure the parameters you want to use
-7. If you want to use auto-grid for MIDI Editor, install script **ek_Auto grid for MIDI Editor** and set it on zoom shortcut.
+1. Install '**ek_Global startup action**' script via Extensions -> ReaPack -> Browse Packages
+2. Execute script '**ek_Global startup action settings**' in Action List and enable 'Enable global action' checkbox
+3. Restart Reaper
+4. Check script '**ek_Global startup action settings**' again and enable features you need
+5. If you want to use auto-grid for MIDI Editor, install script **ek_Adaptive grid settings** and set script **ek_Adaptive grid monitor MIDI Editor** on zoom shortcut (Optional)
 
 <img src="/Assets/images/auto_grid_preview.gif" alt="Global Functions preview" width="500"/>
+
+### Adaptive grid
+
+Basically, 'Global startup action' control adaptive grid, but if you want to have advanced control as in Ableton, you can install script 'ek_Adaptive grid settings'. It shows menu with grid settings and some options.
+
+It's package script, here you are available some another scripts:
+- **ek_Adaptive grid switch to next grid step, ek_Adaptive grid switch to prev grid step (and version for MIDI Editor)**. It quick solution to switch grid. Works by Option+1/2 in Ableton
+- **ek_Adaptive grid monitor MIDI Editor**. This script you need to attach on zoom in MIDI Editor to applying addaptive grid
+- **ek_Adaptive grid settings (MIDI Editor)**. This is version menu for MIDI Editor
+
+Options:
+- **Synced with MIDI Editor**. Initially, grid in arrange view and in MIDI Editor is synced. If you change grid, it applies to both. But if you uncheck this option, grid becomes separated.
+- **Set grid width ratio**. By this option, you can tweak threshold of changing grid depending on zoom level. Use number from 0 to infinite as scale ratio
+- **Set grid limits**. By this option, you can set minimum and maximum grids. Works with adaptive grid
+
+<img src="/Assets/images/adaptive_grid_settings.png" alt="Adaptive grid settings preview" width="500" />
+
+For installation:
+1. Install '**ek_Adaptive grid settings**' script via Extensions -> ReaPack -> Browse Packages
 
 ### Edge silence cropper
 
@@ -334,7 +352,7 @@ Switching to prev grid step settings depending on adaptive or not
 
 #### ek_Toggle time selection by razor or selected items
 
-This script toggle time selection by razor or selected items. Also it toggles transport repeat like in Ableton
+This script toggle time selection by razor or selected items. Actually it works with loop points, so it supports behaviour when loop points and time selection is unlinked. Also it toggles transport repeat like in Ableton
 
 #### ek_Toggle Docker: FX Browser
 

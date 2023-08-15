@@ -1,10 +1,16 @@
 -- @description ek_Global startup action settings
--- @version 1.0.6
+-- @version 1.0.7
 -- @author Ed Kashinsky
 -- @about
 --   Here you can set features for global startup actions
 -- @changelog
---   GUI refactoring
+--   - Easier set up for new users. Now you need just turn option "Enable global action" via "ek_Global startup action settings". No more work with SWS Startup actions
+--   - Tracking of working time on a project. Check it out in "ek_Global startup action settings"
+--   - Showing script name of "Additional global startup action" in "ek_Global startup action settings"
+--   - Global refactoring of adaptive grid. Now there are collected in new script "ek_Adaptive grid" with even context menu. Check it out in ReaPack scripts
+--   - Improved work with Dark Mode
+--   - Many small bug fixes
+--   - GUI refactoring
 
 function CoreFunctionsLoaded(script)
 	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
@@ -35,20 +41,17 @@ end
 local ordered_settings = EK_SortTableByKey(ga_settings)
 
 function frame()
-	GUI_DrawText("Settings for 'ek_Global startup action'", GUI_GetFont(gui_font_types.Bold))
+	local isSet = GA_GetSettingValue(ga_settings.enabled)
+	local isEnabled = EK_IsGlobalActionEnabled()
+	local isStartupSet = EK_IsGlobalActionEnabledViaStartup()
 
-	reaper.ImGui_TextWrapped(GUI_GetCtx(), "Status:")
-	reaper.ImGui_SameLine(GUI_GetCtx())
-
-	if EK_IsGlobalActionEnabled() then
-		reaper.ImGui_TextColored(GUI_GetCtx(), gui_colors.Green, "Enabled")
-	else
-		reaper.ImGui_TextColored(GUI_GetCtx(), gui_colors.Red, "Disabled")
-		GUI_DrawGap()
-		GUI_DrawText("Open 'Extensions' => 'Startup actions' => 'Set global startup action' and paste command id of 'ek_Global startup action' and re-open Reaper", GUI_GetFont(gui_font_types.Bold), gui_colors.Red)
+	if (isSet and not isStartupSet and not isEnabled and ga_startup_exists) or (not isSet and isStartupSet and isEnabled) then
+		GUI_DrawText( "Please restart REAPER for changes to take effect...", GUI_GetFont(gui_font_types.Bold), gui_colors.Red)
 	end
 
-	GUI_DrawGap()
+	if not isStartupSet and isEnabled then
+		GUI_DrawText( "It's enabled by manual setting via SWS Startup actions...", GUI_GetFont(gui_font_types.Bold), gui_colors.Green)
+	end
 
 	reaper.ImGui_PushItemWidth(GUI_GetCtx(), 224)
 	GUI_DrawSettingsTable(ordered_settings)

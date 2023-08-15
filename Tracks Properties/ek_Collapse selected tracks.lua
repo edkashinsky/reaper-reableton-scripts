@@ -1,10 +1,10 @@
 -- @description ek_Collapse selected tracks
--- @version 1.0.6
+-- @version 1.0.7
 -- @author Ed Kashinsky
 -- @about
 --   It collapses selected tracks/envelope lanes between 3 states: small, large. Put height values you like to 'Extensions' -> 'Command parameters' -> 'Track Height A' (for small size) and 'Track Height B' (for large size)
 -- @changelog
---   toggle displaying of tracks in MCP
+--   small fixes
 
 reaper.Undo_BeginBlock()
 
@@ -40,19 +40,12 @@ else
 		local height = reaper.GetMediaTrackInfo_Value(track, "I_TCPH")
 		local state = reaper.GetMediaTrackInfo_Value(track, "I_FOLDERCOMPACT")
 		local isFolder = reaper.GetMediaTrackInfo_Value(track, "I_FOLDERDEPTH")
-		local isMaster = reaper.GetMediaTrackInfo_Value(track,  "IP_TRACKNUMBER") == -1
-		local isArmed = reaper.GetMediaTrackInfo_Value(track, "I_RECARM") == 1
 
-		if isMaster then
-			reaper.SetMediaTrackInfo_Value(track, "I_HEIGHTOVERRIDE", 1)
+		if height > minHeight then
+			reaper.SetMediaTrackInfo_Value(track, "I_HEIGHTOVERRIDE", 18)
+			reaper.SetMediaTrackInfo_Value(track, "B_HEIGHTLOCK", 1)
+			reaper.SetMediaTrackInfo_Value(track, "B_HEIGHTLOCK", 0)
 			reaper.TrackList_AdjustWindows(false)
-		elseif height > minHeight then
-			reaper.Main_OnCommand(reaper.NamedCommandLookup("_XENAKIOS_SELTRAXHEIGHTA"), 0) -- Xenakios/SWS: Set selected tracks heights to A
-			--reaper.Main_OnCommand(reaper.NamedCommandLookup("_SWS_MINTRACKS"), 0) -- SWS: Minimize selected track(s)
-
-			if not isArmed and height == reaper.GetMediaTrackInfo_Value(track, "I_TCPH") then
-				reaper.MB('Please set heights for track states.\n\nGo to "Extensions" -> "Command parameters" and set "Track height A" for collapsed state (as usual equals 1) and "Track height B" for extended state (as usual 80 or more)', 'ek_Collapse selected tracks', 0)
-			end
 
 			-- todo учитывать настройку отображения автоматизаций
 			-- reaper.Main_OnCommand(reaper.NamedCommandLookup("_BR_ENV_HIDE_ALL_BUT_ACTIVE_SEL"), 0) -- SWS/BR: Hide all but selected track envelope for selected tracks

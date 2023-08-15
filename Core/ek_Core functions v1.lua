@@ -59,6 +59,7 @@ local ek_debug_level = ek_debug_levels.Off
 
 local key_ext_prefix = "ek_stuff"
 local key_ext_global = "ek_global_action_enabled"
+local key_ext_global_via_startup = "ek_startup_enabled"
 local key_td_windows_stack = "td_windows_stack_1"
 local key_td_last_windows = "td_last_windows_1"
 local key_table_prefix = "__ek_t:"
@@ -68,6 +69,16 @@ if IS_WINDOWS then
 	gfx.ext_retina = tonumber(dpi) >= 512 and 1 or 0
 else
 	gfx.ext_retina = tonumber(dpi) > 512 and 1 or 0
+end
+
+function EK_CoreFunctionsLoaded(script)
+	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
+	local root_path = debug.getinfo(1, 'S').source:sub(2, -5):match("(.*" .. sep .. ")")
+	local script_path = root_path .. ".." .. sep .. "Core" .. sep .. script
+	local file = io.open(script_path, 'r')
+
+	if file then file:close() dofile(script_path) else return nil end
+	return not not _G["EK_HasExtState"]
 end
 
 function Log(msg, level, param)
@@ -85,9 +96,14 @@ function Log(msg, level, param)
 	end
 
 	if msg then
+		reaper.ShowConsoleMsg("[" .. os.date("%H:%M:%S") .. "] ")
 		reaper.ShowConsoleMsg(msg)
 		reaper.ShowConsoleMsg('\n')
 	end
+end
+
+function EK_ConcatPath(...)
+	return table.concat({...}, package.config:sub(1, 1))
 end
 
 function EK_ShowTooltip(fmt)
@@ -146,11 +162,15 @@ function EK_DeleteExtState(key, for_project)
 end
 
 function EK_IsGlobalActionEnabled()
-	return reaper.HasExtState(key_ext_global, key_ext_global)
+	return reaper.HasExtState(key_ext_prefix, key_ext_global)
 end
 
 function EK_SetIsGlobalActionEnabled()
-	reaper.SetExtState(key_ext_global, key_ext_global, 1, false)
+	reaper.SetExtState(key_ext_prefix, key_ext_global, 1, false)
+end
+
+function EK_IsGlobalActionEnabledViaStartup()
+	return reaper.HasExtState(key_ext_prefix, key_ext_global_via_startup)
 end
 
 function EK_GetPitchModesForSelectedItems()
@@ -184,13 +204,11 @@ function EK_GetPitchModes()
 	local mdx = 0
 	local hasMode = true
 	local addPitchMode = function (id, title, is_submode)
-		local value = {}
-
-		value.id = id
-		value.title = title
-		value.is_submode = is_submode
-
-		table.insert(pitchModes, value)
+		table.insert(pitchModes, {
+			id = id,
+			title = title,
+			is_submode = is_submode
+		})
 
 		--[[
 			if is_submode then
@@ -213,7 +231,7 @@ function EK_GetPitchModes()
 				 local hasSubMode = true
 
 				 while hasSubMode do
-				 	local submode  = reaper.EnumPitchShiftSubModes(mdx, sub_mdx)
+				 	local submode = reaper.EnumPitchShiftSubModes(mdx, sub_mdx)
 
 					if submode ~= nil then
 						addPitchMode(mdx * 2 ^ 16 | sub_mdx, submode, true)
@@ -648,8 +666,10 @@ function EK_AskUser(title, fields)
 		if fields[i][2] then values = values .. fields[i][2] end
 
 		if i < #fields then
-			if fields[i][1] then labels = labels .. "," end
-			if fields[i][2] then values = values .. "," end
+			if fields[i][1] then
+				labels = labels .. ","
+				values = values .. ","
+			end
 		end
 	end
 
@@ -715,6 +735,7 @@ function Pickle:value_(v)
 	elseif vtype == "number" then return v
 	elseif vtype == "boolean" then return tostring(v)
 	elseif vtype == "table" then return "{"..self:ref_(v).."}"
+	elseif vtype == "function" then return "{function}"
 	else error("pickle a "..type(v).." is not supported") end
 end
 
@@ -793,7 +814,9 @@ function GetItemHeaderHeight(item)
 	return header_height
 end
 
-function getAbsolutePath(path)
+function GetAbsolutePath(path)
+	if not path then return nil end
+
 	if IS_WINDOWS then
 		if path:sub(2, 2) == ":" .. dir_sep then
 			return path
@@ -810,7 +833,7 @@ function getAbsolutePath(path)
 
 end
 
-function getReaperIniValue(section, key)
+function GetReaperIniValue(section, key)
 	local fileName = reaper.GetResourcePath() .. dir_sep .. "reaper.ini"
 
 	local file = assert(io.open(fileName, 'r'), 'Error loading file : ' .. fileName);
@@ -1057,4 +1080,153 @@ function EK_IsWindowHoveredByClass(class)
     local wnd = reaper.JS_Window_FromPoint(x, y)
 
 	return EK_IsWindow(wnd, ek_js_wnd_types.class, class)
+end
+
+local function EK_ShowMenuRecursive(rows, is_children)
+	if not rows then return "" end
+
+	local menuRows = ""
+
+	for i, row in pairs(rows) do
+		local line
+
+		if row.is_separator then
+			line = ""
+		else
+			line = row.title
+
+			if not isEmpty(row.children) then line = ">" .. line .. "|" .. EK_ShowMenuRecursive(row.children, true) end
+			if row.is_selected then line = "!" .. line end
+			if row.is_disabled then line = "#" .. line end
+		end
+
+		if is_children and rows[i + 1] == nil then line = "<" .. line end
+
+		 -- >1|2|3|<4|>5|6|7|<8
+		menuRows = menuRows .. line
+
+		if not (is_children and rows[i + 1] == nil) then
+			menuRows = menuRows .. "|"
+		end
+	end
+
+	return menuRows
+end
+
+local menu_value_num = 0
+local function EK_GetSelectedMenuItemRecursive(rows, selected_num)
+	for _, row in pairs(rows) do
+		if row.title and not row.is_separator and isEmpty(row.children) then
+			menu_value_num = menu_value_num + 1
+		end
+
+		if menu_value_num == selected_num then
+			return row
+		end
+
+		if not isEmpty(row.children) then
+			local value = EK_GetSelectedMenuItemRecursive(row.children, selected_num)
+			if value then return value end
+		end
+	end
+
+	return nil
+end
+
+---
+--- Apply array with element
+--- {
+---		title = "Title",
+---		is_selected = true,
+---		is_disabled = false,
+---		is_separator = false,
+---		on_select = function()
+---		children = {}
+---}
+
+function EK_ShowMenu(arr, callback)
+    -- On Windows reaper must create new window
+    if IS_WINDOWS then
+        gfx.init("", 0, 0, 0)
+
+        gfx.x = gfx.mouse_x
+        gfx.y = gfx.mouse_y
+    end
+
+	local menuString = EK_ShowMenuRecursive(arr)
+
+    -- >1|2|3|<4|>5|6|7|<8
+    local retval = gfx.showmenu(menuString)
+
+    Log(retval, ek_log_levels.Notice)
+
+    if retval > 0 then
+		menu_value_num = 0
+		local selectedItem = EK_GetSelectedMenuItemRecursive(arr, retval)
+
+		Log("SELECTED: " .. selectedItem.title, ek_log_levels.Notice)
+
+		if type(selectedItem.on_select) == "function" then
+			selectedItem.on_select()
+		else
+			callback(selectedItem.value)
+		end
+
+    end
+
+    if IS_WINDOWS then
+        gfx.quit()
+    end
+end
+
+ -- created is optional: if true, returns creation date, otherwise modified date
+function EK_GetFileDate(path, created)
+	local m, date
+
+	if (reaper.GetOS()):find "Win" then
+		if created then m = "c" else m = "" end
+		local retval = reaper.ExecProcess('cmd.exe /C "dir /T:' .. m .. '  \"' .. path .. '\" "', 0 ):sub(3)
+		date = retval:match("%d-.%d-.%d+%s-%d-:%d+")
+	else
+		if created then m = "B" else m = "m" end
+
+		local f = io.popen('stat -f %S' .. m .. ' "' .. path .. '"')
+
+		date = f:read()
+		f:close()
+	end
+
+	return date
+end
+
+function EK_GetTime(time)
+	local days = math.floor(time / 86400)
+	local hours = math.floor(math.fmod(time, 86400) / 3600)
+	local minutes = math.floor(math.fmod(time,3600) / 60)
+	local seconds = math.floor(math.fmod(time, 60))
+
+	return days, hours, minutes, seconds
+end
+
+function EK_LookupCommandIdByName(script_name)
+	local fileName = reaper.GetResourcePath() .. dir_sep .. "reaper-kb.ini"
+
+	local file = assert(io.open(fileName, 'r'), 'Error loading file : ' .. fileName);
+	local cmdId;
+
+	for line in file:lines() do
+		-- SCR 4 0 RSfdd3ff20bf50576471f96480db7aa16af9b59267 "Custom: ek_Create crossfade on edges of items.lua" "EK Reableton Scripts/Items Editing/ek_Create crossfade on edges of items.lua"
+		local name = string.match(line, "%a+ %d %d [^%s]+ \"([^\"]+)\"")
+
+		if name == script_name then
+			cmdId = string.match(line, "%a+ %d %d \"?([^%s]+)\"? ")
+			goto end_looking
+		end
+	end
+
+	::end_looking::
+
+	file:close();
+
+	return cmdId
 end
