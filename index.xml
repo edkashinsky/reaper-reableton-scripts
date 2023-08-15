@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="103fcf47f888384d3de631c7c4a7a39b2fe7d528">
+<index version="1" name="Reableton Scripts" commit="df5c802b530b607659088d6279264721ef3983b9">
   <category name="ColorThemes">
     <reapack name="Flat Madness Bright Remix.theme" type="theme" desc="Flat Madness Bright Remix">
       <metadata>
@@ -247,6 +247,12 @@
         <source file="ek_Core functions v1.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/459a810379909acb61a50268f71fa5a0ff5dd288/Core/ek_Core%20functions%20v1.lua</source>
         <source file="ek_Core functions GUI.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/459a810379909acb61a50268f71fa5a0ff5dd288/Core/ek_Core%20functions%20GUI.lua</source>
       </version>
+      <version name="1.0.33" author="Ed Kashinsky" time="2023-08-15T11:56:55Z">
+        <changelog><![CDATA[- small GUI fix]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/22f69ceca6c082a1f22dcfaa47fd3b95ab350056/Core/ek_Core%20functions.lua</source>
+        <source file="ek_Core functions v1.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/22f69ceca6c082a1f22dcfaa47fd3b95ab350056/Core/ek_Core%20functions%20v1.lua</source>
+        <source file="ek_Core functions GUI.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/22f69ceca6c082a1f22dcfaa47fd3b95ab350056/Core/ek_Core%20functions%20GUI.lua</source>
+      </version>
     </reapack>
     <reapack name="ek_Focus virtual MIDI keyboard.lua" type="script" desc="ek_Focus virtual MIDI keyboard">
       <metadata>
@@ -260,45 +266,6 @@
       </metadata>
       <version name="1.0.0" author="Ed Kashinsky" time="2023-06-29T11:43:05Z">
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a0a7ae1bb3f5d11cada240984235a79ffc075be4/Core/ek_Focus%20virtual%20MIDI%20keyboard.lua</source>
-      </version>
-    </reapack>
-    <reapack name="ek_Global startup action settings.lua" type="script" desc="ek_Global startup action settings">
-      <metadata>
-        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
-{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
-\widowctrl\hyphauto
-
-{\pard \ql \f0 \sa180 \li0 \fi0 Here you can set features for global startup actions\par}
-}
-]]></description>
-      </metadata>
-      <version name="1.0.0" author="Ed Kashinsky" time="2022-05-30T09:42:49Z">
-        <changelog><![CDATA[- Added window]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Core/ek_Global%20startup%20action%20settings.lua</source>
-      </version>
-      <version name="1.0.1" author="Ed Kashinsky" time="2022-05-30T19:07:28Z">
-        <changelog><![CDATA[- Added window]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2a870df591554f96d000ddb50141517924547cdc/Core/ek_Global%20startup%20action%20settings.lua</source>
-      </version>
-      <version name="1.0.2" author="Ed Kashinsky" time="2022-05-31T08:06:26Z">
-        <changelog><![CDATA[- Added window]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Core/ek_Global%20startup%20action%20settings.lua</source>
-      </version>
-      <version name="1.0.3" author="Ed Kashinsky" time="2022-06-04T22:17:47Z">
-        <changelog><![CDATA[- Added dark mode feature]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/8cd9f1b22e71bdbc18f3f5028f4625580f3ec334/Core/ek_Global%20startup%20action%20settings.lua</source>
-      </version>
-      <version name="1.0.4" author="Ed Kashinsky" time="2022-10-14T23:10:01Z">
-        <changelog><![CDATA[- Added grid modes like in Ableton]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2707144ae82085d46f885a989b5425e843c36b0f/Core/ek_Global%20startup%20action%20settings.lua</source>
-      </version>
-      <version name="1.0.5" author="Ed Kashinsky" time="2023-02-08T10:07:32Z">
-        <changelog><![CDATA[improves GUI and added new functions]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fdabafb2484f70f3d210674a7e0b9af0a45fd002/Core/ek_Global%20startup%20action%20settings.lua</source>
-      </version>
-      <version name="1.0.6" author="Ed Kashinsky" time="2023-04-27T15:50:53Z">
-        <changelog><![CDATA[GUI refactoring]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/4c6fb827800a1bddbf39e534587b240e9bcb35d0/Core/ek_Global%20startup%20action%20settings.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Global startup action.lua" type="script" desc="ek_Global startup action">
@@ -515,6 +482,28 @@ Please restart Repear to take effect]]></changelog>
       <version name="1.0.5" author="Ed Kashinsky" time="2023-04-20T12:49:59Z">
         <changelog><![CDATA[- Improved stability]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/656009a1990d9dea3ec7975b084954a3137e91f8/Core/ek_Save%20project%20with%20a%20check%20of%20unused%20media%20files.lua</source>
+      </version>
+    </reapack>
+  </category>
+  <category name="Grid">
+    <reapack name="ek_Adaptive grid settings.lua" type="script" desc="ek_Adaptive grid settings">
+      <metadata>
+        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \ql \f0 \sa180 \li0 \fi0 Switching to next grid step settings depending on adaptive or not\par}
+}
+]]></description>
+      </metadata>
+      <version name="1.0.0" author="Ed Kashinsky" time="2023-08-15T11:56:55Z">
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/22f69ceca6c082a1f22dcfaa47fd3b95ab350056/Grid/ek_Adaptive%20grid%20settings.lua</source>
+        <source main="main" file="ek_Adaptive grid switch to next grid step.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/22f69ceca6c082a1f22dcfaa47fd3b95ab350056/Grid/ek_Adaptive%20grid%20switch%20to%20next%20grid%20step.lua</source>
+        <source main="main" file="ek_Adaptive grid switch to prev grid step.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/22f69ceca6c082a1f22dcfaa47fd3b95ab350056/Grid/ek_Adaptive%20grid%20switch%20to%20prev%20grid%20step.lua</source>
+        <source main="midi_editor" file="ek_Adaptive grid switch to next grid step (MIDI Editor).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/22f69ceca6c082a1f22dcfaa47fd3b95ab350056/Grid/ek_Adaptive%20grid%20switch%20to%20next%20grid%20step%20(MIDI%20Editor).lua</source>
+        <source main="midi_editor" file="ek_Adaptive grid switch to prev grid step (MIDI Editor).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/22f69ceca6c082a1f22dcfaa47fd3b95ab350056/Grid/ek_Adaptive%20grid%20switch%20to%20prev%20grid%20step%20(MIDI%20Editor).lua</source>
+        <source main="midi_editor" file="ek_Adaptive grid monitor MIDI Editor.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/22f69ceca6c082a1f22dcfaa47fd3b95ab350056/Grid/ek_Adaptive%20grid%20monitor%20MIDI%20Editor.lua</source>
+        <source main="midi_editor" file="ek_Adaptive grid settings (MIDI Editor).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/22f69ceca6c082a1f22dcfaa47fd3b95ab350056/Grid/ek_Adaptive%20grid%20settings%20(MIDI%20Editor).lua</source>
       </version>
     </reapack>
   </category>
@@ -1743,6 +1732,10 @@ Please restart Repear to take effect]]></changelog>
         <changelog><![CDATA[toggle displaying of tracks in MCP]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/aa892581c61e48224fc9005ac609f7d78fe6eb5e/Tracks%20Properties/ek_Collapse%20selected%20tracks.lua</source>
       </version>
+      <version name="1.0.7" author="Ed Kashinsky" time="2023-08-15T11:56:55Z">
+        <changelog><![CDATA[small fixes]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/22f69ceca6c082a1f22dcfaa47fd3b95ab350056/Tracks%20Properties/ek_Collapse%20selected%20tracks.lua</source>
+      </version>
     </reapack>
     <reapack name="ek_Delete selected tracks.lua" type="script" desc="ek_Delete selected tracks">
       <metadata>
@@ -1822,6 +1815,10 @@ Please restart Repear to take effect]]></changelog>
       <version name="1.0.8" author="Ed Kashinsky" time="2023-04-10T19:08:21Z">
         <changelog><![CDATA[toggle displaying of tracks in MCP]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/aa892581c61e48224fc9005ac609f7d78fe6eb5e/Tracks%20Properties/ek_Expand%20selected%20tracks.lua</source>
+      </version>
+      <version name="1.0.9" author="Ed Kashinsky" time="2023-08-15T11:56:55Z">
+        <changelog><![CDATA[small fixes]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/22f69ceca6c082a1f22dcfaa47fd3b95ab350056/Tracks%20Properties/ek_Expand%20selected%20tracks.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Insert new track.lua" type="script" desc="ek_Insert new track">
