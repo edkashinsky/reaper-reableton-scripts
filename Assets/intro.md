@@ -79,7 +79,7 @@ Options:
 - **Set grid width ratio**. By this option, you can tweak threshold of changing grid depending on zoom level. Use number from 0 to infinite as scale ratio
 - **Set grid limits**. By this option, you can set minimum and maximum grids. Works with adaptive grid
 
-<img src="/Assets/images/adaptive_grid_settings.png" alt="Adaptive grid settings preview" width="500" />
+<img src="/Assets/images/adaptive_grid_settings.png" alt="Adaptive grid settings preview" width="200" />
 
 For installation:
 1. Install '**ek_Adaptive grid settings**' script via Extensions -> ReaPack -> Browse Packages
