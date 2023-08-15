@@ -1,5 +1,5 @@
 -- @description ek_Global startup action
--- @version 1.0.30
+-- @version 1.0.31
 -- @author Ed Kashinsky
 -- @about
 --   This is startup action brings some ableton-like features in realtime. You can control any option by 'ek_Global startup action settings' script.
@@ -21,7 +21,7 @@
 -- @provides
 --   ek_Core functions startup.lua
 --   ek_Adaptive grid functions.lua
---   ek_Global startup action settings.lua
+--   ek_Global startup action - settings.lua
 
 function CoreFunctionsLoaded(script)
 	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
