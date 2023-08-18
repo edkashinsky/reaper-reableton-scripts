@@ -45,7 +45,7 @@ local function GA_GetThemesList()
 
 	local curThemeName = curThemeNamePathPart[#curThemeNamePathPart]
 	if not curThemeName then curThemeName = "" end
-	local themePath = string.gsub(curThemeNamePath, "[^/]+[.][Rr][Ee][Aa][Pp][Ee][Rr][Tt][Hh][Ee][Mm][Ee]", "")
+	local themePath = string.gsub(curThemeNamePath, "[^" .. dir_sep .. "]+[.][Rr][Ee][Aa][Pp][Ee][Rr][Tt][Hh][Ee][Mm][Ee]", "")
 
 	while themeName ~= nil or i == 0 do
 		themeName = reaper.EnumerateFiles(themePath, i)
@@ -857,7 +857,7 @@ function GA_ObserveDarkMode(changes, values)
 	local curThemeNamePathPart = split(curThemeNamePath, dir_sep)
 	local curThemeName = curThemeNamePathPart[#curThemeNamePathPart]
 	if not curThemeName then curThemeName = "" end
-	local themePath = string.gsub(curThemeNamePath, "[^/]+[.][Rr][Ee][Aa][Pp][Ee][Rr][Tt][Hh][Ee][Mm][Ee]", "")
+	local themePath = string.gsub(curThemeNamePath, "[^" .. dir_sep .. "]+[.][Rr][Ee][Aa][Pp][Ee][Rr][Tt][Hh][Ee][Mm][Ee]", "")
 	local isExecutedToday = EK_GetExtState(is_executed_key)
 
 	Log("[DARK THEME] Observing...")
