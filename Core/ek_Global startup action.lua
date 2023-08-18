@@ -1,5 +1,5 @@
 -- @description ek_Global startup action
--- @version 1.0.34
+-- @version 1.0.35
 -- @author Ed Kashinsky
 -- @about
 --   This is startup action brings some ableton-like features in realtime. You can control any option by 'ek_Global startup action settings' script.
@@ -12,8 +12,7 @@
 --      5. Open 'ek_Global startup action settings' again for customize options
 --      6. If you want to use auto-grid for MIDI Editor, install script **ek_Auto grid for MIDI Editor** and set it on zoom shortcut.
 -- @changelog
---   Now tracking for MIDI Editor is working automatically. No need need to attach additional tracking scripts to zoom actions in MIDI Editor.
---   Please restart Reaper for taking effect
+--   Bug fix for dark mode theme list parsing
 -- @provides
 --   ek_Core functions startup.lua
 --   ek_Adaptive grid functions.lua
@@ -46,6 +45,9 @@ local cached_changes = {
 	first_selected_track = nil,
 	first_selected_item = nil,
 }
+
+local ga_cooldown = 0.3
+local ga_last_time = reaper.time_precise()
 
 local dfi_time = reaper.time_precise()
 local dfi_time_delay = 0.2
@@ -80,6 +82,14 @@ local function isChanged(value, param)
 end
 
 local function observeGlobalAction()
+	local time_precise = reaper.time_precise()
+	if time_precise < ga_last_time + ga_cooldown then
+		reaper.defer(observeGlobalAction)
+		return
+	end
+
+	ga_last_time = time_precise
+
 	local something_is_changed = false
 	local changes = {
 		project_path = isChanged(reaper.GetProjectPath(), "project_path"),
