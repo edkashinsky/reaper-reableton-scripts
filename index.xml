@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="57afd98c03f5a48c8cee2743596c359925422527">
+<index version="1" name="Reableton Scripts" commit="5fcab19b0723acd3995b805487ae15a8055ca11c">
   <category name="ColorThemes">
     <reapack name="Flat Madness Bright Remix.theme" type="theme" desc="Flat Madness Bright Remix">
       <metadata>
@@ -479,6 +479,14 @@ Please restart Reaper for taking effect]]></changelog>
         <source file="ek_Core functions startup.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/57afd98c03f5a48c8cee2743596c359925422527/Core/ek_Core%20functions%20startup.lua</source>
         <source file="ek_Adaptive grid functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/57afd98c03f5a48c8cee2743596c359925422527/Core/ek_Adaptive%20grid%20functions.lua</source>
         <source main="main" file="ek_Global startup action - settings.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/57afd98c03f5a48c8cee2743596c359925422527/Core/ek_Global%20startup%20action%20-%20settings.lua</source>
+      </version>
+      <version name="1.0.34" author="Ed Kashinsky" time="2023-08-18T13:16:24Z">
+        <changelog><![CDATA[Now tracking for MIDI Editor is working automatically. No need need to attach additional tracking scripts to zoom actions in MIDI Editor.
+Please restart Reaper for taking effect]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/5fcab19b0723acd3995b805487ae15a8055ca11c/Core/ek_Global%20startup%20action.lua</source>
+        <source file="ek_Core functions startup.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/5fcab19b0723acd3995b805487ae15a8055ca11c/Core/ek_Core%20functions%20startup.lua</source>
+        <source file="ek_Adaptive grid functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/5fcab19b0723acd3995b805487ae15a8055ca11c/Core/ek_Adaptive%20grid%20functions.lua</source>
+        <source main="main" file="ek_Global startup action - settings.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/5fcab19b0723acd3995b805487ae15a8055ca11c/Core/ek_Global%20startup%20action%20-%20settings.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Save project with a check of unused media files.lua" type="script" desc="ek_Save project with a check of unused media files">
@@ -1038,41 +1046,6 @@ Please restart Reaper for taking effect]]></changelog>
     </reapack>
   </category>
   <category name="Navigation">
-    <reapack name="ek_Auto grid for MIDI Editor.lua" type="script" desc="ek_Auto grid for MIDI Editor">
-      <metadata>
-        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
-{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
-\widowctrl\hyphauto
-
-{\pard \ql \f0 \sa180 \li0 \fi0 It changes grid depending on zoom level in MIDI Editor. For installation:\par}
-{\pard \ql \f0 \sa0 \li360 \fi-360 1.\tx360\tab Create custom action\par}
-{\pard \ql \f0 \sa0 \li360 \fi-360 2.\tx360\tab Add to it: - View: Zoom horizontally (MIDI relative/mousewheel) - This script (ek_Auto grid for MIDI Editor)\par}
-{\pard \ql \f0 \sa0 \li360 \fi-360 3.\tx360\tab Add to this custom script MultiZoom shortcut hotkey\par}
-{\pard \ql \f0 \sa0 \li360 \fi-360 4.\tx360\tab Have fun!\sa180\par}
-}
-]]></description>
-      </metadata>
-      <version name="1.0.0" author="Ed Kashinsky" time="2022-05-30T09:42:49Z">
-        <changelog><![CDATA[- Small fixes]]></changelog>
-        <source main="midi_editor">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Navigation/ek_Auto%20grid%20for%20MIDI%20Editor.lua</source>
-      </version>
-      <version name="1.0.1" author="Ed Kashinsky" time="2022-10-14T23:10:01Z">
-        <changelog><![CDATA[- Added grid modes like in Ableton]]></changelog>
-        <source main="midi_editor">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2707144ae82085d46f885a989b5425e843c36b0f/Navigation/ek_Auto%20grid%20for%20MIDI%20Editor.lua</source>
-      </version>
-      <version name="1.0.2" author="Ed Kashinsky" time="2022-10-21T08:24:24Z">
-        <changelog><![CDATA[- Small fix]]></changelog>
-        <source main="midi_editor">https://github.com/edkashinsky/reaper-reableton-scripts/raw/287ea53a9c0951c092fcd42f97d20ee2409ecf1e/Navigation/ek_Auto%20grid%20for%20MIDI%20Editor.lua</source>
-      </version>
-      <version name="1.0.3" author="Ed Kashinsky" time="2023-02-08T10:07:32Z">
-        <changelog><![CDATA[Small fix]]></changelog>
-        <source main="midi_editor">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fdabafb2484f70f3d210674a7e0b9af0a45fd002/Navigation/ek_Auto%20grid%20for%20MIDI%20Editor.lua</source>
-      </version>
-      <version name="1.0.4" author="Ed Kashinsky" time="2023-05-30T09:05:02Z">
-        <changelog><![CDATA[Improved stability]]></changelog>
-        <source main="midi_editor">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d081d22e2e2709813743d4d078a56b5a3ec2d547/Navigation/ek_Auto%20grid%20for%20MIDI%20Editor.lua</source>
-      </version>
-    </reapack>
     <reapack name="ek_Move cursor or selected items left by grid.lua" type="script" desc="ek_Move cursor or selected items left by grid">
       <metadata>
         <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
@@ -1253,82 +1226,6 @@ Please restart Reaper for taking effect]]></changelog>
       </metadata>
       <version name="1.0.0" author="Ed Kashinsky" time="2022-05-30T09:42:49Z">
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Navigation/ek_Smart%20horizontal%20zoom%20out.lua</source>
-      </version>
-    </reapack>
-    <reapack name="ek_Switch to next grid step (MIDI Editor).lua" type="script" desc="ek_Switch to next grid step (MIDI Editor)">
-      <metadata>
-        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
-{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
-\widowctrl\hyphauto
-
-{\pard \ql \f0 \sa180 \li0 \fi0 Switching to next grid step settings in MIDI Editor depending on adaptive or not\par}
-}
-]]></description>
-      </metadata>
-      <version name="1.0.0" author="Ed Kashinsky" time="2022-10-21T08:24:24Z">
-        <changelog><![CDATA[- Added script]]></changelog>
-        <source main="midi_editor">https://github.com/edkashinsky/reaper-reableton-scripts/raw/287ea53a9c0951c092fcd42f97d20ee2409ecf1e/Navigation/ek_Switch%20to%20next%20grid%20step%20(MIDI%20Editor).lua</source>
-      </version>
-      <version name="1.0.1" author="Ed Kashinsky" time="2023-02-08T10:07:32Z">
-        <changelog><![CDATA[Small fixes]]></changelog>
-        <source main="midi_editor">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fdabafb2484f70f3d210674a7e0b9af0a45fd002/Navigation/ek_Switch%20to%20next%20grid%20step%20(MIDI%20Editor).lua</source>
-      </version>
-    </reapack>
-    <reapack name="ek_Switch to next grid step.lua" type="script" desc="ek_Switch to next grid step">
-      <metadata>
-        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
-{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
-\widowctrl\hyphauto
-
-{\pard \ql \f0 \sa180 \li0 \fi0 Switching to next grid step settings depending on adaptive or not\par}
-}
-]]></description>
-      </metadata>
-      <version name="1.0.0" author="Ed Kashinsky" time="2022-10-21T08:24:24Z">
-        <changelog><![CDATA[- Added script]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/287ea53a9c0951c092fcd42f97d20ee2409ecf1e/Navigation/ek_Switch%20to%20next%20grid%20step.lua</source>
-      </version>
-      <version name="1.0.1" author="Ed Kashinsky" time="2023-02-08T10:07:32Z">
-        <changelog><![CDATA[Small fixes]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fdabafb2484f70f3d210674a7e0b9af0a45fd002/Navigation/ek_Switch%20to%20next%20grid%20step.lua</source>
-      </version>
-    </reapack>
-    <reapack name="ek_Switch to prev grid step (MIDI Editor).lua" type="script" desc="ek_Switch to prev grid step (MIDI Editor)">
-      <metadata>
-        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
-{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
-\widowctrl\hyphauto
-
-{\pard \ql \f0 \sa180 \li0 \fi0 Switching to prev grid step settings in MIDI Editor depending on adaptive or not\par}
-}
-]]></description>
-      </metadata>
-      <version name="1.0.0" author="Ed Kashinsky" time="2022-10-21T08:24:24Z">
-        <changelog><![CDATA[- Added script]]></changelog>
-        <source main="midi_editor">https://github.com/edkashinsky/reaper-reableton-scripts/raw/287ea53a9c0951c092fcd42f97d20ee2409ecf1e/Navigation/ek_Switch%20to%20prev%20grid%20step%20(MIDI%20Editor).lua</source>
-      </version>
-      <version name="1.0.1" author="Ed Kashinsky" time="2023-02-08T10:07:32Z">
-        <changelog><![CDATA[Small fixes]]></changelog>
-        <source main="midi_editor">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fdabafb2484f70f3d210674a7e0b9af0a45fd002/Navigation/ek_Switch%20to%20prev%20grid%20step%20(MIDI%20Editor).lua</source>
-      </version>
-    </reapack>
-    <reapack name="ek_Switch to prev grid step.lua" type="script" desc="ek_Switch to prev grid step">
-      <metadata>
-        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
-{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
-\widowctrl\hyphauto
-
-{\pard \ql \f0 \sa180 \li0 \fi0 Switching to prev grid step settings depending on adaptive or not\par}
-}
-]]></description>
-      </metadata>
-      <version name="1.0.0" author="Ed Kashinsky" time="2022-10-21T08:24:24Z">
-        <changelog><![CDATA[- Added script]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/287ea53a9c0951c092fcd42f97d20ee2409ecf1e/Navigation/ek_Switch%20to%20prev%20grid%20step.lua</source>
-      </version>
-      <version name="1.0.1" author="Ed Kashinsky" time="2023-02-08T10:07:32Z">
-        <changelog><![CDATA[Small fixes]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fdabafb2484f70f3d210674a7e0b9af0a45fd002/Navigation/ek_Switch%20to%20prev%20grid%20step.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Toggle time selection by razor or selected items.lua" type="script" desc="ek_Toggle time selection by razor or selected items">
