@@ -63,9 +63,10 @@ For installation:
 4. Check script '**ek_Global startup action settings**' again and enable features you need
 5. If you want to use auto-grid for MIDI Editor, install script **ek_Adaptive grid settings** and set script **ek_Adaptive grid monitor MIDI Editor** on zoom shortcut (Optional)
 
-<img src="/Assets/images/auto_grid_preview.gif" alt="Global Functions preview" width="500"/>
 
 ### Adaptive grid
+
+<img src="/Assets/images/auto_grid_preview.gif" alt="Global Functions preview" width="500"/>
 
 Basically, 'Global startup action' control adaptive grid, but if you want to have advanced control as in Ableton, you can install script 'ek_Adaptive grid settings'. It shows menu with grid settings and some options.
 
@@ -271,17 +272,6 @@ This script just toggle "Preserve Pitch" for selected items but it saves state f
 
 For installation just add this script on toolbar and set "ek_Global Startup Functions" as global startup action via SWS.
 
-#### ek_Auto grid for MIDI Editor
-
-It changes grid depending on zoom level in MIDI Editor.
-For installation:
-1. Create custom action
-2. Add to it:
-- View: Zoom horizontally (MIDI relative/mousewheel)
-- This script (ek_Auto grid for MIDI Editor)
-3. Add to this custom script MultiZoom shortcut hotkey
-4. Have fun!
-
 #### ek_Move cursor or selected MIDI notes left by grid
 
 If any note is selected, this script moves it to left by grid size. And move cursor by grid in other case
@@ -333,22 +323,6 @@ This script helps live with Project Limit option is on. It makes zoom available 
 #### ek_Smart horizontal zoom out
 
 This script helps live with Project Limit option is on. It makes zoom available to places behind limits
-
-#### ek_Switch to next grid step (MIDI Editor)
-
-Switching to next grid step settings in MIDI Editor depending on adaptive or not
-
-#### ek_Switch to next grid step
-
-Switching to next grid step settings depending on adaptive or not
-
-#### ek_Switch to prev grid step (MIDI Editor)
-
-Switching to prev grid step settings in MIDI Editor depending on adaptive or not
-
-#### ek_Switch to prev grid step
-
-Switching to prev grid step settings depending on adaptive or not
 
 #### ek_Toggle time selection by razor or selected items
 

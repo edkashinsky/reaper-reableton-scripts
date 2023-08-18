@@ -63,9 +63,10 @@ For installation:
 4. Check script '**ek_Global startup action settings**' again and enable features you need
 5. If you want to use auto-grid for MIDI Editor, install script **ek_Adaptive grid settings** and set script **ek_Adaptive grid monitor MIDI Editor** on zoom shortcut (Optional)
 
-<img src="/Assets/images/auto_grid_preview.gif" alt="Global Functions preview" width="500"/>
 
 ### Adaptive grid
+
+<img src="/Assets/images/auto_grid_preview.gif" alt="Global Functions preview" width="500"/>
 
 Basically, 'Global startup action' control adaptive grid, but if you want to have advanced control as in Ableton, you can install script 'ek_Adaptive grid settings'. It shows menu with grid settings and some options.
 
