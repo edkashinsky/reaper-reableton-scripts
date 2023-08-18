@@ -1,5 +1,5 @@
 -- @description ek_Global startup action
--- @version 1.0.32
+-- @version 1.0.33
 -- @author Ed Kashinsky
 -- @about
 --   This is startup action brings some ableton-like features in realtime. You can control any option by 'ek_Global startup action settings' script.
@@ -12,12 +12,8 @@
 --      5. Open 'ek_Global startup action settings' again for customize options
 --      6. If you want to use auto-grid for MIDI Editor, install script **ek_Auto grid for MIDI Editor** and set it on zoom shortcut.
 -- @changelog
---   - Easier set up for new users. Now you need just turn option "Enable global action" via "ek_Global startup action settings". No more work with SWS Startup actions
---   - Tracking of working time on a project. Check it out in "ek_Global startup action settings"
---   - Showing script name of "Additional global startup action" in "ek_Global startup action settings"
---   - Global refactoring of adaptive grid. Now there are collected in new script "ek_Adaptive grid" with even context menu. Check it out in ReaPack scripts
---   - Improved work with Dark Mode
---   - Many small bug fixes
+--   Now tracking for MIDI Editor is working automatically. No need need to attach additional tracking scripts to zoom actions in MIDI Editor.
+--   Please restart Reaper for taking effect
 -- @provides
 --   ek_Core functions startup.lua
 --   ek_Adaptive grid functions.lua
@@ -133,7 +129,7 @@ local function observeGlobalAction()
 
 	-- Auto grid
 	if GA_GetSettingValue(ga_settings.auto_grid) then
-		GA_ObserveArrangeGrid()
+		GA_ObserveGrid()
 	end
 
 	-- Up Sample Rate

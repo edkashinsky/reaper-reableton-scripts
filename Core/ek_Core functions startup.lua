@@ -618,18 +618,28 @@ function GA_ObserveOverlapingItemsVertically(changes, values)
 end
 
 --
--- Observe Grid in Arrange View
+-- Observe Grid
 --
-function GA_ObserveArrangeGrid()
+function GA_ObserveGrid()
 	if AG_GridIsChanged() then
 		local showGrid = reaper.SNM_GetIntConfigVar("projshowgrid", 0) & 1 > 0
-		if not showGrid then return end
+		if showGrid then
+			local grid = AG_GetCurrentGridValue()
+			reaper.SetProjectGrid(proj, grid)
 
-		local grid = AG_GetCurrentGridValue()
+			Log("[GRID] Observing arrange grid... grid = {param} ", ek_log_levels.Notice, grid)
+		end
+	end
 
-		Log("[GRID] Observing... grid = {param} ", ek_log_levels.Notice, grid)
-
-		reaper.SetProjectGrid(proj, grid)
+	if AG_GridIsChanged(true) then
+		local MidiEditor = reaper.MIDIEditor_GetActive()
+		if MidiEditor then
+			local grid = AG_GetCurrentGridValue(true)
+			if grid ~= nil then
+				reaper.SetMIDIEditorGrid(0, grid)
+				Log("[GRID] Observing midi grid... grid = {param} ", ek_log_levels.Notice, grid)
+			end
+		end
 	end
 end
 

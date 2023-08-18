@@ -9,10 +9,7 @@ local ag_grid_width_ratio_key = "ag_grid_width_scale"
 local ag_grid_is_synced_key = "ag_grid_is_synced_key"
 local ag_grid_limits = "ag_grid_limits"
 
-local cached_zoom_level
-local cached_config_id
-local cached_zoom_level_scale
-local cached_width_ratio
+local cached_zoom = { arrange = {}, midi = {}}
 local defaultGrid = 3 -- Medium
 local defaultScale = 1 -- Straight
 
@@ -315,28 +312,23 @@ function AG_GetCurrentGridValue(for_midi_editor)
     local settings = AG_GetCurrentGrid(for_midi_editor)
     local zoom_level = AG_GetZoomLevel(for_midi_editor)
     local grid
-    local log
+
     if zoom_level == nil then return nil end
 
     if settings.is_adapt then
         grid = AG_GetAdaptiveGridDivision(zoom_level, for_midi_editor)
         grid = grid * settings.ratio
-
-        log = "ADAPT " .. grid .. " " .. settings.ratio
     else
         grid = settings.ratio
-        log = "NOT ADAPT " .. settings.ratio
     end
 
     if settings.has_scale then
         local scale = AG_GetGridScale(for_midi_editor)
         if scale.value then
             grid = grid * scale.value
-            log = log .. " + " .. scale.value
         end
     end
 
-    Log(log, ek_log_levels.Notice)
     return grid
 end
 
@@ -345,12 +337,20 @@ function AG_GridIsChanged(for_midi_editor)
 	local _, id = AG_GetCurrentGrid(for_midi_editor)
 	local scale = AG_GetGridScale(for_midi_editor)
     local ratio = AG_GetWidthRatio()
+    local cached = for_midi_editor and cached_zoom.midi or cached_zoom.arrange
 
-    if zoom_level ~= cached_zoom_level or id ~= cached_config_id or scale ~= cached_zoom_level_scale or ratio ~= cached_width_ratio then
-        cached_zoom_level = zoom_level
-        cached_config_id = id
-        cached_zoom_level_scale = scale
-        cached_width_ratio = ratio
+    if zoom_level ~= cached.zoom_level or id ~= cached.config_id or scale ~= cached.zoom_level_scale or ratio ~= cached.width_ratio then
+        if for_midi_editor then
+            cached_zoom.midi.zoom_level = zoom_level
+            cached_zoom.midi.config_id = id
+            cached_zoom.midi.zoom_level_scale = scale
+            cached_zoom.midi.width_ratio = ratio
+        else
+            cached_zoom.arrange.zoom_level = zoom_level
+            cached_zoom.arrange.config_id = id
+            cached_zoom.arrange.zoom_level_scale = scale
+            cached_zoom.arrange.width_ratio = ratio
+        end
 
         return true
     else

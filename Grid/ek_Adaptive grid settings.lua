@@ -1,15 +1,17 @@
 -- @description ek_Adaptive grid settings
--- @version 1.0.0
+-- @version 1.0.1
 -- @author Ed Kashinsky
 -- @readme_skip
 -- @about
 --   Switching to next grid step settings depending on adaptive or not
+-- @changelog
+--    Now tracking for MIDI Editor is working automatically. No need need to attach additional tracking scripts to zoom actions in MIDI Editor.
+--    Please restart Reaper for taking effect
 -- @provides
 --   [main=main] ek_Adaptive grid switch to next grid step.lua
 --   [main=main] ek_Adaptive grid switch to prev grid step.lua
 --   [main=midi_editor] ek_Adaptive grid switch to next grid step (MIDI Editor).lua
 --   [main=midi_editor] ek_Adaptive grid switch to prev grid step (MIDI Editor).lua
---   [main=midi_editor] ek_Adaptive grid monitor MIDI Editor.lua
 --   [main=midi_editor] ek_Adaptive grid settings (MIDI Editor).lua
 
 function CoreFunctionsLoaded(script)
