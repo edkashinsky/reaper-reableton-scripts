@@ -849,6 +849,8 @@ function GA_ObserveDarkMode(changes, values)
 	local themeList = GA_GetThemesList()
 	local themeName = not isEmpty(themeList[themeId]) and themeList[themeId] or themeList[1]
 
+	if themeName == nil then themeName = "" end
+
 	local theme_key = ga_key_prefix .. "cached_dark_mode_theme"
 	local is_executed_key = ga_key_prefix .. "is_executed_dark_switch"
 	local curThemeNamePath = reaper.GetLastColorThemeFile()
