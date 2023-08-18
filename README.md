@@ -81,6 +81,7 @@ Options:
 
 For installation:
 1. Install '**ek_Adaptive grid settings**' script via Extensions -> ReaPack -> Browse Packages
+2. Attach this script to any toolbar
 
 ### Edge silence cropper
 
