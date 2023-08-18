@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="01b317e65a2e7371e018aced671c27995cfc395b">
+<index version="1" name="Reableton Scripts" commit="57afd98c03f5a48c8cee2743596c359925422527">
   <category name="ColorThemes">
     <reapack name="Flat Madness Bright Remix.theme" type="theme" desc="Flat Madness Bright Remix">
       <metadata>
@@ -472,6 +472,14 @@ Please restart Repear to take effect]]></changelog>
         <source file="ek_Adaptive grid functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/01b317e65a2e7371e018aced671c27995cfc395b/Core/ek_Adaptive%20grid%20functions.lua</source>
         <source main="main" file="ek_Global startup action - settings.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/01b317e65a2e7371e018aced671c27995cfc395b/Core/ek_Global%20startup%20action%20-%20settings.lua</source>
       </version>
+      <version name="1.0.33" author="Ed Kashinsky" time="2023-08-18T12:28:46Z">
+        <changelog><![CDATA[Now tracking for MIDI Editor is working automatically. No need need to attach additional tracking scripts to zoom actions in MIDI Editor.
+Please restart Reaper for taking effect]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/57afd98c03f5a48c8cee2743596c359925422527/Core/ek_Global%20startup%20action.lua</source>
+        <source file="ek_Core functions startup.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/57afd98c03f5a48c8cee2743596c359925422527/Core/ek_Core%20functions%20startup.lua</source>
+        <source file="ek_Adaptive grid functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/57afd98c03f5a48c8cee2743596c359925422527/Core/ek_Adaptive%20grid%20functions.lua</source>
+        <source main="main" file="ek_Global startup action - settings.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/57afd98c03f5a48c8cee2743596c359925422527/Core/ek_Global%20startup%20action%20-%20settings.lua</source>
+      </version>
     </reapack>
     <reapack name="ek_Save project with a check of unused media files.lua" type="script" desc="ek_Save project with a check of unused media files">
       <metadata>
@@ -528,6 +536,16 @@ Please restart Repear to take effect]]></changelog>
         <source main="midi_editor" file="ek_Adaptive grid switch to prev grid step (MIDI Editor).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/22f69ceca6c082a1f22dcfaa47fd3b95ab350056/Grid/ek_Adaptive%20grid%20switch%20to%20prev%20grid%20step%20(MIDI%20Editor).lua</source>
         <source main="midi_editor" file="ek_Adaptive grid monitor MIDI Editor.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/22f69ceca6c082a1f22dcfaa47fd3b95ab350056/Grid/ek_Adaptive%20grid%20monitor%20MIDI%20Editor.lua</source>
         <source main="midi_editor" file="ek_Adaptive grid settings (MIDI Editor).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/22f69ceca6c082a1f22dcfaa47fd3b95ab350056/Grid/ek_Adaptive%20grid%20settings%20(MIDI%20Editor).lua</source>
+      </version>
+      <version name="1.0.1" author="Ed Kashinsky" time="2023-08-18T12:28:46Z">
+        <changelog><![CDATA[Now tracking for MIDI Editor is working automatically. No need need to attach additional tracking scripts to zoom actions in MIDI Editor.
+Please restart Reaper for taking effect]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/57afd98c03f5a48c8cee2743596c359925422527/Grid/ek_Adaptive%20grid%20settings.lua</source>
+        <source main="main" file="ek_Adaptive grid switch to next grid step.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/57afd98c03f5a48c8cee2743596c359925422527/Grid/ek_Adaptive%20grid%20switch%20to%20next%20grid%20step.lua</source>
+        <source main="main" file="ek_Adaptive grid switch to prev grid step.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/57afd98c03f5a48c8cee2743596c359925422527/Grid/ek_Adaptive%20grid%20switch%20to%20prev%20grid%20step.lua</source>
+        <source main="midi_editor" file="ek_Adaptive grid switch to next grid step (MIDI Editor).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/57afd98c03f5a48c8cee2743596c359925422527/Grid/ek_Adaptive%20grid%20switch%20to%20next%20grid%20step%20(MIDI%20Editor).lua</source>
+        <source main="midi_editor" file="ek_Adaptive grid switch to prev grid step (MIDI Editor).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/57afd98c03f5a48c8cee2743596c359925422527/Grid/ek_Adaptive%20grid%20switch%20to%20prev%20grid%20step%20(MIDI%20Editor).lua</source>
+        <source main="midi_editor" file="ek_Adaptive grid settings (MIDI Editor).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/57afd98c03f5a48c8cee2743596c359925422527/Grid/ek_Adaptive%20grid%20settings%20(MIDI%20Editor).lua</source>
       </version>
     </reapack>
   </category>
