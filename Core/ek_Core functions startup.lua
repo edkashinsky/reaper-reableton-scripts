@@ -621,7 +621,11 @@ end
 -- Observe Grid
 --
 function GA_ObserveGrid()
-	if AG_GridIsChanged() then
+	local is_synced = AG_IsSyncedWithMidiEditor()
+	local is_arrange_changed = AG_GridIsChanged()
+	local is_midi_changed = AG_GridIsChanged(true)
+
+	if is_arrange_changed or (is_synced and is_midi_changed) then
 		local showGrid = reaper.SNM_GetIntConfigVar("projshowgrid", 0) & 1 > 0
 		if showGrid then
 			local grid = AG_GetCurrentGridValue()
@@ -631,7 +635,7 @@ function GA_ObserveGrid()
 		end
 	end
 
-	if AG_GridIsChanged(true) then
+	if is_midi_changed or (is_synced and is_arrange_changed) then
 		local MidiEditor = reaper.MIDIEditor_GetActive()
 		if MidiEditor then
 			local grid = AG_GetCurrentGridValue(true)

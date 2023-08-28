@@ -81,11 +81,18 @@ function AG_SetGridScale(for_midi_editor, id, swingamt)
 
 	EK_SetExtState(for_midi_editor and ag_grid_scale_midi_key or ag_grid_scale_key, id)
 
+    -- kostil for not straight
+    if for_midi_editor then
+        reaper.SetMIDIEditorGrid(proj, 1)
+    else
+         reaper.SetProjectGrid(proj, 1)
+    end
+
     AG_UpdateGrid()
 end
 
 function AG_GetWidthRatio()
-    return EK_GetExtState(ag_grid_width_ratio_key, 1)
+    return EK_GetExtState(ag_grid_width_ratio_key, 2)
 end
 
 function AG_SetWidthRatio(value)
@@ -151,86 +158,47 @@ function AG_SetGridLimits(min, max)
 end
 
 function AG_ToggleSyncedWithMidiEditor()
-    EK_SetExtState(ag_grid_is_synced_key, not AG_IsSyncedWithMidiEditor())
-
-    if AG_IsSyncedWithMidiEditor() then
-        local _, id = AG_GetCurrentGrid()
-        AG_SetCurrentGrid(true, id)
-
-        _, id = AG_GetGridScale()
-        AG_SetGridScale(true, id)
-    end
-
+     -- Grid: Use the same grid division in arrange view and MIDI editor
+    reaper.Main_OnCommand(reaper.NamedCommandLookup(42010), 0)
     AG_UpdateGrid()
 end
 
 function AG_IsSyncedWithMidiEditor()
-    return EK_GetExtState(ag_grid_is_synced_key, true)
+    -- Grid: Use the same grid division in arrange view and MIDI editor
+    local isSynced = reaper.GetToggleCommandState(42010)
+
+    return tonumber(isSynced) == 1
 end
 
 local function AG_GetAdaptiveGridDivision(zoom_level, for_midi_editor)
-    local value
-    local ratio = AG_GetWidthRatio()
+    local spacing = 15
     local min, max = AG_GetGridLimits()
+    local start_time, end_time = reaper.GetSet_ArrangeView2(0, false, 0, 0)
+    local _, _, _, start_beat = reaper.TimeMap2_timeToBeats(0, start_time)
+    local _, _, _, end_beat = reaper.TimeMap2_timeToBeats(0, end_time)
 
-	local getRetinaLevel = function(lvl)
-        if gfx.ext_retina ~= 0 then lvl = lvl * 2 end
-		return lvl * ratio
-	end
+    -- Current view width in pixels
+    local arrange_pixels = (end_time - start_time) * zoom_level
+    -- Number of measures that fit into current view
+    local arrange_measures = (end_beat - start_beat) / 4
 
-    local getOrderByZoomLevel = function(level)
-	    local order
+    local measure_length_in_pixels = arrange_pixels / arrange_measures
 
-        if level <= getRetinaLevel(1) then
-            order = -3
-        elseif level < getRetinaLevel(3) then
-            order = -2
-        elseif level < getRetinaLevel(5) then
-            order = -1
-        elseif level < getRetinaLevel(15) then
-            order = 0
-        elseif level < getRetinaLevel(25) then
-            order = 1
-        elseif level < getRetinaLevel(55) then
-            order = 2
-        elseif level < getRetinaLevel(110) then
-            order = 3
-        elseif level < getRetinaLevel(220) then
-            order = 4
-        elseif level < getRetinaLevel(450) then
-            order = 5
-        elseif level < getRetinaLevel(850) then
-            order = 6
-        elseif level < getRetinaLevel(1600) then
-            order = 7
-        elseif level < getRetinaLevel(3500) then
-            order = 8
-        elseif level < getRetinaLevel(6700) then
-            order = 9
-        elseif level < getRetinaLevel(12000) then
-            order = 10
-        elseif level < getRetinaLevel(30000) then
-            order = 11
-        elseif level < getRetinaLevel(45200) then
-            order = 12
-        elseif level < getRetinaLevel(55100) then
-            order = 13
-        elseif level < getRetinaLevel(80000) then
-            order = 14
-        elseif level < getRetinaLevel(110000) then
-            order = 15
-        elseif level < getRetinaLevel(150000) then
-            order = 16
-        else
-            order = 17
-        end
-        return order
-    end
+    -- The maximum grid (divisions) that would be allowed with spacing
+    local max_grid = measure_length_in_pixels / spacing
 
-	local order = getOrderByZoomLevel(zoom_level)
+     -- Get current grid
+    local _, grid_div, _, _ = reaper.GetSetProjectGrid(0, false)
+    local grid = 1 / grid_div
 
-    if order < 0 then value = (2 * math.abs(order))
-    else value = (1 / (2 ^ order)) end
+    local factor = AG_GetWidthRatio()
+    factor = tonumber(factor) or 2
+
+    -- How often can current grid fit into max_grid?
+    local exp = math.log(max_grid / grid, factor)
+    local new_grid = grid * factor ^ math.floor(exp)
+
+    local value = 1 / new_grid
 
     if min ~= nil and value <= min then value = min
     elseif max ~= nil and value >= max then value = max end
@@ -240,15 +208,13 @@ end
 
 local function AG_GetHZoomLevelForMidiEditor()
 	local MidiEditor = reaper.MIDIEditor_GetActive()
-
 	if not MidiEditor then return end
 
-	local midiview = reaper.JS_Window_FindChildByID(MidiEditor, 0x3E9)
-  	local _, width = reaper.JS_Window_GetClientSize(midiview)
  	local take = reaper.MIDIEditor_GetTake(MidiEditor)
+	if not take or not reaper.ValidatePtr(take, "MediaItem_Take*") then return end
 
-	if not reaper.ValidatePtr(take, "MediaTake*") then return end
-
+    local midiview = reaper.JS_Window_FindChildByID(MidiEditor, 0x3E9)
+  	local _, width = reaper.JS_Window_GetClientSize(midiview)
   	local guid = reaper.BR_GetMediaItemTakeGUID(take)
   	local item =  reaper.GetMediaItemTake_Item(take)
   	local _, chunk = reaper.GetItemStateChunk(item, "", false)
@@ -285,12 +251,12 @@ local function AG_GetHZoomLevelForMidiEditor()
     	end
   	end
 
-  	local start_time, end_time, _ = reaper.MIDI_GetProjTimeFromPPQPos( take, leftmost_tick)
+  	local start_time, end_time, _ = reaper.MIDI_GetProjTimeFromPPQPos(take, leftmost_tick)
 
   	if timebase == 0 or timebase == 4 then
-    	end_time = reaper.MIDI_GetProjTimeFromPPQPos( take, leftmost_tick + (width-1)/hzoom)
+    	end_time = reaper.MIDI_GetProjTimeFromPPQPos(take, leftmost_tick + (width - 1) / hzoom)
   	else
-   		end_time = start_time + (width-1)/hzoom
+   		end_time = start_time + (width - 1) / hzoom
   	end
 
   	return (width) / (end_time - start_time)
@@ -302,7 +268,7 @@ local function AG_GetZoomLevel(for_midi_editor)
     if type(zoom_level) == "string" then
         return tonumber(zoom_level)
     elseif type(zoom_level) == "number" then
-        return math.floor(zoom_level)
+        return zoom_level
     else
         return nil
     end
@@ -332,21 +298,51 @@ function AG_GetCurrentGridValue(for_midi_editor)
     return grid
 end
 
+local function AG_IsMidiEditorZoomLevelChanged()
+    local MidiEditor = reaper.MIDIEditor_GetActive()
+    if not MidiEditor then return false end
+
+    local take = reaper.MIDIEditor_GetTake(MidiEditor)
+    if not take or not reaper.ValidatePtr(take, "MediaItem_Take*") then return false end
+
+    local item = reaper.GetMediaItemTake_Item(take)
+    local _, chunk = reaper.GetItemStateChunk(item, "", false)
+
+    if chunk ~= cached_zoom.midi.chunk then
+        cached_zoom.midi.chunk = chunk
+        return true
+    else
+        return false
+    end
+end
+
 function AG_GridIsChanged(for_midi_editor)
-    local zoom_level = AG_GetZoomLevel(for_midi_editor)
+    local cached = for_midi_editor and cached_zoom.midi or cached_zoom.arrange
+    local is_zoom_changed = false
+
+    if for_midi_editor then
+        is_zoom_changed = AG_IsMidiEditorZoomLevelChanged()
+    else
+        local zoom_level = AG_GetZoomLevel(for_midi_editor)
+        is_zoom_changed = zoom_level ~= cached.zoom_level
+
+        cached_zoom.arrange.zoom_level = zoom_level
+    end
+
+    if is_zoom_changed then
+        return true
+    end
+
 	local _, id = AG_GetCurrentGrid(for_midi_editor)
 	local scale = AG_GetGridScale(for_midi_editor)
     local ratio = AG_GetWidthRatio()
-    local cached = for_midi_editor and cached_zoom.midi or cached_zoom.arrange
 
-    if zoom_level ~= cached.zoom_level or id ~= cached.config_id or scale ~= cached.zoom_level_scale or ratio ~= cached.width_ratio then
+    if id ~= cached.config_id or scale ~= cached.zoom_level_scale or ratio ~= cached.width_ratio then
         if for_midi_editor then
-            cached_zoom.midi.zoom_level = zoom_level
             cached_zoom.midi.config_id = id
             cached_zoom.midi.zoom_level_scale = scale
             cached_zoom.midi.width_ratio = ratio
         else
-            cached_zoom.arrange.zoom_level = zoom_level
             cached_zoom.arrange.config_id = id
             cached_zoom.arrange.zoom_level_scale = scale
             cached_zoom.arrange.width_ratio = ratio
