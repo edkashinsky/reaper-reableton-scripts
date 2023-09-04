@@ -13,6 +13,7 @@ local font_size = 12
 local default_enter_action = nil
 local cached_fonts = nil
 local _, imgui_version_num, _ = reaper.ImGui_GetVersion()
+local cached_values = {}
 
 gui_font_types = {
 	None = 1,
@@ -44,14 +45,15 @@ gui_buttons_types = {
 }
 
 gui_input_types = {
-	Text = 1,
-	Number = 2,
-	NumberDrag = 3,
-	NumberSlider = 4,
-	Checkbox = 5,
-	Combo = 6,
-	Color = 7,
-	ColorView = 8
+	Label = 1,
+	Text = 2,
+	Number = 3,
+	NumberDrag = 4,
+	NumberSlider = 5,
+	Checkbox = 6,
+	Combo = 7,
+	Color = 8,
+	ColorView = 9
 }
 
 GUI_OnWindowClose = nil
@@ -232,39 +234,56 @@ function GUI_DrawSettingsTable(settingsTable)
 	for i = 1, #settingsTable do
 		local newVal, curVal
 		local s = settingsTable[i]
-		local disabled = s.disabled == true or (type(s.disabled) == "function" and s.disabled())
+		local hidden = s.hidden == true or (type(s.hidden) == "function" and s.hidden())
 
-		if type(s.value) == "function" then curVal = s.value()
-		elseif s.value then curVal = s.value
-		else curVal = EK_GetExtState(s.key, s.default) end
+		if not hidden then
+			local disabled = s.disabled == true or (type(s.disabled) == "function" and s.disabled())
 
-		if disabled then reaper.ImGui_BeginDisabled(ctx, true) end
-
-		newVal = GUI_DrawInput(s.type, s.title, curVal, s)
-
-		if curVal ~= newVal then
-			EK_SetExtState(s.key, newVal)
-
-			if type(s.on_change) == "function" then s.on_change(newVal) end
-		end
-
-		if s.description then
-			local descr
-
-			if type(s.description) == "function" then
-				descr = s.description(newVal)
+			if s.type == gui_input_types.Label then
+				reaper.ImGui_TextWrapped(ctx, s.title)
 			else
-				descr = s.description
+				if type(s.value) == "function" then curVal = s.value()
+				elseif s.value then curVal = s.value
+				elseif cached_values[s.key] ~= nil then curVal = cached_values[s.key]
+				else
+					curVal = EK_GetExtState(s.key, s.default)
+					cached_values[s.key] = curVal
+				end
+
+				if disabled then reaper.ImGui_BeginDisabled(ctx, true) end
+
+				newVal = GUI_DrawInput(s.type, s.title, curVal, s)
+
+				if curVal ~= newVal then
+					if type(s.value) ~= "function" then
+						cached_values[s.key] = newVal
+						EK_SetExtState(s.key, newVal)
+					end
+
+					if type(s.on_change) == "function" then
+						s.on_change(newVal)
+					end
+				end
 			end
 
-			if descr ~= nil then
-				GUI_DrawText(descr, GUI_GetFont(gui_font_types.Italic))
+			if s.description then
+				local descr
 
-				if i < #settingsTable then GUI_DrawGap() end
+				if type(s.description) == "function" then
+					descr = s.description(newVal)
+				else
+					descr = s.description
+				end
+
+				if descr ~= nil then
+					GUI_DrawText(descr, GUI_GetFont(gui_font_types.Italic))
+
+					if i < #settingsTable then GUI_DrawGap() end
+				end
 			end
+
+			if disabled then reaper.ImGui_EndDisabled(ctx) end
 		end
-
-		if disabled then reaper.ImGui_EndDisabled(ctx) end
 	end
 end
 
@@ -291,9 +310,9 @@ function GUI_DrawInput(i_type, i_label, i_value, i_settings)
 		if i_settings.number_min and not i_settings.number_max then i_settings.number_max = 0x7fffffff end
 
 		if i_settings.number_precision then
-			_, newVal = reaper.ImGui_DragDouble(ctx, '##' .. i_label, i_value, nil, i_settings.number_min, i_settings.number_max, i_settings.number_precision, input_flags)
+			_, newVal = reaper.ImGui_DragDouble(ctx, '##' .. i_label, i_value, i_settings.number_step, i_settings.number_min, i_settings.number_max, i_settings.number_precision, input_flags)
 		else
-			_, newVal = reaper.ImGui_DragInt(ctx, '##' .. i_label, i_value, nil, i_settings.number_min, i_settings.number_max, nil, input_flags)
+			_, newVal = reaper.ImGui_DragInt(ctx, '##' .. i_label, i_value, i_settings.number_step, i_settings.number_min, i_settings.number_max, nil, input_flags)
 		end
 	elseif i_type == gui_input_types.NumberSlider then
 		if i_settings.number_precision then

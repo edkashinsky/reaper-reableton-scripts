@@ -31,19 +31,18 @@ reaper.Undo_BeginBlock()
 local countSelectedItems = reaper.CountSelectedMediaItems(proj)
 
 if countSelectedItems > 0 then
-    local leadingThreshold = getTsParamValue(tsParams.leading.threshold)
-    local leadingPad = getTsParamValue(tsParams.leading.pad)
-    local leadingFade = getTsParamValue(tsParams.leading.fade)
-    local trailingThreshold = getTsParamValue(tsParams.trailing.threshold)
-    local trailingPad = getTsParamValue(tsParams.trailing.pad)
-    local trailingFade = getTsParamValue(tsParams.trailing.fade)
+    local leadingThreshold, trailingThreshold = GetThresholdsValue()
+    local leadingPad = p.leading.pad.value
+    local leadingFade = p.leading.fade.value
+    local trailingPad = p.trailing.pad.value
+    local trailingFade = p.trailing.fade.value
 
     Log("== Leading edge ==")
-    Log("Threshold: " .. leadingThreshold .. "db")
+    Log("Threshold: " .. leadingThreshold .. "db/%")
     Log("Pad: " .. leadingPad .. "s")
     Log("Fade: " .. leadingFade .. "s")
     Log("== Trailing edge ==")
-    Log("Threshold: " .. trailingThreshold .. "db")
+    Log("Threshold: " .. trailingThreshold .. "db/%")
     Log("Pad: " .. trailingPad .. "s")
     Log("Fade: " .. trailingFade .. "s")
 
@@ -53,11 +52,11 @@ if countSelectedItems > 0 then
         local take = reaper.GetActiveTake(item)
 
         if take ~= nil and not reaper.TakeIsMIDI(take) then
-            local startTime = getStartPositionLouderThenThreshold(take, leadingThreshold)
-            if startTime > 0 then trimLeadingPosition(take, startTime) end
+            local startTime = GetStartPositionLouderThenThreshold(take, leadingThreshold)
+            if startTime > 0 then CropLeadingPosition(take, startTime) end
 
-            local endTime = getEndPositionLouderThenThreshold(take, trailingThreshold)
-            if endTime > 0 then trimTrailingPosition(take, endTime) end
+            local endTime = GetEndPositionLouderThenThreshold(take, trailingThreshold)
+            if endTime > 0 then CropTrailingPosition(take, endTime) end
         end
     end
 
