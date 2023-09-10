@@ -191,12 +191,6 @@ Hotkeys:
 ![Preview](/Assets/images/delete_selected_items_with_color_of_item_under_mouse_position.gif)
 This script deletes selected items with the same color of item under mouse position
 
-#### ek_Edge silence cropper (no prompt)
-
-![Preview](/Assets/images/trim_silence_edges_preview.gif)
-
-It removes silence at the start at the end of item without prompt. Using together with "ek_Trim silence at the edges of selected items"
-
 #### ek_Edge silence cropper
 
 This script helps to remove silence at the start and at the end of selected items by individual thresholds, pads and fades.
