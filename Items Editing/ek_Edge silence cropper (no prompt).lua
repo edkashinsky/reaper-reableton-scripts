@@ -1,12 +1,7 @@
 -- @description ek_Edge silence cropper (no prompt)
--- @version 1.0.2
 -- @author Ed Kashinsky
--- @about
---   ![Preview](/Assets/images/trim_silence_edges_preview.gif)
---
---   It removes silence at the start at the end of item without prompt. Using together with "ek_Trim silence at the edges of selected items"
--- @changelog
---   - Fixed bug with MIDI items
+-- @noindex
+-- @readme_skip
 
 function CoreFunctionsLoaded(script)
 	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
@@ -31,7 +26,7 @@ reaper.Undo_BeginBlock()
 local countSelectedItems = reaper.CountSelectedMediaItems(proj)
 
 if countSelectedItems > 0 then
-    local leadingThreshold, trailingThreshold = GetThresholdsValue()
+    local leadingThreshold, trailingThreshold = GetThresholdsValues()
     local leadingPad = p.leading.pad.value
     local leadingFade = p.leading.fade.value
     local trailingPad = p.trailing.pad.value

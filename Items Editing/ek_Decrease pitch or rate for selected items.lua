@@ -1,5 +1,5 @@
 -- @description ek_Decrease pitch or rate for selected items
--- @version 1.0.4
+-- @version 1.0.5
 -- @author Ed Kashinsky
 -- @about
 --   This script decreases pitch or rate of selected items depending on "Preserve Pitch" option.
@@ -46,17 +46,17 @@ end
 
 -- Shift is pressed (enter value)
 if reaper.JS_Mouse_GetState(8) > 0 then
-	local result = EK_AskUser("Pitch Adjustment", {
+	EK_AskUser("Pitch Adjustment", {
 		{"Enter value for pitch (in semitones):", "" }
-	})
+	}, function(result)
+		if not result or not result[1] then return end
 
-	if not result or not result[1] then return end
+		delta = tonumber(result[1])
+		if not delta then return end
 
-	delta = tonumber(result[1])
-	if not delta then return end
-
-	delta = -math.abs(delta)
-	isDelta = false
+		delta = -math.abs(delta)
+		isDelta = false
+	end)
 end
 
 for i = 0, count_selected_items - 1 do

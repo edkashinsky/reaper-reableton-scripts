@@ -235,7 +235,7 @@ gui_config = {
 		title = "Crop mode",
 		select_values = p.crop_mode.select_values,
 		default = p.crop_mode.default,
-        on_change = function(val, s)
+        on_change = function(val)
             p.crop_mode.value = val
             MakePresetModified()
         end
@@ -394,7 +394,7 @@ for i, block in pairs(p) do
     end
 end
 
-function GetThresholdsValue()
+function GetThresholdsValues()
     if p.crop_mode.value == 0 then
         return p.leading.threshold.value,
             p.trailing.threshold.value
@@ -555,7 +555,7 @@ local function GetRelativeThresholdsByTake(take, rel_threshold)
 
     local rel_db = 40 * log10(abs_percent * (rel_threshold / 100))
 
-    -- Log(maxPeak .. " " .. round(abs_percent * 100) .. " " .. " " .. rel_threshold .. " " .. rel_db, ek_log_levels.Debug)
+    -- Log(reaper.GetTakeName(take) .. ": VAL=" .. rel_db .. " MAX=" .. maxPeak, ek_log_levels.Debug)
 
     return rel_db
 end
@@ -644,16 +644,6 @@ function CropTrailingPosition(take, endOffset)
     
     reaper.SetMediaItemInfo_Value(item, "D_LENGTH", endOffset)
     reaper.SetMediaItemInfo_Value(item, "D_FADEOUTLEN", p.trailing.fade.value)
-end
-
-function GetThresholdsValues()
-    local mode = p.leading.mode.value
-
-    if mode == 0 then
-        return p.leading.threshold.value, p.trailing.threshold.value
-    else
-        return p.leading.threshold_relative.value, p.trailing.threshold_relative.value
-    end
 end
 
 local function GoThroughMidiTakeByNotes(take, processCallback, isReverse)

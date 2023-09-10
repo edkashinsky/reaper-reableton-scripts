@@ -657,7 +657,7 @@ function changePitchForTake(take, value, preservePitch, isDelta)
 	reaper.UpdateArrange()
 end
 
-function EK_AskUser(title, fields)
+function EK_AskUser(title, fields, callback)
 	local labels = ""
 	local values = ""
 
@@ -675,11 +675,7 @@ function EK_AskUser(title, fields)
 
 	local is_done, result = reaper.GetUserInputs(title, #fields, labels, values)
 
-	if is_done then
-		return split(result, ",")
-	else
-		return
-	end
+	callback(is_done and split(result, ",") or nil)
 end
 
 local function getColor(color)

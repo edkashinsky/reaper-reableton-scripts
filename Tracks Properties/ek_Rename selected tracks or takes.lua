@@ -1,5 +1,5 @@
 -- @description ek_Rename selected tracks or takes
--- @version 1.0.2
+-- @version 1.0.3
 -- @author Ed Kashinsky
 -- @about
 --   Renaming stuff for takes, items, markers, regions and tracks depending on focus
@@ -37,17 +37,17 @@ local s_isrgn, s_pos, s_rgnend, s_name, s_markrgnindexnumber
 local _, num_markers, num_regions = reaper.CountProjectMarkers(proj)
 
 local function renameProjectMarker(markrgnindexnumber, isrgn, pos, rgnend, name)
-	local result = EK_AskUser((isrgn and "Rename region" or "Rename marker") .. " #" .. markrgnindexnumber, {
+	EK_AskUser((isrgn and "Rename region" or "Rename marker") .. " #" .. markrgnindexnumber, {
 		{"Enter title", name }
-	})
+	}, function(result)
+		if not result then return end
 
-	if not result then return end
+		local new_name = " "
 
-	local new_name = " "
+		if result[1] then new_name = result[1] end
 
-	if result[1] then new_name = result[1] end
-
-	reaper.SetProjectMarker(markrgnindexnumber, isrgn, pos, rgnend, new_name)
+		reaper.SetProjectMarker(markrgnindexnumber, isrgn, pos, rgnend, new_name)
+	end)
 end
 
 for i = 0, num_markers + num_regions - 1 do

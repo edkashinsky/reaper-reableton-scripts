@@ -1,5 +1,5 @@
 -- @description ek_Toggle monitoring fx plugin on custom slot
--- @version 1.0.1
+-- @version 1.0.2
 -- @author Ed Kashinsky
 -- @about
 --   This script monitors a custom fx slot in the monitoring chain and switches the bypass on it. For realtime highlighting install 'Global startup action'
@@ -41,18 +41,16 @@ local _, _, sectionID, cmdID = reaper.get_action_context()
 
 if not slot_id or isSettingsNeeded then
 	local view_slot_id = slot_id and slot_id + 1 or nil
-	local result = EK_AskUser("Enter slot id for action monitoring", {
+	EK_AskUser("Enter slot id for action monitoring", {
 		{"Custom slot id", view_slot_id}
-	})
+	}, function(result)
+		if not result or not result[1] then return end
 
-	if result then
-		if result[1] then
-			slot_id = tonumber(result[1]) - 1
-			EK_SetExtState(ga_highlight_buttons.mfx_slot_custom, slot_id)
+		slot_id = tonumber(result[1]) - 1
+		EK_SetExtState(ga_highlight_buttons.mfx_slot_custom, slot_id)
 
-			reaper.MB("Slot id has been set. If you want to change it, execute this script with pressed CMD/CTRL key.", "Toggle monitoring fx plugin on custom slot", 0)
-		end
-	end
+		reaper.MB("Slot id has been set. If you want to change it, execute this script with pressed CMD/CTRL key.", "Toggle monitoring fx plugin on custom slot", 0)
+	end)
 
 	return
 end

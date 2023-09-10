@@ -106,34 +106,34 @@ end
 table.insert(menu, {title = "Options", children = {
 	{title = "Synced with MIDI Editor", is_selected = isSynced, on_select = AG_ToggleSyncedWithMidiEditor },
 	{title = option_grid_width_title, on_select = function()
-		local result = EK_AskUser("Set grid width ratio", {
+		EK_AskUser("Set grid width ratio", {
 			{"Width ratio: (e.g 0.5)", AG_GetWidthRatio() }
-		})
+		}, function(result)
+			if not result or not result[1] then return end
 
-		if not result or not result[1] then return end
-
-		local ratio = tonumber(result[1])
-		if ratio == nil or ratio <= 0 then
-			reaper.MB('Ratio must be positive fractional number', 'Error', 0)
-		else
-			AG_SetWidthRatio(ratio)
-		end
+			local ratio = tonumber(result[1])
+			if ratio == nil or ratio <= 0 then
+				reaper.MB('Ratio must be positive fractional number', 'Error', 0)
+			else
+				AG_SetWidthRatio(ratio)
+			end
+		end)
 	end },
 	{title = option_limits_title, on_select = function()
 		local _, _, minTitle, maxTitle = AG_GetGridLimits()
 
-		local result = EK_AskUser("Set grid limits", {
+		EK_AskUser("Set grid limits", {
 			{"Min grid size (e.g 1/64)", minTitle },
 			{"Max grid size (e.g 1)", maxTitle }
-		})
+		}, function(result)
+			if not result then return end
 
-		if not result then return end
+			AG_SetGridLimits(result[1], result[2])
 
-		AG_SetGridLimits(result[1], result[2])
+			_, _, minTitle, maxTitle = AG_GetGridLimits()
 
-		_, _, minTitle, maxTitle = AG_GetGridLimits()
-
-		reaper.MB('Limits have been set to ' .. (minTitle and minTitle or "n/a") .. ", " .. (maxTitle and maxTitle or "n/a"), "Set grid limits", 0)
+			reaper.MB('Limits have been set to ' .. (minTitle and minTitle or "n/a") .. ", " .. (maxTitle and maxTitle or "n/a"), "Set grid limits", 0)
+		end)
 	end },
 }})
 

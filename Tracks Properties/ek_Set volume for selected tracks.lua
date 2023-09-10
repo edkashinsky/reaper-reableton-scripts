@@ -1,5 +1,5 @@
 -- @description ek_Set volume for selected tracks
--- @version 1.0.0
+-- @version 1.0.1
 -- @author Ed Kashinsky
 -- @about
 --   Script shows window with input to set volume
@@ -22,23 +22,22 @@ if not loaded then
 	return
 end
 
+reaper.Undo_BeginBlock()
 local track = reaper.GetSelectedTrack2(proj, 0, true)
 local _, current_volume, _ = reaper.GetTrackUIVolPan(track)
 
-local result = EK_AskUser("Volume Adjustment", {
+EK_AskUser("Volume Adjustment", {
 	{"Enter volume value (in db):", EK_Vol2Db(current_volume, 2) }
-})
+}, function(result)
+	if not result or not result[1] then return end
 
-if not result or not result[1] then return end
+	local volume = tonumber(result[1])
+	if not volume then return end
 
-local volume = tonumber(result[1])
-if not volume then return end
-
-for i = 0, reaper.CountSelectedTracks2(proj, true) - 1 do
-	track = reaper.GetSelectedTrack2(proj, i, true)
-	reaper.SetMediaTrackInfo_Value(track, "D_VOL", EK_Db2Vol(volume));
-end
-
-reaper.Undo_BeginBlock()
+	for i = 0, reaper.CountSelectedTracks2(proj, true) - 1 do
+		track = reaper.GetSelectedTrack2(proj, i, true)
+		reaper.SetMediaTrackInfo_Value(track, "D_VOL", EK_Db2Vol(volume));
+	end
+end)
 
 reaper.Undo_EndBlock("Toggle automation mode for all tracks", -1)

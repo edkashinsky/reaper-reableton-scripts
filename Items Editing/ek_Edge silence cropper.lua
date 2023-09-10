@@ -1,14 +1,18 @@
 -- @description ek_Edge silence cropper
--- @version 1.0.5
+-- @version 1.1.0
 -- @author Ed Kashinsky
 -- @about
 --   This script helps to remove silence at the start and at the end of selected items by individual thresholds, pads and fades.
 --
 --   Also it provides UI for configuration
 -- @changelog
---   - Fixed bug with MIDI items
+--   - Added relative thresholds mode
+--   - Added crop of midi items
+--   - Added presets
+--   - Optimization improvements
 -- @provides
 --   ../Core/ek_Edge silence cropper functions.lua
+--   [main=main] ek_Edge silence cropper (no prompt).lua
 
 function CoreFunctionsLoaded(script)
 	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
@@ -64,7 +68,7 @@ local function GetEdgePositionsByItem(item)
     end
 
     else
-        local p_l_threshold, p_t_threshold = GetThresholdsValue()
+        local p_l_threshold, p_t_threshold = GetThresholdsValues()
 
         if l_cache and l_cache.threshold == p_l_threshold and l_cache.rate == rate then
             startTime = l_cache.position
@@ -248,7 +252,7 @@ end
 local function CropSilence()
     reaper.Undo_BeginBlock()
 
-    local l_threshold, t_threshold = GetThresholdsValue()
+    local l_threshold, t_threshold = GetThresholdsValues()
 
     Log("== Leading edge ==")
     Log("Threshold: " .. l_threshold .. "db/%")
