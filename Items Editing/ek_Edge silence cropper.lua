@@ -38,30 +38,47 @@ local cachedPositions = { leading = {}, trailing = {} }
 local function GetEdgePositionsByItem(item)
     if not item then return end
 
+    local startTime, endTime
     local take = reaper.GetActiveTake(item)
     local _, guid = reaper.GetSetMediaItemInfo_String(item, "GUID", "", false)
     local rate = reaper.GetMediaItemTakeInfo_Value(take, "D_PLAYRATE")
 
-    if not take or not guid or reaper.TakeIsMIDI(take) then return end
-
-    local startTime, endTime
-    local p_l_threshold, p_t_threshold = GetThresholdsValue()
+    if not take or not guid then return end
 
     local l_cache = cachedPositions.leading[guid]
     local r_cache = cachedPositions.trailing[guid]
 
-    if l_cache and l_cache.threshold == p_l_threshold and l_cache.rate == rate then
-        startTime = l_cache.position
-    else
-        startTime = GetStartPositionLouderThenThreshold(take, p_l_threshold)
-        cachedPositions.leading[guid] = { threshold = p_l_threshold, position = startTime, rate = rate }
+    if reaper.TakeIsMIDI(take) then
+        local _, chunk = reaper.GetItemStateChunk(item, "", false)
+
+        if l_cache and l_cache.midi_chunk == chunk then startTime = l_cache.position
+        else
+            startTime = GetStartPositionOfMidiNote(take)
+            cachedPositions.leading[guid] = { midi_chunk = chunk, position = startTime }
+        end
+
+        if r_cache and r_cache.midi_chunk == chunk then endTime = r_cache.position
+        else
+            endTime = GetEndPositionOfMidiNote(take)
+            cachedPositions.trailing[guid] = { midi_chunk = chunk, position = endTime }
     end
 
-    if r_cache and r_cache.threshold == p_t_threshold and r_cache.rate == rate then
-        endTime = r_cache.position
     else
-        endTime = GetEndPositionLouderThenThreshold(take, p_t_threshold)
-        cachedPositions.trailing[guid] = { threshold = p_t_threshold, position = endTime, rate = rate }
+        local p_l_threshold, p_t_threshold = GetThresholdsValue()
+
+        if l_cache and l_cache.threshold == p_l_threshold and l_cache.rate == rate then
+            startTime = l_cache.position
+        else
+            startTime = GetStartPositionLouderThenThreshold(take, p_l_threshold)
+            cachedPositions.leading[guid] = { threshold = p_l_threshold, position = startTime, rate = rate }
+        end
+
+        if r_cache and r_cache.threshold == p_t_threshold and r_cache.rate == rate then
+            endTime = r_cache.position
+        else
+            endTime = GetEndPositionLouderThenThreshold(take, p_t_threshold)
+            cachedPositions.trailing[guid] = { threshold = p_t_threshold, position = endTime, rate = rate }
+        end
     end
 
     return startTime, endTime
@@ -131,9 +148,8 @@ local function PreviewCropResultInArrangeView()
 
     for i = 0, reaper.CountMediaItems(proj) - 1 do
         local item = reaper.GetMediaItem(proj, i)
-         local take = reaper.GetActiveTake(item)
 
-        if reaper.IsMediaItemSelected(item) and not reaper.TakeIsMIDI(take) and preview then
+        if reaper.IsMediaItemSelected(item) and preview then
             local track = reaper.GetMediaItem_Track(item)
             local item_height = reaper.GetMediaItemInfo_Value(item, "I_LASTH")
             local position = reaper.GetMediaItemInfo_Value(item, "D_POSITION")
@@ -247,13 +263,10 @@ local function CropSilence()
         local item = reaper.GetSelectedMediaItem(proj, i)
         local take = reaper.GetActiveTake(item)
 
-        if take ~= nil and not reaper.TakeIsMIDI(take) then
-            local startTime = GetStartPositionLouderThenThreshold(take, l_threshold)
-            if startTime > 0 then CropLeadingPosition(take, startTime) end
+        local startTime, endTime = GetEdgePositionsByItem(item)
 
-            local endTime = GetEndPositionLouderThenThreshold(take, t_threshold)
-            if endTime > 0 then CropTrailingPosition(take, endTime) end
-        end
+        if endTime and endTime > 0 then CropTrailingPosition(take, endTime) end
+        if startTime and startTime > 0 then CropLeadingPosition(take, startTime) end
     end
 
     reaper.UpdateArrange()

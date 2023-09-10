@@ -230,6 +230,12 @@ function GUI_GetCtx()
 	return ctx
 end
 
+function GUI_ClearValuesCache()
+	for key, _ in pairs(cached_values) do
+		cached_values[key] = nil
+	end
+end
+
 function GUI_DrawSettingsTable(settingsTable)
 	for i = 1, #settingsTable do
 		local newVal, curVal
@@ -255,14 +261,13 @@ function GUI_DrawSettingsTable(settingsTable)
 				newVal = GUI_DrawInput(s.type, s.title, curVal, s)
 
 				if curVal ~= newVal then
-					if type(s.value) ~= "function" then
-						cached_values[s.key] = newVal
-						EK_SetExtState(s.key, newVal)
-					end
+					EK_SetExtState(s.key, newVal)
 
 					if type(s.on_change) == "function" then
-						s.on_change(newVal)
+						s.on_change(newVal, s)
 					end
+
+					cached_values[s.key] = nil
 				end
 			end
 
