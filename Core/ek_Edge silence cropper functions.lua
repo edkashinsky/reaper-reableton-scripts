@@ -441,7 +441,7 @@ local function GetDataForAccessor(take)
     local take_source_sample_rate = r.GetMediaSourceSampleRate(take_pcm_source)
 
     -- How many samples are taken from audio accessor and put in the buffer
-    local samples_per_channel = take_source_sample_rate / 2
+    local samples_per_channel = take_source_sample_rate / 4
 
     return aa, a_length, aa_start, aa_end, take_source_sample_rate, take_source_num_channels, samples_per_channel
 end
@@ -454,17 +454,15 @@ local function GoThroughTakeBySamples(take, processCallback, isReverse)
     -- Samples are collected to this buffer
     local buffer = r.new_array(samples_per_channel * take_source_num_channels)
     local total_samples = (aa_end - aa_start) * (take_source_sample_rate/a_length)
-    local offs, sample_count
+    local offs
     local needStopSeeking = false
 
     if total_samples < 1 then return end
 
     if isReverse then
         offs = aa_end - samples_per_channel / take_source_sample_rate
-        sample_count = total_samples
     else
         offs = aa_start
-        sample_count = 0
     end
 
     -- Loop through samples
@@ -483,11 +481,17 @@ local function GoThroughTakeBySamples(take, processCallback, isReverse)
         )
 
         if aa_ret == 1 then
-            for i = 1, #buffer, take_source_num_channels do
-                if (isReverse and sample_count == 0) or (not isReverse and sample_count == total_samples) then
-                     goto done_start
-                end
+            local startBuf = 1
+            local endBuf = #buffer
+            local stepBuf = take_source_num_channels
 
+            if isReverse then
+                startBuf = #buffer
+                endBuf = 1
+                stepBuf = -take_source_num_channels
+            end
+
+            for i = startBuf, endBuf, stepBuf do
                 for j = 1, take_source_num_channels do
                     local buf_pos = i + j - 1
                     local spl = buffer[buf_pos]
@@ -498,29 +502,19 @@ local function GoThroughTakeBySamples(take, processCallback, isReverse)
                         goto done_start
                     end
                 end
-
-                if isReverse then
-                    sample_count = sample_count - 1
-                else
-                    sample_count = sample_count + 1
-                end
             end
         elseif aa_ret == 0 then -- no audio in current buffer
-            if isReverse then
-                sample_count = sample_count - samples_per_channel
-            else
-                sample_count = sample_count + samples_per_channel
-            end
+            -- do nothing
         else
             return
         end
 
         if isReverse then
             offs = offs - samples_per_channel / take_source_sample_rate -- new offset in take source (seconds)
-            needStopSeeking = sample_count <= 0
+            needStopSeeking = offs < aa_start
         else
             offs = offs + samples_per_channel / take_source_sample_rate -- new offset in take source (seconds)
-            needStopSeeking = sample_count >= total_samples
+            needStopSeeking = offs > aa_end - samples_per_channel / take_source_sample_rate
         end
     end -- end of while loop
 
@@ -566,11 +560,14 @@ function GetStartPositionLouderThenThreshold(take, threshold)
     local peakTime = 0
 
     if p.crop_mode.value == 1 then -- relative
-        threshold = GetRelativeThresholdsByTake(take, threshold)
+        local orig = threshold
+        threshold = GetRelativeThresholdsByTake(take, orig)
+
+        if orig == 100 then threshold = threshold - 0.000001 end -- for good comparing floats
     end
 
     GoThroughTakeBySamples(take, function(db, pos_offset)
-        if db > threshold then
+        if db >= threshold then
             peakTime = pos_offset
             return true
         end
@@ -585,11 +582,14 @@ function GetEndPositionLouderThenThreshold(take, threshold)
     local peakTime
 
     if p.crop_mode.value == 1 then -- relative
-        threshold = GetRelativeThresholdsByTake(take, threshold)
+        local orig = threshold
+        threshold = GetRelativeThresholdsByTake(take, orig)
+
+        if orig == 100 then threshold = threshold - 0.000001 end -- for good comparing floats
     end
 
     local _, _, length = GoThroughTakeBySamples(take, function(db, pos_offset)
-        if db > threshold then
+        if db >= threshold then
             peakTime = pos_offset
 
             return true
