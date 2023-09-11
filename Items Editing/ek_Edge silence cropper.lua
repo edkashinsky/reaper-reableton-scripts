@@ -1,5 +1,5 @@
 -- @description ek_Edge silence cropper
--- @version 1.1.2
+-- @version 1.1.3
 -- @author Ed Kashinsky
 -- @about
 --   This script helps to remove silence at the start and at the end of selected items by individual thresholds, pads and fades.
@@ -38,7 +38,60 @@ end
 
 CoreFunctionsLoaded("ek_Edge silence cropper functions.lua")
 
+local window_open = true
+local defer_data = { last_time = 0, cooldown = 0.7 }
 local cachedPositions = { leading = {}, trailing = {} }
+local MainHwnd = reaper.GetMainHwnd()
+local ArrangeHwnd = reaper.JS_Window_FindChildByID(MainHwnd, 0x3E8)
+local min_start = 0.0001
+
+local bm = {
+    leading = { maps = {}, color = ek_colors.Red },
+    trailing = { maps = {}, color = ek_colors.Blue },
+}
+
+local function _f(value)
+    return math.floor(value)
+end
+
+local function _drawVerticalLine(bitmap, x, height, color)
+    reaper.JS_LICE_Line(bitmap, _f(x), 0, _f(x), _f(height), color, 1, "", true)
+end
+
+local function ClearBitmap(map, ind)
+    if map.maps[ind] then
+        reaper.JS_LICE_DestroyBitmap(map.maps[ind])
+    end
+end
+
+local function ResetPreview()
+    for _, maps in pairs(bm) do
+        for i, _ in pairs(maps.maps) do
+            ClearBitmap(maps, i)
+        end
+    end
+end
+
+local function UpdateBitmapIfNeeded(map, ind, width, height)
+    local needToUpdate = false
+
+    if not map.maps[ind] then
+        needToUpdate = true
+    else
+        local w = reaper.JS_LICE_GetWidth(map.maps[ind])
+        local h = reaper.JS_LICE_GetHeight(map.maps[ind])
+
+        needToUpdate = w ~= width or h ~= height
+    end
+
+    if needToUpdate then
+        ClearBitmap(map, ind)
+        map.maps[ind] = reaper.JS_LICE_CreateBitmap(true, math.floor(width), math.floor(height))
+        -- reaper.JS_LICE_Clear(map.maps[ind], ek_colors.Red)
+    end
+
+    return needToUpdate, map.maps[ind]
+end
 
 local function GetEdgePositionsByItem(item)
     if not item then return end
@@ -89,60 +142,9 @@ local function GetEdgePositionsByItem(item)
     return startTime, endTime
 end
 
-local function _f(value)
-    return math.floor(value)
-end
-
-local function _drawVerticalLine(bitmap, x, height, color)
-    reaper.JS_LICE_Line(bitmap, _f(x), 0, _f(x), _f(height), color, 1, "", true)
-end
-
-local bm = {
-    leading = { maps = {}, color = ek_colors.Red },
-    trailing = { maps = {}, color = ek_colors.Blue },
-}
-
-local function ClearBitmap(map, ind)
-    if map.maps[ind] then
-        reaper.JS_LICE_DestroyBitmap(map.maps[ind])
-    end
-end
-
-local function ResetPreview()
-    for _, maps in pairs(bm) do
-        for i, _ in pairs(maps.maps) do
-            ClearBitmap(maps, i)
-        end
-    end
-end
-
-local function UpdateBitmapIfNeeded(map, ind, width, height)
-    local needToUpdate = false
-
-    if not map.maps[ind] then
-        needToUpdate = true
-    else
-        local w = reaper.JS_LICE_GetWidth(map.maps[ind])
-        local h = reaper.JS_LICE_GetHeight(map.maps[ind])
-
-        needToUpdate = w ~= width or h ~= height
-    end
-
-    if needToUpdate then
-        ClearBitmap(map, ind)
-        map.maps[ind] = reaper.JS_LICE_CreateBitmap(true, math.floor(width), math.floor(height))
-        -- reaper.JS_LICE_Clear(map.maps[ind], ek_colors.Red)
-    end
-
-    return map.maps[ind]
-end
-
-local MainHwnd = reaper.GetMainHwnd()
-local ArrangeHwnd = reaper.JS_Window_FindChildByID(MainHwnd, 0x3E8)
-
-local min_start = 0.0001
-
 local function PreviewCropResultInArrangeView()
+    if not window_open then return false end
+
     local zoom = reaper.GetHZoomLevel()
     local _, scrollposh = reaper.JS_Window_GetScrollInfo(ArrangeHwnd, "h")
     local p_l_pad = p.leading.pad.value
@@ -184,20 +186,22 @@ local function PreviewCropResultInArrangeView()
             l_bm_width = l_bm_width + 2
 
             if startTime > min_start and startTime < item_length then
-                local bitmap = UpdateBitmapIfNeeded(bm.leading, i, l_bm_width, l_bm_height)
+                local need_update, bitmap = UpdateBitmapIfNeeded(bm.leading, i, l_bm_width, l_bm_height)
 
-                -- threshold line
-                _drawVerticalLine(bitmap, l_threshold, item_height, ek_colors.Blue)
+                if need_update then
+                    -- threshold line
+                    _drawVerticalLine(bitmap, l_threshold, item_height, ek_colors.Blue)
 
-                -- pad line
-                if l_pad > 0 and p_l_pad > 0 then _drawVerticalLine(bitmap, l_pad, item_height, ek_colors.Red) end
+                    -- pad line
+                    if l_pad > 0 and p_l_pad > 0 then _drawVerticalLine(bitmap, l_pad, item_height, ek_colors.Red) end
 
-                -- fade line
-                if p_l_fade > 0 and l_fade_start > 0 then
-                    reaper.JS_LICE_Line(bitmap, l_fade_start, item_height, l_fade_end, 0, ek_colors.Green, 1, "", true)
+                    -- fade line
+                    if p_l_fade > 0 and l_fade_start > 0 then
+                        reaper.JS_LICE_Line(bitmap, l_fade_start, item_height, l_fade_end, 0, ek_colors.Green, 1, "", true)
+                    end
+
+                    reaper.JS_Composite(ArrangeHwnd, _f(item_offset_x), _f(item_offset_y), _f(l_bm_width), _f(l_bm_height), bitmap, 0, 0, _f(l_bm_width), _f(l_bm_height), true)
                 end
-
-                reaper.JS_Composite(ArrangeHwnd, _f(item_offset_x), _f(item_offset_y), _f(l_bm_width), _f(l_bm_height), bitmap, 0, 0, _f(l_bm_width), _f(l_bm_height), true)
             else
                 ClearBitmap(bm.leading, i)
             end
@@ -222,20 +226,22 @@ local function PreviewCropResultInArrangeView()
             t_bm_width = t_bm_width + 2
 
             if endTime > min_start and endTime < item_length then
-                local bitmap = UpdateBitmapIfNeeded(bm.trailing, i, t_bm_width, t_bm_height)
+                local need_update, bitmap = UpdateBitmapIfNeeded(bm.trailing, i, t_bm_width, t_bm_height)
 
-                -- threshold line
-                _drawVerticalLine(bitmap, t_threshold, item_height, ek_colors.Blue)
+                if need_update then
+                    -- threshold line
+                    _drawVerticalLine(bitmap, t_threshold, item_height, ek_colors.Blue)
 
-                -- pad line
-                if t_pad < item_length_px and p_t_pad > 0 then _drawVerticalLine(bitmap, t_pad, item_height, ek_colors.Red) end
+                    -- pad line
+                    if t_pad < item_length_px and p_t_pad > 0 then _drawVerticalLine(bitmap, t_pad, item_height, ek_colors.Red) end
 
-                -- fade line
-                if p_t_fade > 0 and t_fade_end < item_length_px then
-                    reaper.JS_LICE_Line(bitmap, t_fade_start, 0, t_fade_end, item_height, ek_colors.Green, 1, "", true)
+                    -- fade line
+                    if p_t_fade > 0 and t_fade_end < item_length_px then
+                        reaper.JS_LICE_Line(bitmap, t_fade_start, 0, t_fade_end, item_height, ek_colors.Green, 1, "", true)
+                    end
+
+                    reaper.JS_Composite(ArrangeHwnd, _f(item_offset_x), _f(item_offset_y), _f(t_bm_width), _f(t_bm_height), bitmap, 0, 0, _f(t_bm_width), _f(t_bm_height), true)
                 end
-
-                reaper.JS_Composite(ArrangeHwnd, _f(item_offset_x), _f(item_offset_y), _f(t_bm_width), _f(t_bm_height), bitmap, 0, 0, _f(t_bm_width), _f(t_bm_height), true)
             else
                 ClearBitmap(bm.trailing, i)
             end
@@ -248,6 +254,8 @@ local function PreviewCropResultInArrangeView()
             cachedPositions.trailing[guid] = nil
         end
     end
+
+    return true
 end
 
 local function CropSilence()
@@ -292,13 +300,14 @@ function frame()
     reaper.ImGui_SameLine(GUI_GetCtx())
 
     GUI_DrawButton('Cancel', nil, gui_buttons_types.Cancel)
-
-    PreviewCropResultInArrangeView()
 end
+
+EK_DeferWithCooldown(PreviewCropResultInArrangeView, defer_data)
 
 GUI_ShowMainWindow(330, 0)
 
 function GUI_OnWindowClose()
     ResetPreview()
+    window_open = false;
 end
 

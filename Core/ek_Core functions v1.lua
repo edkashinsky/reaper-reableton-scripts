@@ -1226,3 +1226,23 @@ function EK_LookupCommandIdByName(script_name)
 
 	return cmdId
 end
+
+local deferWithCooldown
+
+function EK_DeferWithCooldown(callback, data)
+	deferWithCooldown = function()
+		local time_precise = reaper.time_precise()
+		if time_precise < data.last_time + data.cooldown then
+			reaper.defer(deferWithCooldown)
+			return
+		end
+
+		data.last_time = time_precise
+
+		if callback() then
+			reaper.defer(deferWithCooldown)
+		end
+	end
+
+	deferWithCooldown()
+end
