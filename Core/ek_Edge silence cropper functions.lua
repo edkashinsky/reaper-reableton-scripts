@@ -405,14 +405,12 @@ function GetThresholdsValues()
 end
 
 local function SampleToDb(sample)
-  -- returns -150 for any 0.0 sample point (since you can't take the log of 0)
-  if sample == 0 then
-    return -150.0
-  else
-    local db = 20 * log10(math.abs(sample))
-
-    if db > 0 then return 0 else return db end
-  end
+    -- returns -150 for any 0.0 sample point (since you can't take the log of 0)
+    if sample == 0 then
+        return -150.0
+    else
+        return 20 * log10(math.abs(sample))
+    end
 end
 
 local function GetDataForAccessor(take)
@@ -494,12 +492,15 @@ local function GoThroughTakeBySamples(take, processCallback, isReverse)
             for i = startBuf, endBuf, stepBuf do
                 for j = 1, take_source_num_channels do
                     local buf_pos = i + j - 1
-                    local spl = buffer[buf_pos]
-                    local pos_offset = offs + (buf_pos / (take_source_sample_rate * take_source_num_channels))
-                    local db = spl > -1 and spl < 1 and SampleToDb(spl) or nil
 
-                    if processCallback(db, pos_offset) then
-                        goto done_start
+                    if buf_pos >= 1 and buf_pos <= #buffer then
+                        local spl = buffer[buf_pos]
+                        local pos_offset = offs + (buf_pos / (take_source_sample_rate * take_source_num_channels))
+                        local db = SampleToDb(spl)
+
+                        if processCallback(db, pos_offset) then
+                            goto done_start
+                        end
                     end
                 end
             end

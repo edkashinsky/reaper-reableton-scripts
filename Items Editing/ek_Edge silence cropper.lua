@@ -1,15 +1,16 @@
 -- @description ek_Edge silence cropper
--- @version 1.1.1
+-- @version 1.1.2
 -- @author Ed Kashinsky
 -- @about
 --   This script helps to remove silence at the start and at the end of selected items by individual thresholds, pads and fades.
 --
 --   Also it provides UI for configuration
 -- @changelog
---   - Added relative thresholds mode
---   - Added crop of midi items
---   - Added presets
---   - Optimization improvements
+--   • Support of 32-bit and multichannel audio
+--   • Added relative thresholds mode
+--   • Added crop of midi items
+--   • Added presets
+--   • Optimization and stability improvements
 -- @provides
 --   ../Core/ek_Edge silence cropper functions.lua
 --   [main=main] ek_Edge silence cropper (no prompt).lua
