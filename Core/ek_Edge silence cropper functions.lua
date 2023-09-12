@@ -2,6 +2,7 @@
 
 local r = reaper
 local presets_key = "triming_silence_presets_list"
+min_step = 0.00001
 
 local presets = {
     current = nil,
@@ -125,17 +126,17 @@ p = {
 		},
         threshold_relative = {
 			key = 'triming_silence_leading_threshold_relative',
-			default = 10, -- %
+			default = 45, -- %
             value = nil,
 		},
 		pad = {
 			key = 'triming_silence_leading_pad',
-			default = 0.12, -- s
+			default = 0.05, -- s
             value = nil,
 		},
 		fade = {
 			key = 'triming_silence_leading_fade',
-			default = 0.08, -- s
+			default = 0.05, -- s
             value = nil,
 		},
 	},
@@ -147,17 +148,17 @@ p = {
 		},
          threshold_relative = {
 			key = 'triming_silence_trailing_threshold_relative',
-			default = 4, -- %
+			default = 20, -- %
             value = nil,
 		},
 		pad = {
 			key = 'triming_silence_trailing_pad',
-			default = 0.22, -- s
+			default = 0.20, -- s
             value = nil,
 		},
 		fade = {
 			key = 'triming_silence_trailing_fade',
-			default = 0.25, -- s
+			default = 0.22, -- s
             value = nil,
 		},
 	},
@@ -564,7 +565,7 @@ function GetStartPositionLouderThenThreshold(take, threshold)
         local orig = threshold
         threshold = GetRelativeThresholdsByTake(take, orig)
 
-        if orig == 100 then threshold = threshold - 0.000001 end -- for good comparing floats
+        if orig == 100 then threshold = threshold - min_step end -- for good comparing floats
     end
 
     GoThroughTakeBySamples(take, function(db, pos_offset)
@@ -586,7 +587,7 @@ function GetEndPositionLouderThenThreshold(take, threshold)
         local orig = threshold
         threshold = GetRelativeThresholdsByTake(take, orig)
 
-        if orig == 100 then threshold = threshold - 0.000001 end -- for good comparing floats
+        if orig == 100 then threshold = threshold - min_step end -- for good comparing floats
     end
 
     local _, _, length = GoThroughTakeBySamples(take, function(db, pos_offset)
@@ -613,7 +614,9 @@ local function GetOffsetConsiderPitchByRate(offset, rate)
 end
 
 function CropLeadingPosition(take, startOffset)
-    startOffset = startOffset - p.leading.pad.value
+    local pad, fade = GetLeadingPadAndOffset(startOffset)
+
+    startOffset = startOffset - pad
   
     if startOffset < 0 then return end
   
@@ -632,19 +635,22 @@ function CropLeadingPosition(take, startOffset)
     local length = r.GetMediaItemInfo_Value(item, "D_LENGTH")
     reaper.SetMediaItemInfo_Value(item, "D_LENGTH", length - startOffset)
     
-    reaper.SetMediaItemInfo_Value(item, "D_FADEINLEN", p.leading.fade.value)
+    reaper.SetMediaItemInfo_Value(item, "D_FADEINLEN", fade)
 end
 
 function CropTrailingPosition(take, endOffset)
-    endOffset = endOffset + p.trailing.pad.value
-  
     local item = r.GetMediaItemTake_Item(take)
+    local length = r.GetMediaItemInfo_Value(item, "D_LENGTH")
+    local pad, fade = GetTrailingPadAndOffset(endOffset, length)
+
+    endOffset = endOffset + pad
+
     local length = r.GetMediaItemInfo_Value(item, "D_LENGTH")
 
     if endOffset > length then return end
     
     reaper.SetMediaItemInfo_Value(item, "D_LENGTH", endOffset)
-    reaper.SetMediaItemInfo_Value(item, "D_FADEOUTLEN", p.trailing.fade.value)
+    reaper.SetMediaItemInfo_Value(item, "D_FADEOUTLEN", fade)
 end
 
 local function GoThroughMidiTakeByNotes(take, processCallback, isReverse)
@@ -736,4 +742,22 @@ function GetEndPositionOfMidiNote(take)
     if not pos then pos = length end
 
     return pos
+end
+
+function GetLeadingPadAndOffset(startTime)
+    if p.leading.pad.value > startTime then
+        local corrected_pad = startTime - min_step
+        return corrected_pad, p.leading.fade.value - (p.leading.pad.value - corrected_pad)
+    else
+        return p.leading.pad.value, p.leading.fade.value
+    end
+end
+
+function GetTrailingPadAndOffset(endTime, itemLength)
+    if p.trailing.pad.value + endTime > itemLength then
+        local corrected_pad = itemLength - endTime - min_step
+        return corrected_pad, p.trailing.fade.value - (p.trailing.pad.value - corrected_pad)
+    else
+        return p.trailing.pad.value, p.trailing.fade.value
+    end
 end

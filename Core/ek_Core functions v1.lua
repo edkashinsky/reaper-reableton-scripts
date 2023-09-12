@@ -1231,6 +1231,8 @@ local deferWithCooldown
 
 function EK_DeferWithCooldown(callback, data)
 	deferWithCooldown = function()
+		if type(data.eventTick) == "function" and not data.eventTick() then return end
+
 		local time_precise = reaper.time_precise()
 		if time_precise < data.last_time + data.cooldown then
 			reaper.defer(deferWithCooldown)

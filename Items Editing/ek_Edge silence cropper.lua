@@ -1,11 +1,12 @@
 -- @description ek_Edge silence cropper
--- @version 1.1.3
+-- @version 1.1.4
 -- @author Ed Kashinsky
 -- @about
 --   This script helps to remove silence at the start and at the end of selected items by individual thresholds, pads and fades.
 --
 --   Also it provides UI for configuration
 -- @changelog
+--   • Optimization for preview lines
 --   • Support of 32-bit and multichannel audio
 --   • Added relative thresholds mode
 --   • Added crop of midi items
@@ -39,11 +40,9 @@ end
 CoreFunctionsLoaded("ek_Edge silence cropper functions.lua")
 
 local window_open = true
-local defer_data = { last_time = 0, cooldown = 0.7 }
-local cachedPositions = { leading = {}, trailing = {} }
+local cachedPositions = { leading = {}, trailing = {}, zoom = nil, hor = nil }
 local MainHwnd = reaper.GetMainHwnd()
 local ArrangeHwnd = reaper.JS_Window_FindChildByID(MainHwnd, 0x3E8)
-local min_start = 0.0001
 
 local bm = {
     leading = { maps = {}, color = ek_colors.Red },
@@ -147,11 +146,10 @@ local function PreviewCropResultInArrangeView()
 
     local zoom = reaper.GetHZoomLevel()
     local _, scrollposh = reaper.JS_Window_GetScrollInfo(ArrangeHwnd, "h")
-    local p_l_pad = p.leading.pad.value
-    local p_l_fade = p.leading.fade.value
-    local p_t_pad = p.trailing.pad.value
-    local p_t_fade = p.trailing.fade.value
     local preview = p.preview_result.value
+
+    cachedPositions.zoom = zoom
+    cachedPositions.hor = scrollposh
 
     for i = 0, reaper.CountMediaItems(proj) - 1 do
         local item = reaper.GetMediaItem(proj, i)
@@ -162,6 +160,8 @@ local function PreviewCropResultInArrangeView()
             local position = reaper.GetMediaItemInfo_Value(item, "D_POSITION")
             local item_length = reaper.GetMediaItemInfo_Value(item, "D_LENGTH")
             local startTime, endTime = GetEdgePositionsByItem(item)
+            local p_l_pad, p_l_fade = GetLeadingPadAndOffset(startTime)
+            local p_t_pad, p_t_fade = GetTrailingPadAndOffset(endTime, item_length)
 
             local item_offset_x = (position * zoom) - scrollposh
             local item_offset_y = reaper.GetMediaTrackInfo_Value(track, "I_TCPY") + GetItemHeaderHeight(item)
@@ -174,10 +174,10 @@ local function PreviewCropResultInArrangeView()
             local l_fade_start = l_pad
             local l_fade_end = l_fade_start + (p_l_fade * zoom)
 
-            if l_threshold < min_start then l_threshold = 0 end
-            if l_pad < min_start then l_pad = 0 end
-            if l_fade_start < min_start then l_fade_start = 0 end
-            if l_fade_end < min_start then l_fade_end = 0 end
+            if l_threshold < min_step then l_threshold = 0 end
+            if l_pad < min_step then l_pad = 0 end
+            if l_fade_start < min_step then l_fade_start = 0 end
+            if l_fade_end < min_step then l_fade_end = 0 end
             if l_fade_end > item_length_px then l_fade_end = item_length_px end
 
             local l_bm_width = math.max(l_threshold, l_fade_end)
@@ -185,7 +185,7 @@ local function PreviewCropResultInArrangeView()
 
             l_bm_width = l_bm_width + 2
 
-            if startTime > min_start and startTime < item_length then
+            if startTime > min_step and startTime < item_length then
                 local need_update, bitmap = UpdateBitmapIfNeeded(bm.leading, i, l_bm_width, l_bm_height)
 
                 if need_update then
@@ -214,10 +214,10 @@ local function PreviewCropResultInArrangeView()
             local t_fade_start = t_fade_end - (p_t_fade * zoom)
 
 
-            if t_threshold < min_start then t_threshold = 0 end
-            if t_pad < min_start then t_pad = 0 end
+            if t_threshold < min_step then t_threshold = 0 end
+            if t_pad < min_step then t_pad = 0 end
             if t_pad > item_length_px then t_pad = item_length_px end
-            if t_fade_start < min_start then t_fade_start = 0 end
+            if t_fade_start < min_step then t_fade_start = 0 end
             if t_fade_end > item_length_px then t_fade_end = item_length_px end
 
             local t_bm_width = math.max(t_threshold, t_fade_end, t_pad)
@@ -225,7 +225,7 @@ local function PreviewCropResultInArrangeView()
 
             t_bm_width = t_bm_width + 2
 
-            if endTime > min_start and endTime < item_length then
+            if endTime > min_step and endTime < item_length then
                 local need_update, bitmap = UpdateBitmapIfNeeded(bm.trailing, i, t_bm_width, t_bm_height)
 
                 if need_update then
@@ -302,7 +302,24 @@ function frame()
     GUI_DrawButton('Cancel', nil, gui_buttons_types.Cancel)
 end
 
-EK_DeferWithCooldown(PreviewCropResultInArrangeView, defer_data)
+EK_DeferWithCooldown(PreviewCropResultInArrangeView, { last_time = 0, cooldown = 0.7, eventTick = function()
+    local _, scrollposh = reaper.JS_Window_GetScrollInfo(ArrangeHwnd, "h")
+
+    if not window_open then
+        ResetPreview()
+        return false
+    end
+
+    if cachedPositions.zoom ~= nil and cachedPositions.zoom ~= reaper.GetHZoomLevel() then
+        ResetPreview()
+    end
+
+    if cachedPositions.hor ~= nil and cachedPositions.hor ~= scrollposh then
+        ResetPreview()
+    end
+
+    return true
+end })
 
 GUI_ShowMainWindow(330, 0)
 
