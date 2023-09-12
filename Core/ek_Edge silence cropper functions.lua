@@ -148,7 +148,7 @@ p = {
 		},
          threshold_relative = {
 			key = 'triming_silence_trailing_threshold_relative',
-			default = 20, -- %
+			default = 10, -- %
             value = nil,
 		},
 		pad = {
@@ -512,11 +512,11 @@ local function GoThroughTakeBySamples(take, processCallback, isReverse)
         end
 
         if isReverse then
-            offs = offs - samples_per_channel / take_source_sample_rate -- new offset in take source (seconds)
             needStopSeeking = offs < aa_start
+            offs = offs - samples_per_channel / take_source_sample_rate -- new offset in take source (seconds)
         else
-            offs = offs + samples_per_channel / take_source_sample_rate -- new offset in take source (seconds)
             needStopSeeking = offs > aa_end - samples_per_channel / take_source_sample_rate
+            offs = offs + samples_per_channel / take_source_sample_rate -- new offset in take source (seconds)
         end
     end -- end of while loop
 
