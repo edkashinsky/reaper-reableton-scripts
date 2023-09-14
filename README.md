@@ -98,7 +98,7 @@ It has an adaptive relative mode to get more accurate results with a single pres
 
 ![Edge silence cropper preview](/Assets/images/edge_silence_cropper/example_2.gif)
 
-t calculates the maximum peak (in db) in each item and applies a percentage of its volume to leading and trailing thresholds
+It calculates the maximum peak (in db) in each item and applies a percentage of its volume to leading and trailing thresholds
 
 Installation:
 1. Install script **ek_Edge silence cropper** for GUI and preview mode
