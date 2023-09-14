@@ -94,11 +94,11 @@ It has preview mode and it is very handy. Every setting has it own color:
 - ![#f03c15](https://via.placeholder.com/15/f03c15/f03c15.png) Pad - Red 
 - ![#c5f015](https://via.placeholder.com/15/c5f015/c5f015.png) Fade - Green
 
-It has an adaptive relative mode to get more accurate results with a single preset at different sound volumes:
+Script has an adaptive relative mode to get more accurate results with a single preset at different sound volumes:
 
 ![Edge silence cropper preview](/Assets/images/edge_silence_cropper/example_2.gif)
 
-It calculates the maximum peak (in db) in each item and applies a percentage of its volume to leading and trailing thresholds
+Script calculates the maximum peak (in db) in each item and applies a percentage of its volume to leading and trailing thresholds
 
 Installation:
 1. Install script **ek_Edge silence cropper** for GUI and preview mode
