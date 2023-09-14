@@ -1,5 +1,5 @@
 -- @description ek_Edge silence cropper
--- @version 1.1.5
+-- @version 1.1.6
 -- @author Ed Kashinsky
 -- @about
 --   This script helps to remove silence at the start and at the end of selected items by individual thresholds, pads and fades.
@@ -40,7 +40,7 @@ end
 CoreFunctionsLoaded("ek_Edge silence cropper functions.lua")
 
 local window_open = true
-local cachedPositions = { leading = {}, trailing = {}, zoom = nil, hor = nil }
+local cachedPositions = { leading = {}, trailing = {}, zoom = nil, hor = nil, count_sel_items = 0 }
 local MainHwnd = reaper.GetMainHwnd()
 local ArrangeHwnd = reaper.JS_Window_FindChildByID(MainHwnd, 0x3E8)
 
@@ -146,10 +146,17 @@ local function PreviewCropResultInArrangeView()
 
     local zoom = reaper.GetHZoomLevel()
     local _, scrollposh = reaper.JS_Window_GetScrollInfo(ArrangeHwnd, "h")
+    local countSelectedItems = reaper.CountSelectedMediaItems(proj)
+
     local preview = p.preview_result.value
 
     cachedPositions.zoom = zoom
     cachedPositions.hor = scrollposh
+
+    if cachedPositions.count_sel_items ~= countSelectedItems then
+        cachedPositions.count_sel_items = countSelectedItems
+        ResetPreview()
+    end
 
     for i = 0, reaper.CountMediaItems(proj) - 1 do
         local item = reaper.GetMediaItem(proj, i)
