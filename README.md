@@ -100,7 +100,6 @@ It has an adaptive relative mode to get more accurate results with a single pres
 
 Installation:
 1. Install script **ek_Edge silence cropper** for GUI and preview mode
-2. [Additionally] install script **ek_Edge silence cropper (no prompt)** to applying crop without any GUI
 
 ### Separated actions for Media item in Mouse modifiers
 
