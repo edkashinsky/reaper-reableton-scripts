@@ -209,7 +209,7 @@ gui_config = {
                     {"Enter name of preset:", name }
                 }, function(res)
                     if not res or not res[1] then
-                        reaper.MB("Please set name for saving preset...", "Save preset", 0)
+                        r.MB("Please set name for saving preset...", "Save preset", 0)
                         ClearPresetSelectItem()
                     else
                         SavePreset(res[1])
@@ -218,7 +218,7 @@ gui_config = {
                     s.select_values = GetPresetSelectValues()
                 end)
             elseif s.select_values[val + 1] == "Delete preset..." then
-                if presets.current and reaper.MB('Are you sure to delete this preset "' .. presets.current .. '"?', "Delete preset...", 4) == 6 then
+                if presets.current and r.MB('Are you sure to delete this preset "' .. presets.current .. '"?', "Delete preset...", 4) == 6 then
                     DeletePreset(presets.current)
                 end
 
@@ -395,6 +395,15 @@ for i, block in pairs(p) do
     end
 end
 
+function GetGUID(item)
+    if not item then return end
+
+    local _, guid = r.GetSetMediaItemInfo_String(item, "GUID", "", false)
+    local length = r.GetMediaItemInfo_Value(item, "D_LENGTH")
+
+    return guid .. ":" .. length
+end
+
 function GetThresholdsValues()
     if p.crop_mode.value == 0 then
         return p.leading.threshold.value,
@@ -414,117 +423,149 @@ local function SampleToDb(sample)
     end
 end
 
-local function GetDataForAccessor(take)
-    -- Get media source of media item take
-    local take_pcm_source = r.GetMediaItemTake_Source(take)
-    if take_pcm_source == nil then return end
+local function GoThroughTakeBySamplesEEL(take, threshold, isReverse)
+    -- making math function local improves their speed
+    local max, min, floor = math.max, math.min, math.floor
 
-    -- Create take audio accessor
-    local aa = r.CreateTakeAudioAccessor(take)
+    -- Function to read the array usinf EEL
+    local ReadArrayWithEEL = r.ImGui_CreateFunctionFromEEL([[
+        i = reverse == 1 ? block_size : 0;
+        maxDb = -150;
+        pos_threshold = -1;
 
-    if aa == nil then return end
+        loop(block_size,
+            // Loop through each channel separately
+            j = reverse == 1 ? n_channels : 1;
 
-    -- Get the start time of the audio that can be returned from this accessor
-    local aa_start = r.GetAudioAccessorStartTime(aa)
-    -- Get the end time of the audio that can be returned from this accessor
-    local aa_end = r.GetAudioAccessorEndTime(aa)
-    local a_length = (aa_end - aa_start) / 25
+            loop(n_channels,
+                spl = samplebuffer[i * j];
+                db = spl == 0 ? -150 : 20 * log10(abs(spl));
 
-    if a_length <= 1 then a_length = 1 elseif a_length > 20 then a_length = 20 end
+                pos_threshold = (threshold != 1000 && pos_threshold == -1 && db >= threshold) ? (
+                    (i * j) / samplerate
+                ) : pos_threshold;
 
-    -- Get the number of channels in the source media.
-    local take_source_num_channels =  r.GetMediaSourceNumChannels(take_pcm_source)
-    if take_source_num_channels > 2 then take_source_num_channels = 2 end
+                maxDb = max(db, maxDb);
 
-    -- Get the sample rate. MIDI source media will return zero.
-    local take_source_sample_rate = r.GetMediaSourceSampleRate(take_pcm_source)
+                j = reverse == 1 ? j - 1 : j + 1;
+            );
 
-    -- How many samples are taken from audio accessor and put in the buffer
-    local samples_per_channel = take_source_sample_rate / 4
+            i = reverse == 1 ? i - 1 : i + 1;
+        );
+    ]])
 
-    return aa, a_length, aa_start, aa_end, take_source_sample_rate, take_source_num_channels, samples_per_channel
-end
+    local PCM_source = r.GetMediaItemTake_Source(take)
+    local samplerate = r.GetMediaSourceSampleRate(PCM_source)
 
-local function GoThroughTakeBySamples(take, processCallback, isReverse)
-    if take == nil then return end
+    if not take or not samplerate then return end
 
-    local aa, a_length, aa_start, aa_end, take_source_sample_rate, take_source_num_channels, samples_per_channel = GetDataForAccessor(take)
+    -- Sort out the selection range
+    local item = r.GetMediaItemTake_Item(take)
+    local item_start = r.GetMediaItemInfo_Value(item, "D_POSITION")
+    local item_len = r.GetMediaItemInfo_Value(item, "D_LENGTH")
+    local sel_start, sel_end = r.GetSet_LoopTimeRange(0, 0, 0, 0, 0)
 
-    -- Samples are collected to this buffer
-    local buffer = r.new_array(samples_per_channel * take_source_num_channels)
-    local total_samples = (aa_end - aa_start) * (take_source_sample_rate/a_length)
-    local offs
-    local needStopSeeking = false
-
-    if total_samples < 1 then return end
-
-    if isReverse then
-        offs = aa_end - samples_per_channel / take_source_sample_rate
-    else
-        offs = aa_start
+    if not sel_start or sel_end == sel_start then
+        sel_start = item_start
+        sel_end = item_start + item_len
     end
 
-    -- Loop through samples
-    while not needStopSeeking do
-        -- Get a block of samples from the audio accessor.
-        -- Samples are extracted immediately pre-FX,
-        -- and returned interleaved (first sample of first channel, first sample of second channel...).
-        -- Returns 0 if no audio, 1 if audio, -1 on error.
-        local aa_ret = r.GetAudioAccessorSamples(
-            aa,                       -- AudioAccessor accessor
-            take_source_sample_rate,  -- integer samplerate
-            take_source_num_channels, -- integer numchannels
-            offs,                     -- number starttime_sec
-            samples_per_channel,      -- integer numsamplesperchannel
-            buffer                    -- r.array samplebuffer
-        )
+    sel_start = max(sel_start, item_start)
+    sel_end = min(sel_end, item_start + item_len)
 
-        if aa_ret == 1 then
-            local startBuf = 1
-            local endBuf = #buffer
-            local stepBuf = take_source_num_channels
+    if sel_end - sel_start <= 0 then return end
 
-            if isReverse then
-                startBuf = #buffer
-                endBuf = 1
-                stepBuf = -take_source_num_channels
-            end
+    local playrate = r.GetMediaItemTakeInfo_Value(take, "D_PLAYRATE")
+    if playrate ~= 1 then
+        r.SetMediaItemTakeInfo_Value(take, "D_PLAYRATE", 1)
+        r.SetMediaItemInfo_Value(item, "D_LENGTH", item_len * playrate)
+    end
 
-            for i = startBuf, endBuf, stepBuf do
-                for j = 1, take_source_num_channels do
-                    local buf_pos = i + j - 1
+    -- Define the time range w.r.t the original playrate
+    local range_start = (sel_start - item_start) * playrate
+    local range_len = (sel_end - sel_start) * playrate
+    local range_end = range_start + range_len
+    local range_len_spls = floor(range_len * samplerate)
 
-                    if buf_pos >= 1 and buf_pos <= #buffer then
-                        local spl = buffer[buf_pos]
-                        local pos_offset = offs + (buf_pos / (take_source_sample_rate * take_source_num_channels))
-                        local db = SampleToDb(spl)
+    -- Allow for multichannel audio
+    local n_channels = r.GetMediaSourceNumChannels(PCM_source)
 
-                        if processCallback(db, pos_offset) then
-                            goto done_start
-                        end
-                    end
-                end
-            end
-        elseif aa_ret == 0 then -- no audio in current buffer
-            -- do nothing
-        else
-            return
+    -- Break the range into blocks
+    local block_size = 4096
+    local n_blocks = floor(range_len_spls / block_size)
+    local n_block_size = (block_size * n_channels) / samplerate
+    local extra_spls = range_len_spls - block_size * n_blocks
+
+    -- 'samplebuffer' will hold all of the audio data for each block
+    local samplebuffer = r.new_array(block_size * n_channels)
+    local audio = r.CreateTakeAudioAccessor(take)
+    local starttime_sec, startBlock, endBlock, iterBlock
+
+    -- Loop through the audio, one block at a time
+    if isReverse then
+        starttime_sec = range_end - n_block_size
+        if starttime_sec < 0 then starttime_sec = 0 end
+
+        startBlock = n_blocks
+        endBlock = 0
+        iterBlock = -1
+    else
+        starttime_sec = range_start
+        startBlock = 0
+        endBlock = n_blocks
+        iterBlock = 1
+    end
+
+    local maxDb = -150
+
+    for cur_block = startBlock, endBlock, iterBlock do
+        local block = cur_block == endBlock and extra_spls or block_size
+
+        samplebuffer.clear()
+
+        -- Loads 'samplebuffer' with the next block
+        r.GetAudioAccessorSamples(audio, samplerate, n_channels, starttime_sec, block, samplebuffer)
+
+        -- Use EEL to read from the array
+        r.ImGui_Function_SetValue(ReadArrayWithEEL, 'block_size', block)
+        r.ImGui_Function_SetValue(ReadArrayWithEEL, 'n_channels', n_channels)
+        r.ImGui_Function_SetValue_Array(ReadArrayWithEEL, 'samplebuffer', samplebuffer)
+        r.ImGui_Function_SetValue(ReadArrayWithEEL, 'samplerate', samplerate)
+        r.ImGui_Function_SetValue(ReadArrayWithEEL, 'reverse', isReverse and 1 or 0)
+        r.ImGui_Function_SetValue(ReadArrayWithEEL, 'threshold', threshold and threshold or 1000)
+        r.ImGui_Function_Execute(ReadArrayWithEEL)
+
+        local oldStartTime = starttime_sec
+        local pos = r.ImGui_Function_GetValue(ReadArrayWithEEL, 'pos_threshold')
+
+        maxDb = math.max(maxDb, r.ImGui_Function_GetValue(ReadArrayWithEEL, 'maxDb'))
+
+        --Log("[" .. cur_block .. "][" .. n_channels .. "] " .. round(oldStartTime, 2) .. ".." .. round(oldStartTime + ((block * n_channels) / samplerate), 2) .. " => " .. round(maxDb, 2) .. " " .. pos, ek_log_levels.Debug)
+
+        if threshold and pos ~= -1 then
+            return starttime_sec + pos
         end
 
         if isReverse then
-            needStopSeeking = offs < aa_start
-            offs = offs - samples_per_channel / take_source_sample_rate -- new offset in take source (seconds)
+            starttime_sec = starttime_sec - ((block * n_channels) / samplerate)
+            if starttime_sec < 0 then starttime_sec = 0 end
         else
-            needStopSeeking = offs > aa_end - samples_per_channel / take_source_sample_rate
-            offs = offs + samples_per_channel / take_source_sample_rate -- new offset in take source (seconds)
+            starttime_sec = starttime_sec + ((block * n_channels) / samplerate)
         end
-    end -- end of while loop
+    end
 
-    ::done_start::
+    --Log("==", ek_log_levels.Debug)
 
-    r.DestroyAudioAccessor(aa)
+    -- Tell r we're done working with this item, so the memory can be freed
+    r.DestroyAudioAccessor(audio)
 
-    return a_length, aa_start, aa_end, take_source_sample_rate, take_source_num_channels, samples_per_channel
+    -- I told you we'd put everything back
+    if playrate ~= 1 then
+        r.SetMediaItemTakeInfo_Value(take, "D_PLAYRATE", playrate)
+        r.SetMediaItemInfo_Value(item, "D_LENGTH", item_len)
+    end
+
+    return maxDb
 end
 
 local rel_peacks_cache = {}
@@ -532,16 +573,11 @@ local function GetRelativeThresholdsByTake(take, rel_threshold)
     if take == nil then return end
 
     local maxPeak = -100
-    local item = reaper.GetMediaItemTake_Item(take)
-    local _, guid = reaper.GetSetMediaItemInfo_String(item, "GUID", "", false)
-
+    local item = r.GetMediaItemTake_Item(take)
+    local guid = GetGUID(item)
+    
     if rel_peacks_cache[guid] == nil then
-        GoThroughTakeBySamples(take, function(db)
-            if db > maxPeak then
-                maxPeak = db
-            end
-        end)
-
+        maxPeak = GoThroughTakeBySamplesEEL(take)
         rel_peacks_cache[guid] = maxPeak
     else
         maxPeak = rel_peacks_cache[guid]
@@ -551,7 +587,7 @@ local function GetRelativeThresholdsByTake(take, rel_threshold)
 
     local rel_db = 40 * log10(abs_percent * (rel_threshold / 100))
 
-    -- Log(reaper.GetTakeName(take) .. ": VAL=" .. rel_db .. " MAX=" .. maxPeak, ek_log_levels.Debug)
+    --Log(r.GetTakeName(take) .. ": VAL=" .. rel_db .. " MAX=" .. maxPeak, ek_log_levels.Debug)
 
     return rel_db
 end
@@ -568,12 +604,7 @@ function GetStartPositionLouderThenThreshold(take, threshold)
         if orig == 100 then threshold = threshold - min_step end -- for good comparing floats
     end
 
-    GoThroughTakeBySamples(take, function(db, pos_offset)
-        if db >= threshold then
-            peakTime = pos_offset
-            return true
-        end
-    end)
+    peakTime = GoThroughTakeBySamplesEEL(take, threshold)
 
     return peakTime
 end
@@ -590,15 +621,12 @@ function GetEndPositionLouderThenThreshold(take, threshold)
         if orig == 100 then threshold = threshold - min_step end -- for good comparing floats
     end
 
-    local _, _, length = GoThroughTakeBySamples(take, function(db, pos_offset)
-        if db >= threshold then
-            peakTime = pos_offset
+    peakTime = GoThroughTakeBySamplesEEL(take, threshold, true)
 
-            return true
-        end
-    end, true)
-
-    if peakTime == nil then peakTime = length end
+    if peakTime == nil then
+        local item = r.GetMediaItemTake_Item(take)
+        peakTime = r.GetMediaItemInfo_Value(item, "D_LENGTH")
+    end
 
     return peakTime
 end
@@ -608,7 +636,7 @@ local function GetOffsetConsiderPitchByRate(offset, rate)
     local semitones = round(math.log(rate, semiFactor), 5)
     local curSemiFactor = 2 ^ ((1 / 12) * math.abs(semitones))
 
-    -- reaper.ShowConsoleMsg(semitones .. "\n")
+    -- r.ShowConsoleMsg(semitones .. "\n")
 
     return semitones > 0 and (offset * curSemiFactor) or (offset / curSemiFactor)
 end
@@ -622,20 +650,20 @@ function CropLeadingPosition(take, startOffset)
   
     local item = r.GetMediaItemTake_Item(take)
     local offset = r.GetMediaItemTakeInfo_Value(take, "D_STARTOFFS")
-    local rate = reaper.GetMediaItemTakeInfo_Value(take, "D_PLAYRATE")
+    local rate = r.GetMediaItemTakeInfo_Value(take, "D_PLAYRATE")
     local startOffsetAbs = GetOffsetConsiderPitchByRate(startOffset, rate)
 
-    -- reaper.ShowConsoleMsg(semitones .. " " .. startOffset .. " " ..  startOffsetAbs .. "\n")
+    -- r.ShowConsoleMsg(semitones .. " " .. startOffset .. " " ..  startOffsetAbs .. "\n")
 
     r.SetMediaItemTakeInfo_Value(take, "D_STARTOFFS", offset + startOffsetAbs)
     
     local position = r.GetMediaItemInfo_Value(item, "D_POSITION")
-    reaper.SetMediaItemInfo_Value(item, "D_POSITION", position + startOffset)
+    r.SetMediaItemInfo_Value(item, "D_POSITION", position + startOffset)
     
     local length = r.GetMediaItemInfo_Value(item, "D_LENGTH")
-    reaper.SetMediaItemInfo_Value(item, "D_LENGTH", length - startOffset)
+    r.SetMediaItemInfo_Value(item, "D_LENGTH", length - startOffset)
     
-    reaper.SetMediaItemInfo_Value(item, "D_FADEINLEN", fade)
+    r.SetMediaItemInfo_Value(item, "D_FADEINLEN", fade)
 end
 
 function CropTrailingPosition(take, endOffset)
@@ -649,8 +677,8 @@ function CropTrailingPosition(take, endOffset)
 
     if endOffset > length then return end
     
-    reaper.SetMediaItemInfo_Value(item, "D_LENGTH", endOffset)
-    reaper.SetMediaItemInfo_Value(item, "D_FADEOUTLEN", fade)
+    r.SetMediaItemInfo_Value(item, "D_LENGTH", endOffset)
+    r.SetMediaItemInfo_Value(item, "D_FADEOUTLEN", fade)
 end
 
 local function GoThroughMidiTakeByNotes(take, processCallback, isReverse)
@@ -671,8 +699,8 @@ local function GoThroughMidiTakeByNotes(take, processCallback, isReverse)
         local ret, _, muted, startppq, endppq, _, _, _ = r.MIDI_GetNote(take, note)
 
         if ret then
-            local startTime = reaper.MIDI_GetProjTimeFromPPQPos(take, startppq)
-            local endTime = reaper.MIDI_GetProjTimeFromPPQPos(take, endppq)
+            local startTime = r.MIDI_GetProjTimeFromPPQPos(take, startppq)
+            local endTime = r.MIDI_GetProjTimeFromPPQPos(take, endppq)
 
             if processCallback(muted, startTime, endTime) then
                 needStopSeeking = true

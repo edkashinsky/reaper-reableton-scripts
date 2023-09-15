@@ -1,11 +1,12 @@
 -- @description ek_Edge silence cropper
--- @version 1.1.6
+-- @version 1.1.7
 -- @author Ed Kashinsky
 -- @about
 --   This script helps to remove silence at the start and at the end of selected items by individual thresholds, pads and fades.
 --
 --   Also it provides UI for configuration
 -- @changelog
+--   • Optimization of audio buffer calculation via EEL
 --   • Optimization for preview lines
 --   • Support of 32-bit and multichannel audio
 --   • Added relative thresholds mode
@@ -97,7 +98,7 @@ local function GetEdgePositionsByItem(item)
 
     local startTime, endTime
     local take = reaper.GetActiveTake(item)
-    local _, guid = reaper.GetSetMediaItemInfo_String(item, "GUID", "", false)
+    local guid = GetGUID(item)
     local rate = reaper.GetMediaItemTakeInfo_Value(take, "D_PLAYRATE")
 
     if not take or not guid then return end
@@ -256,7 +257,7 @@ local function PreviewCropResultInArrangeView()
             ClearBitmap(bm.leading, i)
             ClearBitmap(bm.trailing, i)
 
-            local _, guid = reaper.GetSetMediaItemInfo_String(item, "GUID", "", false)
+            local guid = GetGUID(item)
             cachedPositions.leading[guid] = nil
             cachedPositions.trailing[guid] = nil
         end
@@ -309,7 +310,7 @@ function frame()
     GUI_DrawButton('Cancel', nil, gui_buttons_types.Cancel)
 end
 
-EK_DeferWithCooldown(PreviewCropResultInArrangeView, { last_time = 0, cooldown = 0.7, eventTick = function()
+EK_DeferWithCooldown(PreviewCropResultInArrangeView, { last_time = 0, cooldown = 0.01, eventTick = function()
     local _, scrollposh = reaper.JS_Window_GetScrollInfo(ArrangeHwnd, "h")
 
     if not window_open then
