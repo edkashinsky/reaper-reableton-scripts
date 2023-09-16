@@ -1,11 +1,12 @@
 -- @description ek_Edge silence cropper
--- @version 1.1.7
+-- @version 1.1.8
 -- @author Ed Kashinsky
 -- @about
 --   This script helps to remove silence at the start and at the end of selected items by individual thresholds, pads and fades.
 --
 --   Also it provides UI for configuration
 -- @changelog
+--   • Fixed bug with memory leak
 --   • Optimization of audio buffer calculation via EEL
 --   • Optimization for preview lines
 --   • Support of 32-bit and multichannel audio
@@ -119,8 +120,7 @@ local function GetEdgePositionsByItem(item)
         else
             endTime = GetEndPositionOfMidiNote(take)
             cachedPositions.trailing[guid] = { midi_chunk = chunk, position = endTime }
-    end
-
+        end
     else
         local p_l_threshold, p_t_threshold = GetThresholdsValues()
 
@@ -310,7 +310,7 @@ function frame()
     GUI_DrawButton('Cancel', nil, gui_buttons_types.Cancel)
 end
 
-EK_DeferWithCooldown(PreviewCropResultInArrangeView, { last_time = 0, cooldown = 0.01, eventTick = function()
+EK_DeferWithCooldown(PreviewCropResultInArrangeView, { last_time = 0, cooldown = using_eel and 0.01 or 0.7, eventTick = function()
     local _, scrollposh = reaper.JS_Window_GetScrollInfo(ArrangeHwnd, "h")
 
     if not window_open then

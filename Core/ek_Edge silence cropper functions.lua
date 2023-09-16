@@ -3,6 +3,7 @@
 local r = reaper
 local presets_key = "triming_silence_presets_list"
 min_step = 0.00001
+using_eel = reaper.APIExists("ImGui_CreateFunctionFromEEL")
 
 local presets = {
     current = nil,
@@ -423,7 +424,7 @@ local function SampleToDb(sample)
     end
 end
 
-local function GoThroughTakeBySamplesEEL(take, threshold, isReverse)
+local function GetMaxDbOrThresholdPositionByTakeEEL(take, threshold, isReverse)
     -- making math function local improves their speed
     local max, min, floor = math.max, math.min, math.floor
 
@@ -516,6 +517,7 @@ local function GoThroughTakeBySamplesEEL(take, threshold, isReverse)
         iterBlock = 1
     end
 
+    local pos = -1
     local maxDb = -150
 
     for cur_block = startBlock, endBlock, iterBlock do
@@ -535,15 +537,13 @@ local function GoThroughTakeBySamplesEEL(take, threshold, isReverse)
         r.ImGui_Function_SetValue(ReadArrayWithEEL, 'threshold', threshold and threshold or 1000)
         r.ImGui_Function_Execute(ReadArrayWithEEL)
 
-        local oldStartTime = starttime_sec
-        local pos = r.ImGui_Function_GetValue(ReadArrayWithEEL, 'pos_threshold')
-
+        pos = r.ImGui_Function_GetValue(ReadArrayWithEEL, 'pos_threshold')
         maxDb = math.max(maxDb, r.ImGui_Function_GetValue(ReadArrayWithEEL, 'maxDb'))
 
-        --Log("[" .. cur_block .. "][" .. n_channels .. "] " .. round(oldStartTime, 2) .. ".." .. round(oldStartTime + ((block * n_channels) / samplerate), 2) .. " => " .. round(maxDb, 2) .. " " .. pos, ek_log_levels.Debug)
+        --Log("[" .. cur_block .. "][" .. n_channels .. "] " .. round(starttime_sec, 2) .. ".." .. round(starttime_sec + ((block * n_channels) / samplerate), 2) .. " => " .. round(maxDb, 2) .. " " .. pos, ek_log_levels.Debug)
 
         if threshold and pos ~= -1 then
-            return starttime_sec + pos
+            goto end_looking_eel
         end
 
         if isReverse then
@@ -553,6 +553,8 @@ local function GoThroughTakeBySamplesEEL(take, threshold, isReverse)
             starttime_sec = starttime_sec + ((block * n_channels) / samplerate)
         end
     end
+
+    ::end_looking_eel::
 
     --Log("==", ek_log_levels.Debug)
 
@@ -565,7 +567,134 @@ local function GoThroughTakeBySamplesEEL(take, threshold, isReverse)
         r.SetMediaItemInfo_Value(item, "D_LENGTH", item_len)
     end
 
-    return maxDb
+    if threshold and pos ~= -1 then
+        return starttime_sec + pos
+    elseif not threshold then
+        return maxDb
+    else
+        return nil
+    end
+end
+
+local function GetDataForAccessor(take)
+    -- Get media source of media item take
+    local take_pcm_source = r.GetMediaItemTake_Source(take)
+    if take_pcm_source == nil then return end
+
+    -- Create take audio accessor
+    local aa = r.CreateTakeAudioAccessor(take)
+
+    if aa == nil then return end
+
+    -- Get the start time of the audio that can be returned from this accessor
+    local aa_start = r.GetAudioAccessorStartTime(aa)
+    -- Get the end time of the audio that can be returned from this accessor
+    local aa_end = r.GetAudioAccessorEndTime(aa)
+    local a_length = (aa_end - aa_start) / 25
+
+    if a_length <= 1 then a_length = 1 elseif a_length > 20 then a_length = 20 end
+
+    -- Get the number of channels in the source media.
+    local take_source_num_channels =  r.GetMediaSourceNumChannels(take_pcm_source)
+    if take_source_num_channels > 2 then take_source_num_channels = 2 end
+
+    -- Get the sample rate. MIDI source media will return zero.
+    local take_source_sample_rate = r.GetMediaSourceSampleRate(take_pcm_source)
+
+    -- How many samples are taken from audio accessor and put in the buffer
+    local samples_per_channel = take_source_sample_rate / 4
+
+    return aa, a_length, aa_start, aa_end, take_source_sample_rate, take_source_num_channels, samples_per_channel
+end
+
+local function GetMaxDbOrThresholdPositionByTake(take, threshold, isReverse)
+    if take == nil then return end
+
+    local aa, a_length, aa_start, aa_end, take_source_sample_rate, take_source_num_channels, samples_per_channel = GetDataForAccessor(take)
+
+    -- Samples are collected to this buffer
+    local buffer = r.new_array(samples_per_channel * take_source_num_channels)
+    local total_samples = (aa_end - aa_start) * (take_source_sample_rate/a_length)
+    local offs
+    local needStopSeeking = false
+
+    if total_samples < 1 then return end
+
+    if isReverse then
+        offs = aa_end - samples_per_channel / take_source_sample_rate
+    else
+        offs = aa_start
+    end
+
+    local pos = nil
+    local maxDb = 0
+
+    -- Loop through samples
+    while not needStopSeeking do
+        -- Get a block of samples from the audio accessor.
+        -- Samples are extracted immediately pre-FX,
+        -- and returned interleaved (first sample of first channel, first sample of second channel...).
+        -- Returns 0 if no audio, 1 if audio, -1 on error.
+        local aa_ret = r.GetAudioAccessorSamples(
+            aa,                       -- AudioAccessor accessor
+            take_source_sample_rate,  -- integer samplerate
+            take_source_num_channels, -- integer numchannels
+            offs,                     -- number starttime_sec
+            samples_per_channel,      -- integer numsamplesperchannel
+            buffer                    -- r.array samplebuffer
+        )
+
+        if aa_ret == 1 then
+            local startBuf = 1
+            local endBuf = #buffer
+            local stepBuf = take_source_num_channels
+
+            if isReverse then
+                startBuf = #buffer
+                endBuf = 1
+                stepBuf = -take_source_num_channels
+            end
+
+            for i = startBuf, endBuf, stepBuf do
+                for j = 1, take_source_num_channels do
+                    local buf_pos = i + j - 1
+
+                    if buf_pos >= 1 and buf_pos <= #buffer then
+                        local spl = buffer[buf_pos]
+
+                        if threshold == nil then
+                            maxDb = math.max(maxDb, math.abs(spl))
+                        elseif SampleToDb(spl) >= threshold then
+                            pos = offs + (buf_pos / (take_source_sample_rate * take_source_num_channels))
+                            goto end_looking_lua
+                        end
+                    end
+                end
+            end
+        elseif aa_ret == 0 then -- no audio in current buffer
+            -- do nothing
+        else
+            return
+        end
+
+        if isReverse then
+            needStopSeeking = offs < aa_start
+            offs = offs - samples_per_channel / take_source_sample_rate -- new offset in take source (seconds)
+        else
+            needStopSeeking = offs > aa_end - samples_per_channel / take_source_sample_rate
+            offs = offs + samples_per_channel / take_source_sample_rate -- new offset in take source (seconds)
+        end
+    end -- end of while loop
+
+    ::end_looking_lua::
+
+    r.DestroyAudioAccessor(aa)
+
+    if threshold then
+        return pos
+    else
+        return SampleToDb(maxDb)
+    end
 end
 
 local rel_peacks_cache = {}
@@ -577,7 +706,9 @@ local function GetRelativeThresholdsByTake(take, rel_threshold)
     local guid = GetGUID(item)
     
     if rel_peacks_cache[guid] == nil then
-        maxPeak = GoThroughTakeBySamplesEEL(take)
+        maxPeak = using_eel and GetMaxDbOrThresholdPositionByTakeEEL(take) or
+            GetMaxDbOrThresholdPositionByTake(take)
+
         rel_peacks_cache[guid] = maxPeak
     else
         maxPeak = rel_peacks_cache[guid]
@@ -604,7 +735,10 @@ function GetStartPositionLouderThenThreshold(take, threshold)
         if orig == 100 then threshold = threshold - min_step end -- for good comparing floats
     end
 
-    peakTime = GoThroughTakeBySamplesEEL(take, threshold)
+    peakTime = using_eel and GetMaxDbOrThresholdPositionByTakeEEL(take, threshold) or
+        GetMaxDbOrThresholdPositionByTake(take, threshold)
+
+    if peakTime == nil then peakTime = 0 end
 
     return peakTime
 end
@@ -621,7 +755,8 @@ function GetEndPositionLouderThenThreshold(take, threshold)
         if orig == 100 then threshold = threshold - min_step end -- for good comparing floats
     end
 
-    peakTime = GoThroughTakeBySamplesEEL(take, threshold, true)
+    peakTime = using_eel and GetMaxDbOrThresholdPositionByTakeEEL(take, threshold, true) or
+        GetMaxDbOrThresholdPositionByTake(take, threshold, true)
 
     if peakTime == nil then
         local item = r.GetMediaItemTake_Item(take)
@@ -672,8 +807,6 @@ function CropTrailingPosition(take, endOffset)
     local pad, fade = GetTrailingPadAndOffset(endOffset, length)
 
     endOffset = endOffset + pad
-
-    local length = r.GetMediaItemInfo_Value(item, "D_LENGTH")
 
     if endOffset > length then return end
     
