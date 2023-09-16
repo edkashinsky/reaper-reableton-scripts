@@ -200,7 +200,10 @@ function GetProcessedTitleByAdvanced(title, id)
         local find = config.sr_replace_find
         local replace = config.sr_replace_replace
 
-        if not find or not replace then return title end
+        if not find then return title end
+        if not replace then replace = "" end
+
+        find = escape_regexp_chars(find)
 
         local str, _ = string.gsub(title, find, replace)
 

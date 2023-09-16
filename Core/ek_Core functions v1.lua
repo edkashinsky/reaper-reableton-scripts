@@ -1248,3 +1248,13 @@ function EK_DeferWithCooldown(callback, data)
 
 	deferWithCooldown()
 end
+
+function escape_regexp_chars(text)
+	local reserved = "%+/#$@?{}[]><"
+	local escape = {}
+	for c in reserved:gmatch(".") do
+		escape[c] = "%" .. c
+	end
+
+	return text:gsub(".", escape)
+end
