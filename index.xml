@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="d188e0a36c2b8ec982678fccded7c8096fed5526">
+<index version="1" name="Reableton Scripts" commit="b2f4cfb55e0035ed14e6ec3abc9fec1e8a4934e9">
   <category name="ColorThemes">
     <reapack name="Flat Madness Bright Remix.theme" type="theme" desc="Flat Madness Bright Remix">
       <metadata>
@@ -271,6 +271,12 @@
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/3b48d16b2bd450d70dabea10e978f696915a782d/Core/ek_Core%20functions.lua</source>
         <source file="ek_Core functions v1.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/3b48d16b2bd450d70dabea10e978f696915a782d/Core/ek_Core%20functions%20v1.lua</source>
         <source file="ek_Core functions GUI.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/3b48d16b2bd450d70dabea10e978f696915a782d/Core/ek_Core%20functions%20GUI.lua</source>
+      </version>
+      <version name="1.0.37" author="Ed Kashinsky" time="2023-09-16T20:30:36Z">
+        <changelog><![CDATA[added new functions]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/b2f4cfb55e0035ed14e6ec3abc9fec1e8a4934e9/Core/ek_Core%20functions.lua</source>
+        <source file="ek_Core functions v1.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/b2f4cfb55e0035ed14e6ec3abc9fec1e8a4934e9/Core/ek_Core%20functions%20v1.lua</source>
+        <source file="ek_Core functions GUI.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/b2f4cfb55e0035ed14e6ec3abc9fec1e8a4934e9/Core/ek_Core%20functions%20GUI.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Focus virtual MIDI keyboard.lua" type="script" desc="ek_Focus virtual MIDI keyboard">
