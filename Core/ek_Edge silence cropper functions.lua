@@ -434,7 +434,7 @@ local function GetMaxDbOrThresholdPositionByTakeEEL(take, threshold, isReverse)
         maxDb = -150;
         pos_threshold = -1;
 
-        loop(block_size + 1,
+        while ((reverse == 1 && i > 0) || (reverse != 1 && i < block_size)) (
             // Loop through each channel separately
             j = 1;
 
@@ -491,8 +491,8 @@ local function GetMaxDbOrThresholdPositionByTakeEEL(take, threshold, isReverse)
     local n_channels = r.GetMediaSourceNumChannels(PCM_source)
 
     -- Break the range into blocks
-    local max_block_size = 1048575
-    local block_size = threshold and 4096 or floor(range_len_spls)
+    local max_block_size = 4194303
+    local block_size = threshold and 16384 or floor(range_len_spls)
 
     if block_size > max_block_size / n_channels then block_size = floor(max_block_size / n_channels) end
 
