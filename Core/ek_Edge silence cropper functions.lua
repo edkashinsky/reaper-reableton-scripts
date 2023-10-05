@@ -430,28 +430,27 @@ local function GetMaxDbOrThresholdPositionByTakeEEL(take, threshold, isReverse)
 
     -- Function to read the array usinf EEL
     local ReadArrayWithEEL = r.ImGui_CreateFunctionFromEEL([[
-        i = reverse == 1 ? block_size : 0;
+        i = (reverse == 1) ? block_size : 0;
         maxDb = -150;
         pos_threshold = -1;
 
-        loop(block_size,
+        loop(block_size + 1,
             // Loop through each channel separately
-            j = reverse == 1 ? n_channels : 1;
+            j = 1;
 
             loop(n_channels,
-                spl = samplebuffer[i * j];
-                db = spl == 0 ? -150 : 20 * log10(abs(spl));
+                spl = samplebuffer[(i * n_channels) + j];
+                db = spl == 0 ? -150 : (20 * log10(abs(spl)));
+                maxDb = (threshold != 1000 && maxDb == -150 && db >= threshold) || (threshold == 1000) ?
+                    max(db, maxDb) : maxDb;
 
-                pos_threshold = (threshold != 1000 && pos_threshold == -1 && db >= threshold) ? (
-                    (i * j) / samplerate
-                ) : pos_threshold;
+                pos_threshold = (threshold != 1000 && pos_threshold == -1 && db >= threshold) || (threshold == 1000 && db == maxDb) ?
+                    i / samplerate : pos_threshold;
 
-                maxDb = max(db, maxDb);
-
-                j = reverse == 1 ? j - 1 : j + 1;
+                j = j + 1;
             );
 
-            i = reverse == 1 ? i - 1 : i + 1;
+            i = (reverse == 1) ? i - 1 : i + 1;
         );
     ]])
 
@@ -492,9 +491,12 @@ local function GetMaxDbOrThresholdPositionByTakeEEL(take, threshold, isReverse)
     local n_channels = r.GetMediaSourceNumChannels(PCM_source)
 
     -- Break the range into blocks
-    local block_size = 4096
+    local max_block_size = 1048575
+    local block_size = threshold and 4096 or floor(range_len_spls)
+
+    if block_size > max_block_size / n_channels then block_size = floor(max_block_size / n_channels) end
+
     local n_blocks = floor(range_len_spls / block_size)
-    local n_block_size = (block_size * n_channels) / samplerate
     local extra_spls = range_len_spls - block_size * n_blocks
 
     -- 'samplebuffer' will hold all of the audio data for each block
@@ -504,7 +506,7 @@ local function GetMaxDbOrThresholdPositionByTakeEEL(take, threshold, isReverse)
 
     -- Loop through the audio, one block at a time
     if isReverse then
-        starttime_sec = range_end - n_block_size
+        starttime_sec = range_end - (block_size / samplerate)
         if starttime_sec < 0 then starttime_sec = 0 end
 
         startBlock = n_blocks
@@ -519,6 +521,8 @@ local function GetMaxDbOrThresholdPositionByTakeEEL(take, threshold, isReverse)
 
     local pos = -1
     local maxDb = -150
+
+    Log("=== SEARCH " .. startBlock .. " -> " .. endBlock .. " : " .. iterBlock .. " blocks", ek_log_levels.Important)
 
     for cur_block = startBlock, endBlock, iterBlock do
         local block = cur_block == endBlock and extra_spls or block_size
@@ -537,26 +541,29 @@ local function GetMaxDbOrThresholdPositionByTakeEEL(take, threshold, isReverse)
         r.ImGui_Function_SetValue(ReadArrayWithEEL, 'threshold', threshold and threshold or 1000)
         r.ImGui_Function_Execute(ReadArrayWithEEL)
 
+        local curMaxDb = r.ImGui_Function_GetValue(ReadArrayWithEEL, 'maxDb')
+        maxDb = math.max(maxDb, curMaxDb)
         pos = r.ImGui_Function_GetValue(ReadArrayWithEEL, 'pos_threshold')
-        maxDb = math.max(maxDb, r.ImGui_Function_GetValue(ReadArrayWithEEL, 'maxDb'))
 
-        --Log("[" .. cur_block .. "][" .. n_channels .. "] " .. round(starttime_sec, 2) .. ".." .. round(starttime_sec + ((block * n_channels) / samplerate), 2) .. " => " .. round(maxDb, 2) .. " " .. pos, ek_log_levels.Debug)
+        Log("\t[" .. cur_block .. "][" .. n_channels .. "][" .. block .. "][" .. ((starttime_sec + (block / samplerate)) - starttime_sec) .. "] " .. round(starttime_sec, 2) .. ".." .. round(starttime_sec + (block / samplerate), 2) .. "s. => " .. round(curMaxDb, 2) .. "db. " .. pos .. "s.", ek_log_levels.Important)
 
         if threshold and pos ~= -1 then
             goto end_looking_eel
         end
 
         if isReverse then
-            starttime_sec = starttime_sec - ((block * n_channels) / samplerate)
+            starttime_sec = starttime_sec - (block / samplerate)
             if starttime_sec < 0 then starttime_sec = 0 end
         else
-            starttime_sec = starttime_sec + ((block * n_channels) / samplerate)
+            starttime_sec = starttime_sec + (block / samplerate)
         end
     end
 
     ::end_looking_eel::
 
-    --Log("==", ek_log_levels.Debug)
+    Log("\t===", ek_log_levels.Important)
+    Log("\t" .. range_len_spls .. "spls. " .. maxDb .. "db. " .. pos .. "s. -> " .. (starttime_sec + pos) .. "s. ", ek_log_levels.Important)
+    Log(threshold, ek_log_levels.Important)
 
     -- Tell r we're done working with this item, so the memory can be freed
     r.DestroyAudioAccessor(audio)
@@ -701,7 +708,7 @@ local rel_peacks_cache = {}
 local function GetRelativeThresholdsByTake(take, rel_threshold)
     if take == nil then return end
 
-    local maxPeak = -100
+    local maxPeak = -150
     local item = r.GetMediaItemTake_Item(take)
     local guid = GetGUID(item)
     
@@ -730,9 +737,14 @@ function GetStartPositionLouderThenThreshold(take, threshold)
 
     if p.crop_mode.value == 1 then -- relative
         local orig = threshold
-        threshold = GetRelativeThresholdsByTake(take, orig)
 
-        if orig == 100 then threshold = threshold - min_step end -- for good comparing floats
+        if orig == 0 then
+            threshold = -150
+        elseif orig == 100 then
+            threshold = GetRelativeThresholdsByTake(take, orig)
+        else
+            threshold = GetRelativeThresholdsByTake(take, orig) - min_step -- for good comparing floats
+        end
     end
 
     peakTime = using_eel and GetMaxDbOrThresholdPositionByTakeEEL(take, threshold) or
@@ -750,9 +762,14 @@ function GetEndPositionLouderThenThreshold(take, threshold)
 
     if p.crop_mode.value == 1 then -- relative
         local orig = threshold
-        threshold = GetRelativeThresholdsByTake(take, orig)
 
-        if orig == 100 then threshold = threshold - min_step end -- for good comparing floats
+        if orig == 0 then
+            threshold = -150
+        elseif orig == 100 then
+            threshold = GetRelativeThresholdsByTake(take, orig)
+        else
+            threshold = GetRelativeThresholdsByTake(take, orig) - min_step -- for good comparing floats
+        end
     end
 
     peakTime = using_eel and GetMaxDbOrThresholdPositionByTakeEEL(take, threshold, true) or
