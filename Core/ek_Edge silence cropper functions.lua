@@ -459,61 +459,35 @@ local function GetMaxDbOrThresholdPositionByTakeEEL(take, threshold, isReverse)
 
     if not take or not samplerate then return end
 
-    -- Sort out the selection range
+    local starttime_sec, startBlock, endBlock, iterBlock
+    local audio = r.CreateTakeAudioAccessor(take)
     local item = r.GetMediaItemTake_Item(take)
-    local item_start = r.GetMediaItemInfo_Value(item, "D_POSITION")
     local item_len = r.GetMediaItemInfo_Value(item, "D_LENGTH")
-    local sel_start, sel_end = r.GetSet_LoopTimeRange(0, 0, 0, 0, 0)
-
-    if not sel_start or sel_end == sel_start then
-        sel_start = item_start
-        sel_end = item_start + item_len
-    end
-
-    sel_start = max(sel_start, item_start)
-    sel_end = min(sel_end, item_start + item_len)
-
-    if sel_end - sel_start <= 0 then return end
-
     local playrate = r.GetMediaItemTakeInfo_Value(take, "D_PLAYRATE")
-    if playrate ~= 1 then
-        r.SetMediaItemTakeInfo_Value(take, "D_PLAYRATE", 1)
-        r.SetMediaItemInfo_Value(item, "D_LENGTH", item_len * playrate)
-    end
-
-    -- Define the time range w.r.t the original playrate
-    local range_start = (sel_start - item_start) * playrate
-    local range_len = (sel_end - sel_start) * playrate
-    local range_end = range_start + range_len
-    local range_len_spls = floor(range_len * samplerate)
-
-    -- Allow for multichannel audio
     local n_channels = r.GetMediaSourceNumChannels(PCM_source)
+    local item_len_spls = floor(item_len * playrate * samplerate)
 
-    -- Break the range into blocks
     local max_block_size = 4194303
-    local block_size = threshold and 16384 or floor(range_len_spls)
+    local block_size = threshold and 16384 or floor(item_len_spls)
 
     if block_size > max_block_size / n_channels then block_size = floor(max_block_size / n_channels) end
 
-    local n_blocks = floor(range_len_spls / block_size)
-    local extra_spls = range_len_spls - block_size * n_blocks
+    local n_blocks = floor(item_len_spls / block_size)
+    local extra_spls = item_len_spls - block_size * n_blocks
 
     -- 'samplebuffer' will hold all of the audio data for each block
     local samplebuffer = r.new_array(block_size * n_channels)
-    local audio = r.CreateTakeAudioAccessor(take)
-    local starttime_sec, startBlock, endBlock, iterBlock
 
     -- Loop through the audio, one block at a time
     if isReverse then
-        starttime_sec = range_end - (block_size / samplerate)
+        starttime_sec = item_len - (block_size / samplerate)
         if starttime_sec < 0 then starttime_sec = 0 end
 
         startBlock = n_blocks
         endBlock = 0
         iterBlock = -1
     else
-        starttime_sec = range_start
+        starttime_sec = 0
         startBlock = 0
         endBlock = n_blocks
         iterBlock = 1
@@ -562,7 +536,7 @@ local function GetMaxDbOrThresholdPositionByTakeEEL(take, threshold, isReverse)
     ::end_looking_eel::
 
     Log("\t===", ek_log_levels.Important)
-    Log("\t" .. range_len_spls .. "spls. " .. maxDb .. "db. " .. pos .. "s. -> " .. (starttime_sec + pos) .. "s. ", ek_log_levels.Important)
+    Log("\t" .. item_len_spls .. "spls. " .. maxDb .. "db. " .. pos .. "s. -> " .. (starttime_sec + pos) .. "s. ", ek_log_levels.Important)
     Log(threshold, ek_log_levels.Important)
 
     -- Tell r we're done working with this item, so the memory can be freed
@@ -741,9 +715,9 @@ function GetStartPositionLouderThenThreshold(take, threshold)
         if orig == 0 then
             threshold = -150
         elseif orig == 100 then
-            threshold = GetRelativeThresholdsByTake(take, orig)
-        else
             threshold = GetRelativeThresholdsByTake(take, orig) - min_step -- for good comparing floats
+        else
+            threshold = GetRelativeThresholdsByTake(take, orig)
         end
     end
 
@@ -766,9 +740,9 @@ function GetEndPositionLouderThenThreshold(take, threshold)
         if orig == 0 then
             threshold = -150
         elseif orig == 100 then
-            threshold = GetRelativeThresholdsByTake(take, orig)
-        else
             threshold = GetRelativeThresholdsByTake(take, orig) - min_step -- for good comparing floats
+        else
+            threshold = GetRelativeThresholdsByTake(take, orig)
         end
     end
 
