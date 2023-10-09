@@ -90,9 +90,9 @@ This complicated script helps to crop silence on the edges of items by individua
 ![Edge silence cropper preview](/Assets/images/edge_silence_cropper_preview.png)
 
 It has preview mode and it is very handy. Every setting has it own color:
-- ![#1589F0](https://via.placeholder.com/15/1589F0/1589F0.png) Threshold - Blue 
-- ![#f03c15](https://via.placeholder.com/15/f03c15/f03c15.png) Pad - Red 
-- ![#c5f015](https://via.placeholder.com/15/c5f015/c5f015.png) Fade - Green
+- ![#1589F0](https://via.placeholder.com/15/1589F0/1589F0.png) Threshold - Blue - leading threshold is searched in the forward direction from the start of item, and the trailing one in the reverse direction from the end
+- ![#f03c15](https://via.placeholder.com/15/f03c15/f03c15.png) Pad - Red - offset from threshold position
+- ![#c5f015](https://via.placeholder.com/15/c5f015/c5f015.png) Fade - Green - started from pad position
 
 Script has an adaptive relative mode to get more accurate results with a single preset at different sound volumes:
 
