@@ -1,55 +1,42 @@
--- @description ek_Collapse selected tracks
--- @version 1.0.7
 -- @author Ed Kashinsky
--- @about
---   It collapses selected tracks/envelope lanes between 3 states: small, large. Put height values you like to 'Extensions' -> 'Command parameters' -> 'Track Height A' (for small size) and 'Track Height B' (for large size)
--- @changelog
---   small fixes
+-- @noindex
+-- @about ek_Collapse selected tracks
+-- @readme_skip
+
+function CoreFunctionsLoaded(script)
+	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
+	local root_path = debug.getinfo(1, 'S').source:sub(2, -5):match("(.*" .. sep .. ")")
+	local script_path = root_path .. ".." .. sep .. "Core" .. sep .. script
+	local file = io.open(script_path, 'r')
+
+	if file then file:close() dofile(script_path) else return nil end
+	return not not _G["EK_HasExtState"]
+end
+
+CoreFunctionsLoaded("ek_Tracks collapser functions.lua")
+
+if GetHeightData == nil then return end
 
 reaper.Undo_BeginBlock()
 
-local minHeight
-local defaultMinHeight = 25
-local _, dpi = reaper.ThemeLayout_GetLayout("tcp", -3)
-dpi = tonumber(dpi)
-
-if reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32" then
-	gfx.ext_retina = dpi >= 512 and 1 or 0
-	minHeight = defaultMinHeight * (dpi / 256)
-else
-	gfx.ext_retina = dpi > 512 and 1 or 0
-	minHeight = defaultMinHeight
-end
-
-local proj = 0
-local tinyChildrenState = 2
 local envelope = reaper.GetSelectedTrackEnvelope(proj)
 
 if envelope ~= nil then
-	local height = reaper.GetEnvelopeInfo_Value(envelope, "I_TCPH_USED")
-	
-	if height > 80 then
-		reaper.Main_OnCommand(reaper.NamedCommandLookup("_WOL_APPHSELENVSLOT2"), 0) -- SWS/wol: Apply height to selected envelope, slot 2
-	else 
-		reaper.Main_OnCommand(reaper.NamedCommandLookup("_WOL_APPHSELENVSLOT1"), 0) -- SWS/wol: Apply height to selected envelope, slot 3
-	end
+	local height = reaper.GetEnvelopeInfo_Value(envelope, "I_TCPH")
+	SetEnvelopeHeight(envelope, height > heights[2].val and heights[2].val or heights[1].val)
 else
 	for i = 0, reaper.CountSelectedTracks2(proj, true) - 1 do
 		local track = reaper.GetSelectedTrack2(proj, i, true)
-	
-		local height = reaper.GetMediaTrackInfo_Value(track, "I_TCPH")
-		local state = reaper.GetMediaTrackInfo_Value(track, "I_FOLDERCOMPACT")
+		local current_id, new_id = GetHeightData(track, true)
+		local isLanesEnabled, isLanesExpanded = GetLanesStatus(track)
 		local isFolder = reaper.GetMediaTrackInfo_Value(track, "I_FOLDERDEPTH")
+		local state = reaper.GetMediaTrackInfo_Value(track, "I_FOLDERCOMPACT")
 
-		if height > minHeight then
-			reaper.SetMediaTrackInfo_Value(track, "I_HEIGHTOVERRIDE", 18)
-			reaper.SetMediaTrackInfo_Value(track, "B_HEIGHTLOCK", 1)
-			reaper.SetMediaTrackInfo_Value(track, "B_HEIGHTLOCK", 0)
-			reaper.TrackList_AdjustWindows(false)
-
-			-- todo учитывать настройку отображения автоматизаций
-			-- reaper.Main_OnCommand(reaper.NamedCommandLookup("_BR_ENV_HIDE_ALL_BUT_ACTIVE_SEL"), 0) -- SWS/BR: Hide all but selected track envelope for selected tracks
-		elseif isFolder == 1 and state ~= tinyChildrenState then
+		if current_id == 1 and isLanesEnabled and isLanesExpanded then
+			Log("COLLAPSE LANES", ek_log_levels.Important)
+			reaper.Main_OnCommand(reaper.NamedCommandLookup(42704), 0) -- Track properties: Make fixed item lanes big/small
+		elseif current_id == 1 and isFolder == 1 and state ~= tinyChildrenState then
+			Log("COLLAPSE FOLDER", ek_log_levels.Important)
 			reaper.SetMediaTrackInfo_Value(track, "I_FOLDERCOMPACT", tinyChildrenState)
 
 			-- hide children in MCP
@@ -57,8 +44,20 @@ else
 			reaper.Main_OnCommand(reaper.NamedCommandLookup("_SWS_SELCHILDREN"), 0)
 			reaper.Main_OnCommand(reaper.NamedCommandLookup("_SWSTL_HIDEMCP"), 0)
 			reaper.Main_OnCommand(reaper.NamedCommandLookup("_SWS_RESTORESEL"), 0)
+		elseif current_id ~= new_id then
+			Log("COLLAPSE HEIGHT: " .. current_id .. " => " .. new_id, ek_log_levels.Important)
+
+			reaper.SetMediaTrackInfo_Value(track, "I_HEIGHTOVERRIDE", heights[new_id].val)
+			reaper.SetMediaTrackInfo_Value(track, "B_HEIGHTLOCK", 1)
+			reaper.SetMediaTrackInfo_Value(track, "B_HEIGHTLOCK", 0)
+			reaper.TrackList_AdjustWindows(false)
+
+			SetLastHeightId(track, new_id)
+
+			-- todo учитывать настройку отображения автоматизаций
+			-- reaper.Main_OnCommand(reaper.NamedCommandLookup("_BR_ENV_HIDE_ALL_BUT_ACTIVE_SEL"), 0) -- SWS/BR: Hide all but selected track envelope for selected tracks
 		end
 	end
 end
 
-reaper.Undo_EndBlock("Collapse selected tracks", -1)
+reaper.Undo_EndBlock("Track collapser - collapse", -1)

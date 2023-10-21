@@ -1,48 +1,39 @@
--- @description ek_Expand selected tracks
--- @version 1.0.9
 -- @author Ed Kashinsky
--- @about
---   It expands selected tracks/envelope lanes between 2 states: small, large. Put height values you like to 'Extensions' -> 'Command parameters' -> 'Track Height A' (for small size) and 'Track Height B' (for large size)
--- @changelog
---   small fixes
+-- @noindex
+-- @about ek_Expand selected tracks
+-- @readme_skip
 
-reaper.Undo_BeginBlock()
+function CoreFunctionsLoaded(script)
+	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
+	local root_path = debug.getinfo(1, 'S').source:sub(2, -5):match("(.*" .. sep .. ")")
+	local script_path = root_path .. ".." .. sep .. "Core" .. sep .. script
+	local file = io.open(script_path, 'r')
 
-local minHeight
-local defaultMinHeight = 25
-local _, dpi = reaper.ThemeLayout_GetLayout("tcp", -3)
-dpi = tonumber(dpi)
-
-if reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32" then
-	gfx.ext_retina = dpi >= 512 and 1 or 0
-	minHeight = defaultMinHeight * (dpi / 256)
-else
-	gfx.ext_retina = dpi > 512 and 1 or 0
-	minHeight = defaultMinHeight
+	if file then file:close() dofile(script_path) else return nil end
+	return not not _G["EK_HasExtState"]
 end
 
-local proj = 0
-local tinyChildrenState = 2
+CoreFunctionsLoaded("ek_Tracks collapser functions.lua")
+
+if GetHeightData == nil then return end
+
+reaper.Undo_BeginBlock()
 
 local envelope = reaper.GetSelectedTrackEnvelope(proj)
 
 if envelope ~= nil then
-	local height = reaper.GetEnvelopeInfo_Value(envelope, "I_TCPH_USED")
-	
-	if height < 80 then
-		reaper.Main_OnCommand(reaper.NamedCommandLookup("_WOL_APPHSELENVSLOT2"), 0) -- SWS/wol: Apply height to selected envelope, slot 2
-	else 
-		reaper.Main_OnCommand(reaper.NamedCommandLookup("_WOL_APPHSELENVSLOT3"), 0) -- SWS/wol: Apply height to selected envelope, slot 3
-	end
+	local height = reaper.GetEnvelopeInfo_Value(envelope, "I_TCPH")
+	SetEnvelopeHeight(envelope, (height < heights[2].val) and heights[2].val or heights[3].val)
 else
 	for i = 0, reaper.CountSelectedTracks2(proj, true) - 1 do
 		local track = reaper.GetSelectedTrack2(proj, i, true)
-	
-		local height = reaper.GetMediaTrackInfo_Value(track, "I_TCPH")
+		local current_id, new_id = GetHeightData(track)
+		local isLanesEnabled, isLanesExpanded = GetLanesStatus(track)
 		local state = reaper.GetMediaTrackInfo_Value(track, "I_FOLDERCOMPACT")
 		local isFolder = reaper.GetMediaTrackInfo_Value(track, "I_FOLDERDEPTH")
 
-		if isFolder == 1 and state == tinyChildrenState then
+		if current_id == 1 and isFolder == 1 and state == tinyChildrenState then
+			Log("EXPAND FOLDER", ek_log_levels.Important)
 			reaper.SetMediaTrackInfo_Value(track, "I_FOLDERCOMPACT", 0)
 
 			-- show children in MCP
@@ -50,11 +41,18 @@ else
 			reaper.Main_OnCommand(reaper.NamedCommandLookup("_SWS_SELCHILDREN"), 0)
 			reaper.Main_OnCommand(reaper.NamedCommandLookup("_SWSTL_SHOWMCP"), 0)
 			reaper.Main_OnCommand(reaper.NamedCommandLookup("_SWS_RESTORESEL"), 0)
-		elseif height <= minHeight then
-			reaper.SetMediaTrackInfo_Value(track, "I_HEIGHTOVERRIDE", 97)
+		elseif current_id == 1 and isLanesEnabled and not isLanesExpanded then
+			Log("EXPAND LANES", ek_log_levels.Important)
+			reaper.Main_OnCommand(reaper.NamedCommandLookup(42704), 0) -- Track properties: Make fixed item lanes big/small
+		elseif current_id ~= new_id then
+			Log("EXPAND HEIGHT: " .. current_id .. " => " .. new_id, ek_log_levels.Important)
+
+			reaper.SetMediaTrackInfo_Value(track, "I_HEIGHTOVERRIDE", heights[new_id].val)
 			reaper.SetMediaTrackInfo_Value(track, "B_HEIGHTLOCK", 1)
 			reaper.SetMediaTrackInfo_Value(track, "B_HEIGHTLOCK", 0)
 			reaper.TrackList_AdjustWindows(true)
+
+			SetLastHeightId(track, new_id)
 
 			-- todo учитывать настройку отображения автоматизаций
 			-- reaper.Main_OnCommand(reaper.NamedCommandLookup("_BR_SHOW_FX_ENV_SEL_TRACK"), 0) -- SWS/BR: Show all FX envelopes for selected tracks
@@ -62,4 +60,4 @@ else
 	end
 end
 
-reaper.Undo_EndBlock("Expand selected tracks", -1)
+reaper.Undo_EndBlock("Track collapser - expand", -1)
