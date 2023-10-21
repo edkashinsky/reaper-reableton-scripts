@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="533630116026400c242b68041983eff64bb7ce88">
+<index version="1" name="Reableton Scripts" commit="4ecdd0cff08b9f6c2f77d6d2fe68dee2b2f1fe20">
   <category name="ColorThemes">
     <reapack name="Flat Madness Bright Remix.theme" type="theme" desc="Flat Madness Bright Remix">
       <metadata>
@@ -1801,49 +1801,6 @@ Please restart Reaper for taking effect]]></changelog>
     </reapack>
   </category>
   <category name="Tracks Properties">
-    <reapack name="ek_Collapse selected tracks.lua" type="script" desc="ek_Collapse selected tracks">
-      <metadata>
-        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
-{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
-\widowctrl\hyphauto
-
-{\pard \ql \f0 \sa180 \li0 \fi0 It collapses selected tracks/envelope lanes between 3 states: small, large. Put height values you like to 'Extensions' -> 'Command parameters' -> 'Track Height A' (for small size) and 'Track Height B' (for large size)\par}
-}
-]]></description>
-      </metadata>
-      <version name="1.0.0" author="Ed Kashinsky" time="2022-05-30T09:42:49Z">
-        <changelog><![CDATA[- Small fixes]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Tracks%20Properties/ek_Collapse%20selected%20tracks.lua</source>
-      </version>
-      <version name="1.0.1" author="Ed Kashinsky" time="2022-09-08T17:03:47Z">
-        <changelog><![CDATA[- Small fixes]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/539949af61cc02524de40c9704d90de734e6c584/Tracks%20Properties/ek_Collapse%20selected%20tracks.lua</source>
-      </version>
-      <version name="1.0.2" author="Ed Kashinsky" time="2022-09-08T18:15:04Z">
-        <changelog><![CDATA[- Small fixes]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/35537df8e6a30bf48037029e3d07f1550210c314/Tracks%20Properties/ek_Collapse%20selected%20tracks.lua</source>
-      </version>
-      <version name="1.0.3" author="Ed Kashinsky" time="2022-09-13T08:27:18Z">
-        <changelog><![CDATA[- retina detection fix]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/91880c5b41f521f7a00a908545ce2ed01e2d7cf6/Tracks%20Properties/ek_Collapse%20selected%20tracks.lua</source>
-      </version>
-      <version name="1.0.4" author="Ed Kashinsky" time="2023-04-10T17:57:26Z">
-        <changelog><![CDATA[toggle displaying of tracks in MCP]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/4f9bedf21b16c1a3c597b69775457ad22bdc5f72/Tracks%20Properties/ek_Collapse%20selected%20tracks.lua</source>
-      </version>
-      <version name="1.0.5" author="Ed Kashinsky" time="2023-04-10T18:52:54Z">
-        <changelog><![CDATA[toggle displaying of tracks in MCP]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/6ebb9602c0e63422848c28f052aeb04d21663f44/Tracks%20Properties/ek_Collapse%20selected%20tracks.lua</source>
-      </version>
-      <version name="1.0.6" author="Ed Kashinsky" time="2023-04-10T19:08:21Z">
-        <changelog><![CDATA[toggle displaying of tracks in MCP]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/aa892581c61e48224fc9005ac609f7d78fe6eb5e/Tracks%20Properties/ek_Collapse%20selected%20tracks.lua</source>
-      </version>
-      <version name="1.0.7" author="Ed Kashinsky" time="2023-08-15T11:56:55Z">
-        <changelog><![CDATA[small fixes]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/22f69ceca6c082a1f22dcfaa47fd3b95ab350056/Tracks%20Properties/ek_Collapse%20selected%20tracks.lua</source>
-      </version>
-    </reapack>
     <reapack name="ek_Delete selected tracks.lua" type="script" desc="ek_Delete selected tracks">
       <metadata>
         <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
@@ -1879,53 +1836,6 @@ Please restart Reaper for taking effect]]></changelog>
       </metadata>
       <version name="1.0.0" author="Ed Kashinsky" time="2022-05-30T09:42:49Z">
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Tracks%20Properties/ek_Duplicate%20selected%20tracks%20or%20items.lua</source>
-      </version>
-    </reapack>
-    <reapack name="ek_Expand selected tracks.lua" type="script" desc="ek_Expand selected tracks">
-      <metadata>
-        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
-{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
-\widowctrl\hyphauto
-
-{\pard \ql \f0 \sa180 \li0 \fi0 It expands selected tracks/envelope lanes between 2 states: small, large. Put height values you like to 'Extensions' -> 'Command parameters' -> 'Track Height A' (for small size) and 'Track Height B' (for large size)\par}
-}
-]]></description>
-      </metadata>
-      <version name="1.0.0" author="Ed Kashinsky" time="2022-05-30T09:42:49Z">
-        <changelog><![CDATA[- Small fixes]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Tracks%20Properties/ek_Expand%20selected%20tracks.lua</source>
-      </version>
-      <version name="1.0.2" author="Ed Kashinsky" time="2022-09-08T17:03:47Z">
-        <changelog><![CDATA[- Small fixes]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/539949af61cc02524de40c9704d90de734e6c584/Tracks%20Properties/ek_Expand%20selected%20tracks.lua</source>
-      </version>
-      <version name="1.0.3" author="Ed Kashinsky" time="2022-09-08T17:07:23Z">
-        <changelog><![CDATA[- Small fixes]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/8a7b04253b674dedb38a50cd432c6b4ea742137f/Tracks%20Properties/ek_Expand%20selected%20tracks.lua</source>
-      </version>
-      <version name="1.0.4" author="Ed Kashinsky" time="2022-09-08T18:15:04Z">
-        <changelog><![CDATA[- Small fixes]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/35537df8e6a30bf48037029e3d07f1550210c314/Tracks%20Properties/ek_Expand%20selected%20tracks.lua</source>
-      </version>
-      <version name="1.0.5" author="Ed Kashinsky" time="2022-09-13T08:20:21Z">
-        <changelog><![CDATA[- Small fixes]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f7562d32fb79ff80e5d56ba363144bb0e37d0eea/Tracks%20Properties/ek_Expand%20selected%20tracks.lua</source>
-      </version>
-      <version name="1.0.6" author="Ed Kashinsky" time="2023-04-10T17:57:26Z">
-        <changelog><![CDATA[toggle displaying of tracks in MCP]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/4f9bedf21b16c1a3c597b69775457ad22bdc5f72/Tracks%20Properties/ek_Expand%20selected%20tracks.lua</source>
-      </version>
-      <version name="1.0.7" author="Ed Kashinsky" time="2023-04-10T18:52:54Z">
-        <changelog><![CDATA[toggle displaying of tracks in MCP]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/6ebb9602c0e63422848c28f052aeb04d21663f44/Tracks%20Properties/ek_Expand%20selected%20tracks.lua</source>
-      </version>
-      <version name="1.0.8" author="Ed Kashinsky" time="2023-04-10T19:08:21Z">
-        <changelog><![CDATA[toggle displaying of tracks in MCP]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/aa892581c61e48224fc9005ac609f7d78fe6eb5e/Tracks%20Properties/ek_Expand%20selected%20tracks.lua</source>
-      </version>
-      <version name="1.0.9" author="Ed Kashinsky" time="2023-08-15T11:56:55Z">
-        <changelog><![CDATA[small fixes]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/22f69ceca6c082a1f22dcfaa47fd3b95ab350056/Tracks%20Properties/ek_Expand%20selected%20tracks.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Insert new track.lua" type="script" desc="ek_Insert new track">
@@ -2164,6 +2074,22 @@ Please restart Reaper for taking effect]]></changelog>
       <version name="1.0.2" author="Ed Kashinsky" time="2022-05-31T08:06:26Z">
         <changelog><![CDATA[- Added core functions]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Tracks%20Properties/ek_Toggle%20trim%20mode%20for%20selected%20trackes.lua</source>
+      </version>
+    </reapack>
+    <reapack name="ek_Tracks collapser.lua" type="script" desc="ek_Tracks collapser">
+      <metadata>
+        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \ql \f0 \sa180 \li0 \fi0 This package has 2 scripts "ek_Collapse selected tracks" and "ek_Expand selected tracks". They toggle selected tracks/envelope lanes between 3 states: small, medium, large. Execute one of these scripts on transport panel and put height values there\par}
+}
+]]></description>
+      </metadata>
+      <version name="1.0.0" author="Ed Kashinsky" time="2023-10-21T22:41:15Z">
+        <source file="../Core/ek_Tracks collapser functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/4ecdd0cff08b9f6c2f77d6d2fe68dee2b2f1fe20/Core/ek_Tracks%20collapser%20functions.lua</source>
+        <source main="main" file="ek_Collapse selected tracks.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/4ecdd0cff08b9f6c2f77d6d2fe68dee2b2f1fe20/Tracks%20Properties/ek_Collapse%20selected%20tracks.lua</source>
+        <source main="main" file="ek_Expand selected tracks.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/4ecdd0cff08b9f6c2f77d6d2fe68dee2b2f1fe20/Tracks%20Properties/ek_Expand%20selected%20tracks.lua</source>
       </version>
     </reapack>
   </category>

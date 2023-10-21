@@ -421,10 +421,6 @@ This script monitors a certain fx slot in the monitoring chain and switches the 
 
 It changes color for items or tracks depending on focus
 
-#### ek_Collapse selected tracks
-
-It collapses selected tracks/envelope lanes between 3 states: small, large. Put height values you like to 'Extensions' -> 'Command parameters' -> 'Track Height A' (for small size) and 'Track Height B' (for large size)
-
 #### ek_Delete selected tracks
 
 If item has several takes and option "Show all takes in lane (when room)" is on, we gonna delete active take. If automation lane in focus, delete it. And in other case it deletes track and select previous available track
@@ -432,10 +428,6 @@ If item has several takes and option "Show all takes in lane (when room)" is on,
 #### ek_Duplicate selected tracks or items
 
 If any item is selected, it duplicate item. In other case is duplicate track
-
-#### ek_Expand selected tracks
-
-It expands selected tracks/envelope lanes between 2 states: small, large. Put height values you like to 'Extensions' -> 'Command parameters' -> 'Track Height A' (for small size) and 'Track Height B' (for large size)
 
 #### ek_Insert new track
 
@@ -477,6 +469,3 @@ Toggles selected track soloed
 
 Toggles trim mode for selected tracks and shows current state as button highlight
 
-## P.S.
-
-If you like scripts, you can support me via [PayPal](https://www.paypal.com/paypalme/kashinsky) or subscribe on my [Soundcloud](https://soundcloud.com/edkashinsky).
