@@ -1,10 +1,8 @@
 -- @description ek_Toggle monitoring fx plugin on custom slot
--- @version 1.0.2
 -- @author Ed Kashinsky
--- @about
---   This script monitors a custom fx slot in the monitoring chain and switches the bypass on it. For realtime highlighting install 'Global startup action'
--- @changelog
---   - Added script
+-- @noindex
+-- @about This script monitors a custom fx slot in the monitoring chain and switches the bypass on it. For realtime highlighting install 'Global startup action'
+-- @readme_skip
 
 function CoreFunctionsLoaded(script)
 	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"

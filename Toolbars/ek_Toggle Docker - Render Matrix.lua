@@ -1,12 +1,7 @@
--- @description ek_Toggle Docker: Render Matrix
--- @version 1.0.1
+-- @description ek_Toggle Docker - Render Matrix
 -- @author Ed Kashinsky
--- @about
---   Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"
---
---   This script toggles "Render Matrix" window
--- @changelog
---   - Added script
+-- @noindex
+-- @readme_skip
 
 function CoreFunctionsLoaded()
 	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"

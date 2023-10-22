@@ -1,10 +1,8 @@
--- @description ek_Toggle monitoring fx plugin on slot 4
--- @version 1.0.1
+-- @description ek_Toggle monitoring fx plugin on slot 1
 -- @author Ed Kashinsky
--- @about
---   This script monitors a certain fx slot in the monitoring chain and switches the bypass on it. For realtime highlighting install 'Global startup action'
--- @changelog
---   - Added script
+-- @noindex
+-- @about This script monitors a certain fx slot in the monitoring chain and switches the bypass on it. For realtime highlighting install 'Global startup action'
+-- @readme_skip
 
 function CoreFunctionsLoaded(script)
 	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
@@ -34,7 +32,7 @@ end
 
 reaper.Undo_BeginBlock()
 
-local s_new_value, filename, sectionID, cmdID = reaper.get_action_context()
+local _, _, sectionID, cmdID = reaper.get_action_context()
 GA_ToggleMfxBtnOnSlot(ga_mfx_slots.mfx_slot_4, ga_highlight_buttons.mfx_slot_4, sectionID, cmdID)
 
 reaper.Undo_EndBlock("Toggle monitoring fx plugin on slot 4", -1)

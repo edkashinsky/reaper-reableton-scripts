@@ -1,13 +1,7 @@
--- @description ek_Toggle Docker: Media Explorer
--- @version 1.0.1
+-- @description ek_Toggle Docker - Media Explorer
 -- @author Ed Kashinsky
--- @about
---   Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"
---
---   This script toggles "Media Explorer" window
--- @changelog
---   - Added script
--- @provides [main=main,mediaexplorer] .
+-- @noindex
+-- @readme_skip
 
 function CoreFunctionsLoaded()
 	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"

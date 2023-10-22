@@ -1,0 +1,19 @@
+-- @description ek_Toggle Docker
+-- @version 1.0.0
+-- @author Ed Kashinsky
+-- @about
+--   Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes.
+--   Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"
+-- @metapackage
+-- @provides
+--   [main=main] ek_Toggle Docker - FX Browser.lua
+--   [main=main] ek_Toggle Docker - Loudness.lua
+--   [main=main,mediaexplorer] ek_Toggle Docker - Media Explorer.lua
+--   [main=main,midi_editor] ek_Toggle Docker - MIDI Editor.lua
+--   [main=main] ek_Toggle Docker - Mixer.lua
+--   [main=main] ek_Toggle Docker - Project Bay.lua
+--   [main=main] ek_Toggle Docker - Region manager.lua
+--   [main=main] ek_Toggle Docker - Render Matrix.lua
+--   [main=main] ek_Toggle Docker - Video.lua
+--   [main=main,midi_editor] ek_Toggle Docker - toggle bottom window.lua
+--   [main=main,midi_editor] ek_Toggle Docker - toggle right window.lua

@@ -1,12 +1,7 @@
--- @description ek_Toggle Docker: Mixer
--- @version 1.0.0
+-- @description ek_Toggle Docker - Video
 -- @author Ed Kashinsky
--- @about
---   It remember Render Matrix button for toggling docker window
---
---   For work please install ek_Toggle last under docker window
--- @changelog
---   - Added core functions
+-- @noindex
+-- @readme_skip
 
 function CoreFunctionsLoaded()
 	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
