@@ -159,16 +159,6 @@ For installation:
 
 Script adds 1 second gap between selected items. Press CMD/CTRL to add 0.1 seconds gap.
 
-#### ek_Change pitch mode for selected items
-
-![Preview](/Assets/images/change_pitch_mode_preview.gif)
-
-This script shows nested menu of all pitch modes for selected items right on the toolbar without "Item properties" window
-
-#### ek_Clear pitch or rate for selected items
-
-This script resets any pitch, rate and length info for selected items and makes as default
-
 #### ek_Create crossfade on edges of items
 
 This script creates crossfade on edges of tracks. It useful when you don't use overlap on crossfades for better precise but anyway want to create crossfades
@@ -178,18 +168,6 @@ Installation for better experience:
 2. In **Context** field choose **Media item edge** and **double click** in right one
 3. Choose this script in field **Default action**
 4. Done! It means that when you double click on edge between media items, you create crossfade between them
-
-#### ek_Decrease pitch or rate for selected items
-
-This script decreases pitch or rate of selected items depending on "Preserve Pitch" option.
-
-If option is on, script decreases pitch and change rate in other case. Also when rate is changing, length is changing too (like in Ableton)
-
-If you hold special keys with mouse click, you get additional opportunities
-
-Hotkeys:
-- CMD/CTRL: Adjusting by 0.1 semitone (and 1 semitone without hotkey)
-- SHIFT: You can enter absolute value for pitch
 
 #### ek_Delete selected items with color of item under mouse position
 
@@ -202,18 +180,6 @@ This script helps to remove silence at the start and at the end of selected item
 
 Also it provides UI for configuration
 
-#### ek_Increase pitch or rate for selected items
-
-This script increases pitch or rate of selected items depending on "Preserve Pitch" option.
-
-If option is on, script increases pitch and change rate in other case. Also when rate is changing, length is changing too (like in Ableton)
-
-If you hold special keys with mouse click, you get additional opportunities
-
-Hotkeys:
-- CMD/CTRL: Adjusting by 0.1 semitone (and 1 semitone without hotkey)
-- SHIFT: You can enter absolute value for pitch
-
 #### ek_Pin selected items at markers started from
 
 ![Preview](/Assets/images/pin_items_to_markers_preview.gif)
@@ -222,6 +188,15 @@ This script pins selected items to markers started from specified number. It req
 #### ek_Pin selected items to closest markers
 
 This script pins selected items to closest markers for first selected item. It requires script "ek_Pin selected items at markers started from.lua"
+
+#### ek_Pitch Tool
+
+Pitch tool brings Ableton workflow for pitch manipulations of audio clips.
+- Change pitch mode for selected items menu
+- Toggle preserve pitch for selected items
+- Increase/Decrease pitch or rate for selected items
+- Switch to prev/next pitch mode for selected items
+- Clear pitch or rate for selected items
 
 #### ek_Remove 1 sec gap between selected items
 
@@ -241,18 +216,6 @@ For installation open "Mouse Modifiers" preferences, find "Media item" context a
 Remake of amazing script by AZ and it works a bit different way. You can split by edit cursor if mouse position on it (or in Tolerance range in pixels).
 If you move mouse on transport panel and execute script, you will see settings window
 
-#### ek_Switch to next pitch mode for selected items
-
-This script helps to switch between pitch modes quicker just in one click.
-
-Work with script ek_Switch to prev pitch mode for selected items.lua
-
-#### ek_Switch to prev pitch mode for selected items
-
-This script helps to switch between pitch modes quicker just in one click.
-
-Work with script ek_Switch to next pitch mode for selected items.lua
-
 #### ek_Toggle group for selected items
 
 This script makes group disable, if any selected item is grouped and otherwise if not.
@@ -260,14 +223,6 @@ This script makes group disable, if any selected item is grouped and otherwise i
 #### ek_Toggle overlaping items vertically option
 
 This script toggles option of editing multiple items on one track at the same time
-
-#### ek_Toggle preserve pitch for selected items
-
-![Preview](/Assets/images/prevent_pitch_preview.gif)
-
-This script just toggle "Preserve Pitch" for selected items but it saves state for button. For example, if you select item and it has preserve option, button starts highlight.
-
-For installation just add this script on toolbar and set "ek_Global Startup Functions" as global startup action via SWS.
 
 #### ek_Move cursor or items pack
 
