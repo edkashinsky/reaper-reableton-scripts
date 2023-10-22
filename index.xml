@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="4ddcbe76aafbf152647ef0739f933340f397d3d4">
+<index version="1" name="Reableton Scripts" commit="e2fcf80930f22fc7f31806111c86329aae469723">
   <category name="ColorThemes">
     <reapack name="Flat Madness Bright Remix.theme" type="theme" desc="Flat Madness Bright Remix">
       <metadata>
@@ -1350,242 +1350,31 @@ Please restart Reaper for taking effect]]></changelog>
     </reapack>
   </category>
   <category name="Toolbars">
-    <reapack name="ek_Toggle Docker - FX Browser.lua" type="script" desc="ek_Toggle Docker: FX Browser">
+    <reapack name="ek_Toggle Docker.lua" type="script" desc="ek_Toggle Docker">
       <metadata>
         <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
 {\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
 \widowctrl\hyphauto
 
 {\pard \ql \f0 \sa180 \li0 \fi0 Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"\par}
-{\pard \ql \f0 \sa180 \li0 \fi0 This script toggles "FX Browser" window\par}
 }
 ]]></description>
       </metadata>
-      <version name="1.0.0" author="Ed Kashinsky" time="2022-10-20T19:35:40Z">
-        <changelog><![CDATA[- Added core functions]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d47e8c9575f22bae0af853465d40bbd5f79d4733/Toolbars/ek_Toggle%20Docker%20-%20FX%20Browser.lua</source>
-      </version>
-      <version name="1.0.1" author="Ed Kashinsky" time="2022-10-20T19:45:13Z">
-        <changelog><![CDATA[- Added script]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7618bd914a19478ec5f111d7672bfccbd993d222/Toolbars/ek_Toggle%20Docker%20-%20FX%20Browser.lua</source>
-      </version>
-    </reapack>
-    <reapack name="ek_Toggle Docker - Loudness.lua" type="script" desc="ek_Toggle Docker: Loudness">
-      <metadata>
-        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
-{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
-\widowctrl\hyphauto
-
-{\pard \ql \f0 \sa180 \li0 \fi0 Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"\par}
-{\pard \ql \f0 \sa180 \li0 \fi0 This script toggles "Loudness" window\par}
-}
-]]></description>
-      </metadata>
-      <version name="1.0.0" author="Ed Kashinsky" time="2022-10-20T19:35:40Z">
-        <changelog><![CDATA[- Added core functions]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d47e8c9575f22bae0af853465d40bbd5f79d4733/Toolbars/ek_Toggle%20Docker%20-%20Loudness.lua</source>
-      </version>
-      <version name="1.0.1" author="Ed Kashinsky" time="2022-10-20T19:45:13Z">
-        <changelog><![CDATA[- Added script]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7618bd914a19478ec5f111d7672bfccbd993d222/Toolbars/ek_Toggle%20Docker%20-%20Loudness.lua</source>
+      <version name="1.0.0" author="Ed Kashinsky" time="2023-10-22T17:31:51Z">
+        <source main="main" file="ek_Toggle Docker - FX Browser.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/e2fcf80930f22fc7f31806111c86329aae469723/Toolbars/ek_Toggle%20Docker%20-%20FX%20Browser.lua</source>
+        <source main="main" file="ek_Toggle Docker - Loudness.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/e2fcf80930f22fc7f31806111c86329aae469723/Toolbars/ek_Toggle%20Docker%20-%20Loudness.lua</source>
+        <source main="main mediaexplorer" file="ek_Toggle Docker - Media Explorer.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/e2fcf80930f22fc7f31806111c86329aae469723/Toolbars/ek_Toggle%20Docker%20-%20Media%20Explorer.lua</source>
+        <source main="main midi_editor" file="ek_Toggle Docker - MIDI Editor.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/e2fcf80930f22fc7f31806111c86329aae469723/Toolbars/ek_Toggle%20Docker%20-%20MIDI%20Editor.lua</source>
+        <source main="main" file="ek_Toggle Docker - Mixer.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/e2fcf80930f22fc7f31806111c86329aae469723/Toolbars/ek_Toggle%20Docker%20-%20Mixer.lua</source>
+        <source main="main" file="ek_Toggle Docker - Project Bay.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/e2fcf80930f22fc7f31806111c86329aae469723/Toolbars/ek_Toggle%20Docker%20-%20Project%20Bay.lua</source>
+        <source main="main" file="ek_Toggle Docker - Region manager.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/e2fcf80930f22fc7f31806111c86329aae469723/Toolbars/ek_Toggle%20Docker%20-%20Region%20manager.lua</source>
+        <source main="main" file="ek_Toggle Docker - Render Matrix.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/e2fcf80930f22fc7f31806111c86329aae469723/Toolbars/ek_Toggle%20Docker%20-%20Render%20Matrix.lua</source>
+        <source main="main" file="ek_Toggle Docker - Video.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/e2fcf80930f22fc7f31806111c86329aae469723/Toolbars/ek_Toggle%20Docker%20-%20Video.lua</source>
+        <source main="main midi_editor" file="ek_Toggle Docker - toggle bottom window.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/e2fcf80930f22fc7f31806111c86329aae469723/Toolbars/ek_Toggle%20Docker%20-%20toggle%20bottom%20window.lua</source>
+        <source main="main midi_editor" file="ek_Toggle Docker - toggle right window.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/e2fcf80930f22fc7f31806111c86329aae469723/Toolbars/ek_Toggle%20Docker%20-%20toggle%20right%20window.lua</source>
       </version>
     </reapack>
-    <reapack name="ek_Toggle Docker - Media Explorer.lua" type="script" desc="ek_Toggle Docker: Media Explorer">
-      <metadata>
-        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
-{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
-\widowctrl\hyphauto
-
-{\pard \ql \f0 \sa180 \li0 \fi0 Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"\par}
-{\pard \ql \f0 \sa180 \li0 \fi0 This script toggles "Media Explorer" window\par}
-}
-]]></description>
-      </metadata>
-      <version name="1.0.0" author="Ed Kashinsky" time="2022-10-20T19:35:40Z">
-        <changelog><![CDATA[- Added core functions]]></changelog>
-        <source main="main mediaexplorer">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d47e8c9575f22bae0af853465d40bbd5f79d4733/Toolbars/ek_Toggle%20Docker%20-%20Media%20Explorer.lua</source>
-      </version>
-      <version name="1.0.1" author="Ed Kashinsky" time="2022-10-20T19:45:13Z">
-        <changelog><![CDATA[- Added script]]></changelog>
-        <source main="main mediaexplorer">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7618bd914a19478ec5f111d7672bfccbd993d222/Toolbars/ek_Toggle%20Docker%20-%20Media%20Explorer.lua</source>
-      </version>
-    </reapack>
-    <reapack name="ek_Toggle Docker - MIDI Editor.lua" type="script" desc="ek_Toggle Docker: MIDI Editor">
-      <metadata>
-        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
-{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
-\widowctrl\hyphauto
-
-{\pard \ql \f0 \sa180 \li0 \fi0 Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"\par}
-{\pard \ql \f0 \sa180 \li0 \fi0 This script toggles "MIDI Editor" window\par}
-}
-]]></description>
-      </metadata>
-      <version name="1.0.0" author="Ed Kashinsky" time="2022-10-20T19:35:40Z">
-        <changelog><![CDATA[- Added core functions]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d47e8c9575f22bae0af853465d40bbd5f79d4733/Toolbars/ek_Toggle%20Docker%20-%20MIDI%20Editor.lua</source>
-      </version>
-      <version name="1.0.1" author="Ed Kashinsky" time="2022-10-20T19:45:13Z">
-        <changelog><![CDATA[- Added script]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7618bd914a19478ec5f111d7672bfccbd993d222/Toolbars/ek_Toggle%20Docker%20-%20MIDI%20Editor.lua</source>
-      </version>
-    </reapack>
-    <reapack name="ek_Toggle Docker - Mixer.lua" type="script" desc="ek_Toggle Docker: Mixer">
-      <metadata>
-        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
-{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
-\widowctrl\hyphauto
-
-{\pard \ql \f0 \sa180 \li0 \fi0 Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"\par}
-{\pard \ql \f0 \sa180 \li0 \fi0 This script toggles "Mixer" window\par}
-}
-]]></description>
-      </metadata>
-      <version name="1.0.0" author="Ed Kashinsky" time="2022-10-20T19:35:40Z">
-        <changelog><![CDATA[- Added core functions]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d47e8c9575f22bae0af853465d40bbd5f79d4733/Toolbars/ek_Toggle%20Docker%20-%20Mixer.lua</source>
-      </version>
-      <version name="1.0.1" author="Ed Kashinsky" time="2022-10-20T19:45:13Z">
-        <changelog><![CDATA[- Added script]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7618bd914a19478ec5f111d7672bfccbd993d222/Toolbars/ek_Toggle%20Docker%20-%20Mixer.lua</source>
-      </version>
-    </reapack>
-    <reapack name="ek_Toggle Docker - Project Bay.lua" type="script" desc="ek_Toggle Docker: Project Bay">
-      <metadata>
-        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
-{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
-\widowctrl\hyphauto
-
-{\pard \ql \f0 \sa180 \li0 \fi0 Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"\par}
-{\pard \ql \f0 \sa180 \li0 \fi0 This script toggles "Project Bay" window\par}
-}
-]]></description>
-      </metadata>
-      <version name="1.0.0" author="Ed Kashinsky" time="2023-02-01T15:28:56Z">
-        <changelog><![CDATA[- Added script]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/ead73023edd837715ed73c6231e2a4d9a5fdbeb6/Toolbars/ek_Toggle%20Docker%20-%20Project%20Bay.lua</source>
-      </version>
-    </reapack>
-    <reapack name="ek_Toggle Docker - Region manager.lua" type="script" desc="ek_Toggle Docker: Region manager">
-      <metadata>
-        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
-{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
-\widowctrl\hyphauto
-
-{\pard \ql \f0 \sa180 \li0 \fi0 Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"\par}
-{\pard \ql \f0 \sa180 \li0 \fi0 This script toggles "Region manager" window\par}
-}
-]]></description>
-      </metadata>
-      <version name="1.0.0" author="Ed Kashinsky" time="2023-03-15T12:13:06Z">
-        <changelog><![CDATA[- Added script]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/724fbdc529afa23a21c97f0e5be9b95abfc52071/Toolbars/ek_Toggle%20Docker%20-%20Region%20manager.lua</source>
-      </version>
-      <version name="1.0.1" author="Ed Kashinsky" time="2023-03-15T12:20:13Z">
-        <changelog><![CDATA[- Added script]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/5e26b7cdad0441e4634bdc8b46e0a99b5b4dfe28/Toolbars/ek_Toggle%20Docker%20-%20Region%20manager.lua</source>
-      </version>
-    </reapack>
-    <reapack name="ek_Toggle Docker - Render Matrix.lua" type="script" desc="ek_Toggle Docker: Render Matrix">
-      <metadata>
-        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
-{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
-\widowctrl\hyphauto
-
-{\pard \ql \f0 \sa180 \li0 \fi0 Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"\par}
-{\pard \ql \f0 \sa180 \li0 \fi0 This script toggles "Render Matrix" window\par}
-}
-]]></description>
-      </metadata>
-      <version name="1.0.0" author="Ed Kashinsky" time="2022-10-20T19:35:40Z">
-        <changelog><![CDATA[- Added core functions]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d47e8c9575f22bae0af853465d40bbd5f79d4733/Toolbars/ek_Toggle%20Docker%20-%20Render%20Matrix.lua</source>
-      </version>
-      <version name="1.0.1" author="Ed Kashinsky" time="2022-10-20T19:45:13Z">
-        <changelog><![CDATA[- Added script]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7618bd914a19478ec5f111d7672bfccbd993d222/Toolbars/ek_Toggle%20Docker%20-%20Render%20Matrix.lua</source>
-      </version>
-    </reapack>
-    <reapack name="ek_Toggle Docker - toggle bottom window.lua" type="script" desc="ek_Toggle Docker - toggle bottom window">
-      <metadata>
-        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
-{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
-\widowctrl\hyphauto
-
-{\pard \ql \f0 \sa180 \li0 \fi0 Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"\par}
-{\pard \ql \f0 \sa180 \li0 \fi0 This script helps to toggle last opened window situated in bottom docker\par}
-}
-]]></description>
-      </metadata>
-      <version name="1.0.0" author="Ed Kashinsky" time="2022-10-20T19:35:40Z">
-        <changelog><![CDATA[- Added core functions]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d47e8c9575f22bae0af853465d40bbd5f79d4733/Toolbars/ek_Toggle%20Docker%20-%20toggle%20bottom%20window.lua</source>
-      </version>
-      <version name="1.0.1" author="Ed Kashinsky" time="2022-10-20T19:45:13Z">
-        <changelog><![CDATA[- Added script]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7618bd914a19478ec5f111d7672bfccbd993d222/Toolbars/ek_Toggle%20Docker%20-%20toggle%20bottom%20window.lua</source>
-      </version>
-    </reapack>
-    <reapack name="ek_Toggle Docker - toggle right window.lua" type="script" desc="ek_Toggle Docker: toggle right window">
-      <metadata>
-        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
-{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
-\widowctrl\hyphauto
-
-{\pard \ql \f0 \sa180 \li0 \fi0 Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"\par}
-{\pard \ql \f0 \sa180 \li0 \fi0 This script helps to toggle last opened window situated in right docker\par}
-}
-]]></description>
-      </metadata>
-      <version name="1.0.0" author="Ed Kashinsky" time="2022-10-20T19:35:40Z">
-        <changelog><![CDATA[- Added core functions]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d47e8c9575f22bae0af853465d40bbd5f79d4733/Toolbars/ek_Toggle%20Docker%20-%20toggle%20right%20window.lua</source>
-      </version>
-      <version name="1.0.1" author="Ed Kashinsky" time="2022-10-20T19:45:13Z">
-        <changelog><![CDATA[- Added script]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7618bd914a19478ec5f111d7672bfccbd993d222/Toolbars/ek_Toggle%20Docker%20-%20toggle%20right%20window.lua</source>
-      </version>
-    </reapack>
-    <reapack name="ek_Toggle Docker - Video.lua" type="script" desc="ek_Toggle Docker: Mixer">
-      <metadata>
-        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
-{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
-\widowctrl\hyphauto
-
-{\pard \ql \f0 \sa180 \li0 \fi0 It remember Render Matrix button for toggling docker window\par}
-{\pard \ql \f0 \sa180 \li0 \fi0 For work please install ek_Toggle last under docker window\par}
-}
-]]></description>
-      </metadata>
-      <version name="1.0.0" author="Ed Kashinsky" time="2022-10-20T19:35:40Z">
-        <changelog><![CDATA[- Added core functions]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d47e8c9575f22bae0af853465d40bbd5f79d4733/Toolbars/ek_Toggle%20Docker%20-%20Video.lua</source>
-      </version>
-    </reapack>
-    <reapack name="ek_Toggle monitoring FX on custom slot.lua" type="script" desc="ek_Toggle monitoring fx plugin on custom slot">
-      <metadata>
-        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
-{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
-\widowctrl\hyphauto
-
-{\pard \ql \f0 \sa180 \li0 \fi0 This script monitors a custom fx slot in the monitoring chain and switches the bypass on it. For realtime highlighting install 'Global startup action'\par}
-}
-]]></description>
-      </metadata>
-      <version name="1.0.0" author="Ed Kashinsky" time="2023-03-15T12:13:06Z">
-        <changelog><![CDATA[- Added script]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/724fbdc529afa23a21c97f0e5be9b95abfc52071/Toolbars/ek_Toggle%20monitoring%20FX%20on%20custom%20slot.lua</source>
-      </version>
-      <version name="1.0.1" author="Ed Kashinsky" time="2023-03-15T12:20:13Z">
-        <changelog><![CDATA[- Added script]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/5e26b7cdad0441e4634bdc8b46e0a99b5b4dfe28/Toolbars/ek_Toggle%20monitoring%20FX%20on%20custom%20slot.lua</source>
-      </version>
-      <version name="1.0.2" author="Ed Kashinsky" time="2023-09-10T14:39:38Z">
-        <changelog><![CDATA[- Added script]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/cc5cdcbab6120b8b9a61db20f82722185ac3629b/Toolbars/ek_Toggle%20monitoring%20FX%20on%20custom%20slot.lua</source>
-      </version>
-    </reapack>
-    <reapack name="ek_Toggle monitoring FX on slot 1.lua" type="script" desc="ek_Toggle monitoring fx plugin on slot 1">
+    <reapack name="ek_Toggle monitoring FX.lua" type="script" desc="ek_Toggle monitoring FX">
       <metadata>
         <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
 {\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
@@ -1596,89 +1385,13 @@ Please restart Reaper for taking effect]]></changelog>
 }
 ]]></description>
       </metadata>
-      <version name="1.0.0" author="Ed Kashinsky" time="2022-08-11T17:23:15Z">
-        <changelog><![CDATA[- Added script]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/44b1c04bfdbbd189a7c1c68dd1a94bf3fd334eae/Toolbars/ek_Toggle%20monitoring%20FX%20on%20slot%201.lua</source>
-      </version>
-      <version name="1.0.1" author="Ed Kashinsky" time="2022-08-12T07:19:53Z">
-        <changelog><![CDATA[- Added script]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/ef2c3886cba8e8e02c932b1b87fc8bd1c743df86/Toolbars/ek_Toggle%20monitoring%20FX%20on%20slot%201.lua</source>
-      </version>
-    </reapack>
-    <reapack name="ek_Toggle monitoring FX on slot 2.lua" type="script" desc="ek_Toggle monitoring fx plugin on slot 2">
-      <metadata>
-        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
-{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
-\widowctrl\hyphauto
-
-{\pard \ql \f0 \sa180 \li0 \fi0 This script monitors a certain fx slot in the monitoring chain and switches the bypass on it. For realtime highlighting install 'Global startup action'\par}
-}
-]]></description>
-      </metadata>
-      <version name="1.0.0" author="Ed Kashinsky" time="2022-08-11T17:23:15Z">
-        <changelog><![CDATA[- Added script]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/44b1c04bfdbbd189a7c1c68dd1a94bf3fd334eae/Toolbars/ek_Toggle%20monitoring%20FX%20on%20slot%202.lua</source>
-      </version>
-      <version name="1.0.1" author="Ed Kashinsky" time="2022-08-12T07:19:53Z">
-        <changelog><![CDATA[- Added script]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/ef2c3886cba8e8e02c932b1b87fc8bd1c743df86/Toolbars/ek_Toggle%20monitoring%20FX%20on%20slot%202.lua</source>
-      </version>
-    </reapack>
-    <reapack name="ek_Toggle monitoring FX on slot 3.lua" type="script" desc="ek_Toggle monitoring fx plugin on slot 3">
-      <metadata>
-        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
-{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
-\widowctrl\hyphauto
-
-{\pard \ql \f0 \sa180 \li0 \fi0 This script monitors a certain fx slot in the monitoring chain and switches the bypass on it. For realtime highlighting install 'Global startup action'\par}
-}
-]]></description>
-      </metadata>
-      <version name="1.0.0" author="Ed Kashinsky" time="2022-08-11T17:23:15Z">
-        <changelog><![CDATA[- Added script]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/44b1c04bfdbbd189a7c1c68dd1a94bf3fd334eae/Toolbars/ek_Toggle%20monitoring%20FX%20on%20slot%203.lua</source>
-      </version>
-      <version name="1.0.1" author="Ed Kashinsky" time="2022-08-12T07:19:53Z">
-        <changelog><![CDATA[- Added script]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/ef2c3886cba8e8e02c932b1b87fc8bd1c743df86/Toolbars/ek_Toggle%20monitoring%20FX%20on%20slot%203.lua</source>
-      </version>
-    </reapack>
-    <reapack name="ek_Toggle monitoring FX on slot 4.lua" type="script" desc="ek_Toggle monitoring fx plugin on slot 4">
-      <metadata>
-        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
-{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
-\widowctrl\hyphauto
-
-{\pard \ql \f0 \sa180 \li0 \fi0 This script monitors a certain fx slot in the monitoring chain and switches the bypass on it. For realtime highlighting install 'Global startup action'\par}
-}
-]]></description>
-      </metadata>
-      <version name="1.0.0" author="Ed Kashinsky" time="2022-08-11T17:23:15Z">
-        <changelog><![CDATA[- Added script]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/44b1c04bfdbbd189a7c1c68dd1a94bf3fd334eae/Toolbars/ek_Toggle%20monitoring%20FX%20on%20slot%204.lua</source>
-      </version>
-      <version name="1.0.1" author="Ed Kashinsky" time="2022-08-12T07:19:53Z">
-        <changelog><![CDATA[- Added script]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/ef2c3886cba8e8e02c932b1b87fc8bd1c743df86/Toolbars/ek_Toggle%20monitoring%20FX%20on%20slot%204.lua</source>
-      </version>
-    </reapack>
-    <reapack name="ek_Toggle monitoring FX on slot 5.lua" type="script" desc="ek_Toggle monitoring fx plugin on slot 5">
-      <metadata>
-        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
-{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
-\widowctrl\hyphauto
-
-{\pard \ql \f0 \sa180 \li0 \fi0 This script monitors a certain fx slot in the monitoring chain and switches the bypass on it. For realtime highlighting install 'Global startup action'\par}
-}
-]]></description>
-      </metadata>
-      <version name="1.0.0" author="Ed Kashinsky" time="2022-08-11T17:23:15Z">
-        <changelog><![CDATA[- Added script]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/44b1c04bfdbbd189a7c1c68dd1a94bf3fd334eae/Toolbars/ek_Toggle%20monitoring%20FX%20on%20slot%205.lua</source>
-      </version>
-      <version name="1.0.1" author="Ed Kashinsky" time="2022-08-12T07:19:53Z">
-        <changelog><![CDATA[- Added script]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/ef2c3886cba8e8e02c932b1b87fc8bd1c743df86/Toolbars/ek_Toggle%20monitoring%20FX%20on%20slot%205.lua</source>
+      <version name="1.0.0" author="Ed Kashinsky" time="2023-10-22T17:31:51Z">
+        <source main="main" file="ek_Toggle monitoring FX on custom slot.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/e2fcf80930f22fc7f31806111c86329aae469723/Toolbars/ek_Toggle%20monitoring%20FX%20on%20custom%20slot.lua</source>
+        <source main="main" file="ek_Toggle monitoring FX on slot 1.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/e2fcf80930f22fc7f31806111c86329aae469723/Toolbars/ek_Toggle%20monitoring%20FX%20on%20slot%201.lua</source>
+        <source main="main" file="ek_Toggle monitoring FX on slot 2.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/e2fcf80930f22fc7f31806111c86329aae469723/Toolbars/ek_Toggle%20monitoring%20FX%20on%20slot%202.lua</source>
+        <source main="main" file="ek_Toggle monitoring FX on slot 3.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/e2fcf80930f22fc7f31806111c86329aae469723/Toolbars/ek_Toggle%20monitoring%20FX%20on%20slot%203.lua</source>
+        <source main="main" file="ek_Toggle monitoring FX on slot 4.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/e2fcf80930f22fc7f31806111c86329aae469723/Toolbars/ek_Toggle%20monitoring%20FX%20on%20slot%204.lua</source>
+        <source main="main" file="ek_Toggle monitoring FX on slot 5.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/e2fcf80930f22fc7f31806111c86329aae469723/Toolbars/ek_Toggle%20monitoring%20FX%20on%20slot%205.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Toggle random color for selected items or tracks.lua" type="script" desc="ek_Toggle random color for selected items or tracks">

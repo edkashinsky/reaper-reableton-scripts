@@ -269,49 +269,13 @@ This script just toggle "Preserve Pitch" for selected items but it saves state f
 
 For installation just add this script on toolbar and set "ek_Global Startup Functions" as global startup action via SWS.
 
-#### ek_Move cursor or selected MIDI notes left by grid
+#### ek_Move cursor or items pack
 
-If any note is selected, this script moves it to left by grid size. And move cursor by grid in other case
-
-#### ek_Move cursor or selected MIDI notes right by grid
-
-If any note is selected, this script moves it to right by grid size. And move cursor by grid in other case
-
-#### ek_Move cursor or selected items left by grid
-
-If any item is selected, this script moves it to left by grid size. And moves cursor by grid in other case
-
-#### ek_Move cursor or selected items left by pixel
-
-If any item is selected, this script moves to left it by pixel. And moves cursor by pixel in other case
-
-#### ek_Move cursor or selected items right by grid
-
-If any item is selected, this script moves it to right by grid size. And moves cursor by grid in other case
-
-#### ek_Move cursor or selected items right by pixel
-
-If any item is selected, this script moves it to right by pixel. And moves cursor by pixel in other case
-
-#### ek_Move cursor to start of item under mouse
-
-It just moves edit cursor to start of selected item
+This package has many scripts which are making navigation in arrange view and at the same time are moving some items depends on selection
 
 #### ek_Select items from selected to mouse cursor
 
 This script extends selection of items from selected to mouse cursor. As usual this action attaches in mouse modifiers on media item section
-
-#### ek_Select next non-tiny track
-
-This script helps to navigate by tracks and shown envelopes by hotkeys.
-
-I usually attach this script to down arrow and it goes down throw project and select next track/envelope lane if it visible
-
-#### ek_Select prev non-tiny track
-
-This script helps to navigate by tracks and shown envelopes by hotkeys.
-
-I usually attach this script to up arrow and it goes up throw project and select previous track/envelope lane if it visible
 
 #### ek_Smart horizontal zoom in
 
@@ -325,95 +289,19 @@ This script helps live with Project Limit option is on. It makes zoom available 
 
 This script toggle time selection by razor or selected items. Actually it works with loop points, so it supports behaviour when loop points and time selection is unlinked. Also it toggles transport repeat like in Ableton
 
-#### ek_Toggle Docker: FX Browser
+#### ek_Tracks navigator
 
-Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"
+This package has 2 scripts "ek_Tracks navigator - go to prev track" and "ek_Tracks navigator - go to next track".
+With these scripts you can navigate between non-tiny visible tracks and envelopes. You can attach scripts to arrow keys
 
-This script toggles "FX Browser" window
+#### ek_Toggle Docker
 
-#### ek_Toggle Docker: Loudness
+Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes.
+Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"
 
-Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"
-
-This script toggles "Loudness" window
-
-#### ek_Toggle Docker: MIDI Editor
-
-Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"
-
-This script toggles "MIDI Editor" window
-
-#### ek_Toggle Docker: Media Explorer
-
-Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"
-
-This script toggles "Media Explorer" window
-
-#### ek_Toggle Docker: Mixer
-
-Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"
-
-This script toggles "Mixer" window
-
-#### ek_Toggle Docker: Project Bay
-
-Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"
-
-This script toggles "Project Bay" window
-
-#### ek_Toggle Docker: Region manager
-
-Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"
-
-This script toggles "Region manager" window
-
-#### ek_Toggle Docker: Render Matrix
-
-Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"
-
-This script toggles "Render Matrix" window
-
-#### ek_Toggle Docker: Mixer
-
-It remember Render Matrix button for toggling docker window
-
-For work please install ek_Toggle last under docker window
-
-#### ek_Toggle Docker - toggle bottom window
-
-Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"
-
-This script helps to toggle last opened window situated in bottom docker
-
-#### ek_Toggle Docker: toggle right window
-
-Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"
-
-This script helps to toggle last opened window situated in right docker
-
-#### ek_Toggle monitoring fx plugin on custom slot
-
-This script monitors a custom fx slot in the monitoring chain and switches the bypass on it. For realtime highlighting install 'Global startup action'
-
-#### ek_Toggle monitoring fx plugin on slot 1
+#### ek_Toggle monitoring FX
 
 ![Preview](/Assets/images/mfx_slots_preview.gif)
-
-This script monitors a certain fx slot in the monitoring chain and switches the bypass on it. For realtime highlighting install 'Global startup action'
-
-#### ek_Toggle monitoring fx plugin on slot 2
-
-This script monitors a certain fx slot in the monitoring chain and switches the bypass on it. For realtime highlighting install 'Global startup action'
-
-#### ek_Toggle monitoring fx plugin on slot 3
-
-This script monitors a certain fx slot in the monitoring chain and switches the bypass on it. For realtime highlighting install 'Global startup action'
-
-#### ek_Toggle monitoring fx plugin on slot 4
-
-This script monitors a certain fx slot in the monitoring chain and switches the bypass on it. For realtime highlighting install 'Global startup action'
-
-#### ek_Toggle monitoring fx plugin on slot 5
 
 This script monitors a certain fx slot in the monitoring chain and switches the bypass on it. For realtime highlighting install 'Global startup action'
 
@@ -468,6 +356,11 @@ Toggles selected track soloed
 #### ek_Toggle trim mode for selected trackes
 
 Toggles trim mode for selected tracks and shows current state as button highlight
+
+#### ek_Tracks collapser
+
+This package has 2 scripts "ek_Collapse selected tracks" and "ek_Expand selected tracks". They toggle selected tracks/envelope lanes between 3 states: small, medium, large.
+Execute one of these scripts on transport panel and put height values there
 
 ## P.S.
 

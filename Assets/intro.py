@@ -46,13 +46,15 @@ class Intro:
                     with open(os.path.join(root, filename)) as f:
                         lua = ast.parse(f.read())
 
-                        if lua.body.body and lua.body.body[0].comments:
+                        comments = lua.body.body[0].comments if lua.body.body else lua.body.comments
+
+                        if comments:
                             description = ""
                             about = ""
                             aboutStarted = False
                             isWip = False
 
-                            for comment in lua.body.body[0].comments:
+                            for comment in comments:
                                 if comment.s.find("@readme_skip") >= 0:
                                     isWip = True
                                     break
@@ -61,7 +63,7 @@ class Intro:
                                 elif comment.s.find("@about") >= 0:
                                     aboutStarted = True
                                 elif aboutStarted:
-                                    if comment.s.find("@provides") >= 0 or comment.s.find("@changelog") >= 0:
+                                    if comment.s.find("@provides") >= 0 or comment.s.find("@changelog") >= 0 or comment.s.find("@metapackage") >= 0:
                                         aboutStarted = False
                                     else:
                                         about += comment.s[2:].strip() + "\n"

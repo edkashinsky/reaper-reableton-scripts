@@ -1,6 +1,6 @@
+-- @author Ed Kashinsky
 -- @description ek_Move cursor or items pack
 -- @version 1.0.0
--- @author Ed Kashinsky
 -- @about
 --   This package has many scripts which are making navigation in arrange view and at the same time are moving some items depends on selection
 -- @metapackage
