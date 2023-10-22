@@ -1,18 +1,17 @@
--- @description ek_Decrease pitch or rate for selected items
--- @version 1.0.5
+-- @description ek_Clear pitch or rate for selected items
 -- @author Ed Kashinsky
 -- @about
---   This script decreases pitch or rate of selected items depending on "Preserve Pitch" option.
+--    This script increases pitch or rate of selected items depending on "Preserve Pitch" option.
 --
---   If option is on, script decreases pitch and change rate in other case. Also when rate is changing, length is changing too (like in Ableton)
+--   If option is on, script increases pitch and change rate in other case. Also when rate is changing, length is changing too (like in Ableton)
 --
 --   If you hold special keys with mouse click, you get additional opportunities
 --
 --   Hotkeys:
 --      - CMD/CTRL: Adjusting by 0.1 semitone (and 1 semitone without hotkey)
 --      - SHIFT: You can enter absolute value for pitch
--- @changelog
---   - Now you can enter absolute pitch value by clicking on button + pressing Shift key. Also press Cmd/Ctrl for smoothing changes
+-- @noindex
+-- @readme_skip
 
 function CoreFunctionsLoaded()
 	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
@@ -33,7 +32,7 @@ end
 reaper.Undo_BeginBlock()
 
 local proj = 0
-local delta = -1
+local delta = 1
 local isDelta = true
 local count_selected_items = reaper.CountSelectedMediaItems(proj)
 
@@ -41,7 +40,7 @@ if count_selected_items == 0 then return end
 
 -- ctrl/cmd is pressed (smoother changes)
 if reaper.JS_Mouse_GetState(4) > 0 then
-	delta = -0.1
+	delta = 0.1
 end
 
 -- Shift is pressed (enter value)
@@ -54,7 +53,7 @@ if reaper.JS_Mouse_GetState(8) > 0 then
 		delta = tonumber(result[1])
 		if not delta then return end
 
-		delta = -math.abs(delta)
+		delta = math.abs(delta)
 		isDelta = false
 	end)
 end
@@ -69,4 +68,4 @@ for i = 0, count_selected_items - 1 do
 	changePitchForTake(itemTake, delta, mode == 1, isDelta)
 end
 
-reaper.Undo_EndBlock("Decrease Pitch or Rate", -1)
+reaper.Undo_EndBlock("Increase pitch or rate", -1)

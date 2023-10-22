@@ -1,12 +1,11 @@
 -- @description ek_Switch to prev pitch mode for selected items
--- @version 1.0.1
 -- @author Ed Kashinsky
 -- @about
---   This script helps to switch between pitch modes quicker just in one click.
+--    This script helps to switch between pitch modes quicker just in one click.
 --
---   Work with script ek_Switch to next pitch mode for selected items.lua
--- @changelog
---   - Added core functions
+--    Work with script ek_Pitch Tool - Switch to next pitch mode for selected items.lua
+-- @noindex
+-- @readme_skip
 
 function CoreFunctionsLoaded()
 	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"

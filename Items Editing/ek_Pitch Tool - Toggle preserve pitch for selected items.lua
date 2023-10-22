@@ -1,14 +1,13 @@
 -- @description ek_Toggle preserve pitch for selected items
--- @version 1.0.1
 -- @author Ed Kashinsky
 -- @about
---   ![Preview](/Assets/images/prevent_pitch_preview.gif)
+--    ![Preview](/Assets/images/prevent_pitch_preview.gif)
 --
---   This script just toggle "Preserve Pitch" for selected items but it saves state for button. For example, if you select item and it has preserve option, button starts highlight.
+--    This script just toggle "Preserve Pitch" for selected items but it saves state for button. For example, if you select item and it has preserve option, button starts highlight.
 --
---   For installation just add this script on toolbar and set "ek_Global Startup Functions" as global startup action via SWS.
--- @changelog
---   - Added core functions
+--    For installation just add this script on toolbar and set "ek_Global Startup Functions" as global startup action via SWS.
+-- @noindex
+-- @readme_skip
 
 function CoreFunctionsLoaded(script)
 	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"

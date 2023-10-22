@@ -1,8 +1,9 @@
 -- @description ek_Clear pitch or rate for selected items
--- @version 1.0.1
 -- @author Ed Kashinsky
 -- @about
---   This script resets any pitch, rate and length info for selected items and makes as default
+--    This script resets any pitch, rate and length info for selected items and makes as default
+-- @noindex
+-- @readme_skip
 
 function CoreFunctionsLoaded()
 	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"

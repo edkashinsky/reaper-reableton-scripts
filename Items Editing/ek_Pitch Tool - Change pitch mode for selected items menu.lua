@@ -1,12 +1,9 @@
 -- @description ek_Change pitch mode for selected items
--- @version 1.0.1
 -- @author Ed Kashinsky
 -- @about
---   ![Preview](/Assets/images/change_pitch_mode_preview.gif)
---
---   This script shows nested menu of all pitch modes for selected items right on the toolbar without "Item properties" window
--- @changelog
---   - Added core functions
+--    This script shows nested menu of all pitch modes for selected items right on the toolbar without "Item properties" window
+-- @noindex
+-- @readme_skip
 
 function CoreFunctionsLoaded()
 	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
