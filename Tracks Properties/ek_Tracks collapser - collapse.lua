@@ -1,6 +1,6 @@
 -- @author Ed Kashinsky
 -- @noindex
--- @about ek_Collapse selected tracks
+-- @about ek_Tracks collapser - collapse
 -- @readme_skip
 
 function CoreFunctionsLoaded(script)
