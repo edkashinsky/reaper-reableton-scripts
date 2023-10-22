@@ -1,8 +1,8 @@
 -- @description ek_Move cursor or selected items right by pixel
--- @version 1.0.0
 -- @author Ed Kashinsky
--- @about
---   If any item is selected, this script moves it to right by pixel. And moves cursor by pixel in other case
+-- @noindex
+-- @about If any item is selected, this script moves it to right by pixel. And moves cursor by pixel in other case
+-- @readme_skip
 
 reaper.Undo_BeginBlock()
 

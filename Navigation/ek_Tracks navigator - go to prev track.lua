@@ -1,19 +1,19 @@
--- @description ek_Select prev non-tiny track
--- @version 1.0.0
 -- @author Ed Kashinsky
--- @about
---   This script helps to navigate by tracks and shown envelopes by hotkeys.
---
---   I usually attach this script to up arrow and it goes up throw project and select previous track/envelope lane if it visible
--- @changelog
---   - Small fixes
+-- @noindex
+-- @about ek_Tracks navigator - go to prev track
+-- @readme_skip
 
-local proj = 0
-local tinyChildrenState = 2
+function CoreFunctionsLoaded(script)
+	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
+	local root_path = debug.getinfo(1, 'S').source:sub(2, -5):match("(.*" .. sep .. ")")
+	local script_path = root_path .. ".." .. sep .. "Core" .. sep .. script
+	local file = io.open(script_path, 'r')
 
--- MASTER is a track also
-local countSelectedTracks = reaper.CountSelectedTracks2(proj, true)
-local firstSelectedTrack = reaper.GetSelectedTrack2(proj, 0, true)
+	if file then file:close() dofile(script_path) else return nil end
+	return not not _G["EK_HasExtState"]
+end
+
+CoreFunctionsLoaded("ek_Tracks navigator functions.lua")
 
 -- IF take is selected, navigated by it
 local showAllTakesOption = reaper.SNM_GetIntConfigVar("projtakelane", 0) & 1 == 1 -- Show all takes in lane (when room)
@@ -21,96 +21,6 @@ local firstSelectedItem = reaper.GetSelectedMediaItem(proj, 0)
 local numTakesFirstSelectedItems = 0
 if firstSelectedItem ~= nil then
 	numTakesFirstSelectedItems = reaper.CountTakes(firstSelectedItem)
-end
-
-local function isAnyParentTiny(track)
-	local parentTrack = track
-
-	while parentTrack ~= nil do
-		parentTrack = reaper.GetParentTrack(parentTrack)
-
-		if parentTrack ~= nil then
-			local isFolder = reaper.GetMediaTrackInfo_Value(parentTrack, "I_FOLDERCOMPACT")
-
-			if isFolder == tinyChildrenState then
-				return true
-			end
-		end
-	end
-
-	return false
-end
-
-local function GetPrevTrack()
-	local countTracks = reaper.CountTracks(proj)
-	local sIndex
-	
-	for i = 0, countTracks - 1 do	
-		local track = reaper.GetTrack(proj, i)
-		
-		if track == firstSelectedTrack then
-			sIndex = i
-			break
-		end
-	end
-	
-	if (sIndex == nil or sIndex == 0) then
-		return reaper.GetMasterTrack(proj)
-	end
-	
-	if sIndex - 1 >= 0 then 
-		for i = sIndex - 1, 0, -1 do
-			local track = reaper.GetTrack(proj, i)
-			
-			if isAnyParentTiny(track) == false then
-				return track
-			end
-		end
-	end
-	
-	return reaper.GetTrack(proj, sIndex or countTracks - 1)
-end
-
--- Automation lane
-local function isEnvelopeVisible(env)
-	return env ~= nil and reaper.GetEnvelopeInfo_Value(env, "I_TCPH_USED") > 0
-end
-
-local function getFirstVisibleEnvelopeReverse(track, startedFrom)
-	local countEnvs = reaper.CountTrackEnvelopes(track)
-	
-	if countEnvs == 0 or countEnvs - startedFrom < 0 then
-		return nil
-	end
-	
-	for i = startedFrom, 0, -1 do
-		local env = reaper.GetTrackEnvelope(track, i)
-		
-		if isEnvelopeVisible(env) then
-			return env
-		end
-	end
-	
-	return nil
-end
-
-local function getEnvelopeIdx(env)
-	local track = reaper.GetEnvelopeInfo_Value(env, "P_TRACK")
-	local countEnvs = reaper.CountTrackEnvelopes(track)
-	
-	if countEnvs == 0 then
-		return -1
-	end
-	
-	for i = 0, countEnvs do
-		local e = reaper.GetTrackEnvelope(track, i)
-		
-		if e == env then
-			return i
-		end
-	end
-	
-	return -1
 end
 
 local prevEnvelope
@@ -133,8 +43,6 @@ elseif isEnvelopeVisible(selectedEnvelope) then
 		useFirstSelectedTrack = true
 	end
 end
-	
----
 
 if showAllTakesOption and numTakesFirstSelectedItems > 1 then
 	reaper.Main_OnCommand(40126, 0) -- Take: Switch items to previous take

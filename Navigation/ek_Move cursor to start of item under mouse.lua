@@ -1,8 +1,8 @@
 -- @description ek_Move cursor to start of item under mouse
--- @version 1.0.0
 -- @author Ed Kashinsky
--- @about
---   It just moves edit cursor to start of selected item
+-- @noindex
+-- @about It just moves edit cursor to start of selected item
+-- @readme_skip
 
 reaper.Undo_BeginBlock()
 

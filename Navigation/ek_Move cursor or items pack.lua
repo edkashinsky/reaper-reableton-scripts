@@ -1,0 +1,14 @@
+-- @description ek_Move cursor or items pack
+-- @version 1.0.0
+-- @author Ed Kashinsky
+-- @about
+--   This package has many scripts which are making navigation in arrange view and at the same time are moving some items depends on selection
+-- @metapackage
+-- @provides
+--   [main=main] ek_Move cursor or selected items left by grid.lua
+--   [main=main] ek_Move cursor or selected items right by grid.lua
+--   [main=main] ek_Move cursor or selected items left by pixel.lua
+--   [main=main] ek_Move cursor or selected items right by pixel.lua
+--   [main=main] ek_Move cursor to start of item under mouse.lua
+--   [main=midi_editor] ek_Move cursor or selected MIDI notes left by grid.lua
+--   [main=midi_editor] ek_Move cursor or selected MIDI notes right by grid.lua

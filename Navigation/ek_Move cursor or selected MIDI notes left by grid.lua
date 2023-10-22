@@ -1,11 +1,8 @@
 -- @description ek_Move cursor or selected MIDI notes left by grid
--- @version 1.0.1
 -- @author Ed Kashinsky
--- @about
---   If any note is selected, this script moves it to left by grid size. And move cursor by grid in other case
--- @changelog
---   Bug fix: when item is unselected in arrange view, selected notes in MIDI Editor aren't moved
--- @provides [main=midi_editor] .
+-- @noindex
+-- @about If any note is selected, this script moves it to left by grid size. And move cursor by grid in other case
+-- @readme_skip
 
 reaper.Undo_BeginBlock()
 
