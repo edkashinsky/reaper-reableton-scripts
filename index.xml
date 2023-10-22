@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="0921a2b73f591106cbcff8245a2ad8b2633b54d1">
+<index version="1" name="Reableton Scripts" commit="4ddcbe76aafbf152647ef0739f933340f397d3d4">
   <category name="ColorThemes">
     <reapack name="Flat Madness Bright Remix.theme" type="theme" desc="Flat Madness Bright Remix">
       <metadata>
@@ -1242,22 +1242,6 @@ Please restart Reaper for taking effect]]></changelog>
       </metadata>
       <version name="1.0.0" author="Ed Kashinsky" time="2022-10-09T22:54:02Z">
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d069a7ec585981ae2bc3c50f2ed73f8682875b8f/Navigation/ek_Select%20items%20from%20selected%20to%20mouse%20cursor.lua</source>
-      </version>
-    </reapack>
-    <reapack name="ek_Select next non-tiny track.lua" type="script" desc="ek_Select next non-tiny track">
-      <metadata>
-        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
-{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
-\widowctrl\hyphauto
-
-{\pard \ql \f0 \sa180 \li0 \fi0 This script helps to navigate by tracks and shown envelopes by hotkeys.\par}
-{\pard \ql \f0 \sa180 \li0 \fi0 I usually attach this script to down arrow and it goes down throw project and select next track/envelope lane if it visible\par}
-}
-]]></description>
-      </metadata>
-      <version name="1.0.0" author="Ed Kashinsky" time="2022-05-30T09:42:49Z">
-        <changelog><![CDATA[- Small fixes]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Navigation/ek_Select%20next%20non-tiny%20track.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Smart horizontal zoom in.lua" type="script" desc="ek_Smart horizontal zoom in">
