@@ -284,10 +284,6 @@ It decrease volume for selected track a bit and shows tooltip with set volume
 
 It increase volume for selected track a bit and shows tooltip with set volume
 
-#### ek_Rename selected tracks or takes
-
-Renaming stuff for takes, items, markers, regions and tracks depending on focus
-
 #### ek_Set volume for selected tracks
 
 Script shows window with input to set volume
