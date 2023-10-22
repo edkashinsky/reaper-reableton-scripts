@@ -46,7 +46,7 @@ class Intro:
                     with open(os.path.join(root, filename)) as f:
                         lua = ast.parse(f.read())
 
-                        if lua.body.body[0].comments:
+                        if lua.body.body and lua.body.body[0].comments:
                             description = ""
                             about = ""
                             aboutStarted = False
