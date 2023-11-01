@@ -159,6 +159,11 @@ For installation:
 
 Script adds 1 second gap between selected items. Press CMD/CTRL to add 0.1 seconds gap.
 
+#### ek_Arrange selected items by notes in MIDI item
+
+This script arranges selected items by notes in first selected MIDI item
+
+
 #### ek_Create crossfade on edges of items
 
 This script creates crossfade on edges of tracks. It useful when you don't use overlap on crossfades for better precise but anyway want to create crossfades
