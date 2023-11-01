@@ -306,6 +306,8 @@ local function AG_IsMidiEditorZoomLevelChanged()
     if not take or not reaper.ValidatePtr(take, "MediaItem_Take*") then return false end
 
     local item = reaper.GetMediaItemTake_Item(take)
+    if not item or not reaper.ValidatePtr(item, "MediaItem*") then return false end
+
     local _, chunk = reaper.GetItemStateChunk(item, "", false)
 
     if chunk ~= cached_zoom.midi.chunk then

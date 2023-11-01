@@ -933,7 +933,7 @@ function EK_SortTableByKey(table, sortKey)
 	return ordered_table
 end
 
-function EK_GetSelectedItemsAsGroupedStems()
+function EK_GetSelectedItemsAsGroupedStems(except_guids)
 	local sortedData = {}
 	local result = {}
 	local decimal = 7
@@ -963,6 +963,18 @@ function EK_GetSelectedItemsAsGroupedStems()
 		return nil
 	end
 
+	local isAvailableToAdd = function(guid)
+		if not except_guids then return true end
+
+		local isExists = false
+
+		for i = 1, #except_guids do
+			if except_guids[i] == guid then isExists = true end
+		end
+
+		return not isExists
+	end
+
 	for i = 0, reaper.CountTracks(proj) - 1 do
 		local track = reaper.GetTrack(proj, i)
 		local t_guid = reaper.GetTrackGUID(track)
@@ -974,14 +986,17 @@ function EK_GetSelectedItemsAsGroupedStems()
 				local _, guid = reaper.GetSetMediaItemInfo_String(item, "GUID", "", false)
 				local position = reaper.GetMediaItemInfo_Value(item, "D_POSITION")
 				local length = reaper.GetMediaItemInfo_Value(item, "D_LENGTH")
-				local data = {
-					item_id = guid,
-					track_id = t_guid,
-					position = position,
-					length = length
-				}
 
-				table.insert(sortedData, data)
+				if isAvailableToAdd(guid) then
+					local data = {
+						item_id = guid,
+						track_id = t_guid,
+						position = position,
+						length = length
+					}
+
+					table.insert(sortedData, data)
+				end
 			end
 		end
 	end

@@ -61,8 +61,18 @@ end
 function GetHeightData(track, for_collapse)
 	if not track then return 0 end
 
-	local _, id = reaper.GetSetMediaTrackInfo_String(track, "GUID", "", false)
-	local current_id = EK_GetExtState(key_last_height .. ":" .. id, 2)
+	local current_id
+	local height = reaper.GetMediaTrackInfo_Value(track, "I_TCPH")
+
+	for i = 1, #heights do
+		if height <= heights[i].val then
+			current_id = i
+			goto end_looking
+		end
+	end
+
+	::end_looking::
+
 	local new_id = current_id
 
 	if for_collapse then new_id = new_id - 1
