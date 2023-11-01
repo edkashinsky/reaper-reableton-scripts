@@ -1,6 +1,6 @@
 -- @description ek_Arrange selected items by notes in MIDI item
 -- @author Ed Kashinsky
--- @version 1.0.0
+-- @version 1.0.1
 -- @about
 --    This script arranges selected items by notes in first selected MIDI item
 --
