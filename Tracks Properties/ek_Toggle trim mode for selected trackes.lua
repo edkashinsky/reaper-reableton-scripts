@@ -28,7 +28,8 @@ if not CoreFunctionsLoaded("ek_Core functions startup.lua") then
 end
 
 if not EK_IsGlobalActionEnabled() then
-	reaper.MB('Please add "ek_Global startup action" as Global startup action (Extenstions -> Startup Actions -> Set global startup action) for realtime highlighting of this button', '', 0)
+	reaper.MB('Please execute script "ek_Global startup action settings" and enable "Enable global action" checkbox in the window', '', 0)
+	return
 end
 
 reaper.Undo_BeginBlock()

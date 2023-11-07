@@ -71,6 +71,8 @@ function GetHeightData(track, for_collapse)
 		end
 	end
 
+	if not current_id then current_id = #heights end
+
 	::end_looking::
 
 	local new_id = current_id

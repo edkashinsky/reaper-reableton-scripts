@@ -1,5 +1,5 @@
 -- @description ek_Global startup action
--- @version 1.0.38
+-- @version 1.0.39
 -- @author Ed Kashinsky
 -- @about
 --   This is startup action brings some ableton-like features in realtime. You can control any option by 'ek_Global startup action settings' script.
@@ -12,7 +12,9 @@
 --      5. Open 'ek_Global startup action settings' again for customize options
 --      6. If you want to use auto-grid for MIDI Editor, install script **ek_Auto grid for MIDI Editor** and set it on zoom shortcut.
 -- @changelog
---   Fixed bug with adaptive grid
+--   Fixed bug with limit project length (thanks to @jeremybernstein)
+--
+--   (!) Please restart the REAPER to make changes work
 -- @provides
 --   ek_Core functions startup.lua
 --   ek_Adaptive grid functions.lua
@@ -39,6 +41,7 @@ CoreFunctionsLoaded("ek_Core functions startup.lua")
 local cached_changes = {
 	project_path = nil,
 	play_state = 0,
+	cursor_position = 0,
 	count_items = 0,
 	count_selected_tracks = 0,
 	count_selected_items = 0,
@@ -46,7 +49,7 @@ local cached_changes = {
 	first_selected_item = nil,
 }
 
-local ga_cooldown = 0.3
+local ga_cooldown = 0.2
 local ga_last_time = reaper.time_precise()
 
 local dfi_time = reaper.time_precise()
@@ -94,6 +97,7 @@ local function observeGlobalAction()
 	local changes = {
 		project_path = isChanged(reaper.GetProjectPath(), "project_path"),
 		play_state = isChanged(reaper.GetPlayState(), "play_state"),
+		cursor_position = isChanged(reaper.GetCursorPosition(), "cursor_position"),
 		count_items = isChanged(reaper.CountMediaItems(proj), "count_items"),
 		count_selected_tracks = isChanged(reaper.CountSelectedTracks(proj), "count_selected_tracks"),
 		count_selected_items = isChanged(reaper.CountSelectedMediaItems(proj), "count_selected_items"),

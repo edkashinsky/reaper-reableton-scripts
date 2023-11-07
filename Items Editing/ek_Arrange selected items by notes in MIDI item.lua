@@ -1,6 +1,8 @@
 -- @description ek_Arrange selected items by notes in MIDI item
 -- @author Ed Kashinsky
--- @version 1.0.1
+-- @version 1.0.2
+-- @changelog
+--   Small bug fix
 -- @about
 --    This script arranges selected items by notes in first selected MIDI item
 --
@@ -52,7 +54,7 @@ for i = 0, notecnt - 1 do
 	local _, _, _, startppq, _, _, _, _ = reaper.MIDI_GetNote(midi_take, i)
 	local startTime = reaper.MIDI_GetProjTimeFromPPQPos(midi_take, startppq)
 
-	if startTime > midi_pos then
+	if startTime >= midi_pos then
 		Log("MIDI Note ON " .. startTime, ek_log_levels.Important)
 
 		if stems[noteInd] then
