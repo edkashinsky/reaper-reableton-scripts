@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="c6bf4120976cd915b4d665556e7fb27a1a79c2e5">
+<index version="1" name="Reableton Scripts" commit="779591c514ce98b29b304c7f47b679fe5071661d">
   <category name="ColorThemes">
     <reapack name="Flat Madness Bright Remix.theme" type="theme" desc="Flat Madness Bright Remix">
       <metadata>
@@ -547,6 +547,15 @@ Please restart Reaper for taking effect]]></changelog>
         <source file="ek_Adaptive grid functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/29562452a2cfc190806193547e552e762df82117/Core/ek_Adaptive%20grid%20functions.lua</source>
         <source main="main" file="ek_Global startup action - settings.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/29562452a2cfc190806193547e552e762df82117/Core/ek_Global%20startup%20action%20-%20settings.lua</source>
       </version>
+      <version name="1.0.39" author="Ed Kashinsky" time="2023-11-07T15:47:48Z">
+        <changelog><![CDATA[Fixed bug with limit project length (thanks to @jeremybernstein)
+
+(!) Please restart the REAPER to make changes work]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/779591c514ce98b29b304c7f47b679fe5071661d/Core/ek_Global%20startup%20action.lua</source>
+        <source file="ek_Core functions startup.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/779591c514ce98b29b304c7f47b679fe5071661d/Core/ek_Core%20functions%20startup.lua</source>
+        <source file="ek_Adaptive grid functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/779591c514ce98b29b304c7f47b679fe5071661d/Core/ek_Adaptive%20grid%20functions.lua</source>
+        <source main="main" file="ek_Global startup action - settings.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/779591c514ce98b29b304c7f47b679fe5071661d/Core/ek_Global%20startup%20action%20-%20settings.lua</source>
+      </version>
     </reapack>
     <reapack name="ek_Save project with a check of unused media files.lua" type="script" desc="ek_Save project with a check of unused media files">
       <metadata>
@@ -666,6 +675,10 @@ Please restart Reaper for taking effect]]></changelog>
       </version>
       <version name="1.0.1" author="Ed Kashinsky" time="2023-11-01T12:01:58Z">
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/c6bf4120976cd915b4d665556e7fb27a1a79c2e5/Items%20Editing/ek_Arrange%20selected%20items%20by%20notes%20in%20MIDI%20item.lua</source>
+      </version>
+      <version name="1.0.2" author="Ed Kashinsky" time="2023-11-07T15:47:48Z">
+        <changelog><![CDATA[Small bug fix]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/779591c514ce98b29b304c7f47b679fe5071661d/Items%20Editing/ek_Arrange%20selected%20items%20by%20notes%20in%20MIDI%20item.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Create crossfade on edges of items.lua" type="script" desc="ek_Create crossfade on edges of items">
@@ -1508,6 +1521,10 @@ Please restart Reaper for taking effect]]></changelog>
         <changelog><![CDATA[- Small fixes]]></changelog>
         <source main="main midi_editor">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Tracks%20Properties/ek_Toggle%20single%20solo%20for%20selected%20tracks.lua</source>
       </version>
+      <version name="1.0.1" author="Ed Kashinsky" time="2023-11-07T15:47:48Z">
+        <changelog><![CDATA[When mouse on lane, it will be solo]]></changelog>
+        <source main="main midi_editor">https://github.com/edkashinsky/reaper-reableton-scripts/raw/779591c514ce98b29b304c7f47b679fe5071661d/Tracks%20Properties/ek_Toggle%20single%20solo%20for%20selected%20tracks.lua</source>
+      </version>
     </reapack>
     <reapack name="ek_Toggle trim mode for selected trackes.lua" type="script" desc="ek_Toggle trim mode for selected trackes">
       <metadata>
@@ -1557,6 +1574,12 @@ Please restart Reaper for taking effect]]></changelog>
         <source file="../Core/ek_Tracks collapser functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/29562452a2cfc190806193547e552e762df82117/Core/ek_Tracks%20collapser%20functions.lua</source>
         <source main="main" file="ek_Tracks collapser - collapse.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/29562452a2cfc190806193547e552e762df82117/Tracks%20Properties/ek_Tracks%20collapser%20-%20collapse.lua</source>
         <source main="main" file="ek_Tracks collapser - expand.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/29562452a2cfc190806193547e552e762df82117/Tracks%20Properties/ek_Tracks%20collapser%20-%20expand.lua</source>
+      </version>
+      <version name="1.0.3" author="Ed Kashinsky" time="2023-11-07T15:47:48Z">
+        <changelog><![CDATA[Bug fix for extremely high tracks heights]]></changelog>
+        <source file="../Core/ek_Tracks collapser functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/779591c514ce98b29b304c7f47b679fe5071661d/Core/ek_Tracks%20collapser%20functions.lua</source>
+        <source main="main" file="ek_Tracks collapser - collapse.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/779591c514ce98b29b304c7f47b679fe5071661d/Tracks%20Properties/ek_Tracks%20collapser%20-%20collapse.lua</source>
+        <source main="main" file="ek_Tracks collapser - expand.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/779591c514ce98b29b304c7f47b679fe5071661d/Tracks%20Properties/ek_Tracks%20collapser%20-%20expand.lua</source>
       </version>
     </reapack>
   </category>
