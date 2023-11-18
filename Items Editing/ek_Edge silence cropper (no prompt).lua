@@ -45,14 +45,18 @@ if countSelectedItems > 0 then
         local item = reaper.GetSelectedMediaItem(proj, i)
 
         local take = reaper.GetActiveTake(item)
+        local startTime, endTime
 
-        if take ~= nil and not reaper.TakeIsMIDI(take) then
-            local startTime = GetStartPositionLouderThenThreshold(take, leadingThreshold)
-            if startTime > 0 then CropLeadingPosition(take, startTime) end
-
-            local endTime = GetEndPositionLouderThenThreshold(take, trailingThreshold)
-            if endTime > 0 then CropTrailingPosition(take, endTime) end
+        if reaper.TakeIsMIDI(take) then
+            startTime = GetStartPositionOfMidiNote(take)
+            endTime = GetEndPositionOfMidiNote(take)
+        else
+            startTime = GetStartPositionLouderThenThreshold(take, leadingThreshold)
+            endTime = GetEndPositionLouderThenThreshold(take, trailingThreshold)
         end
+
+        if startTime > 0 then CropLeadingPosition(take, startTime) end
+        if endTime > 0 then CropTrailingPosition(take, endTime) end
     end
 
     reaper.UpdateArrange()
