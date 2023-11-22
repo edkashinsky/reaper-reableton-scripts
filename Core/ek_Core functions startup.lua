@@ -69,6 +69,8 @@ local function GA_GetThemesList()
 
 	table.sort(result)
 
+	table.insert(result, 1, "[Not specified]")
+
 	return result
 end
 
@@ -81,6 +83,12 @@ end
 
 local ga_enabled = EK_IsGlobalActionEnabled()
 ga_startup_exists = reaper.file_exists(EK_ConcatPath(reaper.GetResourcePath(), 'Scripts', '__startup.lua'))
+local ga_dark_theme_list = GA_GetThemesList()
+local ga_dark_theme_key = "ga_dark_theme"
+
+local function GA_GetDarkTheme()
+	return EK_GetExtState(ga_dark_theme_key)
+end
 
 ga_settings = {
 	enabled =  {
@@ -291,7 +299,38 @@ ga_settings = {
 		title = "Name of theme for dark mode",
 		description = "Specify title of theme for dark mode. Note that, this theme should be in the same folder as a regular theme. Name should be with \".ReaperTheme\" extension",
 		default = 0,
-		select_values = GA_GetThemesList(),
+		select_values = ga_dark_theme_list,
+		on_change = function(val)
+			if ga_dark_theme_list[val + 1] then
+				EK_SetExtState(ga_dark_theme_key, ga_dark_theme_list[val + 1])
+			else
+				EK_DeleteExtState(ga_dark_theme_key)
+			end
+		end,
+		value = function()
+			local val = GA_GetSettingValue(ga_settings.dark_mode_theme)
+			local theme = GA_GetDarkTheme()
+
+			if theme and ga_dark_theme_list[val + 1] == theme then
+				return val
+			else
+				local isSet = false
+				for key, row in pairs(ga_dark_theme_list) do
+					if row == theme then
+						val = key - 1
+						EK_SetExtState(ga_settings.dark_mode_theme.key, val)
+						isSet = true
+					end
+				end
+
+				if not isSet and val ~= 0 then
+					val = 0
+					EK_SetExtState(ga_settings.dark_mode_theme.key, val)
+				end
+
+				return val
+			end
+		end,
 		disabled = not ga_enabled,
 		order = 16,
 	},
@@ -844,9 +883,7 @@ function GA_ObserveDarkMode(changes, values)
 	}
 
 	local inInterval = inTimeInterval(startParam, endParam)
-	local themeId = GA_GetSettingValue(ga_settings.dark_mode_theme) + 1
-	local themeList = GA_GetThemesList()
-	local themeName = not isEmpty(themeList[themeId]) and themeList[themeId] or themeList[1]
+	local themeName = GA_GetDarkTheme()
 
 	if themeName == nil then themeName = "" end
 
@@ -860,7 +897,7 @@ function GA_ObserveDarkMode(changes, values)
 	local isExecutedToday = EK_GetExtState(is_executed_key)
 
 	Log("[DARK THEME] Observing...")
-	Log({ inInterval and 1 or 0, themeId, themeName, curThemeName, EK_GetExtState(theme_key) })
+	Log({ inInterval and 1 or 0, themeName, curThemeName, EK_GetExtState(theme_key) })
 
 	if reaper.file_exists(themePath .. themeName .. ".ReaperTheme") then
 		themeName = themeName .. ".ReaperTheme"
@@ -868,6 +905,7 @@ function GA_ObserveDarkMode(changes, values)
 		themeName = themeName .. ".ReaperThemeZip"
 	else
 		Log("[DARK THEME] Theme \"{param}\" does not exists", ek_log_levels.Important, themePath .. themeName)
+		EK_DeleteExtState(ga_dark_theme_key)
 		return
 	end
 
