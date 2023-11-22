@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="8f1c9d0c89b3db94fe8ae577c7328c6b5126191c">
+<index version="1" name="Reableton Scripts" commit="6a773f8ab9dd519d0645d48e47bda3df6fb34fa1">
   <category name="ColorThemes">
     <reapack name="Flat Madness Bright Remix.theme" type="theme" desc="Flat Madness Bright Remix">
       <metadata>
@@ -555,6 +555,15 @@ Please restart Reaper for taking effect]]></changelog>
         <source file="ek_Core functions startup.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/779591c514ce98b29b304c7f47b679fe5071661d/Core/ek_Core%20functions%20startup.lua</source>
         <source file="ek_Adaptive grid functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/779591c514ce98b29b304c7f47b679fe5071661d/Core/ek_Adaptive%20grid%20functions.lua</source>
         <source main="main" file="ek_Global startup action - settings.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/779591c514ce98b29b304c7f47b679fe5071661d/Core/ek_Global%20startup%20action%20-%20settings.lua</source>
+      </version>
+      <version name="1.0.40" author="Ed Kashinsky" time="2023-11-22T10:47:34Z">
+        <changelog><![CDATA[Fixed bug with dark theme selector
+
+(!) Please restart the REAPER to make changes work]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/6a773f8ab9dd519d0645d48e47bda3df6fb34fa1/Core/ek_Global%20startup%20action.lua</source>
+        <source file="ek_Core functions startup.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/6a773f8ab9dd519d0645d48e47bda3df6fb34fa1/Core/ek_Core%20functions%20startup.lua</source>
+        <source file="ek_Adaptive grid functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/6a773f8ab9dd519d0645d48e47bda3df6fb34fa1/Core/ek_Adaptive%20grid%20functions.lua</source>
+        <source main="main" file="ek_Global startup action - settings.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/6a773f8ab9dd519d0645d48e47bda3df6fb34fa1/Core/ek_Global%20startup%20action%20-%20settings.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Save project with a check of unused media files.lua" type="script" desc="ek_Save project with a check of unused media files">
