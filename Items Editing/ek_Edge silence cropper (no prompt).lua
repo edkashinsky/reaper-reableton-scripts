@@ -55,8 +55,8 @@ if countSelectedItems > 0 then
             endTime = GetEndPositionLouderThenThreshold(take, trailingThreshold)
         end
 
-        if startTime > 0 then CropLeadingPosition(take, startTime) end
         if endTime > 0 then CropTrailingPosition(take, endTime) end
+        if startTime > 0 then CropLeadingPosition(take, startTime) end
     end
 
     reaper.UpdateArrange()
