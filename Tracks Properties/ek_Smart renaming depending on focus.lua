@@ -1,10 +1,10 @@
 -- @description ek_Smart renaming depending on focus
--- @version 1.0.10
+-- @version 1.0.11
 -- @author Ed Kashinsky
 -- @about
 --   Renaming stuff for takes, items, markers, regions and tracks depending on focus
 -- @changelog
---   • Fixed bug with special symbols in replace mode
+--   • Fixed bug with renaming of empty item
 -- @provides
 --   ../Core/ek_Smart renaming functions.lua
 

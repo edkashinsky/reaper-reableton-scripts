@@ -420,9 +420,14 @@ local function FindFocusedElement(focused_data)
             if i == 0 then
                 local take = reaper.GetActiveTake(item)
 
-                title = reaper.GetTakeName(take)
+                if take then
+                    title = reaper.GetTakeName(take)
+                else
+                     _, title = reaper.GetSetMediaItemInfo_String(item, "P_NOTES", "", false)
+                end
+
                 value = title
-                color = reaper.GetMediaItemTakeInfo_Value(take, "I_CUSTOMCOLOR")
+                color = take and reaper.GetMediaItemTakeInfo_Value(take, "I_CUSTOMCOLOR") or nil
 
                 if isEmpty(color) then
                     color = reaper.GetMediaItemInfo_Value(item, "I_CUSTOMCOLOR")
@@ -529,7 +534,7 @@ function SaveData(element, isTitleSet, isColorSet, isAdvanced)
                 local take = reaper.GetActiveTake(item)
 
                 if isAdvanced then
-                    local title = reaper.GetTakeName(take)
+                    local title = take and reaper.GetTakeName(take) or ""
                     local id = math.floor(reaper.GetMediaItemInfo_Value(item, "IP_ITEMNUMBER")) + 1
 
                     newTitle = GetProcessedTitleByAdvanced(title, id)
@@ -542,7 +547,7 @@ function SaveData(element, isTitleSet, isColorSet, isAdvanced)
 
                     if element.applyToAllTakes or i_take == take then
                         if isTitleSet then
-                             reaper.GetSetMediaItemTakeInfo_String(i_take, "P_NAME", newTitle, true)
+                            reaper.GetSetMediaItemTakeInfo_String(i_take, "P_NAME", newTitle, true)
                         end
 
                         if isColorSet then
@@ -553,6 +558,20 @@ function SaveData(element, isTitleSet, isColorSet, isAdvanced)
                             if element.applyToAllTakes then
                                 reaper.SetMediaItemInfo_Value(item, "I_CUSTOMCOLOR", color)
                             end
+                        end
+                    end
+                end
+
+                if (reaper.CountTakes(item) == 0) then
+                    if isTitleSet then
+                        reaper.GetSetMediaItemInfo_String(item, "P_NOTES", newTitle, true)
+                    end
+
+                    if isColorSet then
+                        if color ~= 0 then color = color | 0x1000000 end
+
+                        if element.applyToAllTakes then
+                            reaper.SetMediaItemInfo_Value(item, "I_CUSTOMCOLOR", color)
                         end
                     end
                 end
