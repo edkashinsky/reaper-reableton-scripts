@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="0b003f089da5bbc13b0c4f00daed360a7694c637">
+<index version="1" name="Reableton Scripts" commit="17c61f8f9ee3d601add51f9e88e931926001b762">
   <category name="ColorThemes">
     <reapack name="Flat Madness Bright Remix.theme" type="theme" desc="Flat Madness Bright Remix">
       <metadata>
@@ -1498,6 +1498,11 @@ Please restart Reaper for taking effect]]></changelog>
         <changelog><![CDATA[• Fixed bug with special symbols in replace mode]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d188e0a36c2b8ec982678fccded7c8096fed5526/Tracks%20Properties/ek_Smart%20renaming%20depending%20on%20focus.lua</source>
         <source file="../Core/ek_Smart renaming functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d188e0a36c2b8ec982678fccded7c8096fed5526/Core/ek_Smart%20renaming%20functions.lua</source>
+      </version>
+      <version name="1.0.11" author="Ed Kashinsky" time="2023-12-06T16:43:29Z">
+        <changelog><![CDATA[• Fixed bug with renaming of empty item]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/17c61f8f9ee3d601add51f9e88e931926001b762/Tracks%20Properties/ek_Smart%20renaming%20depending%20on%20focus.lua</source>
+        <source file="../Core/ek_Smart renaming functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/17c61f8f9ee3d601add51f9e88e931926001b762/Core/ek_Smart%20renaming%20functions.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Toggle mute and offline FX for selected tracks.lua" type="script" desc="ek_Toggle mute and offline FX for selected tracks">
