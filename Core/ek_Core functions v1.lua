@@ -675,7 +675,13 @@ function EK_AskUser(title, fields, callback)
 
 	local is_done, result = reaper.GetUserInputs(title, #fields, labels, values)
 
-	callback(is_done and split(result, ",") or nil)
+	if type(callback) == 'function' then
+		callback(is_done and split(result, ",") or nil)
+	elseif is_done then
+		return split(result, ",")
+	else
+		return
+	end
 end
 
 local function getColor(color)
@@ -984,14 +990,19 @@ function EK_GetSelectedItemsAsGroupedStems(except_guids)
 
 			if reaper.IsMediaItemSelected(item) then
 				local _, guid = reaper.GetSetMediaItemInfo_String(item, "GUID", "", false)
-				local position = reaper.GetMediaItemInfo_Value(item, "D_POSITION")
-				local length = reaper.GetMediaItemInfo_Value(item, "D_LENGTH")
 
 				if isAvailableToAdd(guid) then
+					local position = reaper.GetMediaItemInfo_Value(item, "D_POSITION")
+					local length = reaper.GetMediaItemInfo_Value(item, "D_LENGTH")
+					local source = reaper.GetMediaItemTake_Source(reaper.GetActiveTake(item))
+					local ret, time, _, _, _, _ = reaper.CF_EnumMediaSourceCues(source, 0) -- First marker cue
+					local offset = ret == 1 and time or reaper.GetMediaItemInfo_Value(item, "D_SNAPOFFSET")
+
 					local data = {
 						item_id = guid,
 						track_id = t_guid,
 						position = position,
+						offset = offset,
 						length = length
 					}
 
@@ -1270,6 +1281,8 @@ function escape_regexp_chars(text)
 	for c in reserved:gmatch(".") do
 		escape[c] = "%" .. c
 	end
+
+	text = tostring(text)
 
 	return text:gsub(".", escape)
 end
