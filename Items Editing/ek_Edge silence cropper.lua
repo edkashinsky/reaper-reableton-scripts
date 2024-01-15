@@ -1,12 +1,15 @@
 -- @description ek_Edge silence cropper
--- @version 1.1.13
+-- @version 1.2.0
 -- @author Ed Kashinsky
 -- @about
 --   This script helps to remove silence at the start and at the end of selected items by individual thresholds, pads and fades.
 --
 --   Also it provides UI for configuration
 -- @changelog
---   • Fixed crop for no-prompt version
+--   • Added new modes: Absolute RMS, Relative RMS from max
+--   • Improved calculation accuracy
+--   • Improved performance and stabilty
+--   • Improved stabilty with old versions of ReaImGui
 -- @provides
 --   ../Core/ek_Edge silence cropper functions.lua
 --   [main=main] ek_Edge silence cropper (no prompt).lua
@@ -34,10 +37,13 @@ end
 
 CoreFunctionsLoaded("ek_Edge silence cropper functions.lua")
 
+local min_step = 0.00001
+local using_eel = reaper.APIExists("ImGui_CreateFunctionFromEEL")
 local window_open = true
-local cachedPositions = { leading = {}, trailing = {}, zoom = nil, hor = nil, count_sel_items = 0 }
+local cachedPositions = { zoom = nil, hor = nil, count_sel_items = 0, values = {}, items_values = {} }
 local MainHwnd = reaper.GetMainHwnd()
 local ArrangeHwnd = reaper.JS_Window_FindChildByID(MainHwnd, 0x3E8)
+local Cropper = EdgeCropper.new()
 
 local bm = {
     leading = { maps = {}, color = ek_colors.Red },
@@ -69,6 +75,9 @@ end
 local function UpdateBitmapIfNeeded(map, ind, width, height)
     local needToUpdate = false
 
+    width = _f(width)
+    height = _f(height)
+
     if not map.maps[ind] then
         needToUpdate = true
     else
@@ -80,59 +89,11 @@ local function UpdateBitmapIfNeeded(map, ind, width, height)
 
     if needToUpdate then
         ClearBitmap(map, ind)
-        map.maps[ind] = reaper.JS_LICE_CreateBitmap(true, math.floor(width), math.floor(height))
+        map.maps[ind] = reaper.JS_LICE_CreateBitmap(true, width, height)
         -- reaper.JS_LICE_Clear(map.maps[ind], ek_colors.Red)
     end
 
     return needToUpdate, map.maps[ind]
-end
-
-local function GetEdgePositionsByItem(item)
-    if not item then return end
-
-    local startTime, endTime
-    local take = reaper.GetActiveTake(item)
-    local guid = GetGUID(item)
-    local rate = reaper.GetMediaItemTakeInfo_Value(take, "D_PLAYRATE")
-
-    if not take or not guid then return end
-
-    local l_cache = cachedPositions.leading[guid]
-    local r_cache = cachedPositions.trailing[guid]
-
-    if reaper.TakeIsMIDI(take) then
-        local _, chunk = reaper.GetItemStateChunk(item, "", false)
-
-        if l_cache and l_cache.midi_chunk == chunk then startTime = l_cache.position
-        else
-            startTime = GetStartPositionOfMidiNote(take)
-            cachedPositions.leading[guid] = { midi_chunk = chunk, position = startTime }
-        end
-
-        if r_cache and r_cache.midi_chunk == chunk then endTime = r_cache.position
-        else
-            endTime = GetEndPositionOfMidiNote(take)
-            cachedPositions.trailing[guid] = { midi_chunk = chunk, position = endTime }
-        end
-    else
-        local p_l_threshold, p_t_threshold = GetThresholdsValues()
-
-        if l_cache and l_cache.threshold == p_l_threshold and l_cache.rate == rate then
-            startTime = l_cache.position
-        else
-            startTime = GetStartPositionLouderThenThreshold(take, p_l_threshold)
-            cachedPositions.leading[guid] = { threshold = p_l_threshold, position = startTime, rate = rate }
-        end
-
-        if r_cache and r_cache.threshold == p_t_threshold and r_cache.rate == rate then
-            endTime = r_cache.position
-        else
-            endTime = GetEndPositionLouderThenThreshold(take, p_t_threshold)
-            cachedPositions.trailing[guid] = { threshold = p_t_threshold, position = endTime, rate = rate }
-        end
-    end
-
-    return startTime, endTime
 end
 
 local function PreviewCropResultInArrangeView()
@@ -156,17 +117,32 @@ local function PreviewCropResultInArrangeView()
         local item = reaper.GetMediaItem(proj, i)
 
         if reaper.IsMediaItemSelected(item) and preview then
+            Cropper = Cropper.SetItem(item)
+
+            local _, guid = reaper.GetSetMediaItemInfo_String(item, "GUID", "", false)
             local track = reaper.GetMediaItem_Track(item)
             local item_height = reaper.GetMediaItemInfo_Value(item, "I_LASTH")
             local position = reaper.GetMediaItemInfo_Value(item, "D_POSITION")
             local item_length = reaper.GetMediaItemInfo_Value(item, "D_LENGTH")
-            local startTime, endTime = GetEdgePositionsByItem(item)
-            local p_l_pad, p_l_fade = GetLeadingPadAndOffset(startTime)
-            local p_t_pad, p_t_fade = GetTrailingPadAndOffset(endTime, item_length)
+            local startTime = Cropper.GetCropPosition()
+            local endTime = Cropper.GetCropPosition(true)
+
+            local p_l_pad = Cropper.GetPadValue()
+            local p_l_fade = Cropper.GetFadeValue()
+            local p_t_pad = Cropper.GetPadValue(true)
+            local p_t_fade = Cropper.GetFadeValue(true)
 
             local item_offset_x = (position * zoom) - scrollposh
             local item_offset_y = reaper.GetMediaTrackInfo_Value(track, "I_TCPY") + GetItemHeaderHeight(item)
             local item_length_px = item_length * zoom
+
+            -- redraw on change position
+            if not cachedPositions.items_values[guid] then cachedPositions.items_values[guid] = {} end
+            if cachedPositions.items_values[guid].position ~= position then
+                cachedPositions.items_values[guid].position = position
+                ClearBitmap(bm.leading, i)
+                ClearBitmap(bm.trailing, i)
+            end
 
             ------------- LEADING PART --------------
 
@@ -186,7 +162,7 @@ local function PreviewCropResultInArrangeView()
 
             l_bm_width = l_bm_width + 2
 
-            if startTime > min_step and startTime < item_length then
+            if startTime > min_step and startTime < item_length - min_step then
                 local need_update, bitmap = UpdateBitmapIfNeeded(bm.leading, i, l_bm_width, l_bm_height)
 
                 if need_update then
@@ -226,7 +202,7 @@ local function PreviewCropResultInArrangeView()
 
             t_bm_width = t_bm_width + 2
 
-            if endTime > min_step and endTime < item_length then
+            if endTime > min_step and endTime < item_length - min_step then
                 local need_update, bitmap = UpdateBitmapIfNeeded(bm.trailing, i, t_bm_width, t_bm_height)
 
                 if need_update then
@@ -249,10 +225,6 @@ local function PreviewCropResultInArrangeView()
         else
             ClearBitmap(bm.leading, i)
             ClearBitmap(bm.trailing, i)
-
-            local guid = GetGUID(item)
-            cachedPositions.leading[guid] = nil
-            cachedPositions.trailing[guid] = nil
         end
     end
 
@@ -262,25 +234,10 @@ end
 local function CropSilence()
     reaper.Undo_BeginBlock()
 
-    local l_threshold, t_threshold = GetThresholdsValues()
-
-    Log("== Leading edge ==")
-    Log("Threshold: " .. l_threshold .. "db/%")
-    Log("Pad: " .. p.leading.pad.value .. "s")
-    Log("Fade: " .. p.leading.fade.value .. "s")
-    Log("== Trailing edge ==")
-    Log("Threshold: " .. t_threshold .. "db/%")
-    Log("Pad: " .. p.trailing.pad.value .. "s")
-    Log("Fade: " .. p.trailing.fade.value .. "s")
-
     for i = 0, reaper.CountSelectedMediaItems(proj) - 1 do
         local item = reaper.GetSelectedMediaItem(proj, i)
-        local take = reaper.GetActiveTake(item)
 
-        local startTime, endTime = GetEdgePositionsByItem(item)
-
-        if endTime and endTime > 0 then CropTrailingPosition(take, endTime) end
-        if startTime and startTime > 0 then CropLeadingPosition(take, startTime) end
+        Cropper.SetItem(item).Crop()
     end
 
     reaper.UpdateArrange()
@@ -317,6 +274,25 @@ EK_DeferWithCooldown(PreviewCropResultInArrangeView, { last_time = 0, cooldown =
 
     if cachedPositions.hor ~= nil and cachedPositions.hor ~= scrollposh then
         ResetPreview()
+    end
+
+    local somethingChanged = false
+    for _, config in pairs(p.leading) do
+        if cachedPositions.values[config.key] ~= config.value then
+            somethingChanged = true
+            cachedPositions.values[config.key] = config.value
+        end
+    end
+
+    for _, config in pairs(p.trailing) do
+        if cachedPositions.values[config.key] ~= config.value then
+            somethingChanged = true
+            cachedPositions.values[config.key] = config.value
+        end
+    end
+
+    if somethingChanged then
+        Cropper.ClearCache()
     end
 
     return true

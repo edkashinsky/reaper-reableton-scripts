@@ -2,8 +2,6 @@
 
 local r = reaper
 local presets_key = "triming_silence_presets_list"
-min_step = 0.00001
-using_eel = reaper.APIExists("ImGui_CreateFunctionFromEEL")
 
 local presets = {
     current = nil,
@@ -130,6 +128,16 @@ p = {
 			default = 45, -- %
             value = nil,
 		},
+        rms_threshold = {
+            key = 'triming_silence_leading_rms_threshold',
+			default = -22.0, -- db
+            value = nil,
+        },
+        rms_threshold_relative = {
+            key = 'triming_silence_leading_rms_threshold_relative',
+			default = 45, -- %
+            value = nil,
+        },
 		pad = {
 			key = 'triming_silence_leading_pad',
 			default = 0.05, -- s
@@ -140,6 +148,11 @@ p = {
 			default = 0.05, -- s
             value = nil,
 		},
+        rms_bin_size = {
+            key = 'triming_silence_leading_rms_bin_size',
+            default = 0.3, -- s
+            value = nil,
+        },
 	},
 	trailing = {
 		threshold = {
@@ -152,6 +165,16 @@ p = {
 			default = 10, -- %
             value = nil,
 		},
+        rms_threshold = {
+            key = 'triming_silence_trailing_rms_threshold',
+			default = -22.0, -- db
+            value = nil,
+        },
+        rms_threshold_relative = {
+            key = 'triming_silence_trailing_rms_threshold_relative',
+			default = 45, -- %
+            value = nil,
+        },
 		pad = {
 			key = 'triming_silence_trailing_pad',
 			default = 0.20, -- s
@@ -165,7 +188,12 @@ p = {
 	},
     crop_mode = {
         key = 'triming_silence_crop_mode',
-        select_values = { "Absolute thresholds", "Relative thresholds from peaks" },
+        select_values = {
+            "Absolute peak (in db)",
+            "Relative peak from max (in %)",
+            "Absolute RMS (in db)",
+            "Relative RMS from max (in %)"
+        },
         default = 1,
         value = nil,
     },
@@ -243,6 +271,22 @@ gui_config = {
         end
 	},
     {
+        type = gui_input_types.NumberSlider,
+        key = p.leading.rms_bin_size.key,
+        default = p.leading.rms_bin_size.default,
+		title = "RMS window",
+        number_min = 0.01,
+        number_max = 1,
+        number_precision = '%.2fs',
+        on_change = function(val)
+            p.leading.rms_bin_size.value = val
+            MakePresetModified()
+        end,
+        hidden = function()
+            return p.crop_mode.value ~= 2 and p.crop_mode.value ~= 3
+        end,
+	},
+    {
 		type = gui_input_types.Label,
 		title = "\nLeading edge: ",
 	},
@@ -259,7 +303,7 @@ gui_config = {
             MakePresetModified()
         end,
         hidden = function()
-            return p.crop_mode.value == 1
+            return p.crop_mode.value ~= 0
         end,
 	},
     {
@@ -267,7 +311,6 @@ gui_config = {
         key = p.leading.threshold_relative.key,
         default = p.leading.threshold_relative.default,
 		title = "Threshold In",
-		default = 1,
         number_min = 0,
         number_max = 100,
         number_precision = '%.0f%%',
@@ -280,14 +323,45 @@ gui_config = {
         end,
 	},
     {
+        type = gui_input_types.NumberSlider,
+		key = p.leading.rms_threshold.key,
+		default = p.leading.rms_threshold.default,
+		title = "Threshold In",
+        number_min = -90,
+        number_max = 0,
+        number_precision = '%.1fdb',
+        on_change = function(val)
+            p.leading.rms_threshold.value = val
+            MakePresetModified()
+        end,
+        hidden = function()
+            return p.crop_mode.value ~= 2
+        end,
+	},
+    {
+        type = gui_input_types.NumberSlider,
+        key = p.leading.rms_threshold_relative.key,
+        default = p.leading.rms_threshold_relative.default,
+		title = "Threshold In",
+        number_min = 0,
+        number_max = 100,
+        number_precision = '%.0f%%',
+        on_change = function(val)
+            p.leading.rms_threshold_relative.value = val
+            MakePresetModified()
+        end,
+        hidden = function()
+            return p.crop_mode.value ~= 3
+        end,
+	},
+    {
         type = gui_input_types.NumberDrag,
         key = p.leading.pad.key,
         default = p.leading.pad.default,
 		title = "Pad In",
-		default = 1,
         number_min = 0,
-        number_step = 0.01,
-        number_precision = '%.2fs',
+        number_step = 0.001,
+        number_precision = '%.3fs',
         on_change = function(val)
             p.leading.pad.value = val
             MakePresetModified()
@@ -298,10 +372,9 @@ gui_config = {
         key = p.leading.fade.key,
         default = p.leading.fade.default,
 		title = "Fade In",
-		default = 1,
         number_min = 0,
-        number_step = 0.01,
-        number_precision = '%.2fs',
+        number_step = 0.001,
+        number_precision = '%.3fs',
         on_change = function(val)
             p.leading.fade.value = val
             MakePresetModified()
@@ -324,7 +397,7 @@ gui_config = {
             MakePresetModified()
         end,
         hidden = function()
-            return p.crop_mode.value == 1
+            return p.crop_mode.value ~= 0
         end,
 	},
     {
@@ -332,7 +405,6 @@ gui_config = {
         key = p.trailing.threshold_relative.key,
         default = p.trailing.threshold_relative.default,
 		title = "Threshold Out",
-		default = 1,
         number_min = 0,
         number_max = 100,
         number_precision = '%.0f%%',
@@ -345,14 +417,45 @@ gui_config = {
         end,
 	},
     {
+        type = gui_input_types.NumberSlider,
+		key = p.trailing.rms_threshold.key,
+		default = p.trailing.rms_threshold.default,
+		title = "Threshold Out",
+        number_min = -90,
+        number_max = 0,
+        number_precision = '%.1fdb',
+        on_change = function(val)
+            p.trailing.rms_threshold.value = val
+            MakePresetModified()
+        end,
+        hidden = function()
+            return p.crop_mode.value ~= 2
+        end,
+	},
+    {
+        type = gui_input_types.NumberSlider,
+        key = p.trailing.rms_threshold_relative.key,
+        default = p.trailing.rms_threshold_relative.default,
+		title = "Threshold Out",
+        number_min = 0,
+        number_max = 100,
+        number_precision = '%.0f%%',
+        on_change = function(val)
+            p.trailing.rms_threshold_relative.value = val
+            MakePresetModified()
+        end,
+        hidden = function()
+            return p.crop_mode.value ~= 3
+        end,
+	},
+    {
         type = gui_input_types.NumberDrag,
         key = p.trailing.pad.key,
         default = p.trailing.pad.default,
 		title = "Pad Out",
-		default = 1,
-        number_step = 0.01,
+        number_step = 0.001,
         number_min = 0,
-        number_precision = '%.2fs',
+        number_precision = '%.3fs',
         on_change = function(val)
             p.trailing.pad.value = val
             MakePresetModified()
@@ -363,10 +466,9 @@ gui_config = {
         key = p.trailing.fade.key,
         default = p.trailing.fade.default,
 		title = "Fade Out",
-		default = 1,
-        number_step = 0.01,
+        number_step = 0.001,
         number_min = 0,
-        number_precision = '%.2fs',
+        number_precision = '%.3fs',
         on_change = function(val)
             p.trailing.fade.value = val
             MakePresetModified()
@@ -396,520 +498,817 @@ for i, block in pairs(p) do
     end
 end
 
-function GetGUID(item)
-    if not item then return end
+EdgeCropper = {}
+EdgeCropper.__index = EdgeCropper
 
-    local _, guid = r.GetSetMediaItemInfo_String(item, "GUID", "", false)
-    local length = r.GetMediaItemInfo_Value(item, "D_LENGTH")
+function EdgeCropper.new()
+    local self = setmetatable({}, EdgeCropper)
 
-    return guid .. ":" .. length
-end
+    local min_db_step = 0.2
+    local min_step = 0.000001
+    local using_eel = reaper.APIExists("ImGui_CreateFunctionFromEEL")
+    local cache = {}
+    local curItem, curTake, curItemLength, curItemPosition
 
-function GetThresholdsValues()
-    if p.crop_mode.value == 0 then
-        return p.leading.threshold.value,
-            p.trailing.threshold.value
-    else
-        return p.leading.threshold_relative.value,
-            p.trailing.threshold_relative.value
-    end
-end
-
-local function SampleToDb(sample)
-    -- returns -150 for any 0.0 sample point (since you can't take the log of 0)
-    if sample == 0 then
-        return -150.0
-    else
-        return 20 * log10(math.abs(sample))
-    end
-end
-
-local function GetMaxDbOrThresholdPositionByTakeEEL(take, threshold, isReverse)
-    -- making math function local improves their speed
-    local max, min, floor = math.max, math.min, math.floor
-
-    -- Function to read the array usinf EEL
-    local ReadArrayWithEEL = r.ImGui_CreateFunctionFromEEL([[
-        i = (reverse == 1) ? block_size : 0;
-        maxDb = -150;
-        pos_threshold = -1;
-
-        while ((reverse == 1 && i > 0) || (reverse != 1 && i < block_size)) (
-            // Loop through each channel separately
-            j = 1;
-
-            loop(n_channels,
-                spl = samplebuffer[(i * n_channels) + j];
-                db = spl == 0 ? -150 : (20 * log10(abs(spl)));
-                maxDb = (threshold != 1000 && maxDb == -150 && db >= threshold) || (threshold == 1000) ?
-                    max(db, maxDb) : maxDb;
-
-                pos_threshold = (threshold != 1000 && pos_threshold == -1 && db >= threshold) || (threshold == 1000 && db == maxDb) ?
-                    i / samplerate : pos_threshold;
-
-                j = j + 1;
-            );
-
-            i = (reverse == 1) ? i - 1 : i + 1;
-        );
-    ]])
-
-    local PCM_source = r.GetMediaItemTake_Source(take)
-    local samplerate = r.GetMediaSourceSampleRate(PCM_source)
-
-    if not take or not samplerate then return end
-
-    local starttime_sec, startBlock, endBlock, iterBlock
-    local audio = r.CreateTakeAudioAccessor(take)
-    local item = r.GetMediaItemTake_Item(take)
-    local item_len = r.GetMediaItemInfo_Value(item, "D_LENGTH")
-    local playrate = r.GetMediaItemTakeInfo_Value(take, "D_PLAYRATE")
-    local n_channels = r.GetMediaSourceNumChannels(PCM_source)
-    local item_len_spls = floor(item_len * playrate * samplerate)
-
-    local max_block_size = 4194303
-    local block_size = threshold and 16384 or floor(item_len_spls)
-
-    if block_size > max_block_size / n_channels then block_size = floor(max_block_size / n_channels) end
-
-    local n_blocks = floor(item_len_spls / block_size)
-    local extra_spls = item_len_spls - block_size * n_blocks
-
-    -- 'samplebuffer' will hold all of the audio data for each block
-    local samplebuffer = r.new_array(block_size * n_channels)
-
-    -- Loop through the audio, one block at a time
-    if isReverse then
-        starttime_sec = item_len - (block_size / samplerate)
-        if starttime_sec < 0 then starttime_sec = 0 end
-
-        startBlock = n_blocks
-        endBlock = 0
-        iterBlock = -1
-    else
-        starttime_sec = 0
-        startBlock = 0
-        endBlock = n_blocks
-        iterBlock = 1
-    end
-
-    local pos = -1
-    local maxDb = -150
-
-    Log("=== SEARCH " .. startBlock .. " -> " .. endBlock .. " : " .. iterBlock .. " blocks", ek_log_levels.Important)
-
-    for cur_block = startBlock, endBlock, iterBlock do
-        local block = cur_block == endBlock and extra_spls or block_size
-
-        samplebuffer.clear()
-
-        -- Loads 'samplebuffer' with the next block
-        r.GetAudioAccessorSamples(audio, samplerate, n_channels, starttime_sec, block, samplebuffer)
-
-        -- Use EEL to read from the array
-        r.ImGui_Function_SetValue(ReadArrayWithEEL, 'block_size', block)
-        r.ImGui_Function_SetValue(ReadArrayWithEEL, 'n_channels', n_channels)
-        r.ImGui_Function_SetValue_Array(ReadArrayWithEEL, 'samplebuffer', samplebuffer)
-        r.ImGui_Function_SetValue(ReadArrayWithEEL, 'samplerate', samplerate)
-        r.ImGui_Function_SetValue(ReadArrayWithEEL, 'reverse', isReverse and 1 or 0)
-        r.ImGui_Function_SetValue(ReadArrayWithEEL, 'threshold', threshold and threshold or 1000)
-        r.ImGui_Function_Execute(ReadArrayWithEEL)
-
-        local curMaxDb = r.ImGui_Function_GetValue(ReadArrayWithEEL, 'maxDb')
-        maxDb = math.max(maxDb, curMaxDb)
-        pos = r.ImGui_Function_GetValue(ReadArrayWithEEL, 'pos_threshold')
-
-        Log("\t[" .. cur_block .. "][" .. n_channels .. "][" .. block .. "][" .. ((starttime_sec + (block / samplerate)) - starttime_sec) .. "] " .. round(starttime_sec, 2) .. ".." .. round(starttime_sec + (block / samplerate), 2) .. "s. => " .. round(curMaxDb, 2) .. "db. " .. pos .. "s.", ek_log_levels.Important)
-
-        if threshold and pos ~= -1 then
-            goto end_looking_eel
-        end
-
-        if isReverse then
-            starttime_sec = starttime_sec - (block / samplerate)
-            if starttime_sec < 0 then starttime_sec = 0 end
+    local SampleToDb = function(sample)
+        -- returns -150 for any 0.0 sample point (since you can't take the log of 0)
+        if sample == 0 then
+            return -150.0
         else
-            starttime_sec = starttime_sec + (block / samplerate)
+            return 20 * log10(math.abs(sample))
         end
     end
 
-    ::end_looking_eel::
+    local GetCache = function(prefix)
+        local _, guid = r.GetSetMediaItemInfo_String(curItem, "GUID", "", false)
 
-    Log("\t===", ek_log_levels.Important)
-    Log("\t" .. item_len_spls .. "spls. " .. maxDb .. "db. " .. pos .. "s. -> " .. (starttime_sec + pos) .. "s. ", ek_log_levels.Important)
-    Log(threshold, ek_log_levels.Important)
+        local key = guid .. ":" .. curItemLength .. ":" .. curItemPosition
 
-    -- Tell r we're done working with this item, so the memory can be freed
-    r.DestroyAudioAccessor(audio)
+        if prefix then
+            if cache[key] == nil then cache[key] = {} end
 
-    -- I told you we'd put everything back
-    if playrate ~= 1 then
-        r.SetMediaItemTakeInfo_Value(take, "D_PLAYRATE", playrate)
-        r.SetMediaItemInfo_Value(item, "D_LENGTH", item_len)
+            return cache[key][prefix]
+        else
+            return cache[key]
+        end
     end
 
-    if threshold and pos ~= -1 then
-        return starttime_sec + pos
-    elseif not threshold then
-        return maxDb
-    else
-        return nil
-    end
-end
+    local SetCache = function(value, prefix)
+        local _, guid = r.GetSetMediaItemInfo_String(curItem, "GUID", "", false)
 
-local function GetDataForAccessor(take)
-    -- Get media source of media item take
-    local take_pcm_source = r.GetMediaItemTake_Source(take)
-    if take_pcm_source == nil then return end
+        local key = guid .. ":" .. curItemLength .. ":" .. curItemPosition
 
-    -- Create take audio accessor
-    local aa = r.CreateTakeAudioAccessor(take)
-
-    if aa == nil then return end
-
-    -- Get the start time of the audio that can be returned from this accessor
-    local aa_start = r.GetAudioAccessorStartTime(aa)
-    -- Get the end time of the audio that can be returned from this accessor
-    local aa_end = r.GetAudioAccessorEndTime(aa)
-    local a_length = (aa_end - aa_start) / 25
-
-    if a_length <= 1 then a_length = 1 elseif a_length > 20 then a_length = 20 end
-
-    -- Get the number of channels in the source media.
-    local take_source_num_channels =  r.GetMediaSourceNumChannels(take_pcm_source)
-    if take_source_num_channels > 2 then take_source_num_channels = 2 end
-
-    -- Get the sample rate. MIDI source media will return zero.
-    local take_source_sample_rate = r.GetMediaSourceSampleRate(take_pcm_source)
-
-    -- How many samples are taken from audio accessor and put in the buffer
-    local samples_per_channel = take_source_sample_rate / 4
-
-    return aa, a_length, aa_start, aa_end, take_source_sample_rate, take_source_num_channels, samples_per_channel
-end
-
-local function GetMaxDbOrThresholdPositionByTake(take, threshold, isReverse)
-    if take == nil then return end
-
-    local aa, a_length, aa_start, aa_end, take_source_sample_rate, take_source_num_channels, samples_per_channel = GetDataForAccessor(take)
-
-    -- Samples are collected to this buffer
-    local buffer = r.new_array(samples_per_channel * take_source_num_channels)
-    local total_samples = (aa_end - aa_start) * (take_source_sample_rate/a_length)
-    local offs
-    local needStopSeeking = false
-
-    if total_samples < 1 then return end
-
-    if isReverse then
-        offs = aa_end - samples_per_channel / take_source_sample_rate
-    else
-        offs = aa_start
+        if prefix then cache[key][prefix] = value
+        else cache[key] = value end
     end
 
-    local pos = nil
-    local maxDb = 0
+    self.ClearCache = function()
+        Log("CLEAR CACHE", ek_log_levels.Warning)
+        if curItem then
+            curItemLength = r.GetMediaItemInfo_Value(curItem, "D_LENGTH")
+            curItemPosition = r.GetMediaItemInfo_Value(curItem, "D_POSITION")
+        end
 
-    -- Loop through samples
-    while not needStopSeeking do
-        -- Get a block of samples from the audio accessor.
-        -- Samples are extracted immediately pre-FX,
-        -- and returned interleaved (first sample of first channel, first sample of second channel...).
-        -- Returns 0 if no audio, 1 if audio, -1 on error.
-        local aa_ret = r.GetAudioAccessorSamples(
-            aa,                       -- AudioAccessor accessor
-            take_source_sample_rate,  -- integer samplerate
-            take_source_num_channels, -- integer numchannels
-            offs,                     -- number starttime_sec
-            samples_per_channel,      -- integer numsamplesperchannel
-            buffer                    -- r.array samplebuffer
-        )
+        cache = {}
+    end
 
-        if aa_ret == 1 then
-            local startBuf = 1
-            local endBuf = #buffer
-            local stepBuf = take_source_num_channels
+    self.SetItem = function(item)
+        curItem = item
+        curTake = r.GetActiveTake(item)
+        curItemLength = r.GetMediaItemInfo_Value(curItem, "D_LENGTH")
+        curItemPosition = r.GetMediaItemInfo_Value(curItem, "D_POSITION")
 
-            if isReverse then
-                startBuf = #buffer
-                endBuf = 1
-                stepBuf = -take_source_num_channels
+        return self
+    end
+
+    local BuildSamplesBuffer = function(isReverse, isPortioned, Callback)
+        if not curTake then return end
+
+        local starttime_sec, startBlock, endBlock, iterBlock
+        local PCM_source = r.GetMediaItemTake_Source(curTake)
+        local samplerate = r.GetMediaSourceSampleRate(PCM_source)
+        local audio = r.CreateTakeAudioAccessor(curTake)
+        local n_channels = r.GetMediaSourceNumChannels(PCM_source)
+        local item_len_spls = math.floor(curItemLength * samplerate)
+
+        local max_block_size = 4194303
+
+        local block_size = isPortioned and samplerate or math.floor(item_len_spls)
+
+        if block_size > max_block_size / n_channels then
+            block_size = math.floor(max_block_size / n_channels)
+        elseif block_size > item_len_spls then
+            block_size = item_len_spls
+        end
+
+        local n_blocks = math.floor(item_len_spls / block_size)
+
+        if n_blocks < 1 then n_blocks = 1 end
+
+        local extra_spls = item_len_spls - block_size * n_blocks
+
+        -- 'samplebuffer' will hold all of the audio data for each block
+        local samplebuffer = r.new_array(block_size * n_channels)
+
+        -- Loop through the audio, one block at a time
+        if isReverse then
+            starttime_sec = curItemLength - (block_size / samplerate)
+            if starttime_sec < 0 then starttime_sec = 0 end
+
+            startBlock = n_blocks
+            endBlock = 0
+            iterBlock = -1
+        else
+            starttime_sec = 0
+            startBlock = 0
+            endBlock = n_blocks
+            iterBlock = 1
+        end
+
+        Log("=== SEARCH " .. startBlock .. " -> " .. endBlock .. " by " .. iterBlock .. " [" .. item_len_spls .. "spl.][" .. round(curItemLength, 3) .. "s.][" .. samplerate .. "Hz] ===", ek_log_levels.Warning)
+
+        for cur_block = startBlock, endBlock, iterBlock do
+            local block = cur_block == endBlock and extra_spls or block_size
+
+            if block == 0 then goto end_looking end
+
+            samplebuffer.clear()
+
+            -- Loads 'samplebuffer' with the next block
+            r.GetAudioAccessorSamples(audio, samplerate, n_channels, starttime_sec, block, samplebuffer)
+
+            Log("\t" .. cur_block .. " block: [" .. n_channels .. "ch.][" .. block .. "spl.][" .. round((starttime_sec + (block / samplerate)) - starttime_sec, 3) .. "s.] " .. round(starttime_sec, 3) .. " - " .. round(starttime_sec + (block / samplerate), 3) .. "s.", ek_log_levels.Warning)
+
+            if Callback(samplebuffer, block, samplerate, n_channels, starttime_sec) then
+                goto end_looking
             end
 
-            for i = startBuf, endBuf, stepBuf do
-                for j = 1, take_source_num_channels do
-                    local buf_pos = i + j - 1
+            if isReverse then
+                starttime_sec = starttime_sec - (block / samplerate)
+                if starttime_sec < 0 then starttime_sec = 0 end
+            else
+                starttime_sec = starttime_sec + (block / samplerate)
+            end
+        end
 
-                    if buf_pos >= 1 and buf_pos <= #buffer then
-                        local spl = buffer[buf_pos]
+        ::end_looking::
 
-                        if threshold == nil then
-                            maxDb = math.max(maxDb, math.abs(spl))
-                        elseif SampleToDb(spl) >= threshold then
-                            pos = offs + (buf_pos / (take_source_sample_rate * take_source_num_channels))
-                            goto end_looking_lua
+        -- Tell r we're done working with this item, so the memory can be freed
+        r.DestroyAudioAccessor(audio)
+    end
+
+    local GoThroughMidiTakeByNotes = function(isReverse, Callback)
+        if curTake == nil or not r.TakeIsMIDI(curTake) then return end
+
+        local note
+
+        if isReverse then
+            local _, notecnt, _, _ = r.MIDI_CountEvts(curTake)
+            note = notecnt - 1
+        else
+            note = 0
+        end
+
+        local needStopSeeking = false
+
+        while not needStopSeeking do
+            local ret, _, muted, startppq, endppq, _, _, _ = r.MIDI_GetNote(curTake, note)
+
+            if ret then
+                local startTime = r.MIDI_GetProjTimeFromPPQPos(curTake, startppq)
+                local endTime = r.MIDI_GetProjTimeFromPPQPos(curTake, endppq)
+
+                if Callback(muted, startTime, endTime) then
+                    needStopSeeking = true
+                end
+            end
+
+            if isReverse then note = note - 1
+            else note = note + 1 end
+
+            if not ret then needStopSeeking = true end
+        end
+    end
+
+    local GetOffsetConsiderPitchByRate = function(offset, rate)
+        local semiFactor = 2 ^ (1 / 12) -- Rate: 2.0 = Pitch * 12
+        local semitones = round(math.log(rate, semiFactor), 5)
+        local curSemiFactor = 2 ^ ((1 / 12) * math.abs(semitones))
+
+        -- r.ShowConsoleMsg(semitones .. "\n")
+
+        return semitones > 0 and (offset * curSemiFactor) or (offset / curSemiFactor)
+    end
+
+    local EelEngine = {
+        GetMaxPeakPosition = function()
+            local CallbackEEL = r.ImGui_CreateFunctionFromEEL([[
+                i = 0;
+                maxDb = -150;
+                maxAmpl = 0;
+                position = -1;
+
+                while (i < block_size) (
+                    while (i < block_size) (
+                        // Loop through each channel separately
+                        j = 1;
+
+                        loop(n_channels,
+                            spl = samplebuffer[(i * n_channels) + j];
+                            ampl = abs(spl);
+
+                            maxAmpl = max(maxAmpl, ampl);
+                            maxDb = ampl != 0 && ampl == maxAmpl ? 20 * log10(ampl) : maxDb;
+                            position = ampl != 0 && ampl == maxAmpl ? i / samplerate : position;
+
+                            j += 1;
+                        );
+
+                        i += 1;
+                    );
+                );
+            ]])
+
+            local maxDb = -150
+            local position = -1
+
+            BuildSamplesBuffer( false, false, function(samplebuffer, block_size, samplerate, n_channels, starttime_sec)
+                -- Use EEL to read from the array
+                r.ImGui_Function_SetValue(CallbackEEL, 'block_size', block_size)
+                r.ImGui_Function_SetValue(CallbackEEL, 'n_channels', n_channels)
+                r.ImGui_Function_SetValue_Array(CallbackEEL, 'samplebuffer', samplebuffer)
+                r.ImGui_Function_SetValue(CallbackEEL, 'samplerate', samplerate)
+                r.ImGui_Function_Execute(CallbackEEL)
+
+                local curMaxDb = r.ImGui_Function_GetValue(CallbackEEL, 'maxDb')
+                local curPosition = r.ImGui_Function_GetValue(CallbackEEL, 'position')
+
+                maxDb = math.max(maxDb, curMaxDb)
+                if maxDb == curMaxDb then
+                    position = starttime_sec + curPosition
+                end
+            end)
+
+            return maxDb, position
+        end,
+        GetPeakThresholdPosition = function(threshold, isReverse)
+            local CallbackEEL = r.ImGui_CreateFunctionFromEEL([[
+                i = (reverse == 1) ? block_size : 0;
+                maxDb = -150;
+                position = -1;
+
+                while ((reverse == 1 && i > 0) || (reverse != 1 && i < block_size)) (
+                    // Loop through each channel separately
+                    j = 1;
+
+                    loop(n_channels,
+                        spl = samplebuffer[(i * n_channels) + j];
+                        db = maxDb != -150 || spl == 0 ? -150 : 20 * log10(abs(spl));
+
+                        maxDb = maxDb == -150 && db >= threshold ? db : maxDb;
+                        position = position == -1 && db >= threshold ? i / samplerate : position;
+
+                        j += 1;
+                    );
+
+                    i = (reverse == 1) ? i - 1 : i + 1;
+                );
+            ]])
+
+            local maxDb = -150
+            local pos = -1
+
+            BuildSamplesBuffer(isReverse, true, function(samplebuffer, block_size, samplerate, n_channels, starttime_sec)
+                -- Use EEL to read from the array
+                r.ImGui_Function_SetValue(CallbackEEL, 'block_size', block_size)
+                r.ImGui_Function_SetValue(CallbackEEL, 'n_channels', n_channels)
+                r.ImGui_Function_SetValue_Array(CallbackEEL, 'samplebuffer', samplebuffer)
+                r.ImGui_Function_SetValue(CallbackEEL, 'samplerate', samplerate)
+                r.ImGui_Function_SetValue(CallbackEEL, 'reverse', isReverse and 1 or 0)
+                r.ImGui_Function_SetValue(CallbackEEL, 'threshold', threshold)
+                r.ImGui_Function_Execute(CallbackEEL)
+
+                local curMaxDb = r.ImGui_Function_GetValue(CallbackEEL, 'maxDb')
+                local curPos = r.ImGui_Function_GetValue(CallbackEEL, 'position')
+
+                if curPos ~= -1 then
+                    maxDb = curMaxDb
+                    pos = starttime_sec + curPos
+
+                    return true
+                end
+            end)
+
+            if pos >= 0 then
+                return maxDb, pos
+            else
+                return nil
+            end
+        end,
+        GetMaxRmsPosition = function()
+            local CallbackEEL = r.ImGui_CreateFunctionFromEEL([[
+                i = 0;
+                maxDb = -150;
+                maxAmpl = 0;
+                position = -1;
+
+                while (i < bins) (
+                    j = 1;
+                    sqsum = 0;
+                    count = 0;
+
+                    loop(bin_samples,
+                        spl = samplebuffer[j + (i * bin_samples)];
+                        sqsum = sqsum + (spl * spl);
+                        count = count + 1;
+
+                        j += 1;
+                    );
+
+                    rms = sqrt(sqsum / count);
+                    maxAmpl = max(maxAmpl, rms);
+
+                    maxDb = rms != 0 && rms == maxAmpl ? 20 * log10(rms) : maxDb;
+                    position = rms != 0 && rms == maxAmpl ? i * bin_size : position;
+
+                    i += 1;
+                );
+            ]])
+
+            local maxDb = -150
+            local position = -1
+
+            BuildSamplesBuffer(false, false, function(samplebuffer, block_size, samplerate, n_channels, starttime_sec)
+                local bin_samples = math.floor(p.leading.rms_bin_size.value * samplerate * n_channels)
+                if bin_samples > #samplebuffer then bin_samples = #samplebuffer end
+
+                local bins = math.floor(#samplebuffer / bin_samples)
+
+                if bins == 0 then bins = 1 end
+
+                -- Use EEL to read from the array
+                r.ImGui_Function_SetValue(CallbackEEL, 'block_size', block_size)
+                r.ImGui_Function_SetValue(CallbackEEL, 'n_channels', n_channels)
+                r.ImGui_Function_SetValue_Array(CallbackEEL, 'samplebuffer', samplebuffer)
+                r.ImGui_Function_SetValue(CallbackEEL, 'samplerate', samplerate)
+
+                r.ImGui_Function_SetValue(CallbackEEL, 'bins', bins)
+                r.ImGui_Function_SetValue(CallbackEEL, 'bin_size', p.leading.rms_bin_size.value)
+                r.ImGui_Function_SetValue(CallbackEEL, 'bin_samples', bin_samples)
+
+                r.ImGui_Function_Execute(CallbackEEL)
+
+                local curMaxDb = r.ImGui_Function_GetValue(CallbackEEL, 'maxDb')
+                local curPosition = r.ImGui_Function_GetValue(CallbackEEL, 'position')
+
+                maxDb = math.max(maxDb, curMaxDb)
+                if maxDb == curMaxDb then
+                    position = starttime_sec + curPosition
+                end
+            end)
+
+            return maxDb, position
+        end,
+        GetRmsThresholdPosition = function(threshold, isReverse)
+            local CallbackEEL = r.ImGui_CreateFunctionFromEEL([[
+                i = (reverse == 1) ? bins : 0;
+                maxDb = -150;
+                position = -1;
+
+                while ((reverse == 1 && i >= 0) || (reverse != 1 && i < bins)) (
+                    j = 1;
+                    sqsum = 0;
+                    count = 0;
+
+                    loop(bin_samples,
+                        spl = samplebuffer[j + (i * bin_samples)];
+                        sqsum = sqsum + (spl * spl);
+                        count = count + 1;
+
+                        j += 1;
+                    );
+
+                    rms = maxDb == -150 ? sqrt(sqsum / count) : 0;
+                    db = maxDb != -150 || rms == 0 ? -150 : 20 * log10(rms);
+
+                    maxDb = maxDb == -150 && db >= threshold ? db : maxDb;
+                    position = position == -1 && db >= threshold ? i * bin_size : position;
+
+                    i = (reverse == 1) ? i - 1 : i + 1;
+                );
+            ]])
+
+            local maxDb = -150
+            local position = -1
+
+            BuildSamplesBuffer(isReverse, true, function(samplebuffer, block_size, samplerate, n_channels, starttime_sec)
+                local bin_samples = math.floor(p.leading.rms_bin_size.value * samplerate * n_channels)
+                if bin_samples > #samplebuffer then bin_samples = #samplebuffer end
+
+                local bins = math.floor(#samplebuffer / bin_samples)
+
+                if bins == 0 then bins = 1 end
+
+                -- Use EEL to read from the array
+                r.ImGui_Function_SetValue(CallbackEEL, 'block_size', block_size)
+                r.ImGui_Function_SetValue(CallbackEEL, 'n_channels', n_channels)
+                r.ImGui_Function_SetValue_Array(CallbackEEL, 'samplebuffer', samplebuffer)
+                r.ImGui_Function_SetValue(CallbackEEL, 'samplerate', samplerate)
+                r.ImGui_Function_SetValue(CallbackEEL, 'reverse', isReverse and 1 or 0)
+                r.ImGui_Function_SetValue(CallbackEEL, 'threshold', threshold)
+
+                r.ImGui_Function_SetValue(CallbackEEL, 'bins', bins)
+                r.ImGui_Function_SetValue(CallbackEEL, 'bin_size', p.leading.rms_bin_size.value)
+                r.ImGui_Function_SetValue(CallbackEEL, 'bin_samples', bin_samples)
+
+                r.ImGui_Function_Execute(CallbackEEL)
+
+                local curMaxDb = r.ImGui_Function_GetValue(CallbackEEL, 'maxDb')
+                local curPosition = r.ImGui_Function_GetValue(CallbackEEL, 'position')
+
+                if curPosition >= 0 then
+                    maxDb = curMaxDb
+                    position = starttime_sec + curPosition
+
+                    return true
+                end
+            end)
+
+            if position >= 0 then
+                return maxDb, position
+            else
+                return nil
+            end
+        end
+    }
+    local LuaEngine = {
+        GetMaxPeakPosition = function()
+            local position = -1
+            local maxDb = 0
+
+            BuildSamplesBuffer(false, false, function(samplebuffer, block_size, samplerate, n_channels, starttime_sec)
+                 local i = 0
+
+                 while (i < block_size) do
+                     for j = 1, n_channels do
+                         local ind = (i * n_channels) + j
+
+                         if ind < #samplebuffer then
+                             local spl = samplebuffer[ind];
+                             local curSpl = math.abs(spl)
+
+                             maxDb = math.max(maxDb, curSpl)
+                             if maxDb == curSpl then
+                                 position = starttime_sec + (i / samplerate)
+                             end
+                         end
+                     end
+
+                     i = i + 1
+                 end
+            end)
+
+            return SampleToDb(maxDb), position
+        end,
+        GetPeakThresholdPosition = function(threshold, isReverse)
+            local position = -1
+            local maxDb = -150
+
+            BuildSamplesBuffer(isReverse, true, function(samplebuffer, block_size, samplerate, n_channels, starttime_sec)
+                 local i = isReverse and block_size or 0
+
+                 while ((isReverse and i > 0) or (not isReverse and i < block_size)) do
+                     for j = 1, n_channels do
+                         local ind = (i * n_channels) + j
+
+                         if ind < #samplebuffer then
+                             local spl = samplebuffer[ind]
+                             local db = SampleToDb(spl)
+
+                             if db >= threshold then
+                                 maxDb = db
+                                 position = starttime_sec + (i / samplerate)
+
+                                 return true
+                             end
+                         end
+                     end
+
+                     i = isReverse and i - 1 or i + 1
+                 end
+            end)
+
+            if position >= 0 then
+                return maxDb, position
+            else
+                return nil
+            end
+        end,
+        GetMaxRmsPosition = function()
+            local maxRms = 0
+            local position = -1
+
+            BuildSamplesBuffer(false, false, function(samplebuffer, block_size, samplerate, n_channels, starttime_sec)
+                local i = 0
+                local bin_samples = math.floor(p.leading.rms_bin_size.value * samplerate * n_channels)
+                local bins = math.floor(#samplebuffer / bin_samples)
+
+                if bins == 0 then bins = 1 end
+
+                while (i < bins) do
+                    local sqsum = 0
+                    local count = 0
+
+                    for j = 1, bin_samples do
+                        local iter = j + (i * bin_samples)
+
+                        if iter < #samplebuffer then
+                            local spl = samplebuffer[iter]
+                            sqsum = sqsum + (spl * spl)
+                            count = count + 1
                         end
+                    end
+
+                    local rms = math.sqrt(sqsum / count)
+
+                    maxRms = math.max(maxRms, rms)
+
+                    --local pos = starttime_sec + (i * p.leading.rms_bin_size.value)
+                    --Log("[" .. bin_samples .. "][" .. round(pos, 3) .. " - " .. round(pos + count / (samplerate * n_channels), 3) .."] => " .. round(SampleToDb(rms), 3), ek_log_levels.Debug)
+
+                    if rms == maxRms then
+                        position = starttime_sec + (i * p.leading.rms_bin_size.value)
+                    end
+
+                    i = i + 1
+                end
+            end)
+
+            return SampleToDb(maxRms), position
+        end,
+        GetRmsThresholdPosition = function(threshold, isReverse)
+            local maxRms = 0
+            local position = -1
+
+            BuildSamplesBuffer(isReverse, true, function(samplebuffer, block_size, samplerate, n_channels, starttime_sec)
+                local bin_samples = math.floor(p.leading.rms_bin_size.value * samplerate * n_channels)
+
+                if bin_samples > #samplebuffer then bin_samples = #samplebuffer end
+
+                local bins = math.floor(#samplebuffer / bin_samples)
+
+                if bins == 0 then bins = 1 end
+
+                local i = isReverse and bins or 0
+
+                while ((isReverse and i >= 0) or (not isReverse and i < bins)) do
+                    local sqsum = 0
+                    local count = 0
+
+                    for j = 1, bin_samples do
+                        local iter = j + (i * bin_samples)
+
+                        if iter < #samplebuffer then
+                            local spl = samplebuffer[iter]
+                            sqsum = sqsum + (spl * spl)
+                            count = count + 1
+                        end
+                    end
+
+                    local rms = math.sqrt(sqsum / count)
+
+                    if SampleToDb(rms) >= threshold then
+                        maxRms = rms
+                        position = starttime_sec + (i * p.leading.rms_bin_size.value)
+                        return true
+                    end
+
+                    --if not isReverse then
+                    --    local pos = starttime_sec + (i * p.leading.rms_bin_size.value)
+                    --    Log("[" .. bin_samples .. "][" .. round(pos, 3) .. " - " .. round(pos + count / (samplerate * n_channels), 3) .."] => " .. round(SampleToDb(rms), 3), ek_log_levels.Debug)
+                    --
+                    --end
+
+                    i = isReverse and i - 1 or i + 1
+                end
+            end)
+
+            if position >= 0 then
+                return SampleToDb(maxRms), position
+            else
+                return nil
+            end
+        end
+    }
+
+    local GetPositionOfMidiNote = function(isReverse)
+        if curTake == nil or not r.TakeIsMIDI(curTake) then return end
+
+        local pos
+
+        GoThroughMidiTakeByNotes(isReverse, function(muted, start_time, end_time)
+            if not muted then
+                local time
+
+                if isReverse then
+                    time = end_time - curItemPosition
+
+                    if time > curItemLength and start_time - curItemPosition <= curItemLength then
+                        pos = curItemLength
+                        return true
+                    elseif time <= curItemLength then
+                        pos = time
+                        return true
+                    end
+                else
+                    time = start_time - curItemPosition
+
+                    if time < 0 and end_time - curItemPosition >= 0 then
+                        pos = 0
+                        return true
+                    elseif time >= 0 then
+                        pos = time
+                        return true
                     end
                 end
             end
-        elseif aa_ret == 0 then -- no audio in current buffer
-            -- do nothing
-        else
-            return
+        end)
+
+        if not pos then pos = curItemLength
         end
 
-        if isReverse then
-            needStopSeeking = offs < aa_start
-            offs = offs - samples_per_channel / take_source_sample_rate -- new offset in take source (seconds)
-        else
-            needStopSeeking = offs > aa_end - samples_per_channel / take_source_sample_rate
-            offs = offs + samples_per_channel / take_source_sample_rate -- new offset in take source (seconds)
-        end
-    end -- end of while loop
-
-    ::end_looking_lua::
-
-    r.DestroyAudioAccessor(aa)
-
-    if threshold then
         return pos
-    else
-        return SampleToDb(maxDb)
-    end
-end
-
-local rel_peacks_cache = {}
-local function GetRelativeThresholdsByTake(take, rel_threshold)
-    if take == nil then return end
-
-    local maxPeak = -150
-    local item = r.GetMediaItemTake_Item(take)
-    local guid = GetGUID(item)
-    
-    if rel_peacks_cache[guid] == nil then
-        maxPeak = using_eel and GetMaxDbOrThresholdPositionByTakeEEL(take) or
-            GetMaxDbOrThresholdPositionByTake(take)
-
-        rel_peacks_cache[guid] = maxPeak
-    else
-        maxPeak = rel_peacks_cache[guid]
     end
 
-    local abs_percent = 10 ^ (maxPeak / 40)
+    local engine = using_eel and EelEngine or LuaEngine
 
-    local rel_db = 40 * log10(abs_percent * (rel_threshold / 100))
-
-    --Log(r.GetTakeName(take) .. ": VAL=" .. rel_db .. " MAX=" .. maxPeak, ek_log_levels.Debug)
-
-    return rel_db
-end
-
-function GetStartPositionLouderThenThreshold(take, threshold)
-    if take == nil then return end
-
-    local peakTime = 0
-
-    if p.crop_mode.value == 1 then -- relative
-        local orig = threshold
-
-        if orig == 0 then
-            threshold = -150
-        elseif orig == 100 then
-            threshold = GetRelativeThresholdsByTake(take, orig) - min_step -- for good comparing floats
-        else
-            threshold = GetRelativeThresholdsByTake(take, orig)
+    self.GetThresholdsValues = function()
+        if p.crop_mode.value == 0 then -- Absolute thresholds
+            return p.leading.threshold.value, p.trailing.threshold.value
+        elseif p.crop_mode.value == 1 then -- Relative thresholds from max peak
+            return p.leading.threshold_relative.value, p.trailing.threshold_relative.value
+        elseif p.crop_mode.value == 2 then -- Absolute RMS
+            return p.leading.rms_threshold.value, p.trailing.rms_threshold.value
+        elseif p.crop_mode.value == 3 then -- Relative RMS from max peak
+            return p.leading.rms_threshold_relative.value, p.trailing.rms_threshold_relative.value
         end
     end
 
-    peakTime = using_eel and GetMaxDbOrThresholdPositionByTakeEEL(take, threshold) or
-        GetMaxDbOrThresholdPositionByTake(take, threshold)
+    self.GetPadValue = function(isReverse)
+        if curItem == nil then return end
 
-    if peakTime == nil then peakTime = 0 end
+        local pad = 0
+        local prefix = p.crop_mode.value .. ":pad:" .. (isReverse and "rev" or "")
+        local cache_val = GetCache(prefix)
 
-    return peakTime
-end
+        if cache_val == nil then
+            local pos = self.GetCropPosition(isReverse)
 
-function GetEndPositionLouderThenThreshold(take, threshold)
-    if take == nil then return end
+            if isReverse then
+                pad = p.trailing.pad.value + pos > curItemLength and curItemLength - pos - min_step or p.trailing.pad.value
+            else
+                pad = p.leading.pad.value > pos and pos - min_step or p.leading.pad.value
+            end
 
-    local peakTime
-
-    if p.crop_mode.value == 1 then -- relative
-        local orig = threshold
-
-        if orig == 0 then
-            threshold = -150
-        elseif orig == 100 then
-            threshold = GetRelativeThresholdsByTake(take, orig) - min_step -- for good comparing floats
+            SetCache(pad, prefix)
         else
-            threshold = GetRelativeThresholdsByTake(take, orig)
+            pad = cache_val
         end
+
+        return pad
     end
 
-    peakTime = using_eel and GetMaxDbOrThresholdPositionByTakeEEL(take, threshold, true) or
-        GetMaxDbOrThresholdPositionByTake(take, threshold, true)
+    self.GetFadeValue = function(isReverse)
+        if curItem == nil then return end
 
-    if peakTime == nil then
-        local item = r.GetMediaItemTake_Item(take)
-        peakTime = r.GetMediaItemInfo_Value(item, "D_LENGTH")
+        local fade = 0
+        local prefix = p.crop_mode.value .. ":fade:" .. (isReverse and "rev" or "")
+        local cache_val = GetCache(prefix)
+
+        if cache_val == nil then
+            local pos = self.GetCropPosition(isReverse)
+            local padPos = pos + self.GetPadValue(isReverse)
+
+            if isReverse then
+                if padPos >= curItemLength then
+                    fade = 0
+                else
+                    local leadingPos = self.GetCropPosition()
+                    local leadingPadPos = leadingPos - self.GetPadValue()
+                    local leadingFade = self.GetFadeValue()
+
+                    fade = padPos - p.trailing.fade.value < leadingPadPos + leadingFade and
+                        padPos - (leadingPadPos + leadingFade)- min_step or p.trailing.fade.value
+                end
+            else
+                if padPos <= 0 then
+                    fade = 0
+                else
+                    fade = p.leading.fade.value + padPos > curItemLength and
+                        curItemLength - padPos - min_step or p.leading.fade.value
+                end
+            end
+
+            SetCache(fade, prefix)
+        else
+            fade = cache_val
+        end
+
+        return fade
     end
 
-    return peakTime
-end
+    local GetMaxDbPosition = function()
+        if curTake == nil then return end
 
-local function GetOffsetConsiderPitchByRate(offset, rate)
-    local semiFactor = 2 ^ (1 / 12) -- Rate: 2.0 = Pitch * 12
-    local semitones = round(math.log(rate, semiFactor), 5)
-    local curSemiFactor = 2 ^ ((1 / 12) * math.abs(semitones))
+        local db = -150
+        local prefix = p.crop_mode.value .. ":max"
+        local cache_val = GetCache(prefix)
 
-    -- r.ShowConsoleMsg(semitones .. "\n")
+        if cache_val == nil then
+            if p.crop_mode.value == 1 then -- Relative thresholds from max peak
+                db, _ = engine.GetMaxPeakPosition()
+            elseif p.crop_mode.value == 3 then -- Relative RMS from max peak
+                db, _ = engine.GetMaxRmsPosition()
+            end
 
-    return semitones > 0 and (offset * curSemiFactor) or (offset / curSemiFactor)
-end
+            SetCache(db, prefix)
+        else
+            db = cache_val
+        end
 
-function CropLeadingPosition(take, startOffset)
-    local pad, fade = GetLeadingPadAndOffset(startOffset)
-
-    startOffset = startOffset - pad
-  
-    if startOffset < 0 then return end
-  
-    local item = r.GetMediaItemTake_Item(take)
-    local offset = r.GetMediaItemTakeInfo_Value(take, "D_STARTOFFS")
-    local rate = r.GetMediaItemTakeInfo_Value(take, "D_PLAYRATE")
-    local startOffsetAbs = GetOffsetConsiderPitchByRate(startOffset, rate)
-
-    -- r.ShowConsoleMsg(semitones .. " " .. startOffset .. " " ..  startOffsetAbs .. "\n")
-
-    r.SetMediaItemTakeInfo_Value(take, "D_STARTOFFS", offset + startOffsetAbs)
-    
-    local position = r.GetMediaItemInfo_Value(item, "D_POSITION")
-    r.SetMediaItemInfo_Value(item, "D_POSITION", position + startOffset)
-    
-    local length = r.GetMediaItemInfo_Value(item, "D_LENGTH")
-    r.SetMediaItemInfo_Value(item, "D_LENGTH", length - startOffset)
-    
-    r.SetMediaItemInfo_Value(item, "D_FADEINLEN", fade)
-end
-
-function CropTrailingPosition(take, endOffset)
-    local item = r.GetMediaItemTake_Item(take)
-    local length = r.GetMediaItemInfo_Value(item, "D_LENGTH")
-    local pad, fade = GetTrailingPadAndOffset(endOffset, length)
-
-    endOffset = endOffset + pad
-
-    if endOffset > length then return end
-    
-    r.SetMediaItemInfo_Value(item, "D_LENGTH", endOffset)
-    r.SetMediaItemInfo_Value(item, "D_FADEOUTLEN", fade)
-end
-
-local function GoThroughMidiTakeByNotes(take, processCallback, isReverse)
-    if take == nil or not r.TakeIsMIDI(take) then return end
-
-    local note
-
-    if isReverse then
-        local _, notecnt, _, _ = r.MIDI_CountEvts(take)
-        note = notecnt - 1
-    else
-        note = 0
+        return db
     end
 
-    local needStopSeeking = false
+    local GetRelativeThreshold = function(isReverse)
+        local db = GetMaxDbPosition()
+        local lt, tt = self.GetThresholdsValues()
+        local threshold = isReverse and tt or lt
 
-    while not needStopSeeking do
-        local ret, _, muted, startppq, endppq, _, _, _ = r.MIDI_GetNote(take, note)
+        if threshold == 0 then return -150 end
 
-        if ret then
-            local startTime = r.MIDI_GetProjTimeFromPPQPos(take, startppq)
-            local endTime = r.MIDI_GetProjTimeFromPPQPos(take, endppq)
+        local abs_percent = 10 ^ (db / 40)
+        local rel_db = 40 * log10(abs_percent * (threshold / 100))
 
-            if processCallback(muted, startTime, endTime) then
-                needStopSeeking = true
+        return rel_db - min_db_step -- for good comparing floats
+    end
+
+    self.GetCropPosition = function(isReverse)
+        if curTake == nil then return end
+
+        local lt, tt
+        local pos = 0
+
+        local prefix = p.crop_mode.value .. ":pos:" .. (isReverse and "rev" or "")
+        local cache_val = GetCache(prefix)
+
+        if cache_val == nil then
+            if reaper.TakeIsMIDI(curTake) then
+                pos = GetPositionOfMidiNote(isReverse)
+            elseif p.crop_mode.value == 0 then -- Absolute thresholds
+                lt, tt = self.GetThresholdsValues()
+                _, pos = engine.GetPeakThresholdPosition(isReverse and tt or lt, isReverse)
+            elseif p.crop_mode.value == 1 then -- Relative thresholds from max peak
+                local rel_t = GetRelativeThreshold(isReverse)
+                 _, pos = engine.GetPeakThresholdPosition(rel_t, isReverse)
+            elseif p.crop_mode.value == 2 then -- Absolute RMS
+                lt, tt = self.GetThresholdsValues()
+                _, pos = engine.GetRmsThresholdPosition(isReverse and tt or lt, isReverse)
+            elseif p.crop_mode.value == 3 then -- Relative RMS from max peak
+                local rel_t = GetRelativeThreshold(isReverse)
+                 _, pos = engine.GetRmsThresholdPosition(rel_t, isReverse)
+            end
+
+            if pos == nil then
+                pos = isReverse and curItemLength or 0
+            end
+
+            SetCache(pos, prefix)
+        else
+            pos = cache_val
+        end
+
+        return pos
+    end
+
+    self.Crop = function()
+        ----------------------
+        -- LEADING POSITION --
+        ----------------------
+        local l_pad = self.GetPadValue()
+        local l_fade = self.GetFadeValue()
+        local l_position = self.GetCropPosition()
+
+        -----------------------
+        -- TRAILING POSITION --
+        -----------------------
+        local t_pad = self.GetPadValue(true)
+        local t_fade = self.GetFadeValue(true)
+        local t_position = self.GetCropPosition(true)
+
+        if l_position then
+            l_position = l_position - l_pad
+
+            local offset = r.GetMediaItemTakeInfo_Value(curTake, "D_STARTOFFS")
+            local rate = r.GetMediaItemTakeInfo_Value(curTake, "D_PLAYRATE")
+            local startOffsetAbs = GetOffsetConsiderPitchByRate(l_position, rate)
+
+            -- r.ShowConsoleMsg(semitones .. " " .. startOffset .. " " ..  startOffsetAbs .. "\n")
+
+            r.SetMediaItemTakeInfo_Value(curTake, "D_STARTOFFS", offset + startOffsetAbs)
+            r.SetMediaItemInfo_Value(curItem, "D_POSITION", curItemPosition + l_position)
+            r.SetMediaItemInfo_Value(curItem, "D_LENGTH", curItemLength - l_position)
+            r.SetMediaItemInfo_Value(curItem, "D_FADEINLEN", l_fade)
+        end
+
+        if t_position then
+            t_position = t_position + t_pad - l_position
+
+            if t_position < curItemLength then
+                r.SetMediaItemInfo_Value(curItem, "D_LENGTH", t_position)
+                r.SetMediaItemInfo_Value(curItem, "D_FADEOUTLEN", t_fade)
             end
         end
-
-        if isReverse then
-            note = note - 1
-        else
-            note = note + 1
-        end
-
-        if not ret then
-            needStopSeeking = true
-        end
     end
-end
 
-function GetStartPositionOfMidiNote(take)
-    if take == nil or not r.TakeIsMIDI(take) then return end
-
-    local item = r.GetMediaItemTake_Item(take)
-    local position =  r.GetMediaItemInfo_Value(item, "D_POSITION")
-
-    local pos = 0
-
-    GoThroughMidiTakeByNotes(take, function(muted, start_time, end_time)
-        if not muted then
-            local time = start_time - position
-
-            if time < 0 and end_time - position >= 0 then
-                pos = 0
-                return true
-            elseif time >= 0 then
-                pos = time
-                return true
-            end
-        end
-    end)
-
-    return pos
-end
-
-function GetEndPositionOfMidiNote(take)
-    if take == nil or not r.TakeIsMIDI(take) then return end
-
-    local item = r.GetMediaItemTake_Item(take)
-    local position =  r.GetMediaItemInfo_Value(item, "D_POSITION")
-    local length = r.GetMediaItemInfo_Value(item, "D_LENGTH")
-
-    local pos
-
-    GoThroughMidiTakeByNotes(take, function(muted, start_time, end_time)
-        if not muted then
-            local time = end_time - position
-
-            if time > length and start_time - position <= length then
-                pos = length
-                return true
-            elseif time <= length then
-                pos = time
-                return true
-            end
-        end
-    end, true)
-
-    if not pos then pos = length end
-
-    return pos
-end
-
-function GetLeadingPadAndOffset(startTime)
-    if p.leading.pad.value > startTime then
-        local corrected_pad = startTime - min_step
-        return corrected_pad, p.leading.fade.value - (p.leading.pad.value - corrected_pad)
-    else
-        return p.leading.pad.value, p.leading.fade.value
-    end
-end
-
-function GetTrailingPadAndOffset(endTime, itemLength)
-    if p.trailing.pad.value + endTime > itemLength then
-        local corrected_pad = itemLength - endTime - min_step
-        return corrected_pad, p.trailing.fade.value - (p.trailing.pad.value - corrected_pad)
-    else
-        return p.trailing.pad.value, p.trailing.fade.value
-    end
+    return self
 end
