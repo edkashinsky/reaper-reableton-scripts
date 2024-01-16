@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="735b89af357550e254a424b4c053f33063a25cf8">
+<index version="1" name="Reableton Scripts" commit="7b6f5d6a6a7e064faaed69556031d98ae84e4a53">
   <category name="ColorThemes">
     <reapack name="Flat Madness Bright Remix.theme" type="theme" desc="Flat Madness Bright Remix">
       <metadata>
@@ -906,6 +906,17 @@ Please restart Reaper for taking effect]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/735b89af357550e254a424b4c053f33063a25cf8/Items%20Editing/ek_Edge%20silence%20cropper.lua</source>
         <source file="../Core/ek_Edge silence cropper functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/735b89af357550e254a424b4c053f33063a25cf8/Core/ek_Edge%20silence%20cropper%20functions.lua</source>
         <source main="main" file="ek_Edge silence cropper (no prompt).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/735b89af357550e254a424b4c053f33063a25cf8/Items%20Editing/ek_Edge%20silence%20cropper%20(no%20prompt).lua</source>
+      </version>
+      <version name="1.2.1" author="Ed Kashinsky" time="2024-01-16T16:00:35Z">
+        <changelog><![CDATA[• Added scripts for quick presets applying. Check out them in action list]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7b6f5d6a6a7e064faaed69556031d98ae84e4a53/Items%20Editing/ek_Edge%20silence%20cropper.lua</source>
+        <source file="../Core/ek_Edge silence cropper functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7b6f5d6a6a7e064faaed69556031d98ae84e4a53/Core/ek_Edge%20silence%20cropper%20functions.lua</source>
+        <source main="main" file="ek_Edge silence cropper (no prompt).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7b6f5d6a6a7e064faaed69556031d98ae84e4a53/Items%20Editing/ek_Edge%20silence%20cropper%20(no%20prompt).lua</source>
+        <source main="main" file="ek_Edge silence cropper - apply Preset 1.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7b6f5d6a6a7e064faaed69556031d98ae84e4a53/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%201.lua</source>
+        <source main="main" file="ek_Edge silence cropper - apply Preset 2.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7b6f5d6a6a7e064faaed69556031d98ae84e4a53/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%202.lua</source>
+        <source main="main" file="ek_Edge silence cropper - apply Preset 3.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7b6f5d6a6a7e064faaed69556031d98ae84e4a53/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%203.lua</source>
+        <source main="main" file="ek_Edge silence cropper - apply Preset 4.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7b6f5d6a6a7e064faaed69556031d98ae84e4a53/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%204.lua</source>
+        <source main="main" file="ek_Edge silence cropper - apply Preset 5.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7b6f5d6a6a7e064faaed69556031d98ae84e4a53/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%205.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Pin selected items at markers started from.lua" type="script" desc="ek_Pin selected items at markers started from">
