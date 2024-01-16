@@ -10,11 +10,11 @@ local presets = {
     list = EK_GetExtState(presets_key, {})
 }
 
-function ClearPresetSelectItem()
+local function ClearPresetSelectItem()
     EK_SetExtState(p.presets.key, 0)
 end
 
-function DeletePreset(name)
+local function DeletePreset(name)
     presets.id = nil
     presets.current = nil
     presets.is_modified = false
@@ -23,7 +23,7 @@ function DeletePreset(name)
     EK_SetExtState(presets_key, presets.list)
 end
 
-function SavePreset(name)
+local function SavePreset(name)
     local data = {}
 
     for _, block in pairs(p) do
@@ -43,7 +43,7 @@ function SavePreset(name)
     EK_SetExtState(presets_key, presets.list)
 end
 
-function SetPreset(name)
+local function SetPreset(name, is_persist)
     presets.current = name
     presets.is_modified = false
 
@@ -62,11 +62,13 @@ function SetPreset(name)
             end
         end
 
-        EK_SetExtState(key, value)
+        if is_persist then
+            EK_SetExtState(key, value)
+        end
     end
 end
 
-function GetPresetSelectValues()
+local function GetPresetSelectValues()
     local label
     local presets_list = {}
 
@@ -104,7 +106,7 @@ function GetPresetSelectValues()
     return presets_list
 end
 
-function MakePresetModified()
+local function MakePresetModified()
     if presets.id ~= nil then
         presets.is_modified = true
         local val = gui_config[1].select_values[presets.id]
@@ -113,6 +115,32 @@ function MakePresetModified()
         if not string.find(val, label) then
             gui_config[1].select_values[presets.id] = val .. " [" .. label .. "]"
         end
+    end
+end
+
+function ApplyQuickPreset(num)
+    num = num + 2
+
+    local p = GetPresetSelectValues()
+
+    if p[num] == nil then
+        reaper.MB('Preset ' .. (num - 2)  .. ' does not found. Please execute "ek_Edge silence cropper" script to create preset for applying', 'Edge silence cropper', 0)
+        return
+    else
+        SetPreset(p[num])
+    end
+
+    local countSelectedItems = reaper.CountSelectedMediaItems(proj)
+
+    if countSelectedItems > 0 then
+        local Cropper = EdgeCropper.new()
+
+        for i = 0, countSelectedItems - 1 do
+            local item = reaper.GetSelectedMediaItem(proj, i)
+            Cropper.SetItem(item).Crop()
+        end
+
+        reaper.UpdateArrange()
     end
 end
 
@@ -254,7 +282,7 @@ gui_config = {
                 ClearPresetSelectItem()
                 s.select_values = GetPresetSelectValues()
             elseif val ~= 0 then
-                SetPreset(s.select_values[val + 1])
+                SetPreset(s.select_values[val + 1], true)
                 s.select_values = GetPresetSelectValues()
             end
         end
@@ -522,34 +550,35 @@ function EdgeCropper.new()
     local GetCache = function(prefix)
         local _, guid = r.GetSetMediaItemInfo_String(curItem, "GUID", "", false)
 
-        local key = guid .. ":" .. curItemLength .. ":" .. curItemPosition
-
         if prefix then
-            if cache[key] == nil then cache[key] = {} end
+            if cache[guid] == nil then cache[guid] = {} end
 
-            return cache[key][prefix]
+            return cache[guid][prefix]
         else
-            return cache[key]
+            return cache[guid]
         end
     end
 
     local SetCache = function(value, prefix)
         local _, guid = r.GetSetMediaItemInfo_String(curItem, "GUID", "", false)
 
-        local key = guid .. ":" .. curItemLength .. ":" .. curItemPosition
-
-        if prefix then cache[key][prefix] = value
-        else cache[key] = value end
+        if prefix then cache[guid][prefix] = value
+        else cache[guid] = value end
     end
 
-    self.ClearCache = function()
+    self.ClearCache = function(item)
         Log("CLEAR CACHE", ek_log_levels.Warning)
         if curItem then
             curItemLength = r.GetMediaItemInfo_Value(curItem, "D_LENGTH")
             curItemPosition = r.GetMediaItemInfo_Value(curItem, "D_POSITION")
         end
 
-        cache = {}
+        if item ~= nil then
+            local _, guid = r.GetSetMediaItemInfo_String(item, "GUID", "", false)
+            cache[guid] = nil
+        else
+            cache = {}
+        end
     end
 
     self.SetItem = function(item)
@@ -1168,6 +1197,10 @@ function EdgeCropper.new()
         if cache_val == nil then
             local pos = self.GetCropPosition(isReverse)
             local padPos = pos + self.GetPadValue(isReverse)
+            local curItemFade = r.GetMediaItemInfo_Value(curItem, isReverse and "D_FADEOUTLEN" or "D_FADEINLEN")
+            local fadeValue = isReverse and p.trailing.fade.value or p.leading.fade.value
+
+            if fadeValue > curItemFade then curItemFade = fadeValue end
 
             if isReverse then
                 if padPos >= curItemLength then
@@ -1177,15 +1210,15 @@ function EdgeCropper.new()
                     local leadingPadPos = leadingPos - self.GetPadValue()
                     local leadingFade = self.GetFadeValue()
 
-                    fade = padPos - p.trailing.fade.value < leadingPadPos + leadingFade and
-                        padPos - (leadingPadPos + leadingFade)- min_step or p.trailing.fade.value
+                    fade = padPos - curItemFade < leadingPadPos + leadingFade and
+                        padPos - (leadingPadPos + leadingFade) - min_step or curItemFade
                 end
             else
                 if padPos <= 0 then
                     fade = 0
                 else
-                    fade = p.leading.fade.value + padPos > curItemLength and
-                        curItemLength - padPos - min_step or p.leading.fade.value
+                    fade = curItemFade + padPos > curItemLength and
+                        curItemLength - padPos - min_step or curItemFade
                 end
             end
 

@@ -1,18 +1,20 @@
 -- @description ek_Edge silence cropper
--- @version 1.2.0
+-- @version 1.2.1
 -- @author Ed Kashinsky
 -- @about
 --   This script helps to remove silence at the start and at the end of selected items by individual thresholds, pads and fades.
 --
 --   Also it provides UI for configuration
 -- @changelog
---   • Added new modes: Absolute RMS, Relative RMS from max
---   • Improved calculation accuracy
---   • Improved performance and stabilty
---   • Improved stabilty with old versions of ReaImGui
+--   • Added scripts for quick presets applying. Check out them in action list
 -- @provides
 --   ../Core/ek_Edge silence cropper functions.lua
 --   [main=main] ek_Edge silence cropper (no prompt).lua
+--   [main=main] ek_Edge silence cropper - apply Preset 1.lua
+--   [main=main] ek_Edge silence cropper - apply Preset 2.lua
+--   [main=main] ek_Edge silence cropper - apply Preset 3.lua
+--   [main=main] ek_Edge silence cropper - apply Preset 4.lua
+--   [main=main] ek_Edge silence cropper - apply Preset 5.lua
 
 function CoreFunctionsLoaded(script)
 	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
@@ -136,12 +138,24 @@ local function PreviewCropResultInArrangeView()
             local item_offset_y = reaper.GetMediaTrackInfo_Value(track, "I_TCPY") + GetItemHeaderHeight(item)
             local item_length_px = item_length * zoom
 
-            -- redraw on change position
-            if not cachedPositions.items_values[guid] then cachedPositions.items_values[guid] = {} end
-            if cachedPositions.items_values[guid].position ~= position then
-                cachedPositions.items_values[guid].position = position
+            -- redraw on change item values
+            if not cachedPositions.items_values[guid] then
+                cachedPositions.items_values[guid] = { D_POSITION = 0, D_FADEINLEN = 0, D_FADEOUTLEN = 0, }
+            end
+
+            local isSomethingChanged = false
+            for key, value in pairs(cachedPositions.items_values[guid]) do
+                local curValue = reaper.GetMediaItemInfo_Value(item, key)
+                if curValue ~= value then
+                    isSomethingChanged = true
+                    cachedPositions.items_values[guid][key] = curValue
+                end
+            end
+
+            if isSomethingChanged then
                 ClearBitmap(bm.leading, i)
                 ClearBitmap(bm.trailing, i)
+                Cropper.ClearCache(item)
             end
 
             ------------- LEADING PART --------------
