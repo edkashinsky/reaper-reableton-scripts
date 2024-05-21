@@ -2,7 +2,10 @@
 -- @author Ed Kashinsky
 -- @noindex
 
-SCRIPT_NAME = ({reaper.get_action_context()})[2]:match("([^/\\_]+)%.lua$")
+CONTEXT = ({reaper.get_action_context()})
+SCRIPT_NAME = CONTEXT[2]:match("([^/\\]+)%.lua$")
+SCRIPT_PATH = CONTEXT[2]:match("(.*[/\\])")
+
 IS_WINDOWS = reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32"
 
 local ek_debug_levels = {

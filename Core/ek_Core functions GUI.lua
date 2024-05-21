@@ -147,6 +147,13 @@ local function main()
 end
 
 function GUI_ShowMainWindow(w, h)
+	if reaper.ImGui_GetVersion == nil or not pcall(function()
+		dofile(reaper.GetResourcePath() .. '/Scripts/ReaTeam Extensions/API/imgui.lua') '0.7'
+	end) then
+		reaper.MB('Please install "ReaImGui: ReaScript binding for Dear ImGui" (minimum v.0.7) library via ReaPack', SCRIPT_NAME, 0)
+		return
+	end
+
 	window_width = w
 	window_height = h
 
