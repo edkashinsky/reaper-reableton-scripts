@@ -44,7 +44,7 @@ ek_js_wnd = {
 	},
 	titles = {
 		RegionManager = "Region/Marker Manager",
-		ScriptSmartRenaming = "Smart renaming depending on focus"
+		ScriptSmartRenaming = "ek_Smart renaming depending on focus"
 	}
 }
 
