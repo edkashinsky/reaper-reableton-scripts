@@ -25,7 +25,7 @@ https://raw.githubusercontent.com/edkashinsky/reaper-reableton-scripts/master/in
 
 One of the main thing is warping panel:  
 
-<img src="https://cdn.discordapp.com/attachments/275712116315521035/922133416856678510/preview.png" width="450" />
+![Ableton Clip Shortcuts](/Assets/images/ableton_clip_shortcuts_preview.png)
 
 1. **Mode** - ek_Change pitch mode for selected items
 2. **Warp** - ek_Toggle preserve pitch for selected items
