@@ -138,15 +138,3 @@ Installation:
 1. Install script **ek_Smart renaming depending on focus**
 2. Just attach it on Cmd/Ctrl+R instead of renaming by default.
 
-### Theme
-
-#### Flat Madness Remix
-
-The one of the most [impressive themes](https://forum.cockos.com/showthread.php?t=247086) for Reaper (made by Dmytry Hapochka). I tuned a bit this theme to look it more like Ableton.
-
-![Theme Preview](/Assets/images/theme_preview.png)
-
-For installation:
-1. Install [Fonts](/Assets/fonts/theme-fonts.zip?raw=true)
-2. Open **Extensions** -> **ReaPack** -> **Browse Packages** and install "Flat Madness Dark Remix" or "Flat Madness Bright Remix"
-

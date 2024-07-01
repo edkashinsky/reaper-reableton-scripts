@@ -138,18 +138,6 @@ Installation:
 1. Install script **ek_Smart renaming depending on focus**
 2. Just attach it on Cmd/Ctrl+R instead of renaming by default.
 
-### Theme
-
-#### Flat Madness Remix
-
-The one of the most [impressive themes](https://forum.cockos.com/showthread.php?t=247086) for Reaper (made by Dmytry Hapochka). I tuned a bit this theme to look it more like Ableton.
-
-![Theme Preview](/Assets/images/theme_preview.png)
-
-For installation:
-1. Install [Fonts](/Assets/fonts/theme-fonts.zip?raw=true)
-2. Open **Extensions** -> **ReaPack** -> **Browse Packages** and install "Flat Madness Dark Remix" or "Flat Madness Bright Remix"
-
 
 ## List of scripts
 
@@ -318,6 +306,10 @@ Toggles trim mode for selected tracks and shows current state as button highligh
 This package has 2 scripts "ek_Collapse selected tracks" and "ek_Expand selected tracks". They toggle selected tracks/envelope lanes between 3 states: small, medium, large.
 Execute one of these scripts on transport panel and put height values there
 
-## P.S.
+## Support and feedback
 
-If you like scripts, you can support me via [PayPal](https://www.paypal.com/paypalme/kashinsky) or subscribe on my [Soundcloud](https://soundcloud.com/edkashinsky).
+Please fill free to contact me here or on [LinkedIn](https://www.linkedin.com/in/edkashinsky/) or [Facebook](https://www.facebook.com/edkashinsky.music/) if you have any questions.
+
+If you like my scripts, you can support me via [PayPal](https://www.paypal.com/paypalme/kashinsky), [BuyMeACoffee](https://www.buymeacoffee.com/edkashinskd) or subscribe on my [Soundcloud](https://soundcloud.com/edkashinsky).
+
+
