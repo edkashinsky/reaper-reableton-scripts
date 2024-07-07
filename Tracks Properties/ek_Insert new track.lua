@@ -1,10 +1,10 @@
 -- @description ek_Insert new track
--- @version 1.0.0
+-- @version 1.0.1
 -- @author Ed Kashinsky
 -- @about
 --   It just inserts track or inserts it in the end of list depending on situation
 -- @changelog
---   - Small fixes
+--   When selected track is folder, track will be created at the end of track list
 
 local proj = 0
 local tinyChildrenState = 2
@@ -54,8 +54,8 @@ local function IsLastSelectedTrackTiny()
 	return false
 end
 
-if IsLastSelectedTrackTiny() then
+if IsLastSelectedTrackTiny() or countSelectedTracks == 0 then
 	reaper.Main_OnCommand(reaper.NamedCommandLookup(40702), 0) -- Track: Insert new track at end of track list
 else
-	reaper.Main_OnCommand(reaper.NamedCommandLookup(40001), 0) -- Track: Insert new track
+	reaper.Main_OnCommand(reaper.NamedCommandLookup("_SWS_INSRTTRKABOVE"), 0) -- SWS: Insert track above selected tracks
 end

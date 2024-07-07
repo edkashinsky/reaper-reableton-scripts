@@ -1,11 +1,11 @@
 -- @description ek_Smart split items by mouse cursor
--- @version 1.0.5
+-- @version 1.0.6
 -- @author Ed Kashinsky
 -- @about
 --   Remake of amazing script by AZ and it works a bit different way. You can split by edit cursor if mouse position on it (or in Tolerance range in pixels).
 --   If you move mouse on transport panel and execute script, you will see settings window
 -- @changelog
---   Cut grouped items too with original item
+--   Updated the minimum version of ReaImGui to version 0.8.5
 -- @provides
 --   ../Core/ek_Smart split items by mouse cursor functions.lua
 
@@ -26,29 +26,19 @@ if not loaded then
 	return
 end
 
-if not reaper.APIExists("ImGui_WindowFlags_NoCollapse") then
-    reaper.MB('Please install "ReaImGui: ReaScript binding for Dear ImGui" via ReaPack', '', 0)
-	return
-end
-
 CoreFunctionsLoaded("ek_Smart split items by mouse cursor functions.lua")
-
-if not reaper.APIExists("ImGui_WindowFlags_NoCollapse") then
-    reaper.MB('Please install "ReaImGui: ReaScript binding for Dear ImGui" via ReaPack', '', 0)
-	return
-end
 
 local window, _, _ = reaper.BR_GetMouseCursorContext()
 if window == "transport" then
 	local settings = EK_SortTableByKey(split_settings)
 
-	function frame()
-		reaper.ImGui_PushItemWidth(GUI_GetCtx(), 224)
+	function frame(ImGui, ctx)
+		ImGui.PushItemWidth(ctx, 224)
 		GUI_DrawSettingsTable(settings)
-		reaper.ImGui_PopItemWidth(GUI_GetCtx())
+		ImGui.PopItemWidth(ctx)
 	end
 
-	GUI_ShowMainWindow(610, 0)
+	GUI_ShowMainWindow(625, 0)
 	return
 end
 

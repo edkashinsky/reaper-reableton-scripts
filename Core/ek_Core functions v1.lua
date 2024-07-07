@@ -509,6 +509,14 @@ function join(list, delimiter)
 	return string
 end
 
+function trim(s)
+	return (s:gsub("^%s*(.-)%s*$", "%1"))
+end
+
+function stricmp(a, b)
+	return a:upper() == b:upper()
+end
+
 function round(number, decimals)
 	if not decimals then decimals = 0 end
 
@@ -533,13 +541,6 @@ function isEmpty(value)
 	return false
 end
 
-function ShowPitchTooltip(semi)
-	semi = round(semi, 1)
-
-	local message = (semi > 0 and "+" .. semi or semi) .. " " .. (math.abs(semi) == 1 and "semitone" or "semitones")
-	EK_ShowTooltip(message)
-end
-
 function log10(x)
   	return math.log(x, 10)
 end
@@ -555,6 +556,13 @@ function modifyTime(dt, mdParams)
 		min = mdParams.min ~= nil and mdParams.min or dt.min,
 		sec = 0
 	})
+end
+
+function ShowPitchTooltip(semi)
+	semi = round(semi, 1)
+
+	local message = (semi > 0 and "+" .. semi or semi) .. " " .. (math.abs(semi) == 1 and "semitone" or "semitones")
+	EK_ShowTooltip(message)
 end
 
 function clearPitchForTake(take)

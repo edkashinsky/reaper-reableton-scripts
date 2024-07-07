@@ -1,11 +1,11 @@
 -- @description ek_Pin selected items at markers started from
--- @version 1.0.8
+-- @version 1.0.9
 -- @author Ed Kashinsky
 -- @about
 --   ![Preview](/Assets/images/pin_items_to_markers_preview.gif)
 --   This script pins selected items to markers started from specified number. It requires ReaImGui extension.
 -- @changelog
---   - GUI Refactoring
+--   Updated the minimum version of ReaImGui to version 0.8.5
 -- @provides
 --   ../Core/ek_Pin selected items functions.lua
 
@@ -25,11 +25,6 @@ if not loaded then
 	return
 end
 
-if not reaper.APIExists("ImGui_WindowFlags_NoCollapse") then
-    reaper.MB('Please install "ReaImGui: ReaScript binding for Dear ImGui" via ReaPack', '', 0)
-	return
-end
-
 CoreFunctionsLoaded("ek_Pin selected items functions.lua")
 
 local markers = GetMarkers()
@@ -41,7 +36,7 @@ local count_selected_items = reaper.CountSelectedMediaItems(proj)
 local gui_sel_marker = nil
 local gui_sel_count = 0
 
-function frame()
+function frame(ImGui, ctx)
 	markers = GetMarkers()
 
 	local gui_markers_list = {}
@@ -64,27 +59,27 @@ function frame()
 		end
 	end
 
-	reaper.ImGui_PushItemWidth(GUI_GetCtx(), 110)
+	ImGui.PushItemWidth(ctx, 110)
 	local value
 
-	_, value = reaper.ImGui_Combo(GUI_GetCtx(), "Start marker number", gui_sel_marker, join(gui_markers_list, "\0") .. "\0")
+	_, value = ImGui.Combo(ctx, "Start marker number", gui_sel_marker, join(gui_markers_list, "\0") .. "\0")
 	if value ~= gui_sel_marker then
 		start_marker = gui_markers_list[value + 1]
 		gui_sel_marker = value
 	end
 
-	_, value = reaper.ImGui_Combo(GUI_GetCtx(), "Count items on track", gui_sel_count, join(gui_count_list, "\0") .. "\0")
+	_, value = ImGui.Combo(ctx, "Count items on track", gui_sel_count, join(gui_count_list, "\0") .. "\0")
 	if value ~= gui_sel_count then
 		count_on_track = gui_count_list[value + 1] == "No limit" and nil or gui_count_list[value + 1]
 		gui_sel_count = value
 	end
 
-	_, value = reaper.ImGui_Checkbox(GUI_GetCtx(), 'Group piled items', save_relative_position)
+	_, value = ImGui.Checkbox(ctx, 'Group piled items', save_relative_position)
     if value ~= save_relative_position then
         save_relative_position = value
     end
 
-	reaper.ImGui_Indent(GUI_GetCtx(), 35)
+	ImGui.Indent(ctx, 35)
 
 	GUI_DrawButton('Pin to marker', function()
 		reaper.Undo_BeginBlock()
@@ -97,7 +92,7 @@ function frame()
 		reaper.Undo_EndBlock("Move selected items at markers started from", -1)
 	end, gui_buttons_types.Action, true)
 
-    reaper.ImGui_SameLine(GUI_GetCtx())
+    ImGui.SameLine(ctx)
 
 	GUI_DrawButton('Cancel', nil, gui_buttons_types.Cancel)
 end

@@ -1,5 +1,5 @@
 -- @description ek_Global startup action
--- @version 1.0.40
+-- @version 1.0.41
 -- @author Ed Kashinsky
 -- @about
 --   This is startup action brings some ableton-like features in realtime. You can control any option by 'ek_Global startup action settings' script.
@@ -12,9 +12,7 @@
 --      5. Open 'ek_Global startup action settings' again for customize options
 --      6. If you want to use auto-grid for MIDI Editor, install script **ek_Auto grid for MIDI Editor** and set it on zoom shortcut.
 -- @changelog
---   Fixed bug with dark theme selector
---
---   (!) Please restart the REAPER to make changes work
+--   Updated the minimum version of ReaImGui to version 0.8.5
 -- @provides
 --   ek_Core functions startup.lua
 --   ek_Adaptive grid functions.lua

@@ -1,10 +1,10 @@
 -- @description ek_Smart renaming depending on focus
--- @version 1.0.11
+-- @version 1.0.12
 -- @author Ed Kashinsky
 -- @about
 --   Renaming stuff for takes, items, markers, regions and tracks depending on focus
 -- @changelog
---   • Fixed bug with renaming of empty item
+--   Updated the minimum version of ReaImGui to version 0.8.5
 -- @provides
 --   ../Core/ek_Smart renaming functions.lua
 
@@ -24,17 +24,12 @@ if not loaded then
 	return
 end
 
-if not reaper.APIExists("ImGui_WindowFlags_NoCollapse") then
-    reaper.MB('Please install "ReaImGui: ReaScript binding for Dear ImGui" via ReaPack', '', 0)
-	return
-end
-
 CoreFunctionsLoaded("ek_Smart renaming functions.lua")
 
 local defaultPalette = {
 	0xc93b10, 0xc95a10, 0xc9a510, 0xcaca11, 0x80ca0d, 0x51a31a, 0x5bc910, 0x10c92e, 0x13ca5a, 0x12caa5, 0x0ea5ca, 0x2696cf, 0x3682d4, 0x4644d8, 0x4341b0, 0x5e40d5, 0x7738d3, 0x902ed1, 0xa40fc9, 0xca11c9,
 }
-local wndWidth = 330
+local wndWidth = 340
 local element = GetFocusedElement()
 local isColorTreeShowed = false
 local isColorTreeShowedChanged = false
@@ -146,32 +141,32 @@ local function UpdateLastColorsList(new_color)
 	return true
 end
 
-local function drawClearButton()
-	local draw_list = reaper.ImGui_GetWindowDrawList(GUI_GetCtx())
+local function drawClearButton(ImGui, ctx)
+	local draw_list = ImGui.GetWindowDrawList(ctx)
 
-	local p = { reaper.ImGui_GetCursorScreenPos(GUI_GetCtx()) }
+	local p = { ImGui.GetCursorScreenPos(ctx) }
 	local x = p[1]
 	local y = p[2]
 	local sz = 18
 	local offset = 3
 
-	reaper.ImGui_DrawList_AddRectFilled(draw_list, x, y, x + sz, y + sz, gui_colors.Background, 0.0);
-	reaper.ImGui_DrawList_AddLine(draw_list, x + offset, y + offset, x + sz - 1 - offset, y + sz - 1 - offset, gui_colors.Red, 1)
-	reaper.ImGui_DrawList_AddLine(draw_list, x + offset, y + sz - 1 - offset, x + sz - 1 - offset, y + offset, gui_colors.Red, 1)
+	ImGui.DrawList_AddRectFilled(draw_list, x, y, x + sz, y + sz, gui_colors.Background, 0.0);
+	ImGui.DrawList_AddLine(draw_list, x + offset, y + offset, x + sz - 1 - offset, y + sz - 1 - offset, gui_colors.Red, 1)
+	ImGui.DrawList_AddLine(draw_list, x + offset, y + sz - 1 - offset, x + sz - 1 - offset, y + offset, gui_colors.Red, 1)
 
 	if color == 0 then
-		reaper.ImGui_DrawList_AddRect(draw_list, x, y, x + sz, y + sz, gui_colors.White, 0.0);
+		ImGui.DrawList_AddRect(draw_list, x, y, x + sz, y + sz, gui_colors.White, 0.0);
 	end
-	if reaper.ImGui_InvisibleButton(GUI_GetCtx(), '##Clear color', sz, sz) then
+	if ImGui.InvisibleButton(ctx, '##Clear color', sz, sz) then
 		color = 0
 		isColorSet = true
 	end
 end
 
-local function drawAddColorButton()
-	local draw_list = reaper.ImGui_GetWindowDrawList(GUI_GetCtx())
+local function drawAddColorButton(ImGui, ctx)
+	local draw_list = ImGui.GetWindowDrawList(ctx)
 
-	local p = { reaper.ImGui_GetCursorScreenPos(GUI_GetCtx()) }
+	local p = { ImGui.GetCursorScreenPos(ctx) }
 	local x = p[1]
 	local y = p[2]
 	local sz = 18
@@ -179,16 +174,16 @@ local function drawAddColorButton()
 	local cy = y + (sz / 2)
 	local offset = 3
 
-	reaper.ImGui_DrawList_AddRectFilled(draw_list, x, y, x + sz, y + sz, gui_colors.Background, 0.0);
-	reaper.ImGui_DrawList_AddLine(draw_list, cx, y + offset, cx, y + sz - offset, gui_colors.White, 1)
-	reaper.ImGui_DrawList_AddLine(draw_list, x + offset, cy, x + sz - offset, cy, gui_colors.White, 1)
+	ImGui.DrawList_AddRectFilled(draw_list, x, y, x + sz, y + sz, gui_colors.Background, 0.0);
+	ImGui.DrawList_AddLine(draw_list, cx, y + offset, cx, y + sz - offset, gui_colors.White, 1)
+	ImGui.DrawList_AddLine(draw_list, x + offset, cy, x + sz - offset, cy, gui_colors.White, 1)
 
-	if reaper.ImGui_InvisibleButton(GUI_GetCtx(), '##Add color', sz, sz) then
+	if ImGui.InvisibleButton(ctx, '##Add color', sz, sz) then
 		newColor = nil
-		reaper.ImGui_OpenPopup(GUI_GetCtx(), 'mypicker')
+		ImGui.OpenPopup(ctx, 'mypicker')
 	end
 
-	if reaper.ImGui_BeginPopup(GUI_GetCtx(), 'mypicker') then
+	if ImGui.BeginPopup(ctx, 'mypicker') then
 		local newVal = GUI_DrawInput(gui_input_types.Color, "Add new color", newColor)
 		if newVal ~= newColor then
 			newColor = newVal
@@ -196,35 +191,35 @@ local function drawAddColorButton()
 
 		GUI_DrawInput(gui_input_types.ColorView, "Add new color", newColor)
 
-		reaper.ImGui_SameLine(GUI_GetCtx())
+		ImGui.SameLine(ctx)
 
 		GUI_DrawButton('Add color', function()
 			UpdateLastColorsList(newColor)
-			reaper.ImGui_CloseCurrentPopup(GUI_GetCtx())
+			ImGui.CloseCurrentPopup(ctx)
 		end, gui_buttons_types.Action, true)
 
-		reaper.ImGui_SameLine(GUI_GetCtx())
+		ImGui.SameLine(ctx)
 
 		GUI_DrawButton('Cancel', function()
-			reaper.ImGui_CloseCurrentPopup(GUI_GetCtx())
+			ImGui.CloseCurrentPopup(ctx)
 		end, gui_buttons_types.Cancel, true)
 
 		GUI_DrawText()
 		GUI_DrawText( 'Default color palette settings', GUI_GetFont(gui_font_types.Bold))
-		reaper.ImGui_Separator(GUI_GetCtx())
+		ImGui.Separator(ctx)
 
 		GUI_DrawSettingsTable(rename_default_colors_config)
 
-		reaper.ImGui_EndPopup(GUI_GetCtx())
+		ImGui.EndPopup(ctx)
 	end
 end
 
-local function frameForColorSection()
-	reaper.ImGui_Separator(GUI_GetCtx())
+local function frameForColorSection(ImGui, ctx)
+	ImGui.Separator(ctx)
 
-	drawClearButton()
+	drawClearButton(ImGui, ctx)
 
-	reaper.ImGui_SameLine(GUI_GetCtx(), nil, 4)
+	ImGui.SameLine(ctx, nil, 4)
 
 	for i = 1, #lastColorsList do
 		if GUI_DrawInput(gui_input_types.ColorView, "Last Color #" .. i, lastColorsList[i], { selected = color == lastColorsList[i] }) then
@@ -232,10 +227,10 @@ local function frameForColorSection()
 			isColorSet = true
 		end
 
-		reaper.ImGui_SameLine(GUI_GetCtx(), nil, 4)
+		ImGui.SameLine(ctx, nil, 4)
 	end
 
-	drawAddColorButton()
+	drawAddColorButton(ImGui, ctx)
 
 	for i = 1, #GetDefaultColor() do
 		local clr = tonumber(GetDefaultColor(i))
@@ -244,13 +239,13 @@ local function frameForColorSection()
 			isColorSet = true
 		end
 
-		if i ~= #GetDefaultColor() and i % 10 ~= 0 then reaper.ImGui_SameLine(GUI_GetCtx(), nil, 4) end
+		if i ~= #GetDefaultColor() and i % 10 ~= 0 then ImGui.SameLine(ctx, nil, 4) end
 	end
 
-	reaper.ImGui_Separator(GUI_GetCtx())
+	ImGui.Separator(ctx)
 end
 
-local function frameForAdvancedForm()
+local function frameForAdvancedForm(ImGui, ctx)
 	local a_key = 0
 	local a_type = EK_GetExtState(rename_advanced_types_key, rename_advanced_types.Replace)
 	local a_fields
@@ -264,7 +259,7 @@ local function frameForAdvancedForm()
 		end
 	end
 
-	reaper.ImGui_PushItemWidth(GUI_GetCtx(), 216)
+	ImGui.PushItemWidth(ctx, 216)
 
 	local newVal = GUI_DrawInput(gui_input_types.Combo, "Type", a_key, settings)
 	if newVal ~= a_key then
@@ -273,16 +268,16 @@ local function frameForAdvancedForm()
 
 	GUI_DrawSettingsTable(a_fields)
 
-	reaper.ImGui_PopItemWidth(GUI_GetCtx())
+	ImGui.PopItemWidth(ctx)
 
-	reaper.ImGui_Separator(GUI_GetCtx())
+	ImGui.Separator(ctx)
 
 	GUI_DrawText('Example:')
-	reaper.ImGui_SameLine(GUI_GetCtx())
-	reaper.ImGui_PushFont(GUI_GetCtx(), GUI_GetFont(gui_font_types.Bold))
+	ImGui.SameLine(ctx)
+	ImGui.PushFont(ctx, GUI_GetFont(gui_font_types.Bold))
 	GUI_DrawText(GetProcessedTitleByAdvanced(element.value, 1))
 
-	reaper.ImGui_PopFont(GUI_GetCtx())
+	ImGui.PopFont(ctx)
 end
 
 local start_time = reaper.time_precise()
@@ -297,7 +292,7 @@ local function NeedToUpdateFocusedElement()
 	end
 end
 
-function frame()
+function frame(ImGui, ctx)
 	if NeedToUpdateFocusedElement() then
 		element = GetFocusedElement()
 	end
@@ -312,12 +307,12 @@ function frame()
 	-- HEADER
 	--
 	GUI_DrawText(element.typeTitle .. ":")
-	reaper.ImGui_SameLine(GUI_GetCtx())
-	reaper.ImGui_PushFont(GUI_GetCtx(), GUI_GetFont(gui_font_types.Bold))
+	ImGui.SameLine(ctx)
+	ImGui.PushFont(ctx, GUI_GetFont(gui_font_types.Bold))
 	GUI_DrawText(element.title)
-	reaper.ImGui_PopFont(GUI_GetCtx())
+	ImGui.PopFont(ctx)
 
-	reaper.ImGui_BeginDisabled(GUI_GetCtx(), element.type == rename_types.Nothing)
+	ImGui.BeginDisabled(ctx, element.type == rename_types.Nothing)
 
 	--
 	-- NEW TITLE
@@ -328,11 +323,11 @@ function frame()
 		isColorTreeShowedChanged = true
 	end
 
-	reaper.ImGui_SameLine(GUI_GetCtx(), nil, 4)
+	ImGui.SameLine(ctx, nil, 4)
 
-	reaper.ImGui_BeginDisabled(GUI_GetCtx(), isAdvanced == true)
+	ImGui.BeginDisabled(ctx, isAdvanced == true)
 
-	reaper.ImGui_PushItemWidth(GUI_GetCtx(), 194)
+	ImGui.PushItemWidth(ctx, 194)
 
 	GUI_SetFocusOnWidget()
 
@@ -342,15 +337,15 @@ function frame()
 		isTitleSet = true
 	end
 
-	reaper.ImGui_PopItemWidth(GUI_GetCtx())
+	ImGui.PopItemWidth(ctx)
 
-	reaper.ImGui_EndDisabled(GUI_GetCtx())
+	ImGui.EndDisabled(ctx)
 
 	--
 	-- COLOR
 	--
 	if isColorTreeShowed then
-		frameForColorSection()
+		frameForColorSection(ImGui, ctx)
 	end
 
 	if isColorTreeShowedChanged then
@@ -375,12 +370,12 @@ function frame()
 	end
 
 	if isAdvanced then
-		frameForAdvancedForm()
+		frameForAdvancedForm(ImGui, ctx)
 	end
 
-	reaper.ImGui_Separator(GUI_GetCtx())
+	ImGui.Separator(ctx)
 
-	reaper.ImGui_Indent(GUI_GetCtx(), 85)
+	ImGui.Indent(ctx, 85)
 
 	GUI_DrawButton('Rename', function()
 		reaper.Undo_BeginBlock()
@@ -400,9 +395,9 @@ function frame()
 		reaper.Undo_EndBlock(SCRIPT_NAME, -1)
 	end, gui_buttons_types.Action, false, reaper.ImGui_Key_Enter())
 
-	reaper.ImGui_EndDisabled(GUI_GetCtx())
+	ImGui.EndDisabled(ctx)
 
-	reaper.ImGui_SameLine(GUI_GetCtx())
+	ImGui.SameLine(ctx)
 
 	GUI_DrawButton('Cancel', nil, gui_buttons_types.Cancel)
 end

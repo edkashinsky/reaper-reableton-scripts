@@ -1,10 +1,10 @@
 -- @description ek_Pin selected items to closest markers
--- @version 1.0.0
+-- @version 1.0.1
 -- @author Ed Kashinsky
 -- @about
 --   This script pins selected items to closest markers for first selected item. It requires script "ek_Pin selected items at markers started from.lua"
 -- @changelog
---   - Added script
+--   ReaImGui no longer need
 
 function CoreFunctionsLoaded(script)
 	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
@@ -19,11 +19,6 @@ end
 local loaded = CoreFunctionsLoaded("ek_Core functions.lua")
 if not loaded then
 	if loaded == nil then reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0) end
-	return
-end
-
-if not reaper.APIExists("ImGui_WindowFlags_NoCollapse") then
-    reaper.MB('Please install "ReaImGui: ReaScript binding for Dear ImGui" via ReaPack', '', 0)
 	return
 end
 

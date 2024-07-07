@@ -1,12 +1,12 @@
 -- @description ek_Edge silence cropper
--- @version 1.2.1
+-- @version 1.2.2
 -- @author Ed Kashinsky
 -- @about
 --   This script helps to remove silence at the start and at the end of selected items by individual thresholds, pads and fades.
 --
 --   Also it provides UI for configuration
 -- @changelog
---   • Added scripts for quick presets applying. Check out them in action list
+--   Updated the minimum version of ReaImGui to version 0.8.5
 -- @provides
 --   ../Core/ek_Edge silence cropper functions.lua
 --   [main=main] ek_Edge silence cropper (no prompt).lua
@@ -32,12 +32,9 @@ if not loaded then
 	return
 end
 
-if not reaper.APIExists("ImGui_WindowFlags_NoCollapse") then
-    reaper.MB('Please install "ReaImGui: ReaScript binding for Dear ImGui" via ReaPack', '', 0)
-	return
-end
-
 CoreFunctionsLoaded("ek_Edge silence cropper functions.lua")
+
+GUI_ShowMainWindow(330, 0)
 
 local min_step = 0.00001
 local using_eel = reaper.APIExists("ImGui_CreateFunctionFromEEL")
@@ -259,17 +256,17 @@ local function CropSilence()
     reaper.Undo_EndBlock("Edge silence cropper", -1)
 end
 
-function frame()
+function frame(ImGui, ctx)
     GUI_DrawSettingsTable(gui_config)
 
     GUI_DrawGap()
-    reaper.ImGui_Indent(GUI_GetCtx(), 72)
+    ImGui.Indent(ctx, 72)
 
     GUI_DrawButton('Trim silence', function()
         CropSilence()
     end)
 
-    reaper.ImGui_SameLine(GUI_GetCtx())
+    ImGui.SameLine(ctx)
 
     GUI_DrawButton('Cancel', nil, gui_buttons_types.Cancel)
 end
@@ -311,8 +308,6 @@ EK_DeferWithCooldown(PreviewCropResultInArrangeView, { last_time = 0, cooldown =
 
     return true
 end })
-
-GUI_ShowMainWindow(330, 0)
 
 function GUI_OnWindowClose()
     ResetPreview()

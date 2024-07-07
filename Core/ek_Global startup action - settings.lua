@@ -23,14 +23,11 @@ if not CoreFunctionsLoaded("ek_Core functions startup.lua") then
 	return
 end
 
-if not reaper.APIExists("ImGui_WindowFlags_NoCollapse") then
-    reaper.MB('Please install "ReaImGui: ReaScript binding for Dear ImGui" via ReaPack', '', 0)
-	return
-end
+GUI_ShowMainWindow(490, 670)
 
 local ordered_settings = EK_SortTableByKey(ga_settings)
 
-function frame()
+function frame(ImGui, ctx)
 	local isSet = GA_GetSettingValue(ga_settings.enabled)
 	local isEnabled = EK_IsGlobalActionEnabled()
 	local isStartupSet = EK_IsGlobalActionEnabledViaStartup()
@@ -43,9 +40,8 @@ function frame()
 		GUI_DrawText( "It's enabled by manual setting via SWS Startup actions...", GUI_GetFont(gui_font_types.Bold), gui_colors.Green)
 	end
 
-	reaper.ImGui_PushItemWidth(GUI_GetCtx(), 224)
+	ImGui.PushItemWidth(ctx, 224)
 	GUI_DrawSettingsTable(ordered_settings)
-	reaper.ImGui_PopItemWidth(GUI_GetCtx())
+	ImGui.PopItemWidth(ctx)
 end
 
-GUI_ShowMainWindow(490, 670)

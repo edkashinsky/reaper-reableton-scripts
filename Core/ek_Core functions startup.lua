@@ -557,7 +557,7 @@ end
 -- Observe Project Limit
 --
 function GA_ObserveProjectLimit(changes, values)
-	Log("[PROJECT LIMIT] {param} observing...", ek_log_levels.Warning, ga_settings.project_limit.key)
+	Log("[PROJECT LIMIT] {param} observing...", ek_log_levels.Notice, ga_settings.project_limit.key)
 
 	local maxLen = 0
 
@@ -896,8 +896,8 @@ function GA_ObserveDarkMode(changes, values)
 	local themePath = string.gsub(curThemeNamePath, "[^" .. dir_sep .. "]+[.][Rr][Ee][Aa][Pp][Ee][Rr][Tt][Hh][Ee][Mm][Ee]", "")
 	local isExecutedToday = EK_GetExtState(is_executed_key)
 
-	Log("[DARK THEME] Observing...")
-	Log({ inInterval and 1 or 0, themeName, curThemeName, EK_GetExtState(theme_key) })
+	Log("[DARK THEME] Observing...", ek_log_levels.Notice)
+	Log({ inInterval and 1 or 0, themeName, curThemeName, EK_GetExtState(theme_key) }, ek_log_levels.Notice)
 
 	if reaper.file_exists(themePath .. themeName .. ".ReaperTheme") then
 		themeName = themeName .. ".ReaperTheme"

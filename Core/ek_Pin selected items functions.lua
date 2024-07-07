@@ -1,3 +1,4 @@
+-- @author Ed Kashinsky
 -- @noindex
 
 local items_map = {}
@@ -155,6 +156,8 @@ function PinItems(marker_num, save_relative_position, items_on_track)
 				else
 					newPosition = position
 				end
+
+				newPosition = newPosition - items_map[i][j].offset
 
 				reaper.SetMediaItemInfo_Value(item, "D_POSITION", newPosition)
 			end
