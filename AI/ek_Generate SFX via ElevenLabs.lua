@@ -1,10 +1,10 @@
 -- @description ek_Generate SFX via ElevenLabs
--- @version 1.0.0
+-- @version 1.0.1
 -- @author Ed Kashinsky
 -- @about
 --   Script uses ElevenLabs API to generate sound effects and inserts them into the project.
 -- @provides
---    [data] Data/*
+--    [nomain] Data/*
 
 function CoreFunctionsLoaded(script)
 	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
