@@ -1,13 +1,15 @@
 -- @description ek_Generate SFX via ElevenLabs
--- @version 1.0.1
+-- @version 1.0.2
 -- @author Ed Kashinsky
 -- @about
 --   Script uses ElevenLabs API to generate sound effects and inserts them into the project.
+-- @changelog
+--   Added support of Windows 8
 -- @provides
 --    [nomain] Data/*
 
+local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
 function CoreFunctionsLoaded(script)
-	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
 	local root_path = debug.getinfo(1, 'S').source:sub(2, -5):match("(.*" .. sep .. ")")
 	local script_path = root_path .. ".." .. sep .. "Core" .. sep .. script
 	local file = io.open(script_path, 'r')
@@ -46,7 +48,11 @@ local data = {
 	is_console_collapsed = settings.console_collapsed
 }
 
-local function ConsoleLog(message)
+local function ConsoleLog(message, is_important)
+	if is_important and not settings.enable_console then
+		reaper.MB(tostring(message), "Error from ElevenLabs API", 0)
+	end
+
 	table.insert(data.logs, "[" .. os.date("%H:%M:%S") .. "] " .. tostring(message))
 end
 
@@ -77,7 +83,7 @@ local function GenerateSfx()
 		path = SCRIPT_PATH:gsub(" ", "\\ ")
 	end
 
-	local command = path .. "Data/" .. app .. " -p \"" .. prompt .. "\" -k \"" .. settings.api_key .. "\" -i " .. settings.influence .. " -f \"" .. project_path .. "\""
+	local command = path .. "Data" .. sep .. app .. " -p \"" .. prompt .. "\" -k \"" .. settings.api_key .. "\" -i " .. settings.influence .. " -f \"" .. project_path .. "\""
 	if not settings.auto_duration then
 		command = command .. " -d " .. settings.duration
 	end
@@ -85,9 +91,8 @@ local function GenerateSfx()
 	data.req_left = data.req_left - 1
 	ConsoleLog(command)
 
-	local handle = io.popen(command)
-	local output_path = trim(handle:read("*a"))
-	handle:close()
+	ExecCommand("chmod +x " ..  path .. "Data" .. sep .. app)
+	local output_path = ExecCommand(command)
 
 	if reaper.file_exists(output_path) then
 		reaper.InsertMedia(output_path, 0)
@@ -99,12 +104,8 @@ local function GenerateSfx()
 		else
 			data.is_waiting = false
 		end
-	elseif settings.enable_console then
-		ConsoleLog("[ERR] " .. output_path)
-		data.is_waiting = false
-		data.req_left = 0
 	else
-		reaper.MB(output_path, "Error from ElevenLabs API", 0)
+		ConsoleLog("Response: " .. (string.len(output_path) > 0 and output_path or "Unknown error."))
 		data.is_waiting = false
 		data.req_left = 0
 	end
