@@ -1,5 +1,5 @@
 -- @description ek_Generate SFX via ElevenLabs
--- @version 1.0.2
+-- @version 1.0.3
 -- @author Ed Kashinsky
 -- @about
 --   Script uses ElevenLabs API to generate sound effects and inserts them into the project.
@@ -81,6 +81,7 @@ local function GenerateSfx()
 
 		app = "s11-" .. arch
 		path = SCRIPT_PATH:gsub(" ", "\\ ")
+		ExecCommand("chmod +x " ..  path .. "Data" .. sep .. app)
 	end
 
 	local command = path .. "Data" .. sep .. app .. " -p \"" .. prompt .. "\" -k \"" .. settings.api_key .. "\" -i " .. settings.influence .. " -f \"" .. project_path .. "\""
@@ -91,7 +92,6 @@ local function GenerateSfx()
 	data.req_left = data.req_left - 1
 	ConsoleLog(command)
 
-	ExecCommand("chmod +x " ..  path .. "Data" .. sep .. app)
 	local output_path = ExecCommand(command)
 
 	if reaper.file_exists(output_path) then
