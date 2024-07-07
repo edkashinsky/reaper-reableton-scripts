@@ -173,12 +173,12 @@ function frame(ImGui, ctx, is_first_frame)
 			ImGui.CloseCurrentPopup(ctx)
       	end
 
-		reaper.ImGui_EndDisabled(ctx)
+		ImGui.EndDisabled(ctx)
 
 		ImGui.EndPopup(ctx)
 	end
 
-	reaper.ImGui_BeginDisabled(ctx, data.is_waiting or string.len(settings.api_key) == 0)
+	ImGui.BeginDisabled(ctx, data.is_waiting or string.len(settings.api_key) == 0)
 
 	if not ImGui.ValidatePtr(input_callback, 'ImGui_Function*') then
         input_callback = ImGui.CreateFunctionFromEEL([[
@@ -226,7 +226,7 @@ function frame(ImGui, ctx, is_first_frame)
 
 	ImGui.SameLine(ctx, nil, 4)
 
-	if reaper.ImGui_Button(ctx, "Settings") then
+	if ImGui.Button(ctx, "Settings") then
 		ImGui.OpenPopup(ctx, 'Settings')
     end
 
@@ -284,12 +284,12 @@ function frame(ImGui, ctx, is_first_frame)
 		data.req_left = settings.amount
 		data.is_waiting = true
 		reaper.defer(GenerateSfx)
-	end, gui_buttons_types.Action, true, reaper.ImGui_Key_Enter())
+	end, gui_buttons_types.Action, true, ImGui.Key_Enter())
 
-	reaper.ImGui_EndDisabled(ctx)
+	ImGui.EndDisabled(ctx)
 
 	if settings.enable_console then
-		ImGui.Dummy(ctx, 0, 20)
+		GUI_DrawGap(20)
 
 		if is_first_frame and not settings.console_collapsed then
 			ImGui.SetNextItemOpen(ctx, true)
