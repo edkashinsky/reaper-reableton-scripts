@@ -1,5 +1,5 @@
 -- @description ek_Separated actions for Media item in Mouse modifiers
--- @version 1.1.1
+-- @version 1.1.2
 -- @author Ed Kashinsky
 -- @about
 --   This script gives opportunity to attach 2 different actions on Media item context in Mouse modifiers - when we click on header of media item and part between header and middle of it.
@@ -8,9 +8,7 @@
 --		- If option enabled, header label is positioned above the item and "header part" calculates as 1/4 of the upper part of the item
 --      - If option disabled, header label is positioned on item and header part calculates as header label height
 -- @changelog
---   - Script works in 2 workflows depends on option "Draw labels above the item when media item height is more than":
---       - If option disabled, header label is positioned on item and header part calculates as header label height
---		 - If option enabled, header label is positioned above the item and "header part" calculates as 1/4 of the upper part of the item
+--   - Script works in 2 workflows depends on option "Draw labels above the item when media item height is more than": If option disabled, header label is positioned on item and header part calculates as header label height. If option enabled, header label is positioned above the item and "header part" calculates as 1/4 of the upper part of the item
 --   - Fixed bug when script doesn't work with lanes
 
 if not reaper.APIExists("JS_ReaScriptAPI_Version") then
