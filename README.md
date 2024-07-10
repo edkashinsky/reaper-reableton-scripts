@@ -109,7 +109,7 @@ This small script helps to attach 2 independent actions on media item click: on 
 - If option disabled, header label is positioned on item and header part calculates as header label height
 - If option enabled, header label is positioned above the item and "header part" calculates as 1/4 of the upper part of the item
 
-<img src="/Assets/images/separated_actions_for_media_item_preview.png" alt="Separated_actions_for_media_item_preview" width="400"/>
+<img src="/Assets/images/separated_actions_for_media_item_preview.png" alt="Separated_actions_for_media_item_preview" />
 
 Installation:
 1. Install script **ek_Separated actions for Media item in Mouse modifiers**
