@@ -1,5 +1,5 @@
 -- @description ek_Separated actions for Media item in Mouse modifiers
--- @version 1.1.0
+-- @version 1.1.1
 -- @author Ed Kashinsky
 -- @about
 --   This script gives opportunity to attach 2 different actions on Media item context in Mouse modifiers - when we click on header of media item and part between header and middle of it.
@@ -98,12 +98,10 @@ if GetItemHeaderHeight(item) == 0 then
 	-- "Draw labels above the item when media item height is more than" is disabled
 	-- Click on header
 	track_y = track_y + headerHeight
-	Log("DISABLED", ek_log_levels.Debug)
 else
 	-- "Draw labels above the item when media item height is more than" is enabled
 	-- Click on 1/4 up part of item
 	track_y = track_y + (reaper.GetMediaItemInfo_Value(item, "I_LASTH") / 4)
-	Log("ENABLED", ek_log_levels.Debug)
 end
 
 if ry < track_y then
