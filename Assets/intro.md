@@ -105,7 +105,9 @@ Installation:
 
 ### Separated actions for Media item in Mouse modifiers
 
-This small script helps to attach 2 independent actions on media item click: on header and zone below of it. 
+This small script helps to attach 2 independent actions on media item click: on header and zone below of it. Script have 2 workflows depends on option "Draw labels above the item when media item height is more than":
+- If option disabled, header label is positioned on item and header part calculates as header label height
+- If option enabled, header label is positioned above the item and "header part" calculates as 1/4 of the upper part of the item
 
 <img src="/Assets/images/separated_actions_for_media_item_preview.png" alt="Separated_actions_for_media_item_preview" width="400"/>
 

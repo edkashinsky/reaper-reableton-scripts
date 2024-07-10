@@ -1,11 +1,17 @@
 -- @description ek_Separated actions for Media item in Mouse modifiers
--- @version 1.0.6
+-- @version 1.1.0
 -- @author Ed Kashinsky
 -- @about
 --   This script gives opportunity to attach 2 different actions on Media item context in Mouse modifiers - when we click on header of media item and part between header and middle of it.
 --   For installation open "Mouse Modifiers" preferences, find "Media item" context and select this script in any section. Also you can copy this script and use it in different hotkey-sections and actions.
+--   Script works in workflows depends on option "Draw labels above the item when media item height is more than":
+--		- If option enabled, header label is positioned above the item and "header part" calculates as 1/4 of the upper part of the item
+--      - If option disabled, header label is positioned on item and header part calculates as header label height
 -- @changelog
---   Bug fixes: script follows to "Draw labels above the item, rather than within the item" setting
+--   - Script works in 2 workflows depends on option "Draw labels above the item when media item height is more than":
+--       - If option disabled, header label is positioned on item and header part calculates as header label height
+--		 - If option enabled, header label is positioned above the item and "header part" calculates as 1/4 of the upper part of the item
+--   - Fixed bug when script doesn't work with lanes
 
 if not reaper.APIExists("JS_ReaScriptAPI_Version") then
 	local answer = reaper.MB("You have to install JS_ReaScriptAPI for this script to work. Would you like to open the relative web page in your browser?", "JS_ReaScriptAPI not installed", 4 )
@@ -86,7 +92,19 @@ end
 if not item then return end
 
 local track = reaper.GetMediaItem_Track(item)
-local track_y = reaper.GetMediaTrackInfo_Value(track, "I_TCPY") + GetItemHeaderHeight(item)
+local track_y = reaper.GetMediaTrackInfo_Value(track, "I_TCPY") + reaper.GetMediaItemInfo_Value(item, "I_LASTY")
+
+if GetItemHeaderHeight(item) == 0 then
+	-- "Draw labels above the item when media item height is more than" is disabled
+	-- Click on header
+	track_y = track_y + headerHeight
+	Log("DISABLED", ek_log_levels.Debug)
+else
+	-- "Draw labels above the item when media item height is more than" is enabled
+	-- Click on 1/4 up part of item
+	track_y = track_y + (reaper.GetMediaItemInfo_Value(item, "I_LASTH") / 4)
+	Log("ENABLED", ek_log_levels.Debug)
+end
 
 if ry < track_y then
 	-- Clicked on header

@@ -105,7 +105,9 @@ Installation:
 
 ### Separated actions for Media item in Mouse modifiers
 
-This small script helps to attach 2 independent actions on media item click: on header and zone below of it. 
+This small script helps to attach 2 independent actions on media item click: on header and zone below of it. Script have 2 workflows depends on option "Draw labels above the item when media item height is more than":
+- If option disabled, header label is positioned on item and header part calculates as header label height
+- If option enabled, header label is positioned above the item and "header part" calculates as 1/4 of the upper part of the item
 
 <img src="/Assets/images/separated_actions_for_media_item_preview.png" alt="Separated_actions_for_media_item_preview" width="400"/>
 
@@ -203,6 +205,9 @@ This script selects items with the same color and on same track of item under mo
 
 This script gives opportunity to attach 2 different actions on Media item context in Mouse modifiers - when we click on header of media item and part between header and middle of it.
 For installation open "Mouse Modifiers" preferences, find "Media item" context and select this script in any section. Also you can copy this script and use it in different hotkey-sections and actions.
+Script works in workflows depends on option "Draw labels above the item when media item height is more than":
+- If option enabled, header label is positioned above the item and "header part" calculates as 1/4 of the upper part of the item
+- If option disabled, header label is positioned on item and header part calculates as header label height
 
 #### ek_Smart split items by mouse cursor
 
