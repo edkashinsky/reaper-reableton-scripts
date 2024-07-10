@@ -1,5 +1,5 @@
 -- @description ek_Create crossfade on edges of items
--- @version 1.0.0
+-- @version 1.0.1
 -- @author Ed Kashinsky
 -- @about
 --   This script creates crossfade on edges of tracks. It useful when you don't use overlap on crossfades for better precise but anyway want to create crossfades
@@ -10,7 +10,7 @@
 --      3. Choose this script in field **Default action**
 --      4. Done! It means that when you double click on edge between media items, you create crossfade between them
 -- @changelog
---   - Added script
+--   Fixed bug when no any selected track
 
 reaper.Undo_BeginBlock()
 
@@ -48,18 +48,20 @@ function prepareCrossfadeItems(left_item, right_item)
     return true
 end
 
-for i = 0, reaper.CountTrackMediaItems(selected_track) - 1 do
-    local item = reaper.GetTrackMediaItem(selected_track, i)
-    local prev_item = reaper.GetTrackMediaItem(selected_track, i - 1)
+if selected_track ~= nil then
+    for i = 0, reaper.CountTrackMediaItems(selected_track) - 1 do
+        local item = reaper.GetTrackMediaItem(selected_track, i)
+        local prev_item = reaper.GetTrackMediaItem(selected_track, i - 1)
 
-    if prepareCrossfadeItems(prev_item, item) then
-        reaper.Main_OnCommand(reaper.NamedCommandLookup("_SWS_SAVESELITEMS1"), 0) -- SWS: Save selected track(s) selected item(s), slot 1
+        if prepareCrossfadeItems(prev_item, item) then
+            reaper.Main_OnCommand(reaper.NamedCommandLookup("_SWS_SAVESELITEMS1"), 0) -- SWS: Save selected track(s) selected item(s), slot 1
 
-        reaper.SetMediaItemSelected(item, true)
-        reaper.SetMediaItemSelected(prev_item, true)
+            reaper.SetMediaItemSelected(item, true)
+            reaper.SetMediaItemSelected(prev_item, true)
 
-        can_crossfade = true
-        goto done
+            can_crossfade = true
+            goto done
+        end
     end
 end
 
