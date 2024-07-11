@@ -1323,11 +1323,17 @@ function escape_regexp_chars(text)
 end
 
 function EK_ExecCommand(command)
-	local handle = io.popen(command)
-	local output_path = trim(handle:read("*a"))
-	handle:close()
+	local output_path
 
-	return output_path
+	if IS_WINDOWS then
+		output_path = tostring(reaper.ExecProcess('cmd.exe /C start ' .. command, 0))
+	else
+		local handle = io.popen(command)
+		output_path = trim(handle:read("*a"))
+		handle:close()
+	end
+
+	return tostring(output_path)
 end
 
 function EK_CurlRequest(type, url, headers, data, params)
