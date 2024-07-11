@@ -1,10 +1,10 @@
 -- @description ek_Generate SFX via ElevenLabs
--- @version 1.1.1
+-- @version 1.1.2
 -- @author Ed Kashinsky
 -- @about
 --   Script uses ElevenLabs API to generate sound effects and inserts them into the project.
 -- @changelog
---   Small UI fixes
+--   Show response of http-requests
 
 function CoreFunctionsLoaded(script)
 	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
@@ -73,16 +73,16 @@ local function GenerateSfx()
 		post_data["duration_seconds"] = settings.duration
 	end
 
-	local req = EK_CurlRequest(CURL_POST, "https://api.elevenlabs.io/v1/sound-generation", {
+	local code = EK_CurlRequest(CURL_POST, "https://api.elevenlabs.io/v1/sound-generation", {
 		["Content-Type"] = "application/json",
 		["xi-api-key"] = settings.api_key
 	}, post_data, {
-		'-fo "' .. project_path .. dir_sep .. filename .. '"'
+		'-o "' .. project_path .. dir_sep .. filename .. '"'
 	})
 
 	data.req_left = data.req_left - 1
 
-	if reaper.file_exists(project_path .. dir_sep .. filename) then
+	if code == 200 and reaper.file_exists(project_path .. dir_sep .. filename) then
 		reaper.InsertMedia(project_path .. dir_sep .. filename, 0)
 		ConsoleLog("File \"" .. project_path .. dir_sep .. filename .. "\" has been imported")
 
@@ -92,8 +92,16 @@ local function GenerateSfx()
 		else
 			reaper.defer(function() data.is_waiting = false end)
 		end
+	elseif code ~= 200 and reaper.file_exists(project_path .. dir_sep .. filename) then
+		local file = io.open(project_path .. dir_sep .. filename, "rb")
+		ConsoleLog("Response: " .. tostring(file:read "*a"))
+		file:close()
+
+		os.remove(project_path .. dir_sep .. filename)
+		data.req_left = 0
+		reaper.defer(function() data.is_waiting = false end)
 	else
-		ConsoleLog("Response: " .. (string.len(req) > 0 and req or "Unknown error."))
+		ConsoleLog("Response code: " .. tostring(code))
 		data.req_left = 0
 		reaper.defer(function() data.is_waiting = false end)
 	end

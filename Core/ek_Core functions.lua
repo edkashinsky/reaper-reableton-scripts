@@ -1,7 +1,7 @@
 -- @description ek_Core functions
 -- @author Ed Kashinsky
 -- @about Base functions used by ek-scripts.
--- @version 1.0.44
+-- @version 1.0.45
 -- @provides
 --   ek_Core functions v1.lua
 --   ek_Core functions GUI.lua

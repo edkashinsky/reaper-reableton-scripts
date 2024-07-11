@@ -1333,7 +1333,7 @@ function EK_ExecCommand(command)
 		handle:close()
 	end
 
-	return tostring(output_path)
+	return tonumber(output_path)
 end
 
 function EK_CurlRequest(type, url, headers, data, params)
@@ -1346,7 +1346,7 @@ function EK_CurlRequest(type, url, headers, data, params)
 		command = root:gsub("\\", "\"\\\""):gsub("\"\\", "\\", 1):gsub("\"%.%.\"", '..') .. '"'
 	end
 
-	command = command .. " -sS " -- -s (--silent) and -S (--show-error)
+	command = command .. ' -s -w "%{http_code}" ' -- -s (--silent) -w (show http code of response)
 
 	if params then
 		for i = 1, #params do command = command .. params[i] .. " " end
