@@ -8,6 +8,10 @@ SCRIPT_PATH = CONTEXT[2]:match("(.*[/\\])")
 
 IS_WINDOWS = reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32"
 
+CURL_GET = 'GET'
+CURL_POST = 'POST'
+CURL_PUT = 'PUT'
+
 local ek_debug_levels = {
 	All = 0,
 	Notice = 1,
@@ -66,6 +70,7 @@ local key_ext_global_via_startup = "ek_startup_enabled"
 local key_td_windows_stack = "td_windows_stack_1"
 local key_td_last_windows = "td_last_windows_1"
 local key_table_prefix = "__ek_t:"
+local charset = {}
 
 local _, dpi = reaper.ThemeLayout_GetLayout("tcp", -3)
 if IS_WINDOWS then
@@ -1241,6 +1246,25 @@ function EK_GetTime(time)
 	return days, hours, minutes, seconds
 end
 
+function EK_GetTableLength(data)
+	local length = 0
+	for _, _ in pairs(data) do length = length + 1 end
+
+	return length
+end
+
+function EK_GenerateRandomHexSeq(length)
+	if not length or length <= 0 then return '' end
+
+	if isEmpty(charset) then
+		for c = 48, 57  do table.insert(charset, string.char(c)) end -- Numbers
+    	for c = 65, 90  do table.insert(charset, string.char(c)) end -- Uppercase
+	end
+
+    math.randomseed(os.clock() ^ 5)
+    return EK_GenerateRandomHexSeq(length - 1) .. charset[math.random(1, #charset)]
+end
+
 function EK_LookupCommandIdByName(script_name)
 	local fileName = reaper.GetResourcePath() .. dir_sep .. "reaper-kb.ini"
 
@@ -1296,4 +1320,57 @@ function escape_regexp_chars(text)
 	text = tostring(text)
 
 	return text:gsub(".", escape)
+end
+
+function EK_ExecCommand(command)
+	local handle = io.popen(command)
+	local output_path = trim(handle:read("*a"))
+	handle:close()
+
+	return output_path
+end
+
+function EK_CurlRequest(type, url, headers, data, params)
+	local command = "curl"
+
+	if not type then type = CURL_GET end
+
+	if IS_WINDOWS then
+		local root = debug.getinfo(1, 'S').source:sub(2, -5):match("(.*" .. dir_sep .. ")") .. "curl" .. dir_sep .. "curl.exe"
+		command = root:gsub("\\", "\"\\\""):gsub("\"\\", "\\", 1):gsub("\"%.%.\"", '..') .. '"'
+	end
+
+	command = command .. " -sS " -- -s (--silent) and -S (--show-error)
+
+	if params then
+		for i = 1, #params do command = command .. params[i] .. " " end
+	end
+
+	command = command .. "--request " .. type .. " --url " .. url .. " "
+
+	if headers then
+		for key, value in pairs(headers) do
+			command = command .. '--header "' .. key:gsub('"', '\"') .. ": " .. value:gsub('"', '\"') .. '" '
+		end
+	end
+
+	if data then
+		local i = 1
+		local len = EK_GetTableLength(data)
+		local data_string = ""
+		for key, value in pairs(data) do
+			key = tostring(key):gsub("\\", "\\\\\\\\"):gsub('"', '\\\\"')
+			value = tostring(value):gsub("\\", "\\\\\\\\"):gsub('"', '\\\\"')
+			data_string = data_string .. '"' .. key .. '": "' .. value .. '"'
+
+			if i < len then data_string = data_string .. "," end
+			i = i + 1
+		end
+
+		command = command .. '--data "{' .. string.gsub(data_string, '"', '\\"') .. '}"'
+	end
+
+	Log(command, ek_log_levels.Important)
+
+	return EK_ExecCommand(command)
 end

@@ -1,12 +1,14 @@
 -- @description ek_Core functions
 -- @author Ed Kashinsky
 -- @about Base functions used by ek-scripts.
--- @version 1.0.42
+-- @version 1.0.43
 -- @provides
 --   ek_Core functions v1.lua
 --   ek_Core functions GUI.lua
+--   [nomain] curl/*
+--
 -- @changelog
---    Updated the minimum version of ReaImGui to version 0.8.5
+--    Added curl app for making HTTP-requests for some scripts
 
 local function CoreLoadFunctions()
     local info = debug.getinfo(1,'S');

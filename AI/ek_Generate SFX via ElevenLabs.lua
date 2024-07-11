@@ -1,15 +1,13 @@
 -- @description ek_Generate SFX via ElevenLabs
--- @version 1.0.3
+-- @version 1.1.0
 -- @author Ed Kashinsky
 -- @about
 --   Script uses ElevenLabs API to generate sound effects and inserts them into the project.
 -- @changelog
---   Added support of Windows 8
--- @provides
---    [nomain] Data/*
+--   HTTP-requests are making by Curl
 
-local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
 function CoreFunctionsLoaded(script)
+	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
 	local root_path = debug.getinfo(1, 'S').source:sub(2, -5):match("(.*" .. sep .. ")")
 	local script_path = root_path .. ".." .. sep .. "Core" .. sep .. script
 	local file = io.open(script_path, 'r')
@@ -56,47 +54,36 @@ local function ConsoleLog(message, is_important)
 	table.insert(data.logs, "[" .. os.date("%H:%M:%S") .. "] " .. tostring(message))
 end
 
-local function ExecCommand(command)
-	local handle = io.popen(command)
-	local output_path = trim(handle:read("*a"))
-	handle:close()
+local function GetFilename(prompt)
+	prompt = prompt:gsub("[^%a%d]", "_"):sub(0, 32)
+	if not settings.auto_duration then prompt = prompt .. "_" .. settings.duration end
 
-	return output_path
+	return "EL_" .. prompt .. "_" .. EK_GenerateRandomHexSeq(4) .. ".mp3"
 end
 
 local function GenerateSfx()
-	local app, path
 	local project_path = reaper.GetProjectPath()
-	local prompt = data.prompt:gsub("\"", "\\\"")
+	local filename = GetFilename(data.prompt)
+	local post_data = {
+		["text"] = data.prompt,
+		["prompt_influence"] = settings.influence,
+	}
 
-	if IS_WINDOWS then
-		app = "s11.exe"
-		path = SCRIPT_PATH:gsub("\\", "\"\\\""):gsub("\"\\", "\\", 1):sub(0, -2)
-	else
-		local arch = ExecCommand("uname -m")
-		if arch ~= "arm64" and arch ~= "x86_64" then
-			reaper.MB("Your operating system is not supported.", "Error", 0)
-			return
-		end
-
-		app = "s11-" .. arch
-		path = SCRIPT_PATH:gsub(" ", "\\ ")
-		ExecCommand("chmod +x " ..  path .. "Data" .. sep .. app)
-	end
-
-	local command = path .. "Data" .. sep .. app .. " -p \"" .. prompt .. "\" -k \"" .. settings.api_key .. "\" -i " .. settings.influence .. " -f \"" .. project_path .. "\""
 	if not settings.auto_duration then
-		command = command .. " -d " .. settings.duration
+		post_data["duration_seconds"] = settings.duration
 	end
 
-	data.req_left = data.req_left - 1
-	ConsoleLog(command)
+	local req = EK_CurlRequest(CURL_POST, "https://api.elevenlabs.io/v1/sound-generation", {
+		["Content-Type"] = "application/json",
+		["xi-api-key"] = settings.api_key
+	}, post_data, {
+		'-fo "' .. project_path .. dir_sep .. filename .. '"'
+	})
 
-	local output_path = ExecCommand(command)
-
-	if reaper.file_exists(output_path) then
-		reaper.InsertMedia(output_path, 0)
-		ConsoleLog("File \"" .. output_path .. "\" has been imported")
+	if reaper.file_exists(project_path .. dir_sep .. filename) then
+		reaper.InsertMedia(project_path .. dir_sep .. filename, 0)
+		ConsoleLog("File \"" .. project_path .. dir_sep .. filename .. "\" has been imported")
+		data.req_left = data.req_left - 1
 
 		if data.req_left > 0 then
 			ConsoleLog("Next variation is requested... Left " .. data.req_left)
@@ -105,7 +92,7 @@ local function GenerateSfx()
 			data.is_waiting = false
 		end
 	else
-		ConsoleLog("Response: " .. (string.len(output_path) > 0 and output_path or "Unknown error."))
+		ConsoleLog("Response: " .. (string.len(req) > 0 and req or "Unknown error."))
 		data.is_waiting = false
 		data.req_left = 0
 	end
