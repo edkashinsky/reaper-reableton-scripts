@@ -1,10 +1,10 @@
 -- @description ek_Generate SFX via ElevenLabs
--- @version 1.1.0
+-- @version 1.1.1
 -- @author Ed Kashinsky
 -- @about
 --   Script uses ElevenLabs API to generate sound effects and inserts them into the project.
 -- @changelog
---   HTTP-requests are making by Curl
+--   Small UI fixes
 
 function CoreFunctionsLoaded(script)
 	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
@@ -80,21 +80,22 @@ local function GenerateSfx()
 		'-fo "' .. project_path .. dir_sep .. filename .. '"'
 	})
 
+	data.req_left = data.req_left - 1
+
 	if reaper.file_exists(project_path .. dir_sep .. filename) then
 		reaper.InsertMedia(project_path .. dir_sep .. filename, 0)
 		ConsoleLog("File \"" .. project_path .. dir_sep .. filename .. "\" has been imported")
-		data.req_left = data.req_left - 1
 
 		if data.req_left > 0 then
 			ConsoleLog("Next variation is requested... Left " .. data.req_left)
 			reaper.defer(GenerateSfx)
 		else
-			data.is_waiting = false
+			reaper.defer(function() data.is_waiting = false end)
 		end
 	else
 		ConsoleLog("Response: " .. (string.len(req) > 0 and req or "Unknown error."))
-		data.is_waiting = false
 		data.req_left = 0
+		reaper.defer(function() data.is_waiting = false end)
 	end
 end
 
