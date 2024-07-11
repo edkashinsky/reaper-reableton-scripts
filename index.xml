@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="3af2f65dc5e063066a09322a500512417841e323">
+<index version="1" name="Reableton Scripts" commit="2765bece5217cc2e9c7d0ed5f24912997eb32b1c">
   <category name="AI">
     <reapack name="ek_Generate SFX via ElevenLabs.lua" type="script" desc="ek_Generate SFX via ElevenLabs">
       <metadata>
@@ -295,6 +295,15 @@
         <source file="curl/curl-ca-bundle.crt">https://github.com/edkashinsky/reaper-reableton-scripts/raw/3af2f65dc5e063066a09322a500512417841e323/Core/curl/curl-ca-bundle.crt</source>
         <source file="curl/curl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/3af2f65dc5e063066a09322a500512417841e323/Core/curl/curl.exe</source>
         <source file="curl/trurl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/3af2f65dc5e063066a09322a500512417841e323/Core/curl/trurl.exe</source>
+      </version>
+      <version name="1.0.44" author="Ed Kashinsky" time="2024-07-11T18:59:27Z">
+        <changelog><![CDATA[Bug fix for execution console commands on Windows]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2765bece5217cc2e9c7d0ed5f24912997eb32b1c/Core/ek_Core%20functions.lua</source>
+        <source file="ek_Core functions v1.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2765bece5217cc2e9c7d0ed5f24912997eb32b1c/Core/ek_Core%20functions%20v1.lua</source>
+        <source file="ek_Core functions GUI.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2765bece5217cc2e9c7d0ed5f24912997eb32b1c/Core/ek_Core%20functions%20GUI.lua</source>
+        <source file="curl/curl-ca-bundle.crt">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2765bece5217cc2e9c7d0ed5f24912997eb32b1c/Core/curl/curl-ca-bundle.crt</source>
+        <source file="curl/curl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2765bece5217cc2e9c7d0ed5f24912997eb32b1c/Core/curl/curl.exe</source>
+        <source file="curl/trurl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2765bece5217cc2e9c7d0ed5f24912997eb32b1c/Core/curl/trurl.exe</source>
       </version>
     </reapack>
     <reapack name="ek_Focus virtual MIDI keyboard.lua" type="script" desc="ek_Focus virtual MIDI keyboard">
