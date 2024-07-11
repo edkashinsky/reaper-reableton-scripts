@@ -1323,15 +1323,9 @@ function escape_regexp_chars(text)
 end
 
 function EK_ExecCommand(command)
-	local output_path
-
-	if IS_WINDOWS then
-		output_path = tostring(reaper.ExecProcess('cmd.exe /C start ' .. command, 0))
-	else
-		local handle = io.popen(command)
-		output_path = trim(handle:read("*a"))
-		handle:close()
-	end
+	local handle = io.popen(command)
+	local output_path = trim(handle:read("*a"))
+	handle:close()
 
 	return tonumber(output_path)
 end
