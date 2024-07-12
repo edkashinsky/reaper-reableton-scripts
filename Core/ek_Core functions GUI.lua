@@ -58,7 +58,7 @@ gui_input_types = {
 }
 
 GUI_OnWindowClose = nil
-FLT_MIN, FLT_MAX = reaper.ImGui_NumericLimits_Float()
+FLT_MIN, FLT_MAX = reaper.ImGui_NumericLimits_Float and reaper.ImGui_NumericLimits_Float() or 0, 0
 
 local function GUI_GetWindowFlags()
 	return reaper.ImGui_WindowFlags_NoCollapse() |

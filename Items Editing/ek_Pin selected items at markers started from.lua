@@ -1,13 +1,15 @@
 -- @description ek_Pin selected items at markers started from
--- @version 1.0.9
+-- @version 1.0.10
 -- @author Ed Kashinsky
 -- @about
 --   ![Preview](/Assets/images/pin_items_to_markers_preview.gif)
 --   This script pins selected items to markers started from specified number. It requires ReaImGui extension.
 -- @changelog
---   Updated the minimum version of ReaImGui to version 0.8.5
+--   Added opportunity to pin items to regions
 -- @provides
 --   ../Core/ek_Pin selected items functions.lua
+--   [main=main] ek_Pin selected items to closest markers.lua
+--   [main=main] ek_Pin selected items to closest regions.lua
 
 function CoreFunctionsLoaded(script)
 	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
@@ -27,17 +29,18 @@ end
 
 CoreFunctionsLoaded("ek_Pin selected items functions.lua")
 
-local markers = GetMarkers()
 local start_marker = nil
 local count_on_track = nil
 local save_relative_position = true
-local count_selected_items = reaper.CountSelectedMediaItems(proj)
 
 local gui_sel_marker = nil
 local gui_sel_count = 0
+local gui_pin_to = 0
+local pin_types = { "Markers", "Regions" }
+local markers
 
 function frame(ImGui, ctx)
-	markers = GetMarkers()
+	markers = GetMarkersOrRegions(gui_pin_to == 1)
 
 	local gui_markers_list = {}
 	local gui_count_list = { "No limit" }
@@ -62,7 +65,12 @@ function frame(ImGui, ctx)
 	ImGui.PushItemWidth(ctx, 110)
 	local value
 
-	_, value = ImGui.Combo(ctx, "Start marker number", gui_sel_marker, join(gui_markers_list, "\0") .. "\0")
+	_, value = ImGui.Combo(ctx, "Pin to", gui_pin_to, join(pin_types, "\0") .. "\0")
+	if value ~= gui_pin_to then
+		gui_pin_to = value
+	end
+
+	_, value = ImGui.Combo(ctx, gui_pin_to == 1 and "Start region number" or "Start marker number", gui_sel_marker, join(gui_markers_list, "\0") .. "\0")
 	if value ~= gui_sel_marker then
 		start_marker = gui_markers_list[value + 1]
 		gui_sel_marker = value
@@ -79,12 +87,14 @@ function frame(ImGui, ctx)
         save_relative_position = value
     end
 
-	ImGui.Indent(ctx, 35)
+	GUI_DrawGap(7)
 
-	GUI_DrawButton('Pin to marker', function()
+	ImGui.Indent(ctx, 45)
+
+	GUI_DrawButton('Pin items', function()
 		reaper.Undo_BeginBlock()
 
-		PinItems(start_marker, save_relative_position, count_on_track)
+		PinItems(gui_pin_to == 1, start_marker, save_relative_position, count_on_track)
 
 		GUI_CloseMainWindow()
 
@@ -97,16 +107,12 @@ function frame(ImGui, ctx)
 	GUI_DrawButton('Cancel', nil, gui_buttons_types.Cancel)
 end
 
-if #markers == 0 then
-	EK_ShowTooltip("There is no markers for pinning")
-else
-	local item = reaper.GetSelectedMediaItem(proj, 0)
+local item = reaper.GetSelectedMediaItem(proj, 0)
 
-	if item then
-		local position = reaper.GetMediaItemInfo_Value(item, "D_POSITION")
+if item then
+	local position = reaper.GetMediaItemInfo_Value(item, "D_POSITION")
 
-		start_marker = FindNearestMarkerNum(position)
-	end
-
-	GUI_ShowMainWindow(260, 0)
+	start_marker = FindNearestMarkerNum(gui_pin_to == 1, position)
 end
+
+GUI_ShowMainWindow(260, 0)

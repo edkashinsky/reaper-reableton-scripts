@@ -1,4 +1,4 @@
--- @description ek_Pin selected items to closest markers
+-- @description ek_Pin selected items to closest regions
 -- @author Ed Kashinsky
 -- @noindex
 -- @readme_skip
@@ -32,4 +32,4 @@ for i = 0, reaper.CountSelectedMediaItems(proj) - 1 do
 	end
 end
 
-PinItems(false, FindNearestMarkerNum(false, min_position), true)
+PinItems(true, FindNearestMarkerNum(true, min_position), true)

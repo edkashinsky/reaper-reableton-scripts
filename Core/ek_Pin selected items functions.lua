@@ -3,7 +3,7 @@
 
 local items_map = {}
 
-function GetMarkers()
+function GetMarkersOrRegions(is_regions)
 	local markers = {}
 	local _, num_markers, num_regions = reaper.CountProjectMarkers(proj)
 	
@@ -11,7 +11,7 @@ function GetMarkers()
 	for i = 0, num_markers + num_regions - 1 do
 		local _, isrgn, pos, _, _, markrgnindexnumber = reaper.EnumProjectMarkers(i)
 		
-		if isrgn == false then
+		if isrgn == is_regions then
 			table.insert(markers, {
 				num = markrgnindexnumber,
 				position = pos
@@ -87,7 +87,7 @@ local function CreateNewTracksForItemsGroup(index)
 	end
 end
 
-function FindNearestMarkerNum(position)
+function FindNearestMarkerNum(is_region, position)
 	local _, num_markers, num_regions = reaper.CountProjectMarkers(proj)
 	local prevMarkerNum = 0
 	local prevMarkerPos = 0
@@ -95,7 +95,7 @@ function FindNearestMarkerNum(position)
 	for i = 0, num_markers + num_regions - 1 do
 		local _, isrgn, pos, _, _, markrgnindexnumber = reaper.EnumProjectMarkers(i)
 
-		if isrgn == false then
+		if isrgn == is_region then
 			if pos > position then
 				local prevDist = position - prevMarkerPos
 				local curDist = pos - position
@@ -112,8 +112,8 @@ function FindNearestMarkerNum(position)
 	end
 end
 
-function PinItems(marker_num, save_relative_position, items_on_track)
-	local markers = GetMarkers()
+function PinItems(to_regions, marker_num, save_relative_position, items_on_track)
+	local markers = GetMarkersOrRegions(to_regions)
 	local startIndex = FindIndexByMarkerNumber(markers, marker_num)
 
 	if startIndex == nil then
