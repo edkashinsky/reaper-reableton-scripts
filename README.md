@@ -194,10 +194,6 @@ This script deletes selected items with the same color of item under mouse posit
 ![Preview](/Assets/images/pin_items_to_markers_preview.gif)
 This script pins selected items to markers started from specified number. It requires ReaImGui extension.
 
-#### ek_Pin selected items to closest markers
-
-This script pins selected items to closest markers for first selected item. It requires script "ek_Pin selected items at markers started from.lua"
-
 #### ek_Pitch Tool
 
 Pitch tool brings Ableton workflow for pitch manipulations of audio clips.
