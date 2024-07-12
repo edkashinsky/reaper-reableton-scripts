@@ -1,6 +1,7 @@
 -- @description ek_Smart renaming depending on focus
 -- @version 1.0.12
 -- @author Ed Kashinsky
+-- @readme_skip
 -- @about
 --   Renaming stuff for takes, items, markers, regions and tracks depending on focus
 -- @changelog

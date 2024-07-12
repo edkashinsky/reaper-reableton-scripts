@@ -140,6 +140,26 @@ Installation:
 1. Install script **ek_Smart renaming depending on focus**
 2. Just attach it on Cmd/Ctrl+R instead of renaming by default.
 
+### Generate SFX via ElevenLabs
+
+You can import the generated SFX from [elevenlabs.io](https://elevenlabs.io/sound-effects) directly into the arrangement window using this script. It's simple, just enter your text prompt, press generate and that's it.
+
+<img src="/Assets/images/generate_sfx_via_elevenlabs.png" alt="smart_renaming_depending_on_focus" width="650"/>
+
+Intallalation:
+1. Install script **ek_Generate SFX via ElevenLabs**
+2. Go to profile on [elevenlabs.io](https://elevenlabs.io/sound-effects) and generate API key
+
+<img src="/Assets/images/generate_sfx_via_elevenlabs_settings.png" alt="smart_renaming_depending_on_focus" width="170"/>
+
+3. Insert API-key in settings of the script
+
+<img src="/Assets/images/generate_sfx_via_elevenlabs_settings_2.png" alt="smart_renaming_depending_on_focus" width="400"/>
+
+4. Enter some text prompt and click "Generate and import"
+
+**KNOWN ISSUES**: Script doesn't work with projects with non-latin characters in the path
+
 
 ## List of scripts
 
@@ -169,12 +189,6 @@ Installation for better experience:
 ![Preview](/Assets/images/delete_selected_items_with_color_of_item_under_mouse_position.gif)
 This script deletes selected items with the same color of item under mouse position
 
-#### ek_Edge silence cropper
-
-This script helps to remove silence at the start and at the end of selected items by individual thresholds, pads and fades.
-
-Also it provides UI for configuration
-
 #### ek_Pin selected items at markers started from
 
 ![Preview](/Assets/images/pin_items_to_markers_preview.gif)
@@ -200,14 +214,6 @@ Script removes 1 second gap between selected items. Press CMD/CTRL to remove 0.1
 #### ek_Select items on track with color of item under mouse position
 
 This script selects items with the same color and on same track of item under mouse position
-
-#### ek_Separated actions for Media item in Mouse modifiers
-
-This script gives opportunity to attach 2 different actions on Media item context in Mouse modifiers - when we click on header of media item and part between header and middle of it.
-For installation open "Mouse Modifiers" preferences, find "Media item" context and select this script in any section. Also you can copy this script and use it in different hotkey-sections and actions.
-Script works in workflows depends on option "Draw labels above the item when media item height is more than":
-- If option enabled, header label is positioned above the item and "header part" calculates as 1/4 of the upper part of the item
-- If option disabled, header label is positioned on item and header part calculates as header label height
 
 #### ek_Smart split items by mouse cursor
 
@@ -247,6 +253,10 @@ This script toggle time selection by razor or selected items. Actually it works 
 This package has 2 scripts "ek_Tracks navigator - go to prev track" and "ek_Tracks navigator - go to next track".
 With these scripts you can navigate between non-tiny visible tracks and envelopes. You can attach scripts to arrow keys
 
+#### ek_Create region depending on selection
+
+Create region based on razor, selected items or time selection
+
 #### ek_Toggle Docker
 
 Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes.
@@ -285,10 +295,6 @@ It increase volume for selected track a bit and shows tooltip with set volume
 #### ek_Set volume for selected tracks
 
 Script shows window with input to set volume
-
-#### ek_Smart renaming depending on focus
-
-Renaming stuff for takes, items, markers, regions and tracks depending on focus
 
 #### ek_Toggle mute and offline FX for selected tracks
 

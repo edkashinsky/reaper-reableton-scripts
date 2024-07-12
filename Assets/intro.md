@@ -140,3 +140,23 @@ Installation:
 1. Install script **ek_Smart renaming depending on focus**
 2. Just attach it on Cmd/Ctrl+R instead of renaming by default.
 
+### Generate SFX via ElevenLabs
+
+You can import the generated SFX from [elevenlabs.io](https://elevenlabs.io/sound-effects) directly into the arrangement window using this script. It's simple, just enter your text prompt, press generate and that's it.
+
+<img src="/Assets/images/generate_sfx_via_elevenlabs.png" alt="smart_renaming_depending_on_focus" width="650"/>
+
+Intallalation:
+1. Install script **ek_Generate SFX via ElevenLabs**
+2. Go to profile on [elevenlabs.io](https://elevenlabs.io/sound-effects) and generate API key
+
+<img src="/Assets/images/generate_sfx_via_elevenlabs_settings.png" alt="smart_renaming_depending_on_focus" width="170"/>
+
+3. Insert API-key in settings of the script
+
+<img src="/Assets/images/generate_sfx_via_elevenlabs_settings_2.png" alt="smart_renaming_depending_on_focus" width="400"/>
+
+4. Enter some text prompt and click "Generate and import"
+
+**KNOWN ISSUES**: Script doesn't work with projects with non-latin characters in the path
+

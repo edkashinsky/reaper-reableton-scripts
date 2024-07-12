@@ -1,6 +1,7 @@
 -- @description ek_Separated actions for Media item in Mouse modifiers
 -- @version 1.1.2
 -- @author Ed Kashinsky
+-- @readme_skip
 -- @about
 --   This script gives opportunity to attach 2 different actions on Media item context in Mouse modifiers - when we click on header of media item and part between header and middle of it.
 --   For installation open "Mouse Modifiers" preferences, find "Media item" context and select this script in any section. Also you can copy this script and use it in different hotkey-sections and actions.

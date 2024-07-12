@@ -13,8 +13,11 @@ class Intro:
     __outroFile = 'outro.md'
 
     __pathCategories = [
+        'AI',
+        'Grid',
         'Items Editing',
         'Navigation',
+        'Regions',
         'Toolbars',
         'Tracks Properties'
     ]
