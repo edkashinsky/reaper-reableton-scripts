@@ -1,5 +1,5 @@
 -- @description ek_Edge silence cropper
--- @version 1.2.2
+-- @version 1.2.3
 -- @author Ed Kashinsky
 -- @readme_skip
 -- @about
@@ -7,7 +7,7 @@
 --
 --   Also it provides UI for configuration
 -- @changelog
---   Updated the minimum version of ReaImGui to version 0.8.5
+--   Bug fix with Sliders
 -- @provides
 --   ../Core/ek_Edge silence cropper functions.lua
 --   [main=main] ek_Edge silence cropper (no prompt).lua

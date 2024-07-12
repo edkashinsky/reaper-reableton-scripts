@@ -326,6 +326,7 @@ gui_config = {
         number_min = -90,
         number_max = 0,
         number_precision = '%.1fdb',
+        flags = reaper.ImGui_SliderFlags_Logarithmic and reaper.ImGui_SliderFlags_Logarithmic() or nil,
         on_change = function(val)
             p.leading.threshold.value = val
             MakePresetModified()
@@ -342,6 +343,7 @@ gui_config = {
         number_min = 0,
         number_max = 100,
         number_precision = '%.0f%%',
+        flags = reaper.ImGui_SliderFlags_Logarithmic and reaper.ImGui_SliderFlags_Logarithmic() or nil,
         on_change = function(val)
             p.leading.threshold_relative.value = val
             MakePresetModified()
@@ -358,6 +360,7 @@ gui_config = {
         number_min = -90,
         number_max = 0,
         number_precision = '%.1fdb',
+        flags = reaper.ImGui_SliderFlags_Logarithmic and reaper.ImGui_SliderFlags_Logarithmic() or nil,
         on_change = function(val)
             p.leading.rms_threshold.value = val
             MakePresetModified()
@@ -374,6 +377,7 @@ gui_config = {
         number_min = 0,
         number_max = 100,
         number_precision = '%.0f%%',
+        flags = reaper.ImGui_SliderFlags_Logarithmic and reaper.ImGui_SliderFlags_Logarithmic() or nil,
         on_change = function(val)
             p.leading.rms_threshold_relative.value = val
             MakePresetModified()
@@ -419,6 +423,7 @@ gui_config = {
 		title = "Threshold Out",
         number_min = -90,
         number_max = 0,
+        flags = reaper.ImGui_SliderFlags_Logarithmic and reaper.ImGui_SliderFlags_Logarithmic() or nil,
         number_precision = '%.1fdb',
         on_change = function(val)
             p.trailing.threshold.value = val
@@ -436,6 +441,7 @@ gui_config = {
         number_min = 0,
         number_max = 100,
         number_precision = '%.0f%%',
+        flags = reaper.ImGui_SliderFlags_Logarithmic and reaper.ImGui_SliderFlags_Logarithmic() or nil,
         on_change = function(val)
             p.trailing.threshold_relative.value = val
             MakePresetModified()
@@ -452,6 +458,7 @@ gui_config = {
         number_min = -90,
         number_max = 0,
         number_precision = '%.1fdb',
+        flags = reaper.ImGui_SliderFlags_Logarithmic and reaper.ImGui_SliderFlags_Logarithmic() or nil,
         on_change = function(val)
             p.trailing.rms_threshold.value = val
             MakePresetModified()
@@ -468,6 +475,7 @@ gui_config = {
         number_min = 0,
         number_max = 100,
         number_precision = '%.0f%%',
+        flags = reaper.ImGui_SliderFlags_Logarithmic and reaper.ImGui_SliderFlags_Logarithmic() or nil,
         on_change = function(val)
             p.trailing.rms_threshold_relative.value = val
             MakePresetModified()

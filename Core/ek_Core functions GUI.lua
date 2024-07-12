@@ -67,8 +67,12 @@ local function GUI_GetWindowFlags()
 end
 
 local function GUI_GetInputFlags()
-	return reaper.ImGui_InputTextFlags_AutoSelectAll() -- |
-	--	reaper.ImGui_InputTextFlags_AllowTabInput() -- because of bug
+	return reaper.ImGui_InputTextFlags_AutoSelectAll() |
+		reaper.ImGui_InputTextFlags_AllowTabInput()
+end
+
+local function GUI_GetSliderFlags()
+	return nil
 end
 
 function GUI_GetColorFlags()
@@ -363,6 +367,8 @@ function GUI_DrawInput(i_type, i_label, i_value, i_settings)
 			_, newVal = ImGui.InputInt(ctx, '##' .. i_label, i_value, nil, nil, input_flags)
 		end
 	elseif i_type == gui_input_types.NumberDrag then
+		input_flags = i_settings.flags and i_settings.flags or GUI_GetSliderFlags()
+
 		if i_settings.number_min and not i_settings.number_max then i_settings.number_max = 0x7fffffff end
 
 		if i_settings.number_precision then
@@ -371,6 +377,8 @@ function GUI_DrawInput(i_type, i_label, i_value, i_settings)
 			_, newVal = ImGui.DragInt(ctx, '##' .. i_label, i_value, i_settings.number_step, i_settings.number_min, i_settings.number_max, nil, input_flags)
 		end
 	elseif i_type == gui_input_types.NumberSlider then
+		input_flags = i_settings.flags and i_settings.flags or GUI_GetSliderFlags()
+
 		if i_settings.number_precision then
 			_, newVal = ImGui.SliderDouble(ctx, '##' .. i_label, i_value, i_settings.number_min, i_settings.number_max, i_settings.number_precision, input_flags)
 		else
