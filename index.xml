@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="bc11567a650ec1181b3175cfb067e9fcb6c35430">
+<index version="1" name="Reableton Scripts" commit="f54323fa5d5791fe9ffb561067d9086864783b72">
   <category name="AI">
     <reapack name="ek_Generate SFX via ElevenLabs.lua" type="script" desc="ek_Generate SFX via ElevenLabs">
       <metadata>
@@ -348,6 +348,15 @@
         <source file="curl/curl-ca-bundle.crt">https://github.com/edkashinsky/reaper-reableton-scripts/raw/bc11567a650ec1181b3175cfb067e9fcb6c35430/Core/curl/curl-ca-bundle.crt</source>
         <source file="curl/curl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/bc11567a650ec1181b3175cfb067e9fcb6c35430/Core/curl/curl.exe</source>
         <source file="curl/trurl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/bc11567a650ec1181b3175cfb067e9fcb6c35430/Core/curl/trurl.exe</source>
+      </version>
+      <version name="1.0.49" author="Ed Kashinsky" time="2024-07-12T12:54:13Z">
+        <changelog><![CDATA[GUI bug fixes]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f54323fa5d5791fe9ffb561067d9086864783b72/Core/ek_Core%20functions.lua</source>
+        <source file="ek_Core functions v1.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f54323fa5d5791fe9ffb561067d9086864783b72/Core/ek_Core%20functions%20v1.lua</source>
+        <source file="ek_Core functions GUI.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f54323fa5d5791fe9ffb561067d9086864783b72/Core/ek_Core%20functions%20GUI.lua</source>
+        <source file="curl/curl-ca-bundle.crt">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f54323fa5d5791fe9ffb561067d9086864783b72/Core/curl/curl-ca-bundle.crt</source>
+        <source file="curl/curl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f54323fa5d5791fe9ffb561067d9086864783b72/Core/curl/curl.exe</source>
+        <source file="curl/trurl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f54323fa5d5791fe9ffb561067d9086864783b72/Core/curl/trurl.exe</source>
       </version>
     </reapack>
     <reapack name="ek_Focus virtual MIDI keyboard.lua" type="script" desc="ek_Focus virtual MIDI keyboard">
@@ -998,6 +1007,17 @@ Please restart Reaper for taking effect]]></changelog>
         <source main="main" file="ek_Edge silence cropper - apply Preset 3.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fe61ca9bce9e7cf69112e3b5c5bc0bd89ed03cc2/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%203.lua</source>
         <source main="main" file="ek_Edge silence cropper - apply Preset 4.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fe61ca9bce9e7cf69112e3b5c5bc0bd89ed03cc2/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%204.lua</source>
         <source main="main" file="ek_Edge silence cropper - apply Preset 5.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fe61ca9bce9e7cf69112e3b5c5bc0bd89ed03cc2/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%205.lua</source>
+      </version>
+      <version name="1.2.3" author="Ed Kashinsky" time="2024-07-12T12:54:13Z">
+        <changelog><![CDATA[Bug fix with Sliders]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f54323fa5d5791fe9ffb561067d9086864783b72/Items%20Editing/ek_Edge%20silence%20cropper.lua</source>
+        <source file="../Core/ek_Edge silence cropper functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f54323fa5d5791fe9ffb561067d9086864783b72/Core/ek_Edge%20silence%20cropper%20functions.lua</source>
+        <source main="main" file="ek_Edge silence cropper (no prompt).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f54323fa5d5791fe9ffb561067d9086864783b72/Items%20Editing/ek_Edge%20silence%20cropper%20(no%20prompt).lua</source>
+        <source main="main" file="ek_Edge silence cropper - apply Preset 1.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f54323fa5d5791fe9ffb561067d9086864783b72/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%201.lua</source>
+        <source main="main" file="ek_Edge silence cropper - apply Preset 2.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f54323fa5d5791fe9ffb561067d9086864783b72/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%202.lua</source>
+        <source main="main" file="ek_Edge silence cropper - apply Preset 3.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f54323fa5d5791fe9ffb561067d9086864783b72/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%203.lua</source>
+        <source main="main" file="ek_Edge silence cropper - apply Preset 4.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f54323fa5d5791fe9ffb561067d9086864783b72/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%204.lua</source>
+        <source main="main" file="ek_Edge silence cropper - apply Preset 5.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f54323fa5d5791fe9ffb561067d9086864783b72/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%205.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Pin selected items at markers started from.lua" type="script" desc="ek_Pin selected items at markers started from">
