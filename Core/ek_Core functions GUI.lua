@@ -67,8 +67,8 @@ local function GUI_GetWindowFlags()
 end
 
 local function GUI_GetInputFlags()
-	return reaper.ImGui_InputTextFlags_AutoSelectAll() |
-		reaper.ImGui_InputTextFlags_AllowTabInput()
+	return reaper.ImGui_InputTextFlags_AutoSelectAll() -- |
+	--	reaper.ImGui_InputTextFlags_AllowTabInput() -- because of bug
 end
 
 function GUI_GetColorFlags()
