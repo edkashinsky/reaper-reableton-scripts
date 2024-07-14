@@ -146,7 +146,7 @@ You can import the generated SFX from [elevenlabs.io](https://elevenlabs.io/soun
 
 <img src="/Assets/images/generate_sfx_via_elevenlabs.png" alt="smart_renaming_depending_on_focus" width="650"/>
 
-Intallalation:
+Installation:
 1. Install script **ek_Generate SFX via ElevenLabs**
 2. Go to profile on [elevenlabs.io](https://elevenlabs.io/sound-effects) and generate API key
 
