@@ -1,14 +1,14 @@
 -- @description ek_Core functions
 -- @author Ed Kashinsky
 -- @about Base functions used by ek-scripts.
--- @version 1.0.49
+-- @version 1.0.50
 -- @provides
 --   ek_Core functions v1.lua
 --   ek_Core functions GUI.lua
 --   [nomain] curl/*
 --
 -- @changelog
---    GUI bug fixes
+--    Added helpers for not installed dependencies
 
 local function CoreLoadFunctions()
     local info = debug.getinfo(1,'S');
@@ -25,6 +25,7 @@ end
 
 if not reaper.APIExists("JS_Mouse_GetState") then
     reaper.MB('Please install "js_ReaScriptAPI: API functions for ReaScripts" via ReaPack', '', 0)
+    reaper.ReaPack_BrowsePackages("js_ReaScriptAPI: API functions for ReaScripts")
 	return
 end
 

@@ -1,5 +1,5 @@
 -- @description ek_Separated actions for Media item in Mouse modifiers
--- @version 1.1.3
+-- @version 1.1.4
 -- @author Ed Kashinsky
 -- @readme_skip
 -- @about
@@ -9,14 +9,12 @@
 --		- If option enabled, header label is positioned above the item and "header part" calculates as 1/4 of the upper part of the item
 --      - If option disabled, header label is positioned on item and header part calculates as header label height
 -- @changelog
---   Script monitors media item label font size and UI scale as well
+--   Added helpers for not installed dependencies
 
 if not reaper.APIExists("JS_ReaScriptAPI_Version") then
-	local answer = reaper.MB("You have to install JS_ReaScriptAPI for this script to work. Would you like to open the relative web page in your browser?", "JS_ReaScriptAPI not installed", 4 )
-
-	if answer == 6 then reaper.CF_ShellExecute("https://forum.cockos.com/showthread.php?t=212174") end
-
-	return reaper.defer(function() end)
+	reaper.MB('Please install "js_ReaScriptAPI: API functions for ReaScripts" via ReaPack', '', 0)
+    reaper.ReaPack_BrowsePackages("js_ReaScriptAPI: API functions for ReaScripts")
+    return
 end
 
 function CoreFunctionsLoaded()
@@ -31,7 +29,10 @@ end
 
 local loaded = CoreFunctionsLoaded()
 if not loaded then
-	if loaded == nil then reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0) end
+	if loaded == nil then
+        reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0)
+        reaper.ReaPack_BrowsePackages("ek_Core functions")
+    end
 	return
 end
 

@@ -147,6 +147,7 @@ function GUI_ShowMainWindow(w, h)
 		dofile(reaper.GetResourcePath() .. '/Scripts/ReaTeam Extensions/API/imgui.lua') '0.8.5'
 	end) then
 		reaper.MB('Please install "ReaImGui: ReaScript binding for Dear ImGui" (minimum v.0.8.5) library via ReaPack', SCRIPT_NAME, 0)
+		reaper.ReaPack_BrowsePackages("ReaImGui: ReaScript binding for Dear ImGui")
 		return
 	end
 
