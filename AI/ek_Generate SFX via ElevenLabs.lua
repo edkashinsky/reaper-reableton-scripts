@@ -1,11 +1,11 @@
 -- @description ek_Generate SFX via ElevenLabs
--- @version 1.1.3
+-- @version 1.1.4
 -- @author Ed Kashinsky
 -- @readme_skip
 -- @about
 --   Script uses ElevenLabs API to generate sound effects and inserts them into the project.
 -- @changelog
---   Added helpers for not installed dependencies
+--   Added test request button
 
 function CoreFunctionsLoaded(script)
 	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
@@ -77,12 +77,13 @@ local function GenerateSfx()
 		post_data["duration_seconds"] = settings.duration
 	end
 
-	local code = EK_CurlRequest(CURL_POST, "https://api.elevenlabs.io/v1/sound-generation", {
+	local code = tonumber(EK_CurlRequest(CURL_POST, "https://api.elevenlabs.io/v1/sound-generation", {
 		["Content-Type"] = "application/json",
 		["xi-api-key"] = settings.api_key
 	}, post_data, {
+		'-s -w "%{http_code}"',
 		'-o "' .. project_path .. dir_sep .. filename .. '"'
-	})
+	}))
 
 	data.req_left = data.req_left - 1
 
@@ -162,6 +163,16 @@ function frame(ImGui, ctx, is_first_frame)
 			settings.enable_console = newVal
 			is_changed = true
 		end
+
+		if ImGui.Button(ctx, 'Test request') then
+			ConsoleLog(EK_CurlRequest(CURL_POST, "https://api.elevenlabs.io/v1/sound-generation", {
+				["Content-Type"] = "application/json",
+				["xi-api-key"] = "123"
+			}, nil, {
+				"-I"
+			}))
+			ImGui.CloseCurrentPopup(ctx)
+      	end
 
 		GUI_DrawGap(10)
 		GUI_DrawText("Thanks to Tyoma Makeev in development of Python part and Konstantin Knerik for the script idea and support.", GUI_GetFont(gui_font_types.Italic))

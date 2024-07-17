@@ -1327,23 +1327,27 @@ function EK_ExecCommand(command)
 	local output_path = trim(handle:read("*a"))
 	handle:close()
 
-	return tonumber(output_path)
+	return output_path
 end
 
 function EK_CurlRequest(type, url, headers, data, params)
-	local command = "curl"
+	local command = "curl "
+	local is_verbose = false
 
 	if not type then type = CURL_GET end
 
 	if IS_WINDOWS then
 		local root = debug.getinfo(1, 'S').source:sub(2, -5):match("(.*" .. dir_sep .. ")") .. "curl" .. dir_sep .. "curl.exe"
-		command = root:gsub("\\", "\"\\\""):gsub("\"\\", "\\", 1):gsub("\"%.%.\"", '..') .. '"'
+		command = root:gsub("\\", "\"\\\""):gsub("\"\\", "\\", 1):gsub("\"%.%.\"", '..') .. '" '
 	end
 
-	command = command .. ' -s -w "%{http_code}" ' -- -s (--silent) -w (show http code of response)
+	-- command = command .. ' -s -w "%{http_code}" ' -- -s (--silent) -w (show http code of response)
 
 	if params then
-		for i = 1, #params do command = command .. params[i] .. " " end
+		for i = 1, #params do
+			command = command .. params[i] .. " "
+			if params[i] == "-I" then is_verbose = true end
+		end
 	end
 
 	command = command .. "--request " .. type .. " --url " .. url .. " "
@@ -1370,7 +1374,7 @@ function EK_CurlRequest(type, url, headers, data, params)
 		command = command .. '--data "{' .. string.gsub(data_string, '"', '\\"') .. '}"'
 	end
 
-	Log(command, ek_log_levels.Important)
+	local res = EK_ExecCommand(command)
 
-	return EK_ExecCommand(command)
+	return is_verbose and command .. "\n" .. res or res
 end
