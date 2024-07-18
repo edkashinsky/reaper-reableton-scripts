@@ -1,11 +1,11 @@
 -- @description ek_Generate SFX via ElevenLabs
--- @version 1.1.4
+-- @version 1.1.5
 -- @author Ed Kashinsky
 -- @readme_skip
 -- @about
 --   Script uses ElevenLabs API to generate sound effects and inserts them into the project.
 -- @changelog
---   Added test request button
+--   Added small notice on error throw
 
 function CoreFunctionsLoaded(script)
 	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
@@ -107,6 +107,9 @@ local function GenerateSfx()
 		reaper.defer(function() data.is_waiting = false end)
 	else
 		ConsoleLog("Response code: " .. tostring(code))
+		if code == 200 or code == 0 then
+			ConsoleLog("Please make sure that there are no non-Latin characters in the project path (" .. project_path .. ")")
+		end
 		data.req_left = 0
 		reaper.defer(function() data.is_waiting = false end)
 	end
@@ -172,6 +175,7 @@ function frame(ImGui, ctx, is_first_frame)
 				"-I"
 			}))
 			ImGui.CloseCurrentPopup(ctx)
+			settings.enable_console = true
       	end
 
 		GUI_DrawGap(10)

@@ -1322,10 +1322,16 @@ function escape_regexp_chars(text)
 	return text:gsub(".", escape)
 end
 
-function EK_ExecCommand(command)
-	local handle = io.popen(command)
-	local output_path = trim(handle:read("*a"))
-	handle:close()
+function EK_ExecCommand(command, via_reaper)
+	local output_path
+
+	if via_reaper then
+		output_path = reaper.ExecProcess(IS_WINDOWS and 'cmd.exe /C start ' .. command or '/bin/sh -c "' .. command .. '"', 0)
+	else
+		local handle = io.popen(command)
+		output_path = trim(handle:read("*a"))
+		handle:close()
+	end
 
 	return output_path
 end
@@ -1373,6 +1379,8 @@ function EK_CurlRequest(type, url, headers, data, params)
 
 		command = command .. '--data "{' .. string.gsub(data_string, '"', '\\"') .. '}"'
 	end
+
+	Log(command, ek_log_levels.Important)
 
 	local res = EK_ExecCommand(command)
 
