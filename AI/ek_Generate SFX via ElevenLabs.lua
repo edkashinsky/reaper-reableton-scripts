@@ -1,5 +1,5 @@
 -- @description ek_Generate SFX via ElevenLabs
--- @version 1.1.5
+-- @version 1.1.6
 -- @author Ed Kashinsky
 -- @readme_skip
 -- @about
@@ -99,17 +99,19 @@ local function GenerateSfx()
 		end
 	elseif code ~= 200 and reaper.file_exists(project_path .. dir_sep .. filename) then
 		local file = io.open(project_path .. dir_sep .. filename, "rb")
-		ConsoleLog("Response: " .. tostring(file:read "*a"))
+		ConsoleLog("Response: " .. tostring(file:read "*a"), true)
 		file:close()
 
 		os.remove(project_path .. dir_sep .. filename)
 		data.req_left = 0
 		reaper.defer(function() data.is_waiting = false end)
 	else
-		ConsoleLog("Response code: " .. tostring(code))
+		local err = "Response code: " .. tostring(code)
 		if code == 200 or code == 0 then
-			ConsoleLog("Please make sure that there are no non-Latin characters in the project path (" .. project_path .. ")")
+			err = err .. "\nPlease make sure that there are no non-Latin characters in the project path (" .. project_path .. ")"
 		end
+
+		ConsoleLog(err, true)
 		data.req_left = 0
 		reaper.defer(function() data.is_waiting = false end)
 	end
