@@ -1,11 +1,11 @@
 -- @description ek_Smart renaming depending on focus
--- @version 1.0.12
+-- @version 1.0.13
 -- @author Ed Kashinsky
 -- @readme_skip
 -- @about
 --   Renaming stuff for takes, items, markers, regions and tracks depending on focus
 -- @changelog
---   Updated the minimum version of ReaImGui to version 0.8.5
+--   Small ui fixes
 -- @provides
 --   ../Core/ek_Smart renaming functions.lua
 
@@ -148,7 +148,7 @@ local function drawClearButton(ImGui, ctx)
 	local p = { ImGui.GetCursorScreenPos(ctx) }
 	local x = p[1]
 	local y = p[2]
-	local sz = 18
+	local sz = 19
 	local offset = 3
 
 	ImGui.DrawList_AddRectFilled(draw_list, x, y, x + sz, y + sz, gui_colors.Background, 0.0);

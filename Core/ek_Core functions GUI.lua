@@ -76,13 +76,12 @@ local function GUI_GetSliderFlags()
 end
 
 function GUI_GetColorFlags()
-	return reaper.ImGui_InputTextFlags_AutoSelectAll() |
-		reaper.ImGui_InputTextFlags_AllowTabInput() |
-		reaper.ImGui_ColorEditFlags_NoOptions() |
+	return reaper.ImGui_ColorEditFlags_NoOptions() |
 		reaper.ImGui_ColorEditFlags_DisplayHex() |
 		reaper.ImGui_ColorEditFlags_NoSidePreview() |
 		reaper.ImGui_ColorEditFlags_NoTooltip() |
-		reaper.ImGui_ColorEditFlags_NoAlpha()
+		reaper.ImGui_ColorEditFlags_NoAlpha() |
+		reaper.ImGui_ColorEditFlags_NoBorder()
 end
 
 local function GUI_GetFonts()
@@ -408,7 +407,7 @@ function GUI_DrawInput(i_type, i_label, i_value, i_settings)
 
 		ImGui.PushStyleColor(ctx, ImGui.Col_FrameBg(), gui_colors.White)
 		if i_settings.selected then
-			newVal = ImGui.ColorButton(ctx, '##' .. i_label, i_value, flags & ~ImGui.InputTextFlags_AllowTabInput())
+			newVal = ImGui.ColorButton(ctx, '##' .. i_label, i_value, flags & ~ImGui.ColorEditFlags_NoBorder())
 		else
 			newVal = ImGui.ColorButton(ctx, '##' .. i_label, i_value, flags)
 		end
