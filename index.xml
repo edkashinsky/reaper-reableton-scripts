@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="7c5fb9a5b51b4763851ce528737f477ff2f1cf4f">
+<index version="1" name="Reableton Scripts" commit="736649cb7e3d3183668cc589e61d166ef88c4c67">
   <category name="AI">
     <reapack name="ek_Generate SFX via ElevenLabs.lua" type="script" desc="ek_Generate SFX via ElevenLabs">
       <metadata>
@@ -64,6 +64,10 @@
       <version name="1.1.6" author="Ed Kashinsky" time="2024-07-18T11:11:30Z">
         <changelog><![CDATA[Added small notice on error throw]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/6f5bf718420031cf1f8cde1875f9a175735f531d/AI/ek_Generate%20SFX%20via%20ElevenLabs.lua</source>
+      </version>
+      <version name="1.1.7" author="Ed Kashinsky" time="2024-07-25T12:54:26Z">
+        <changelog><![CDATA[UI updates]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/736649cb7e3d3183668cc589e61d166ef88c4c67/AI/ek_Generate%20SFX%20via%20ElevenLabs.lua</source>
       </version>
     </reapack>
   </category>
@@ -410,6 +414,16 @@
         <source file="curl/curl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7c5fb9a5b51b4763851ce528737f477ff2f1cf4f/Core/curl/curl.exe</source>
         <source file="curl/trurl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7c5fb9a5b51b4763851ce528737f477ff2f1cf4f/Core/curl/trurl.exe</source>
       </version>
+      <version name="1.0.54" author="Ed Kashinsky" time="2024-07-25T12:54:26Z">
+        <changelog><![CDATA[Added Light theme for IU scripts
+Added about window]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/736649cb7e3d3183668cc589e61d166ef88c4c67/Core/ek_Core%20functions.lua</source>
+        <source file="ek_Core functions v1.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/736649cb7e3d3183668cc589e61d166ef88c4c67/Core/ek_Core%20functions%20v1.lua</source>
+        <source file="ek_Core functions GUI.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/736649cb7e3d3183668cc589e61d166ef88c4c67/Core/ek_Core%20functions%20GUI.lua</source>
+        <source file="curl/curl-ca-bundle.crt">https://github.com/edkashinsky/reaper-reableton-scripts/raw/736649cb7e3d3183668cc589e61d166ef88c4c67/Core/curl/curl-ca-bundle.crt</source>
+        <source file="curl/curl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/736649cb7e3d3183668cc589e61d166ef88c4c67/Core/curl/curl.exe</source>
+        <source file="curl/trurl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/736649cb7e3d3183668cc589e61d166ef88c4c67/Core/curl/trurl.exe</source>
+      </version>
     </reapack>
     <reapack name="ek_Focus virtual MIDI keyboard.lua" type="script" desc="ek_Focus virtual MIDI keyboard">
       <metadata>
@@ -704,6 +718,13 @@ Please restart Reaper for taking effect]]></changelog>
         <source file="ek_Core functions startup.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/8da70d68701a8f2c3993d67f8724e985b030f254/Core/ek_Core%20functions%20startup.lua</source>
         <source file="ek_Adaptive grid functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/8da70d68701a8f2c3993d67f8724e985b030f254/Core/ek_Adaptive%20grid%20functions.lua</source>
         <source main="main" file="ek_Global startup action - settings.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/8da70d68701a8f2c3993d67f8724e985b030f254/Core/ek_Global%20startup%20action%20-%20settings.lua</source>
+      </version>
+      <version name="1.0.43" author="Ed Kashinsky" time="2024-07-25T12:54:26Z">
+        <changelog><![CDATA[UI update]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/736649cb7e3d3183668cc589e61d166ef88c4c67/Core/ek_Global%20startup%20action.lua</source>
+        <source file="ek_Core functions startup.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/736649cb7e3d3183668cc589e61d166ef88c4c67/Core/ek_Core%20functions%20startup.lua</source>
+        <source file="ek_Adaptive grid functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/736649cb7e3d3183668cc589e61d166ef88c4c67/Core/ek_Adaptive%20grid%20functions.lua</source>
+        <source main="main" file="ek_Global startup action - settings.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/736649cb7e3d3183668cc589e61d166ef88c4c67/Core/ek_Global%20startup%20action%20-%20settings.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Save project with a check of unused media files.lua" type="script" desc="ek_Save project with a check of unused media files">
@@ -1078,69 +1099,16 @@ Please restart Reaper for taking effect]]></changelog>
         <source main="main" file="ek_Edge silence cropper - apply Preset 4.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f54323fa5d5791fe9ffb561067d9086864783b72/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%204.lua</source>
         <source main="main" file="ek_Edge silence cropper - apply Preset 5.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f54323fa5d5791fe9ffb561067d9086864783b72/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%205.lua</source>
       </version>
-    </reapack>
-    <reapack name="ek_Pin selected items at markers started from.lua" type="script" desc="ek_Pin selected items at markers started from">
-      <metadata>
-        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
-{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
-\widowctrl\hyphauto
-
-{\pard \ql \f0 \sa180 \li0 \fi0 {\cf1 [image: /Assets/images/pin_items_to_markers_preview.gif]\cf0} This script pins selected items to markers started from specified number. It requires ReaImGui extension.\par}
-}
-]]></description>
-      </metadata>
-      <version name="1.0.0" author="Ed Kashinsky" time="2022-05-30T09:42:49Z">
-        <changelog><![CDATA[- GUI updated to ReaImGui]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Items%20Editing/ek_Pin%20selected%20items%20at%20markers%20started%20from.lua</source>
-      </version>
-      <version name="1.0.1" author="Ed Kashinsky" time="2022-05-31T08:06:26Z">
-        <changelog><![CDATA[- GUI updated to ReaImGui]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Items%20Editing/ek_Pin%20selected%20items%20at%20markers%20started%20from.lua</source>
-      </version>
-      <version name="1.0.2" author="Ed Kashinsky" time="2022-06-11T14:06:24Z">
-        <changelog><![CDATA[- Small fixes
-- GUI updated to ReaImGui]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/b8e4a77e39cddbe42c40c2cb2e95c28b36c19e42/Items%20Editing/ek_Pin%20selected%20items%20at%20markers%20started%20from.lua</source>
-      </version>
-      <version name="1.0.3" author="Ed Kashinsky" time="2022-10-24T16:23:33Z">
-        <changelog><![CDATA[- Small fixes]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/4908c5351c9672915e5b3e34524a7c68b2809ab2/Items%20Editing/ek_Pin%20selected%20items%20at%20markers%20started%20from.lua</source>
-      </version>
-      <version name="1.0.4" author="Ed Kashinsky" time="2022-11-14T18:18:55Z">
-        <changelog><![CDATA[- Small fixes]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/0bb36e7e2ba7809b4d78c0816b3d4e4b69ed2cf3/Items%20Editing/ek_Pin%20selected%20items%20at%20markers%20started%20from.lua</source>
-      </version>
-      <version name="1.0.5" author="Ed Kashinsky" time="2022-11-25T21:14:37Z">
-        <changelog><![CDATA[- Small fixes]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f3784d631421a3ae98bddf51b8a3a1fcb095d853/Items%20Editing/ek_Pin%20selected%20items%20at%20markers%20started%20from.lua</source>
-        <source file="../Core/ek_Pin selected items functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f3784d631421a3ae98bddf51b8a3a1fcb095d853/Core/ek_Pin%20selected%20items%20functions.lua</source>
-      </version>
-      <version name="1.0.6" author="Ed Kashinsky" time="2023-02-01T13:34:59Z">
-        <changelog><![CDATA[- Small fix]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/6f03ee4926af5534156ad3d4698e100f1555e1aa/Items%20Editing/ek_Pin%20selected%20items%20at%20markers%20started%20from.lua</source>
-        <source file="../Core/ek_Pin selected items functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/6f03ee4926af5534156ad3d4698e100f1555e1aa/Core/ek_Pin%20selected%20items%20functions.lua</source>
-      </version>
-      <version name="1.0.7" author="Ed Kashinsky" time="2023-02-24T17:35:55Z">
-        <changelog><![CDATA[- Small fix]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/4d6888e3d68d5146aa6f2ebca962d8699994c78c/Items%20Editing/ek_Pin%20selected%20items%20at%20markers%20started%20from.lua</source>
-        <source file="../Core/ek_Pin selected items functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/4d6888e3d68d5146aa6f2ebca962d8699994c78c/Core/ek_Pin%20selected%20items%20functions.lua</source>
-      </version>
-      <version name="1.0.8" author="Ed Kashinsky" time="2023-04-27T15:50:53Z">
-        <changelog><![CDATA[- GUI Refactoring]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/4c6fb827800a1bddbf39e534587b240e9bcb35d0/Items%20Editing/ek_Pin%20selected%20items%20at%20markers%20started%20from.lua</source>
-        <source file="../Core/ek_Pin selected items functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/4c6fb827800a1bddbf39e534587b240e9bcb35d0/Core/ek_Pin%20selected%20items%20functions.lua</source>
-      </version>
-      <version name="1.0.9" author="Ed Kashinsky" time="2024-07-07T16:44:19Z">
-        <changelog><![CDATA[Updated the minimum version of ReaImGui to version 0.8.5]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fe61ca9bce9e7cf69112e3b5c5bc0bd89ed03cc2/Items%20Editing/ek_Pin%20selected%20items%20at%20markers%20started%20from.lua</source>
-        <source file="../Core/ek_Pin selected items functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fe61ca9bce9e7cf69112e3b5c5bc0bd89ed03cc2/Core/ek_Pin%20selected%20items%20functions.lua</source>
-      </version>
-      <version name="1.0.10" author="Ed Kashinsky" time="2024-07-12T12:04:54Z">
-        <changelog><![CDATA[Added opportunity to pin items to regions]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/eb1d05dd3c8cf5a9082239336fe646022059d81f/Items%20Editing/ek_Pin%20selected%20items%20at%20markers%20started%20from.lua</source>
-        <source file="../Core/ek_Pin selected items functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/eb1d05dd3c8cf5a9082239336fe646022059d81f/Core/ek_Pin%20selected%20items%20functions.lua</source>
-        <source main="main" file="ek_Pin selected items to closest markers.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/eb1d05dd3c8cf5a9082239336fe646022059d81f/Items%20Editing/ek_Pin%20selected%20items%20to%20closest%20markers.lua</source>
-        <source main="main" file="ek_Pin selected items to closest regions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/eb1d05dd3c8cf5a9082239336fe646022059d81f/Items%20Editing/ek_Pin%20selected%20items%20to%20closest%20regions.lua</source>
+      <version name="1.2.4" author="Ed Kashinsky" time="2024-07-25T12:54:26Z">
+        <changelog><![CDATA[UI updates]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/736649cb7e3d3183668cc589e61d166ef88c4c67/Items%20Editing/ek_Edge%20silence%20cropper.lua</source>
+        <source file="../Core/ek_Edge silence cropper functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/736649cb7e3d3183668cc589e61d166ef88c4c67/Core/ek_Edge%20silence%20cropper%20functions.lua</source>
+        <source main="main" file="ek_Edge silence cropper (no prompt).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/736649cb7e3d3183668cc589e61d166ef88c4c67/Items%20Editing/ek_Edge%20silence%20cropper%20(no%20prompt).lua</source>
+        <source main="main" file="ek_Edge silence cropper - apply Preset 1.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/736649cb7e3d3183668cc589e61d166ef88c4c67/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%201.lua</source>
+        <source main="main" file="ek_Edge silence cropper - apply Preset 2.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/736649cb7e3d3183668cc589e61d166ef88c4c67/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%202.lua</source>
+        <source main="main" file="ek_Edge silence cropper - apply Preset 3.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/736649cb7e3d3183668cc589e61d166ef88c4c67/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%203.lua</source>
+        <source main="main" file="ek_Edge silence cropper - apply Preset 4.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/736649cb7e3d3183668cc589e61d166ef88c4c67/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%204.lua</source>
+        <source main="main" file="ek_Edge silence cropper - apply Preset 5.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/736649cb7e3d3183668cc589e61d166ef88c4c67/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%205.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Pitch Tool.lua" type="script" desc="ek_Pitch Tool">
@@ -1297,6 +1265,25 @@ Please restart Reaper for taking effect]]></changelog>
         <changelog><![CDATA[Updated the minimum version of ReaImGui to version 0.8.5]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fe61ca9bce9e7cf69112e3b5c5bc0bd89ed03cc2/Items%20Editing/ek_Smart%20split%20items%20by%20mouse%20cursor.lua</source>
         <source file="../Core/ek_Smart split items by mouse cursor functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fe61ca9bce9e7cf69112e3b5c5bc0bd89ed03cc2/Core/ek_Smart%20split%20items%20by%20mouse%20cursor%20functions.lua</source>
+      </version>
+    </reapack>
+    <reapack name="ek_Snap items to markers or regions.lua" type="script" desc="ek_Snap items to markers or regions">
+      <metadata>
+        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \ql \f0 \sa180 \li0 \fi0 {\cf1 [image: /Assets/images/pin_items_to_markers_preview.gif]\cf0} This script snaps selected items to markers or regions started from specified number. It requires ReaImGui extension.\par}
+}
+]]></description>
+      </metadata>
+      <version name="1.0.0" author="Ed Kashinsky" time="2024-07-25T12:54:26Z">
+        <changelog><![CDATA[Added opportunity to snap items to regions
+UI update]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/736649cb7e3d3183668cc589e61d166ef88c4c67/Items%20Editing/ek_Snap%20items%20to%20markers%20or%20regions.lua</source>
+        <source file="../Core/ek_Snap items to markers functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/736649cb7e3d3183668cc589e61d166ef88c4c67/Core/ek_Snap%20items%20to%20markers%20functions.lua</source>
+        <source main="main" file="ek_Snap items to closest markers.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/736649cb7e3d3183668cc589e61d166ef88c4c67/Items%20Editing/ek_Snap%20items%20to%20closest%20markers.lua</source>
+        <source main="main" file="ek_Snap items to closest regions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/736649cb7e3d3183668cc589e61d166ef88c4c67/Items%20Editing/ek_Snap%20items%20to%20closest%20regions.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Toggle group for selected items.lua" type="script" desc="ek_Toggle group for selected items">
@@ -1728,6 +1715,11 @@ Please restart Reaper for taking effect]]></changelog>
         <changelog><![CDATA[Small ui fixes]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7c5fb9a5b51b4763851ce528737f477ff2f1cf4f/Tracks%20Properties/ek_Smart%20renaming%20depending%20on%20focus.lua</source>
         <source file="../Core/ek_Smart renaming functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7c5fb9a5b51b4763851ce528737f477ff2f1cf4f/Core/ek_Smart%20renaming%20functions.lua</source>
+      </version>
+      <version name="1.0.14" author="Ed Kashinsky" time="2024-07-25T12:54:26Z">
+        <changelog><![CDATA[UI update]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/736649cb7e3d3183668cc589e61d166ef88c4c67/Tracks%20Properties/ek_Smart%20renaming%20depending%20on%20focus.lua</source>
+        <source file="../Core/ek_Smart renaming functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/736649cb7e3d3183668cc589e61d166ef88c4c67/Core/ek_Smart%20renaming%20functions.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Toggle mute and offline FX for selected tracks.lua" type="script" desc="ek_Toggle mute and offline FX for selected tracks">
