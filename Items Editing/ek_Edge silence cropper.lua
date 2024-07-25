@@ -1,5 +1,5 @@
 -- @description ek_Edge silence cropper
--- @version 1.2.3
+-- @version 1.2.4
 -- @author Ed Kashinsky
 -- @readme_skip
 -- @about
@@ -7,7 +7,7 @@
 --
 --   Also it provides UI for configuration
 -- @changelog
---   Bug fix with Sliders
+--   UI updates
 -- @provides
 --   ../Core/ek_Edge silence cropper functions.lua
 --   [main=main] ek_Edge silence cropper (no prompt).lua
@@ -35,7 +35,7 @@ end
 
 CoreFunctionsLoaded("ek_Edge silence cropper functions.lua")
 
-GUI_ShowMainWindow(330, 0)
+GUI_ShowMainWindow()
 
 local min_step = 0.00001
 local using_eel = reaper.APIExists("ImGui_CreateFunctionFromEEL")

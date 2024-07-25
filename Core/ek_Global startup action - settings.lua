@@ -23,7 +23,7 @@ end
 
 CoreFunctionsLoaded("ek_Core functions startup.lua")
 
-GUI_ShowMainWindow(490, 670)
+GUI_ShowMainWindow(0, 670)
 
 local ordered_settings = EK_SortTableByKey(ga_settings)
 
@@ -33,11 +33,11 @@ function frame(ImGui, ctx)
 	local isStartupSet = EK_IsGlobalActionEnabledViaStartup()
 
 	if (isSet and not isStartupSet and not isEnabled and ga_startup_exists) or (not isSet and isStartupSet and isEnabled) then
-		GUI_DrawText( "Please restart REAPER for changes to take effect...", GUI_GetFont(gui_font_types.Bold), gui_colors.Red)
+		GUI_DrawText( "Please restart REAPER for changes to take effect...", gui_fonts.Bold, gui_cols.Red)
 	end
 
 	if not isStartupSet and isEnabled then
-		GUI_DrawText( "It's enabled by manual setting via SWS Startup actions...", GUI_GetFont(gui_font_types.Bold), gui_colors.Green)
+		GUI_DrawText( "It's enabled by manual setting via SWS Startup actions...", gui_fonts.Bold, gui_cols.Green)
 	end
 
 	ImGui.PushItemWidth(ctx, 224)

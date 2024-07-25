@@ -1,4 +1,4 @@
--- @description ek_Pin selected items to closest regions
+-- @description ek_Snap items to closest markers
 -- @author Ed Kashinsky
 -- @noindex
 -- @readme_skip
@@ -19,7 +19,7 @@ if not loaded then
 	return
 end
 
-CoreFunctionsLoaded("ek_Pin selected items functions.lua")
+CoreFunctionsLoaded("ek_Snap items to markers functions.lua")
 
 local min_position
 
@@ -32,4 +32,8 @@ for i = 0, reaper.CountSelectedMediaItems(proj) - 1 do
 	end
 end
 
-PinItems(true, FindNearestMarkerNum(true, min_position), true)
+reaper.Undo_BeginBlock()
+
+SnapItems(false, FindNearestMarkerNum(false, min_position), true)
+
+reaper.Undo_EndBlock(SCRIPT_NAME, -1)

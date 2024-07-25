@@ -28,7 +28,7 @@ rename_default_colors_config = {
         number_max = 1.0,
         default = 0,
         number_precision = "%.2f",
-        callback = function() UpdateDefaultColorsPalette() end
+        on_change = function() UpdateDefaultColorsPalette() end
     },
     {
         key = "sr_dc_saturation",
@@ -38,7 +38,7 @@ rename_default_colors_config = {
         number_max = 1,
         default = 0,
         number_precision = "%.2f",
-        callback = function() UpdateDefaultColorsPalette() end
+        on_change = function() UpdateDefaultColorsPalette() end
     },
     {
         key = "sr_dc_brightness",
@@ -48,7 +48,7 @@ rename_default_colors_config = {
         number_max = 1,
         default = 0,
         number_precision = "%.2f",
-        callback = function() UpdateDefaultColorsPalette() end
+        on_change = function() UpdateDefaultColorsPalette() end
     },
 }
 

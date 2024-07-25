@@ -112,16 +112,24 @@ function FindNearestMarkerNum(is_region, position)
 	end
 end
 
-function PinItems(to_regions, marker_num, save_relative_position, items_on_track)
+function SnapItems(to_regions, marker_num, save_relative_position, items_on_track)
 	local markers = GetMarkersOrRegions(to_regions)
-	local startIndex = FindIndexByMarkerNumber(markers, marker_num)
+	if isEmpty(markers) then
+		EK_ShowTooltip(to_regions and "There is no any region in the project." or "There is no any marker in the project.")
+		return
+	end
 
+	local startIndex = FindIndexByMarkerNumber(markers, marker_num)
 	if startIndex == nil then
 		EK_ShowTooltip("Please enter correct number of marker.")
 		return
 	end
 
 	items_map = EK_GetSelectedItemsAsGroupedStems()
+	if isEmpty(items_map) then
+		EK_ShowTooltip("There is no any selected item.")
+		return
+	end
 
 	local curIndex = startIndex
 

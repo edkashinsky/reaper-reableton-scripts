@@ -5,7 +5,7 @@
 --   Remake of amazing script by AZ and it works a bit different way. You can split by edit cursor if mouse position on it (or in Tolerance range in pixels).
 --   If you move mouse on transport panel and execute script, you will see settings window
 -- @changelog
---   Updated the minimum version of ReaImGui to version 0.8.5
+--   UI updates
 -- @provides
 --   ../Core/ek_Smart split items by mouse cursor functions.lua
 
@@ -38,7 +38,7 @@ if window == "transport" then
 		ImGui.PopItemWidth(ctx)
 	end
 
-	GUI_ShowMainWindow(625, 0)
+	GUI_ShowMainWindow()
 	return
 end
 

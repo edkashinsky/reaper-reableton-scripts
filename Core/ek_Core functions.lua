@@ -1,14 +1,15 @@
 -- @description ek_Core functions
 -- @author Ed Kashinsky
 -- @about Base functions used by ek-scripts.
--- @version 1.0.53
+-- @version 1.0.54
 -- @provides
 --   ek_Core functions v1.lua
 --   ek_Core functions GUI.lua
 --   [nomain] curl/*
 --
 -- @changelog
---    Bug fix of ColorView in UI
+--    Added Light theme for IU scripts
+--    Added about window
 
 local function CoreLoadFunctions()
     local info = debug.getinfo(1,'S');

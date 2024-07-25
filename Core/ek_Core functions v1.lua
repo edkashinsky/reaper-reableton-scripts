@@ -3,7 +3,7 @@
 -- @noindex
 
 CONTEXT = ({reaper.get_action_context()})
-SCRIPT_NAME = CONTEXT[2]:match("([^/\\]+)%.lua$")
+SCRIPT_NAME = CONTEXT[2]:match("([^/\\]+)%.lua$"):gsub("ek_", "")
 SCRIPT_PATH = CONTEXT[2]:match("(.*[/\\])")
 
 IS_WINDOWS = reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32"

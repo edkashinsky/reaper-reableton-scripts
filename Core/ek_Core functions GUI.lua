@@ -4,38 +4,109 @@
 
 local ImGui = {}
 local ctx
+local GUI_THEME_DARK = "Dark"
+local GUI_THEME_LIGHT = "Light"
+local key_gui_theme = "gui_theme"
+local key_gui_font_size = "gui_font_size"
 local window_visible = false
 local window_opened = false
 local window_first_frame_showed = false
 local window_width = 0
 local window_height = 0
-local font_name = 'Helvetica'
-local font_size = 13
+local font_name = 'Arial'
+local font_size = EK_GetExtState(key_gui_font_size, 14)
 local default_enter_action = nil
 local cached_fonts = nil
 local cached_values = {}
 
-gui_font_types = {
+local gui_themes = { GUI_THEME_DARK, GUI_THEME_LIGHT }
+local theme = EK_GetExtState(key_gui_theme, GUI_THEME_DARK)
+
+gui_fonts = {
 	None = 1,
 	Italic = 2,
 	Bold = 3,
 }
 
-gui_colors = {
+gui_cols = {
 	White = 0xffffffff,
 	Green = 0x6CCA3Cff,
 	Red = 0xEB5852ff,
-	Blue = 0x1f6fcbff,
-	Background = 0x2c2c2cff,
-	Text = 0xffffffff,
-	TextDisabled = 0xbbbbbbff,
+	Background = {
+		Dark = 0x202022ff,
+		Light = 0xccccccff,
+	},
+	ScrollGrab = {
+		Dark = 0x686868ff,
+		Light = 0xaaaaaaff,
+	},
+	Text = {
+		Dark = 0xffffffff,
+		Light = 0x202022ff,
+		Disabled = {
+			Dark = 0xbbbbbbff,
+			Light = 0xeeeeeeff,
+		},
+		Link = {
+			Dark = 0x4296FAFF,
+			Light = 0x1f6fcbff
+		}
+	},
+	Header = {
+		Background = 0x5865f2ff,
+		Text = 0xffffffff,
+	},
+	Menu = {
+		Background = {
+			Dark = 0x37373bff,
+			Light = 0xc4c4c4ff,
+		},
+		Hovered = {
+			Dark = 0x67676eff,
+			Light = 0xaaaaaaff,
+		},
+		Active = {
+			Dark = 0x67676eff,
+			Light = 0xaaaaaaff,
+		},
+	},
 	Input = {
-		Background = 0x686868ff,
+		Background = {
+			Dark = 0x686868ff,
+			Light = 0xaaaaaaff,
+		},
 		Hover = 0x686868bb,
 		Text = 0xe9e9e9ff,
-		Label = 0xffffffff,
+		Label = {
+			Dark = 0xffffffff,
+			Light = 0x202022ff,
+		},
+		CheckMark = 0x7ffffffff,
+		Grab = 0x707affff,
+		Combo = {
+			Background = {
+				Dark = 0x686868ff,
+				Light = 0xaaaaaaff,
+			},
+			Hovered = 0x999999ff
+		}
 	},
 	Button = {
+		Basic = {
+			Background = 0x5865f2ff,
+			Hovered = 0x4751c4ff,
+			Active = 0x4751c4ff,
+			Text = 0xffffffff,
+		},
+		Cancel = {
+			Background = {
+				Dark = 0x686868ff,
+				Light = 0xaaaaaaff,
+			},
+			Hovered = 0x4f4f4fff,
+			Active = 0x4f4f4fff,
+			Text = 0xffffffff,
+		}
 
 	}
 }
@@ -58,12 +129,15 @@ gui_input_types = {
 }
 
 GUI_OnWindowClose = nil
+GUI_DrawMenu = nil
 FLT_MIN, FLT_MAX = reaper.ImGui_NumericLimits_Float and reaper.ImGui_NumericLimits_Float() or 0, 0
+
 
 local function GUI_GetWindowFlags()
 	return reaper.ImGui_WindowFlags_NoCollapse() |
 		reaper.ImGui_WindowFlags_NoResize() |
-		reaper.ImGui_WindowFlags_TopMost()
+		reaper.ImGui_WindowFlags_TopMost() |
+		reaper.ImGui_WindowFlags_MenuBar()
 end
 
 local function GUI_GetInputFlags()
@@ -87,9 +161,9 @@ end
 local function GUI_GetFonts()
 	if not cached_fonts then
 		cached_fonts = {}
-		cached_fonts[gui_font_types.None] = ImGui.CreateFont(font_name, font_size, ImGui.FontFlags_None())
-		cached_fonts[gui_font_types.Italic] = ImGui.CreateFont(font_name, font_size, ImGui.FontFlags_Italic())
-		cached_fonts[gui_font_types.Bold] = ImGui.CreateFont(font_name, font_size, ImGui.FontFlags_Bold())
+		cached_fonts[gui_fonts.None] = ImGui.CreateFont(font_name, font_size, ImGui.FontFlags_None())
+		cached_fonts[gui_fonts.Italic] = ImGui.CreateFont(font_name, font_size, ImGui.FontFlags_Italic())
+		cached_fonts[gui_fonts.Bold] = ImGui.CreateFont(font_name, font_size, ImGui.FontFlags_Bold())
 	end
 
 	return cached_fonts
@@ -100,30 +174,173 @@ function GUI_GetFont(font_type)
 	return fonts[font_type]
 end
 
+function GUI_GetColor(color)
+	if not color then return nil end
+
+	if type(color) == 'table' and color.Dark and color.Light then
+		return theme == GUI_THEME_DARK and color.Dark or color.Light
+	end
+
+	return color
+end
+
+function GUI_PushColor(reaimgui_col, col)
+	if type(reaimgui_col) == 'table' then
+		for key, val in pairs(reaimgui_col) do
+			ImGui.PushStyleColor(ctx, key, GUI_GetColor(val))
+		end
+	else
+		ImGui.PushStyleColor(ctx, reaimgui_col, GUI_GetColor(col))
+	end
+end
+
+function GUI_DrawModalPopup(title, content)
+	local center_x, center_y = ImGui.Viewport_GetCenter(ImGui.GetWindowViewport(ctx))
+	ImGui.SetNextWindowSize(ctx, 480, 0)
+    ImGui.SetNextWindowPos(ctx, center_x, center_y, ImGui.Cond_Always(), 0.5, 0.5)
+
+	GUI_PushColor(ImGui.Col_Text(), gui_cols.Header.Text)
+	if ImGui.BeginPopupModal(ctx, title, nil, ImGui.WindowFlags_NoResize()) then
+		ImGui.PopStyleColor(ctx)
+
+		content(ImGui, ctx)
+
+		ImGui.EndPopup(ctx)
+	else
+		ImGui.PopStyleColor(ctx)
+	end
+end
+
+local function DrawAboutPopup()
+	GUI_DrawModalPopup('About', function()
+		GUI_DrawText("Hello, brave Reaper user! My name is ")
+		ImGui.SameLine(ctx, 0, 0);
+		GUI_DrawLink("Ed Kashinsky", "https://soundcloud.com/edkashinsky")
+		GUI_DrawText("and I'm glad you're using my scripts!")
+
+		GUI_DrawGap(10)
+
+		GUI_DrawText("If you have any ideas for improving scripts or bug reports,")
+		GUI_DrawText("please create an issue on ")
+		ImGui.SameLine(ctx, 0, 0);
+		GUI_DrawLink("Github", "https://github.com/edkashinsky/reaper-reableton-scripts/issues/new")
+		GUI_DrawText("or just text me on ")
+		ImGui.SameLine(ctx, 0, 0);
+		GUI_DrawLink("Facebook", "https://www.facebook.com/edkashinsky.music/")
+
+		GUI_DrawGap(10)
+
+		GUI_DrawText("You can support my work via:")
+		ImGui.Bullet(ctx)
+		ImGui.SameLine(ctx, 0, 5);
+		GUI_DrawLink("PayPal", "https://www.paypal.com/paypalme/kashinsky")
+
+		ImGui.Bullet(ctx)
+		ImGui.SameLine(ctx, 0, 5);
+		GUI_DrawLink("BuyMeCoffee", "https://buymeacoffee.com/edkashinsky")
+
+		ImGui.Bullet(ctx)
+		ImGui.SameLine(ctx, 0, 5);
+		GUI_DrawLink("Ko-fi", "https://ko-fi.com/edkashinsky")
+
+		ImGui.Bullet(ctx)
+		ImGui.SameLine(ctx, 0, 5);
+		GUI_DrawLink("Boosty", "https://boosty.to/edkashinsky/donate")
+		GUI_DrawGap(10)
+
+		GUI_DrawText("GUI Global Settings", gui_fonts.Bold)
+
+		local newVal
+		local key = 0
+		for i = 1, #gui_themes do
+			if gui_themes[i] == theme then key = i - 1 end
+		end
+
+		ImGui.PushItemWidth(ctx, 160)
+		newVal = GUI_DrawInput(gui_input_types.Combo, "Theme", key, { select_values = gui_themes })
+		if newVal ~= key then
+			theme = gui_themes[newVal + 1]
+			EK_SetExtState(key_gui_theme, theme)
+		end
+
+		newVal = GUI_DrawInput(gui_input_types.NumberSlider, "Font size (need to reopen script)", font_size, { number_min = 9, number_max = 20})
+		if newVal ~= font_size then
+			font_size = newVal
+			EK_SetExtState(key_gui_font_size, font_size)
+		end
+
+		GUI_DrawGap(10)
+		GUI_SetCursorCenter('  Close  ')
+
+		GUI_DrawButton('Close', function()
+			ImGui.CloseCurrentPopup(ctx)
+		end, gui_buttons_types.Cancel, true)
+	end)
+end
+
 --
 -- Show main window
 --
 local function main()
 	ImGui.SetNextWindowSize(ctx, window_width, window_height)
 
-	ImGui.PushFont(ctx, GUI_GetFont(gui_font_types.None))
-	ImGui.PushStyleColor(ctx, ImGui.Col_WindowBg(), gui_colors.Background)
-	ImGui.PushStyleColor(ctx, ImGui.Col_Separator(), gui_colors.Background)
-	ImGui.PushStyleColor(ctx, ImGui.Col_FrameBg(), gui_colors.Input.Background)
-	ImGui.PushStyleColor(ctx, ImGui.Col_FrameBgHovered(), gui_colors.Input.Hover)
-	ImGui.PushStyleColor(ctx, ImGui.Col_FrameBgActive(), gui_colors.Input.Hover)
-	ImGui.PushStyleColor(ctx, ImGui.Col_Text(), gui_colors.Text)
-	ImGui.PushStyleColor(ctx, ImGui.Col_TextDisabled(), gui_colors.TextDisabled)
+	GUI_PushColor({
+		[ImGui.Col_WindowBg()] = gui_cols.Background,
+		[ImGui.Col_Separator()] = gui_cols.Background,
+		[ImGui.Col_PopupBg()] = gui_cols.Background,
+		[ImGui.Col_ScrollbarBg()] = gui_cols.Background,
+		[ImGui.Col_ScrollbarGrab()] = gui_cols.ScrollGrab,
+		[ImGui.Col_Text()] = gui_cols.Text,
+		[ImGui.Col_TextDisabled()] = gui_cols.Text.Disabled,
+		[ImGui.Col_MenuBarBg()] = gui_cols.Menu.Background,
+		[ImGui.Col_FrameBg()] = gui_cols.Input.Background,
+		[ImGui.Col_FrameBgHovered()] = gui_cols.Input.Hover,
+		[ImGui.Col_FrameBgActive()] = gui_cols.Input.Hover,
+		[ImGui.Col_Header()] = gui_cols.Header.Background,
+		[ImGui.Col_HeaderHovered()] = gui_cols.Menu.Hovered,
+		[ImGui.Col_HeaderActive()] = gui_cols.Menu.Active,
+		[ImGui.Col_Button()] = gui_cols.Button.Basic.Background,
+		[ImGui.Col_ButtonHovered()] = gui_cols.Button.Basic.Hovered,
+		[ImGui.Col_ButtonActive()] = gui_cols.Button.Basic.Active,
+		[ImGui.Col_TitleBg()] = gui_cols.Header.Background,
+		[ImGui.Col_TitleBgActive()] = gui_cols.Header.Background,
+		[ImGui.Col_TitleBgCollapsed()] = gui_cols.Header.Background,
+		[ImGui.Col_CheckMark()] = gui_cols.Input.CheckMark,
+		[ImGui.Col_SliderGrab()] = gui_cols.Input.Grab,
+	})
+
+	ImGui.PushFont(ctx, GUI_GetFont(gui_fonts.None))
+	ImGui.PushStyleVar(ctx, ImGui.StyleVar_FrameRounding(), 2)
+	ImGui.PushStyleVar(ctx, ImGui.StyleVar_WindowPadding(), 12, 12)
+	ImGui.PushStyleVar(ctx, ImGui.StyleVar_WindowBorderSize(), 1)
 
 	window_visible, window_opened = ImGui.Begin(ctx, SCRIPT_NAME, true, GUI_GetWindowFlags())
 
 	if window_visible then
+		local open_about_popup
+		local menu_action
+
+		if ImGui.BeginMenuBar(ctx) then
+			if type(GUI_DrawMenu) == 'function' then
+				menu_action = GUI_DrawMenu(ImGui, ctx)
+			end
+
+			if ImGui.MenuItem(ctx, 'About') then open_about_popup = true end
+			ImGui.EndMenuBar(ctx)
+		end
+
+		if open_about_popup then ImGui.OpenPopup(ctx, 'About') end
+		if type(menu_action) == 'function' then menu_action() end
+
+		DrawAboutPopup()
 	    frame(ImGui, ctx, not window_first_frame_showed)
 		window_first_frame_showed = true
 	    ImGui.End(ctx)
 	end
 
-	ImGui.PopStyleColor(ctx, 7)
+	ImGui.PopStyleVar(ctx, 3)
+
+	ImGui.PopStyleColor(ctx, 22)
 	ImGui.PopFont(ctx)
 
 	if ImGui.IsKeyPressed(ctx, ImGui.Key_Escape()) then
@@ -142,6 +359,9 @@ local function main()
 end
 
 function GUI_ShowMainWindow(w, h)
+	w = w or 0
+	h = h or 0
+
 	if reaper.ImGui_GetVersion == nil or not pcall(function()
 		dofile(reaper.GetResourcePath() .. '/Scripts/ReaTeam Extensions/API/imgui.lua') '0.8.5'
 	end) then
@@ -174,13 +394,13 @@ function GUI_CloseMainWindow()
 end
 
 function GUI_DrawText(text, font, color)
-	if not font then font = GUI_GetFont(gui_font_types.None) end
+	if not font then font = gui_fonts.None end
 
 	if color ~= nil then
-		ImGui.PushStyleColor(ctx, ImGui.Col_Text(), color)
+		GUI_PushColor(ImGui.Col_Text(), color)
 	end
 
-	ImGui.PushFont(ctx, font)
+	ImGui.PushFont(ctx, GUI_GetFont(font))
 	ImGui.TextWrapped(ctx, text)
 	ImGui.PopFont(ctx)
 
@@ -190,15 +410,14 @@ function GUI_DrawText(text, font, color)
 end
 
 function GUI_DrawLink(text, url)
-	text = url or text
+	url = url or text
 
 	if not reaper.CF_ShellExecute then
 		ImGui.Text(ctx, text)
 		return
 	end
 
-	local color = ImGui.GetStyleColor(ctx, ImGui.Col_CheckMark())
-	ImGui.TextColored(ctx, color, text)
+	ImGui.TextColored(ctx, GUI_GetColor(gui_cols.Text.Link), text)
 	if ImGui.IsItemClicked(ctx) then
 		reaper.CF_ShellExecute(url or text)
 	elseif ImGui.IsItemHovered(ctx) then
@@ -209,7 +428,12 @@ end
 function GUI_DrawHint(text, title)
 	if not title then title = "[?]" end
 
-	ImGui.TextDisabled(ctx, title)
+	GUI_PushColor(ImGui.Col_Text(), gui_cols.Button.Basic.Background)
+	ImGui.PushFont(ctx, GUI_GetFont(gui_fonts.Bold))
+	ImGui.Text(ctx, title)
+	ImGui.PopFont(ctx)
+	ImGui.PopStyleColor(ctx)
+
 	if ImGui.IsItemHovered(ctx, ImGui.HoveredFlags_DelayShort()) and ImGui.BeginTooltip(ctx) then
 		ImGui.PushTextWrapPos(ctx, ImGui.GetFontSize(ctx) * 35.0)
 		ImGui.Text(ctx, text)
@@ -243,11 +467,14 @@ function GUI_DrawButton(label, action, btn_type, prevent_close_wnd, keyboard_key
 	width = width + (gui_btn_padding * 2)
 
 	if btn_type == gui_buttons_types.Action then
-
+		GUI_PushColor(ImGui.Col_Text(), gui_cols.Button.Basic.Text)
 	elseif btn_type == gui_buttons_types.Cancel then
-		ImGui.PushStyleColor(ctx, ImGui.Col_Button(), 0x545454ff)
-		ImGui.PushStyleColor(ctx, ImGui.Col_ButtonHovered(), 0x666666ff)
-		ImGui.PushStyleColor(ctx, ImGui.Col_ButtonActive(), 0x777777ff)
+		GUI_PushColor({
+			[ImGui.Col_Button()] = gui_cols.Button.Cancel.Background,
+			[ImGui.Col_ButtonHovered()] = gui_cols.Button.Cancel.Hovered,
+			[ImGui.Col_ButtonActive()] = gui_cols.Button.Cancel.Active,
+			[ImGui.Col_Text()] = gui_cols.Button.Cancel.Text,
+		})
 	end
 
 	if not default_enter_action and btn_type == gui_buttons_types.Action and type(action) == 'function' then
@@ -273,9 +500,9 @@ function GUI_DrawButton(label, action, btn_type, prevent_close_wnd, keyboard_key
 	end
 
 	if btn_type == gui_buttons_types.Action then
-
+		ImGui.PopStyleColor(ctx, 1)
 	elseif btn_type == gui_buttons_types.Cancel then
-		ImGui.PopStyleColor(ctx, 3)
+		ImGui.PopStyleColor(ctx, 4)
 	end
 end
 
@@ -336,7 +563,7 @@ function GUI_DrawSettingsTable(settingsTable)
 				end
 
 				if descr ~= nil then
-					GUI_DrawText(descr, GUI_GetFont(gui_font_types.Italic))
+					GUI_DrawText(descr, gui_fonts.Italic)
 
 					if i < #settingsTable then GUI_DrawGap() end
 				end
@@ -355,8 +582,8 @@ function GUI_DrawInput(i_type, i_label, i_value, i_settings)
 	local needLabel = true
 	local inner_spacing_x = ImGui.GetStyleVar(ctx, ImGui.StyleVar_ItemInnerSpacing())
 
-	ImGui.PushFont(ctx, GUI_GetFont(gui_font_types.Bold))
-	ImGui.PushStyleColor(ctx, ImGui.Col_Text(), gui_colors.Input.Text)
+	ImGui.PushFont(ctx, GUI_GetFont(gui_fonts.Bold))
+	GUI_PushColor(ImGui.Col_Text(), gui_cols.Input.Text)
 
 	if i_type == gui_input_types.Text then
 		_, newVal = ImGui.InputText(ctx, '##' .. i_label, i_value, input_flags)
@@ -387,6 +614,11 @@ function GUI_DrawInput(i_type, i_label, i_value, i_settings)
 	elseif i_type == gui_input_types.Checkbox then
 		_, newVal = ImGui.Checkbox(ctx, '##' .. i_label, i_value)
 	elseif i_type == gui_input_types.Combo then
+		GUI_PushColor({
+			[ImGui.Col_PopupBg()] = gui_cols.Input.Combo.Background,
+			[ImGui.Col_ScrollbarBg()] = gui_cols.Input.Combo.Background,
+			[ImGui.Col_HeaderHovered()] = gui_cols.Input.Combo.Hovered,
+		})
 		local select_values
 
 		if type(i_settings.select_values) == "function" then
@@ -396,16 +628,18 @@ function GUI_DrawInput(i_type, i_label, i_value, i_settings)
 		end
 
 		_, newVal = ImGui.Combo(ctx, '##' .. i_label, i_value, join(i_settings.select_values, "\0") .. "\0")
+
+		ImGui.PopStyleColor(ctx, 3)
 	elseif i_type == gui_input_types.Color then
 		if i_value == 0 then i_value = nil end
 
 		_, newVal = ImGui.ColorPicker3(ctx, '##' .. i_label, i_value, GUI_GetColorFlags())
 	elseif i_type == gui_input_types.ColorView then
-		if i_value == 0 then i_value = tonumber(gui_colors.Input.Background >> 8) end
+		if i_value == 0 then i_value = tonumber(GUI_GetColor(gui_cols.Input.Background) >> 8) end
 
 		local flags = i_settings.flags and i_settings.flags or GUI_GetColorFlags()
 
-		ImGui.PushStyleColor(ctx, ImGui.Col_FrameBg(), gui_colors.White)
+		ImGui.PushStyleColor(ctx, ImGui.Col_FrameBg(), GUI_GetColor(gui_cols.White))
 		if i_settings.selected then
 			newVal = ImGui.ColorButton(ctx, '##' .. i_label, i_value, flags & ~ImGui.ColorEditFlags_NoBorder())
 		else
@@ -424,8 +658,9 @@ function GUI_DrawInput(i_type, i_label, i_value, i_settings)
 	--
 	if needLabel then
 		ImGui.SameLine(ctx, nil, inner_spacing_x)
-		ImGui.PushStyleColor(ctx, ImGui.Col_Text(),  gui_colors.Input.Label)
-		if i_settings.label_not_bold ~= true then ImGui.PushFont(ctx, GUI_GetFont(gui_font_types.Bold)) end
+		GUI_PushColor(ImGui.Col_Text(), gui_cols.Input.Label)
+
+		if i_settings.label_not_bold ~= true then ImGui.PushFont(ctx, GUI_GetFont(gui_fonts.Bold)) end
 
 		ImGui.Text(ctx, i_label)
 

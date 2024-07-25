@@ -1,11 +1,11 @@
 -- @description ek_Smart renaming depending on focus
--- @version 1.0.13
+-- @version 1.0.14
 -- @author Ed Kashinsky
 -- @readme_skip
 -- @about
 --   Renaming stuff for takes, items, markers, regions and tracks depending on focus
 -- @changelog
---   Small ui fixes
+--   UI update
 -- @provides
 --   ../Core/ek_Smart renaming functions.lua
 
@@ -30,7 +30,7 @@ CoreFunctionsLoaded("ek_Smart renaming functions.lua")
 local defaultPalette = {
 	0xc93b10, 0xc95a10, 0xc9a510, 0xcaca11, 0x80ca0d, 0x51a31a, 0x5bc910, 0x10c92e, 0x13ca5a, 0x12caa5, 0x0ea5ca, 0x2696cf, 0x3682d4, 0x4644d8, 0x4341b0, 0x5e40d5, 0x7738d3, 0x902ed1, 0xa40fc9, 0xca11c9,
 }
-local wndWidth = 340
+--local wndWidth = 0
 local element = GetFocusedElement()
 local isColorTreeShowed = false
 local isColorTreeShowedChanged = false
@@ -151,12 +151,12 @@ local function drawClearButton(ImGui, ctx)
 	local sz = 19
 	local offset = 3
 
-	ImGui.DrawList_AddRectFilled(draw_list, x, y, x + sz, y + sz, gui_colors.Background, 0.0);
-	ImGui.DrawList_AddLine(draw_list, x + offset, y + offset, x + sz - 1 - offset, y + sz - 1 - offset, gui_colors.Red, 1)
-	ImGui.DrawList_AddLine(draw_list, x + offset, y + sz - 1 - offset, x + sz - 1 - offset, y + offset, gui_colors.Red, 1)
+	ImGui.DrawList_AddRectFilled(draw_list, x, y, x + sz, y + sz, GUI_GetColor(gui_cols.Background), 0.0);
+	ImGui.DrawList_AddLine(draw_list, x + offset, y + offset, x + sz - 1 - offset, y + sz - 1 - offset, GUI_GetColor(gui_cols.Red), 1)
+	ImGui.DrawList_AddLine(draw_list, x + offset, y + sz - 1 - offset, x + sz - 1 - offset, y + offset, GUI_GetColor(gui_cols.Red), 1)
 
 	if color == 0 then
-		ImGui.DrawList_AddRect(draw_list, x, y, x + sz, y + sz, gui_colors.White, 0.0);
+		ImGui.DrawList_AddRect(draw_list, x, y, x + sz, y + sz, GUI_GetColor(gui_cols.White), 0.0);
 	end
 	if ImGui.InvisibleButton(ctx, '##Clear color', sz, sz) then
 		color = 0
@@ -175,9 +175,9 @@ local function drawAddColorButton(ImGui, ctx)
 	local cy = y + (sz / 2)
 	local offset = 3
 
-	ImGui.DrawList_AddRectFilled(draw_list, x, y, x + sz, y + sz, gui_colors.Background, 0.0);
-	ImGui.DrawList_AddLine(draw_list, cx, y + offset, cx, y + sz - offset, gui_colors.White, 1)
-	ImGui.DrawList_AddLine(draw_list, x + offset, cy, x + sz - offset, cy, gui_colors.White, 1)
+	ImGui.DrawList_AddRectFilled(draw_list, x, y, x + sz, y + sz, GUI_GetColor(gui_cols.Background), 0.0);
+	ImGui.DrawList_AddLine(draw_list, cx, y + offset, cx, y + sz - offset, GUI_GetColor(gui_cols.White), 1)
+	ImGui.DrawList_AddLine(draw_list, x + offset, cy, x + sz - offset, cy, GUI_GetColor(gui_cols.White), 1)
 
 	if ImGui.InvisibleButton(ctx, '##Add color', sz, sz) then
 		newColor = nil
@@ -206,7 +206,7 @@ local function drawAddColorButton(ImGui, ctx)
 		end, gui_buttons_types.Cancel, true)
 
 		GUI_DrawText()
-		GUI_DrawText( 'Default color palette settings', GUI_GetFont(gui_font_types.Bold))
+		GUI_DrawText( 'Default color palette settings', gui_fonts.Bold)
 		ImGui.Separator(ctx)
 
 		GUI_DrawSettingsTable(rename_default_colors_config)
@@ -275,7 +275,7 @@ local function frameForAdvancedForm(ImGui, ctx)
 
 	GUI_DrawText('Example:')
 	ImGui.SameLine(ctx)
-	ImGui.PushFont(ctx, GUI_GetFont(gui_font_types.Bold))
+	ImGui.PushFont(ctx, GUI_GetFont(gui_fonts.Bold))
 	GUI_DrawText(GetProcessedTitleByAdvanced(element.value, 1))
 
 	ImGui.PopFont(ctx)
@@ -309,7 +309,7 @@ function frame(ImGui, ctx)
 	--
 	GUI_DrawText(element.typeTitle .. ":")
 	ImGui.SameLine(ctx)
-	ImGui.PushFont(ctx, GUI_GetFont(gui_font_types.Bold))
+	ImGui.PushFont(ctx, GUI_GetFont(gui_fonts.Bold))
 	GUI_DrawText(element.title)
 	ImGui.PopFont(ctx)
 
@@ -350,7 +350,7 @@ function frame(ImGui, ctx)
 	end
 
 	if isColorTreeShowedChanged then
-		GUI_SetWindowSize(wndWidth, 0)
+		--GUI_SetWindowSize(wndWidth, 0)
 		isColorTreeShowedChanged = false
 	end
 
@@ -367,7 +367,7 @@ function frame(ImGui, ctx)
 	newVal = GUI_DrawInput(gui_input_types.Checkbox, "Advanced", isAdvanced, { label_not_bold = true })
 	if newVal ~= isAdvanced then
 		isAdvanced = newVal
-		GUI_SetWindowSize(wndWidth, 0)
+		--GUI_SetWindowSize(wndWidth, 0)
 	end
 
 	if isAdvanced then
@@ -403,4 +403,4 @@ function frame(ImGui, ctx)
 	GUI_DrawButton('Cancel', nil, gui_buttons_types.Cancel)
 end
 
-GUI_ShowMainWindow(wndWidth, 0)
+GUI_ShowMainWindow()

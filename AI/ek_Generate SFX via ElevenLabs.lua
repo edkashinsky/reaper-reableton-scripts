@@ -1,11 +1,11 @@
 -- @description ek_Generate SFX via ElevenLabs
--- @version 1.1.6
+-- @version 1.1.7
 -- @author Ed Kashinsky
 -- @readme_skip
 -- @about
 --   Script uses ElevenLabs API to generate sound effects and inserts them into the project.
 -- @changelog
---   Added small notice on error throw
+--   UI updates
 
 function CoreFunctionsLoaded(script)
 	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
@@ -26,7 +26,7 @@ if not loaded then
 	return
 end
 
-GUI_ShowMainWindow(570, 0)
+GUI_ShowMainWindow()
 
 local input_callback
 local settings_key = 'ai_elevenlabs_settings'
@@ -129,6 +129,14 @@ local function SaveHistory()
 	settings.history[#settings.history + 1] = data.prompt
 end
 
+function GUI_DrawMenu(ImGui, ctx)
+	if ImGui.MenuItem(ctx, 'Settings') then
+		return function()
+			ImGui.OpenPopup(ctx, 'Settings')
+		end
+	end
+end
+
 function frame(ImGui, ctx, is_first_frame)
 	local newVal
 	local is_changed = false
@@ -137,12 +145,8 @@ function frame(ImGui, ctx, is_first_frame)
 		ImGui.OpenPopup(ctx, 'Settings')
 	end
 
-	local center_x, center_y = ImGui.Viewport_GetCenter(ImGui.GetWindowViewport(ctx))
-	ImGui.SetNextWindowSize(ctx, 480, 0)
-    ImGui.SetNextWindowPos(ctx, center_x, center_y, ImGui.Cond_Appearing(), 0.5, 0.5)
-
-	if ImGui.BeginPopupModal(ctx, 'Settings', nil, ImGui.WindowFlags_NoResize()) then
-		GUI_DrawText("Script uses ElevenLabs API to generate sound effects and inserts them into the project.", GUI_GetFont(gui_font_types.Bold))
+	GUI_DrawModalPopup('Settings', function()
+		GUI_DrawText("Script uses ElevenLabs API to generate sound effects and inserts them into the project.", gui_fonts.Bold)
 		GUI_DrawLink("https://elevenlabs.io/")
 		GUI_DrawGap(10)
 		GUI_DrawText("Please enter your API-key to start working with the script. Authorize on website and go to Profile + API section")
@@ -169,7 +173,7 @@ function frame(ImGui, ctx, is_first_frame)
 			is_changed = true
 		end
 
-		if ImGui.Button(ctx, 'Test request') then
+		GUI_DrawButton('Test request', function()
 			ConsoleLog(EK_CurlRequest(CURL_POST, "https://api.elevenlabs.io/v1/sound-generation", {
 				["Content-Type"] = "application/json",
 				["xi-api-key"] = "123"
@@ -178,23 +182,21 @@ function frame(ImGui, ctx, is_first_frame)
 			}))
 			ImGui.CloseCurrentPopup(ctx)
 			settings.enable_console = true
-      	end
+		end, gui_buttons_types.Action, true)
 
 		GUI_DrawGap(10)
-		GUI_DrawText("Thanks to Tyoma Makeev in development of Python part and Konstantin Knerik for the script idea and support.", GUI_GetFont(gui_font_types.Italic))
+		GUI_DrawText("Thanks to Tyoma Makeev in development of Python part and Konstantin Knerik for the script idea and support.", gui_fonts.Italic)
 		GUI_DrawGap(10)
 
 		ImGui.BeginDisabled(ctx, string.len(settings.api_key) == 0)
 
-		GUI_SetCursorCenter('Close')
-		if ImGui.Button(ctx, 'Close') then
+		GUI_SetCursorCenter('   Close   ')
+		GUI_DrawButton('Close', function()
 			ImGui.CloseCurrentPopup(ctx)
-      	end
+		end, gui_buttons_types.Cancel, true)
 
 		ImGui.EndDisabled(ctx)
-
-		ImGui.EndPopup(ctx)
-	end
+	end)
 
 	ImGui.BeginDisabled(ctx, data.is_waiting or string.len(settings.api_key) == 0)
 
@@ -234,19 +236,12 @@ function frame(ImGui, ctx, is_first_frame)
 	end
 
 	GUI_SetFocusOnWidget()
-	ImGui.SetNextItemWidth(ctx, -58)
-
+	ImGui.SetNextItemWidth(ctx, -FLT_MIN)
 
 	_, newVal = ImGui.InputTextWithHint(ctx, "###Prompt", "Describe your sound effect and then click generate...", data.prompt, ImGui.InputTextFlags_CallbackHistory(), input_callback)
 	if newVal ~= data.prompt then
 		data.prompt = newVal
 	end
-
-	ImGui.SameLine(ctx, nil, 4)
-
-	if ImGui.Button(ctx, "Settings") then
-		ImGui.OpenPopup(ctx, 'Settings')
-    end
 
 	data.history_pos = ImGui.Function_GetValue(input_callback, 'HistoryPos')
 
@@ -285,6 +280,8 @@ function frame(ImGui, ctx, is_first_frame)
 		is_changed = true
 	end
 
+	GUI_DrawGap(5)
+
 	GUI_DrawButton("Generate and import", function()
 		if string.len(data.prompt) == 0 then
 			ConsoleLog("[ERR] Please type some text for prompt.")
@@ -317,8 +314,11 @@ function frame(ImGui, ctx, is_first_frame)
 		local _, h = ImGui.Viewport_GetSize(ImGui.GetWindowViewport(ctx))
 		local is_collapsed = true
 
+		GUI_PushColor(ImGui.Col_Text(), gui_cols.Header.Text)
+
 		if ImGui.CollapsingHeader(ctx, "Console log") then
-			ImGui.PushStyleColor(ctx, ImGui.Col_ChildBg(), gui_colors.Input.Background)
+			ImGui.PopStyleColor(ctx)
+			GUI_PushColor(ImGui.Col_ChildBg(), gui_cols.Input.Background)
 
 			if ImGui.BeginChild(ctx, "Console log", 0, h - y > 140 and 0 or 140) then
 				local logMsgs = ""
@@ -332,6 +332,8 @@ function frame(ImGui, ctx, is_first_frame)
 			ImGui.PopStyleColor(ctx)
 
 			is_collapsed = false
+		else
+			ImGui.PopStyleColor(ctx)
 		end
 
 		if settings.console_collapsed ~= is_collapsed then
