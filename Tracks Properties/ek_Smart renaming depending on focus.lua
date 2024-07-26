@@ -1,11 +1,11 @@
 -- @description ek_Smart renaming depending on focus
--- @version 1.0.14
+-- @version 1.0.15
 -- @author Ed Kashinsky
 -- @readme_skip
 -- @about
 --   Renaming stuff for takes, items, markers, regions and tracks depending on focus
 -- @changelog
---   UI update
+--   small UI update
 -- @provides
 --   ../Core/ek_Smart renaming functions.lua
 
@@ -260,7 +260,7 @@ local function frameForAdvancedForm(ImGui, ctx)
 		end
 	end
 
-	ImGui.PushItemWidth(ctx, 216)
+	ImGui.PushItemWidth(ctx, 260)
 
 	local newVal = GUI_DrawInput(gui_input_types.Combo, "Type", a_key, settings)
 	if newVal ~= a_key then
@@ -332,6 +332,7 @@ function frame(ImGui, ctx)
 
 	GUI_SetFocusOnWidget()
 
+	ImGui.PushItemWidth(ctx, 300)
 	newVal = GUI_DrawInput(gui_input_types.Text, "New Title", value)
 	if newVal ~= value then
 		value = newVal
@@ -376,8 +377,7 @@ function frame(ImGui, ctx)
 
 	ImGui.Separator(ctx)
 
-	ImGui.Indent(ctx, 85)
-
+	GUI_SetCursorCenter('   Rename       Cancel   ')
 	GUI_DrawButton('Rename', function()
 		reaper.Undo_BeginBlock()
 
