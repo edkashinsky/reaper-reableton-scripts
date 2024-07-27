@@ -21,6 +21,9 @@ local cached_values = {}
 
 local gui_themes = { GUI_THEME_DARK, GUI_THEME_LIGHT }
 local theme = EK_GetExtState(key_gui_theme, GUI_THEME_DARK)
+local version = EK_GetScriptVersion()
+local coreVersion = EK_GetScriptVersion(debug.getinfo(1, 'S').source:sub(2, -5):match("(.*" .. dir_sep .. ")") .. "ek_Core functions.lua")
+local _, _, imGuiVersion = reaper.ImGui_GetVersion()
 
 gui_fonts = {
 	None = 1,
@@ -224,7 +227,8 @@ local function DrawAboutPopup()
 		GUI_DrawText("please create an issue on ")
 		ImGui.SameLine(ctx, 0, 0);
 		GUI_DrawLink("Github", "https://github.com/edkashinsky/reaper-reableton-scripts/issues/new")
-		GUI_DrawText("or just text me on ")
+		ImGui.SameLine(ctx, 0, 0);
+		ImGui.Text(ctx, " or just text me on ")
 		ImGui.SameLine(ctx, 0, 0);
 		GUI_DrawLink("Facebook", "https://www.facebook.com/edkashinsky.music/")
 
@@ -270,7 +274,34 @@ local function DrawAboutPopup()
 		end
 
 		GUI_DrawGap(10)
-		GUI_SetCursorCenter('  Close  ')
+
+		if version then
+			GUI_DrawText("Script version: " .. version)
+		end
+
+		if coreVersion then
+			GUI_DrawText("Core functions version: " .. coreVersion)
+		end
+
+		GUI_DrawText("ReaImGui version: " .. imGuiVersion)
+
+		GUI_DrawGap(10)
+
+		if version then
+			GUI_SetCursorCenter('     Close   About script    ')
+
+			GUI_DrawButton('About script', function()
+				local owner = reaper.ReaPack_GetOwner(({reaper.get_action_context()})[2])
+				if owner then
+					reaper.ReaPack_AboutInstalledPackage(owner)
+					reaper.ReaPack_FreeEntry(owner)
+				end
+			end, gui_buttons_types.Action, true)
+
+			ImGui.SameLine(ctx)
+		else
+			GUI_SetCursorCenter('   Close   ')
+		end
 
 		GUI_DrawButton('Close', function()
 			ImGui.CloseCurrentPopup(ctx)

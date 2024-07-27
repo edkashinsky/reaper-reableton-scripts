@@ -1386,3 +1386,16 @@ function EK_CurlRequest(type, url, headers, data, params)
 
 	return is_verbose and command .. "\n" .. res or res
 end
+
+function EK_GetScriptVersion(scriptName)
+	scriptName = scriptName or ({reaper.get_action_context()})[2]
+
+	local owner = reaper.ReaPack_GetOwner(scriptName)
+	if owner then
+		local retval, repo, cat, pkg, desc, type, ver, author, flags, fileCount = reaper.ReaPack_GetEntryInfo(owner)
+		reaper.ReaPack_FreeEntry(owner)
+		return ver
+	end
+
+	return nil
+end
