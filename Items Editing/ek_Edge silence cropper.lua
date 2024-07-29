@@ -1,5 +1,5 @@
 -- @description ek_Edge silence cropper
--- @version 1.2.4
+-- @version 1.2.5
 -- @author Ed Kashinsky
 -- @readme_skip
 -- @about
@@ -7,7 +7,8 @@
 --
 --   Also it provides UI for configuration
 -- @changelog
---   UI updates
+--   - Fixed problem with trailing fade
+--   - Some render CPU optimization
 -- @provides
 --   ../Core/ek_Edge silence cropper functions.lua
 --   [main=main] ek_Edge silence cropper (no prompt).lua
@@ -44,6 +45,7 @@ local cachedPositions = { zoom = nil, hor = nil, count_sel_items = 0, values = {
 local MainHwnd = reaper.GetMainHwnd()
 local ArrangeHwnd = reaper.JS_Window_FindChildByID(MainHwnd, 0x3E8)
 local Cropper = EdgeCropper.new()
+local previewed_items = {}
 
 local bm = {
     leading = { maps = {}, color = ek_colors.Red },
@@ -115,11 +117,12 @@ local function PreviewCropResultInArrangeView()
 
     for i = 0, reaper.CountMediaItems(proj) - 1 do
         local item = reaper.GetMediaItem(proj, i)
+        local _, guid = reaper.GetSetMediaItemInfo_String(item, "GUID", "", false)
+        local isItemSelected = reaper.IsMediaItemSelected(item)
 
-        if reaper.IsMediaItemSelected(item) and preview then
+        if isItemSelected and preview then
             Cropper = Cropper.SetItem(item)
 
-            local _, guid = reaper.GetSetMediaItemInfo_String(item, "GUID", "", false)
             local track = reaper.GetMediaItem_Track(item)
             local item_height = reaper.GetMediaItemInfo_Value(item, "I_LASTH")
             local position = reaper.GetMediaItemInfo_Value(item, "D_POSITION")
@@ -138,7 +141,7 @@ local function PreviewCropResultInArrangeView()
 
             -- redraw on change item values
             if not cachedPositions.items_values[guid] then
-                cachedPositions.items_values[guid] = { D_POSITION = 0, D_FADEINLEN = 0, D_FADEOUTLEN = 0, }
+                cachedPositions.items_values[guid] = { D_POSITION = 0, D_FADEINLEN = 0, D_FADEOUTLEN = 0, D_LENGTH = 0 }
             end
 
             local isSomethingChanged = false
@@ -191,8 +194,6 @@ local function PreviewCropResultInArrangeView()
 
                     reaper.JS_Composite(ArrangeHwnd, _f(item_offset_x), _f(item_offset_y), _f(l_bm_width), _f(l_bm_height), bitmap, 0, 0, _f(l_bm_width), _f(l_bm_height), true)
                 end
-            else
-                ClearBitmap(bm.leading, i)
             end
 
             ------------- TRAILING PART --------------
@@ -231,12 +232,14 @@ local function PreviewCropResultInArrangeView()
 
                     reaper.JS_Composite(ArrangeHwnd, _f(item_offset_x), _f(item_offset_y), _f(t_bm_width), _f(t_bm_height), bitmap, 0, 0, _f(t_bm_width), _f(t_bm_height), true)
                 end
-            else
-                ClearBitmap(bm.trailing, i)
             end
-        else
+
+            previewed_items[guid] = 1
+        elseif not isItemSelected and previewed_items[guid] then
             ClearBitmap(bm.leading, i)
             ClearBitmap(bm.trailing, i)
+
+            previewed_items[guid] = nil
         end
     end
 
@@ -305,6 +308,7 @@ EK_DeferWithCooldown(PreviewCropResultInArrangeView, { last_time = 0, cooldown =
 
     if somethingChanged then
         Cropper.ClearCache()
+        ResetPreview()
     end
 
     return true
