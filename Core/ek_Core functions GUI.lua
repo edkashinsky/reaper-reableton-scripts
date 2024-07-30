@@ -76,7 +76,7 @@ gui_cols = {
 	Input = {
 		Background = {
 			Dark = 0x686868ff,
-			Light = 0xaaaaaaff,
+			Light = 0xa1a1a1ff,
 		},
 		Hover = 0x686868bb,
 		Text = 0xe9e9e9ff,
@@ -104,7 +104,7 @@ gui_cols = {
 		Cancel = {
 			Background = {
 				Dark = 0x686868ff,
-				Light = 0xaaaaaaff,
+				Light = 0xa1a1a1ff,
 			},
 			Hovered = 0x4f4f4fff,
 			Active = 0x4f4f4fff,
@@ -260,7 +260,7 @@ local function DrawAboutPopup()
 			if gui_themes[i] == theme then key = i - 1 end
 		end
 
-		ImGui.PushItemWidth(ctx, 160)
+		ImGui.PushItemWidth(ctx, 190)
 		newVal = GUI_DrawInput(gui_input_types.Combo, "Theme", key, { select_values = gui_themes })
 		if newVal ~= key then
 			theme = gui_themes[newVal + 1]
@@ -288,7 +288,7 @@ local function DrawAboutPopup()
 		GUI_DrawGap(10)
 
 		if version then
-			GUI_SetCursorCenter('     Close   About script    ')
+			GUI_SetCursorCenter({'About script', 'Close'})
 
 			GUI_DrawButton('About script', function()
 				local owner = reaper.ReaPack_GetOwner(({reaper.get_action_context()})[2])
@@ -474,6 +474,12 @@ function GUI_DrawHint(text, title)
 end
 
 function GUI_SetCursorCenter(text)
+	if type(text) == 'table' then
+		local formattedText = "     "
+		for i = 1, #text do formattedText = formattedText .. text[i] .. "   " end
+		text = formattedText .. "     "
+	end
+
 	local avail_w = ImGui.GetContentRegionAvail(ctx)
 	local text_w  = ImGui.CalcTextSize(ctx, text)
 
