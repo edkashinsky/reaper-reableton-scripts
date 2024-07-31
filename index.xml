@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="92e920ce280b4082e5ce466a745a988d7b8b8b2c">
+<index version="1" name="Reableton Scripts" commit="aeddc436c5fb3384e57f7827d6ae41c940a0693e">
   <category name="AI">
     <reapack name="ek_Generate SFX via ElevenLabs.lua" type="script" desc="ek_Generate SFX via ElevenLabs">
       <metadata>
@@ -1755,6 +1755,11 @@ UI update]]></changelog>
         <changelog><![CDATA[small UI update]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/9cf854f03ced548631012795485fe632ac6a9203/Tracks%20Properties/ek_Smart%20renaming%20depending%20on%20focus.lua</source>
         <source file="../Core/ek_Smart renaming functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/9cf854f03ced548631012795485fe632ac6a9203/Core/ek_Smart%20renaming%20functions.lua</source>
+      </version>
+      <version name="1.0.16" author="Ed Kashinsky" time="2024-07-31T11:57:17Z">
+        <changelog><![CDATA[small color UI update]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/aeddc436c5fb3384e57f7827d6ae41c940a0693e/Tracks%20Properties/ek_Smart%20renaming%20depending%20on%20focus.lua</source>
+        <source file="../Core/ek_Smart renaming functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/aeddc436c5fb3384e57f7827d6ae41c940a0693e/Core/ek_Smart%20renaming%20functions.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Toggle mute and offline FX for selected tracks.lua" type="script" desc="ek_Toggle mute and offline FX for selected tracks">
