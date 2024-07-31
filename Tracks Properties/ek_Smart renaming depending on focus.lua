@@ -1,11 +1,11 @@
 -- @description ek_Smart renaming depending on focus
--- @version 1.0.15
+-- @version 1.0.16
 -- @author Ed Kashinsky
 -- @readme_skip
 -- @about
 --   Renaming stuff for takes, items, markers, regions and tracks depending on focus
 -- @changelog
---   small UI update
+--   small color UI update
 -- @provides
 --   ../Core/ek_Smart renaming functions.lua
 
@@ -148,7 +148,7 @@ local function drawClearButton(ImGui, ctx)
 	local p = { ImGui.GetCursorScreenPos(ctx) }
 	local x = p[1]
 	local y = p[2]
-	local sz = 19
+	local sz = 20
 	local offset = 3
 
 	ImGui.DrawList_AddRectFilled(draw_list, x, y, x + sz, y + sz, GUI_GetColor(gui_cols.Background), 0.0);
@@ -156,7 +156,7 @@ local function drawClearButton(ImGui, ctx)
 	ImGui.DrawList_AddLine(draw_list, x + offset, y + sz - 1 - offset, x + sz - 1 - offset, y + offset, GUI_GetColor(gui_cols.Red), 1)
 
 	if color == 0 then
-		ImGui.DrawList_AddRect(draw_list, x, y, x + sz, y + sz, GUI_GetColor(gui_cols.White), 0.0);
+		ImGui.DrawList_AddRect(draw_list, x, y, x + sz, y + sz, GUI_GetColor(gui_cols.White), ImGui.GetStyleVar(ctx, ImGui.StyleVar_FrameRounding()));
 	end
 	if ImGui.InvisibleButton(ctx, '##Clear color', sz, sz) then
 		color = 0
@@ -170,7 +170,7 @@ local function drawAddColorButton(ImGui, ctx)
 	local p = { ImGui.GetCursorScreenPos(ctx) }
 	local x = p[1]
 	local y = p[2]
-	local sz = 18
+	local sz = 20
 	local cx = x + (sz / 2)
 	local cy = y + (sz / 2)
 	local offset = 3
