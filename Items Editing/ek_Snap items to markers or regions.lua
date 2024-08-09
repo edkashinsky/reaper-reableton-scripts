@@ -1,14 +1,23 @@
 -- @description ek_Snap items to markers or regions
--- @version 1.0.0
+-- @version 1.1.0
 -- @author Ed Kashinsky
 -- @about
---   ![Preview](/Assets/images/pin_items_to_markers_preview.gif)
 --   This script snaps selected items to markers or regions started from specified number. It requires ReaImGui extension.
+--   It has 3 behaviours: simple, stems, consider overlapped items. You can see how it works shematically on pictograms in GUI
+--   You can set custom offset depends on your need: just begin of item, snap offset, first cue marker, peak of item
+--   Script gives posibility to limit markers/regions snapping. For example only 2 markers after specified.
+-- @readme_skip
 -- @changelog
---   Added opportunity to snap items to regions
---   UI update
+--   Added brand new snapping behaviours: simple, stems, consider overlapped items
+--   Also there is flexible offset: just begin of item, snap offset, first cue marker, peak of item
 -- @provides
 --   ../Core/ek_Snap items to markers functions.lua
+--   ../Core/images/marker_overlapped.png
+--   ../Core/images/marker_single.png
+--   ../Core/images/marker_stems.png
+--   ../Core/images/region_overlapped.png
+--   ../Core/images/region_single.png
+--   ../Core/images/region_stems.png
 --   [main=main] ek_Snap items to closest markers.lua
 --   [main=main] ek_Snap items to closest regions.lua
 
@@ -24,99 +33,214 @@ end
 
 local loaded = CoreFunctionsLoaded("ek_Core functions.lua")
 if not loaded then
-	if loaded == nil then reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0) end
+	if loaded == nil then
+		reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0)
+		reaper.ReaPack_BrowsePackages("ek_Core functions")
+	end
 	return
 end
 
 CoreFunctionsLoaded("ek_Snap items to markers functions.lua")
 
-local start_marker
-local count_on_track
-local save_relative_position = true
 local window_open = true
+local markers_list = { "No markers" }
+local count_list = {}
 
-local gui_sel_marker
-local gui_sel_count = 0
-local gui_snap_to = 0
-local gui_snap_types = { "Markers", "Regions" }
-local gui_markers_list = {}
-local gui_count_list = {}
-local gui_count_i = 0
+local gui_config = {
+	{
+		type = gui_input_types.Combo,
+		key = data.snap_to.key,
+		title = "Snap to",
+		select_values =  {
+			[SNAP_TO_MARKERS] = "Markers",
+			[SNAP_TO_REGIONS] = "Regions"
+		},
+		default = data.snap_to.default
+	},
+	{
+		type = gui_input_types.Combo,
+		key = data.start_marker.key,
+		title = function()
+			return data.snap_to.value == SNAP_TO_MARKERS and "Start marker number" or "Start region number"
+		end,
+		select_values = function()
+			return markers_list
+		end,
+		default = data.start_marker.default
+	},
+	{
+		type = gui_input_types.Combo,
+		key = data.count_on_track.key,
+		title = function()
+			return data.snap_to.value == SNAP_TO_MARKERS and "Number of markers from starting" or "Number of regions from starting"
+		end,
+		select_values = function()
+			return count_list
+		end,
+		default = data.count_on_track.default
+	},
+	{
+		type = gui_input_types.Combo,
+		key = data.position.key,
+		title = "Snap position",
+		select_values = {
+			[POSITION_BEGIN] = "Beginning of leading item",
+			[POSITION_SNAP_OFFSET] = "Snap offset of leading item",
+			[POSITION_FIRST_CUE] = "First cue marker in leading item",
+			[POSITION_PEAK] = "Peak of leading item"
+		},
+		default = data.position.default
+	},
+	{
+		type = gui_input_types.ComboImages,
+		key = data.behaviour.key,
+		title = "Snapping behaviour",
+		select_values = function()
+			local rootPath = CORE_PATH .. "images" .. dir_sep
+			local prefix = data.snap_to.value == SNAP_TO_MARKERS and "marker" or "region"
+			return {
+				{
+					id = BEHAVIOUR_TYPE_SINGLE,
+					title = "One item per marker",
+					image = rootPath .. prefix .. "_single.png",
+				},
+				{
+					id = BEHAVIOUR_TYPE_STEM,
+					title = "Items on different tracks to one marker",
+					image = rootPath .. prefix .. "_stems.png",
+				},
+				{
+					id = BEHAVIOUR_TYPE_OVERLAPPED,
+					title = "Consider overlapping items",
+					image = rootPath .. prefix .. "_overlapped.png",
+				}
+			}
+		end,
+		default = data.behaviour.default,
+		gap_top = 7
+	},
+	{
+	type = gui_input_types.Checkbox,
+		key = data.ignore_when_unavailable.key,
+		title = "Ignore items when no available markers",
+		default = data.ignore_when_unavailable.default,
+		hint = "If unchecked, it creates new tracks, when there are more items than available markers/regions"
+	},
+}
 
-local function UpdateMarkersLis()
-	local markers = GetMarkersOrRegions(gui_snap_to == 1)
-	local sel_marker_position = 0
-	local marker_is_found = false
+-- initing values --
+for i, block in pairs(data) do
+	data[i].value = EK_GetExtState(block.key, block.default)
+end
 
-	gui_markers_list = {}
-	gui_count_list = { "No limit" }
-	gui_count_i = 1
+local function SetDataValue(setting, value)
+	if not setting then return end
+
+	setting.value = value
+	EK_SetExtState(setting.key, setting.value)
+
+	GUI_ClearValuesCache()
+end
+
+local function GetStartMarkerTitle(marker)
+	if string.len(marker.title) > 0 then
+		return "#" .. marker.num .. " (" .. marker.title .. ")"
+	else
+		return "#" .. marker.num
+	end
+end
+
+local function UpdateMarkersList()
+	local new_marker_list = {}
+	local new_count_list = { "No limit" }
+	local markers = GetMarkersOrRegions(data.snap_to.value)
+	local started_marker_position
+	local gui_sel_marker = 0
+	local gui_count_i = 1
+	local start_marker = markers_list[data.start_marker.value + 1]
+	local count_is_exists = false
 
 	for i = 1, #markers do
-		table.insert(gui_markers_list, markers[i].num)
-		if markers[i].num == start_marker then
+		local title = GetStartMarkerTitle(markers[i])
+		table.insert(new_marker_list, title)
+
+		if title == start_marker then
 			gui_sel_marker = i - 1
-			sel_marker_position = markers[i].position
-			marker_is_found = true
+			started_marker_position = markers[i].position
 		end
 	end
 
-	if isEmpty(gui_markers_list) then
-		gui_markers_list = { gui_snap_to == 1 and "No regions" or "No markers" }
-		gui_sel_marker = 0
-	elseif not marker_is_found then
-		start_marker = markers[1].num
-		gui_sel_marker = 0
-		sel_marker_position = markers[1].position
+	if not started_marker_position and markers[1] then
+		started_marker_position = markers[1].position
 	end
 
 	for i = 1, #markers do
-		if markers[i].position > sel_marker_position then
-			table.insert(gui_count_list, gui_count_i)
+		if markers[i].position >= started_marker_position then
+			if data.count_on_track.value == gui_count_i then
+				count_is_exists = true
+			end
+			table.insert(new_count_list, gui_count_i)
 			gui_count_i = gui_count_i + 1
 		end
 	end
 
+	if #markers_list ~= #new_marker_list then
+		SetDataValue(data.start_marker, gui_sel_marker)
+	end
+
+	if not count_is_exists then
+		SetDataValue(data.count_on_track, 0)
+	end
+
+	count_list = new_count_list
+	markers_list = #new_marker_list > 0 and new_marker_list or { data.snap_to.value == SNAP_TO_MARKERS and "No markers" or "No regions" }
+
 	return window_open
 end
 
-function frame(ImGui, ctx)
-	ImGui.PushItemWidth(ctx, 140)
-	local value
+function frame(ImGui, ctx, is_first_frame)
+	if is_first_frame then
+		local min_position
 
-	value = GUI_DrawInput(gui_input_types.Combo, "Snap to", gui_snap_to, { select_values = gui_snap_types })
-	if value ~= gui_snap_to then
-		gui_snap_to = value
-	end
+		for i = 0, reaper.CountSelectedMediaItems(proj) - 1 do
+			local item = reaper.GetSelectedMediaItem(proj, i)
+			local position = reaper.GetMediaItemInfo_Value(item, "D_POSITION")
 
-	value = GUI_DrawInput(gui_input_types.Combo, gui_snap_to == 1 and "Start region number" or "Start marker number", gui_sel_marker, { select_values = gui_markers_list })
-	if value ~= gui_sel_marker then
-		start_marker = gui_markers_list[value + 1]
-		gui_sel_marker = value
-	end
-
-	value = GUI_DrawInput(gui_input_types.Combo, "Count items on track", gui_sel_count, { select_values = gui_count_list })
-	if value ~= gui_sel_count then
-		if gui_count_list[value + 1] == "No limit" then count_on_track = nil
-		else count_on_track = gui_count_list[value + 1]
+			if not min_position or position < min_position then
+				min_position = position
+			end
 		end
 
-		gui_sel_count = value
+		local marker = FindNearestMarker(data.snap_to.value, min_position or 0)
+		if marker then
+			for i = 1, #markers_list do
+				if markers_list[i] == GetStartMarkerTitle(marker) then
+					SetDataValue(data.start_marker, i - 1)
+				end
+			end
+		end
 	end
 
-	value = GUI_DrawInput(gui_input_types.Checkbox, "Group items on different tracks", save_relative_position)
-    if value ~= save_relative_position then
-        save_relative_position = value
-    end
+	ImGui.PushItemWidth(ctx, 220)
+
+	GUI_DrawSettingsTable(gui_config, data)
 
 	GUI_DrawGap(7)
 
-	ImGui.Indent(ctx, 60)
+	GUI_SetCursorCenter({'Snap items', 'Cancel'})
 
 	GUI_DrawButton('Snap items', function()
 		reaper.Undo_BeginBlock()
 
-		SnapItems(gui_snap_to == 1, start_marker, save_relative_position, count_on_track)
+		local markers = GetMarkersOrRegions(data.snap_to.value)
+		local marker_num = 0
+		for i = 1, #markers do
+			if markers_list[data.start_marker.value + 1] == GetStartMarkerTitle(markers[i]) then
+				marker_num = markers[i].num
+			end
+		end
+
+		SnapItems(data.snap_to.value, marker_num, data)
 
 		GUI_CloseMainWindow()
 
@@ -128,15 +252,7 @@ function frame(ImGui, ctx)
 	GUI_DrawButton('Cancel', nil, gui_buttons_types.Cancel)
 end
 
-local item = reaper.GetSelectedMediaItem(proj, 0)
-
-if item then
-	local position = reaper.GetMediaItemInfo_Value(item, "D_POSITION")
-
-	start_marker = FindNearestMarkerNum(gui_snap_to == 1, position)
-end
-
-EK_DeferWithCooldown(UpdateMarkersLis, { last_time = 0, cooldown = 0.5 })
+EK_DeferWithCooldown(UpdateMarkersList, { last_time = 0, cooldown = 0.5 })
 GUI_ShowMainWindow()
 
 function GUI_OnWindowClose()

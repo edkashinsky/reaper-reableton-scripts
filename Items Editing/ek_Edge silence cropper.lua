@@ -1,5 +1,5 @@
 -- @description ek_Edge silence cropper
--- @version 1.2.5
+-- @version 1.2.6
 -- @author Ed Kashinsky
 -- @readme_skip
 -- @about
@@ -7,8 +7,7 @@
 --
 --   Also it provides UI for configuration
 -- @changelog
---   - Fixed problem with trailing fade
---   - Some render CPU optimization
+--   small GUI refactoring
 -- @provides
 --   ../Core/ek_Edge silence cropper functions.lua
 --   [main=main] ek_Edge silence cropper (no prompt).lua
@@ -261,7 +260,7 @@ local function CropSilence()
 end
 
 function frame(ImGui, ctx)
-    GUI_DrawSettingsTable(gui_config)
+    GUI_DrawSettingsTable(gui_config, p)
 
     GUI_DrawGap()
     ImGui.Indent(ctx, 72)

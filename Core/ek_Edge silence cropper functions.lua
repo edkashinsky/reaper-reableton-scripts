@@ -293,8 +293,7 @@ gui_config = {
 		title = "Crop mode",
 		select_values = p.crop_mode.select_values,
 		default = p.crop_mode.default,
-        on_change = function(val)
-            p.crop_mode.value = val
+        on_change = function()
             MakePresetModified()
         end
 	},
@@ -306,8 +305,7 @@ gui_config = {
         number_min = 0.01,
         number_max = 1,
         number_precision = '%.2fs',
-        on_change = function(val)
-            p.leading.rms_bin_size.value = val
+        on_change = function()
             MakePresetModified()
         end,
         hidden = function()
@@ -327,8 +325,7 @@ gui_config = {
         number_max = 0,
         number_precision = '%.1fdb',
         flags = reaper.ImGui_SliderFlags_Logarithmic and reaper.ImGui_SliderFlags_Logarithmic() or nil,
-        on_change = function(val)
-            p.leading.threshold.value = val
+        on_change = function()
             MakePresetModified()
         end,
         hidden = function()
@@ -344,8 +341,7 @@ gui_config = {
         number_max = 100,
         number_precision = '%.0f%%',
         flags = reaper.ImGui_SliderFlags_Logarithmic and reaper.ImGui_SliderFlags_Logarithmic() or nil,
-        on_change = function(val)
-            p.leading.threshold_relative.value = val
+        on_change = function()
             MakePresetModified()
         end,
         hidden = function()
@@ -361,8 +357,7 @@ gui_config = {
         number_max = 0,
         number_precision = '%.1fdb',
         flags = reaper.ImGui_SliderFlags_Logarithmic and reaper.ImGui_SliderFlags_Logarithmic() or nil,
-        on_change = function(val)
-            p.leading.rms_threshold.value = val
+        on_change = function()
             MakePresetModified()
         end,
         hidden = function()
@@ -378,8 +373,7 @@ gui_config = {
         number_max = 100,
         number_precision = '%.0f%%',
         flags = reaper.ImGui_SliderFlags_Logarithmic and reaper.ImGui_SliderFlags_Logarithmic() or nil,
-        on_change = function(val)
-            p.leading.rms_threshold_relative.value = val
+        on_change = function()
             MakePresetModified()
         end,
         hidden = function()
@@ -394,8 +388,7 @@ gui_config = {
         number_min = 0,
         number_step = 0.001,
         number_precision = '%.3fs',
-        on_change = function(val)
-            p.leading.pad.value = val
+        on_change = function()
             MakePresetModified()
         end
 	},
@@ -407,8 +400,7 @@ gui_config = {
         number_min = 0,
         number_step = 0.001,
         number_precision = '%.3fs',
-        on_change = function(val)
-            p.leading.fade.value = val
+        on_change = function()
             MakePresetModified()
         end
 	},
@@ -425,8 +417,7 @@ gui_config = {
         number_max = 0,
         flags = reaper.ImGui_SliderFlags_Logarithmic and reaper.ImGui_SliderFlags_Logarithmic() or nil,
         number_precision = '%.1fdb',
-        on_change = function(val)
-            p.trailing.threshold.value = val
+        on_change = function()
             MakePresetModified()
         end,
         hidden = function()
@@ -442,8 +433,7 @@ gui_config = {
         number_max = 100,
         number_precision = '%.0f%%',
         flags = reaper.ImGui_SliderFlags_Logarithmic and reaper.ImGui_SliderFlags_Logarithmic() or nil,
-        on_change = function(val)
-            p.trailing.threshold_relative.value = val
+        on_change = function()
             MakePresetModified()
         end,
         hidden = function()
@@ -459,8 +449,7 @@ gui_config = {
         number_max = 0,
         number_precision = '%.1fdb',
         flags = reaper.ImGui_SliderFlags_Logarithmic and reaper.ImGui_SliderFlags_Logarithmic() or nil,
-        on_change = function(val)
-            p.trailing.rms_threshold.value = val
+        on_change = function()
             MakePresetModified()
         end,
         hidden = function()
@@ -476,8 +465,7 @@ gui_config = {
         number_max = 100,
         number_precision = '%.0f%%',
         flags = reaper.ImGui_SliderFlags_Logarithmic and reaper.ImGui_SliderFlags_Logarithmic() or nil,
-        on_change = function(val)
-            p.trailing.rms_threshold_relative.value = val
+        on_change = function()
             MakePresetModified()
         end,
         hidden = function()
@@ -492,8 +480,7 @@ gui_config = {
         number_step = 0.001,
         number_min = 0,
         number_precision = '%.3fs',
-        on_change = function(val)
-            p.trailing.pad.value = val
+        on_change = function()
             MakePresetModified()
         end
 	},
@@ -505,8 +492,7 @@ gui_config = {
         number_min = 0,
         number_step = 0.001,
         number_precision = '%.3fs',
-        on_change = function(val)
-            p.trailing.fade.value = val
+        on_change = function()
             MakePresetModified()
         end
 	},
@@ -515,9 +501,6 @@ gui_config = {
 		key = p.preview_result.key,
 		default = p.preview_result.default,
 		title = "Preview result",
-        on_change = function(val)
-            p.preview_result.value = val
-        end
 	},
 }
 

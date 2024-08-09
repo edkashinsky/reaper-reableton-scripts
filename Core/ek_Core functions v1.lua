@@ -2,9 +2,14 @@
 -- @author Ed Kashinsky
 -- @noindex
 
+proj = 0
+defProjPitchMode = -1
+dir_sep = IS_WINDOWS and "\\" or "/"
+
 CONTEXT = ({reaper.get_action_context()})
 SCRIPT_NAME = CONTEXT[2]:match("([^/\\]+)%.lua$"):gsub("ek_", "")
 SCRIPT_PATH = CONTEXT[2]:match("(.*[/\\])")
+CORE_PATH = debug.getinfo(1, 'S').source:sub(2, -5):match("(.*" .. dir_sep .. ")")
 
 IS_WINDOWS = reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32"
 
@@ -58,10 +63,6 @@ local ek_js_wnd_types = {
 	title = 3
 }
 
-proj = 0
-defProjPitchMode = -1
-dir_sep = IS_WINDOWS and "\\" or "/"
-
 local ek_debug_level = ek_debug_levels.Off
 
 local key_ext_prefix = "ek_stuff"
@@ -80,9 +81,7 @@ else
 end
 
 function EK_CoreFunctionsLoaded(script)
-	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
-	local root_path = debug.getinfo(1, 'S').source:sub(2, -5):match("(.*" .. sep .. ")")
-	local script_path = root_path .. ".." .. sep .. "Core" .. sep .. script
+	local script_path = CORE_PATH .. script
 	local file = io.open(script_path, 'r')
 
 	if file then file:close() dofile(script_path) else return nil end
@@ -505,9 +504,10 @@ end
 function join(list, delimiter)
 	if type(list) ~= 'table' or #list == 0 then return "" end
 
-	local string = list[1]
+	local startNum = list[0] and 0 or 1
+	local string = list[startNum]
 
-	for i = 2, #list do
+	for i = startNum + 1, #list do
 		string = string .. delimiter .. list[i]
 	end
 
@@ -1008,18 +1008,11 @@ function EK_GetSelectedItemsAsGroupedStems(except_guids)
 				local _, guid = reaper.GetSetMediaItemInfo_String(item, "GUID", "", false)
 
 				if isAvailableToAdd(guid) then
-					local position = reaper.GetMediaItemInfo_Value(item, "D_POSITION")
-					local length = reaper.GetMediaItemInfo_Value(item, "D_LENGTH")
-					local source = reaper.GetMediaItemTake_Source(reaper.GetActiveTake(item))
-					local ret, time, _, _, _, _ = reaper.CF_EnumMediaSourceCues(source, 0) -- First marker cue
-					local offset = ret == 1 and time or reaper.GetMediaItemInfo_Value(item, "D_SNAPOFFSET")
-
 					local data = {
 						item_id = guid,
 						track_id = t_guid,
-						position = position,
-						offset = offset,
-						length = length
+						position = reaper.GetMediaItemInfo_Value(item, "D_POSITION"),
+						length = reaper.GetMediaItemInfo_Value(item, "D_LENGTH")
 					}
 
 					table.insert(sortedData, data)
@@ -1343,7 +1336,7 @@ function EK_CurlRequest(type, url, headers, data, params)
 	if not type then type = CURL_GET end
 
 	if IS_WINDOWS then
-		local root = debug.getinfo(1, 'S').source:sub(2, -5):match("(.*" .. dir_sep .. ")") .. "curl" .. dir_sep .. "curl.exe"
+		local root = CORE_PATH .. "curl" .. dir_sep .. "curl.exe"
 		command = root:gsub("\\", "\"\\\""):gsub("\"\\", "\\", 1):gsub("\"%.%.\"", '..') .. '" '
 	end
 

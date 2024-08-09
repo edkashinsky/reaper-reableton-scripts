@@ -1,14 +1,14 @@
 -- @description ek_Core functions
 -- @author Ed Kashinsky
 -- @about Base functions used by ek-scripts.
--- @version 1.0.56
+-- @version 1.0.57
 -- @provides
 --   ek_Core functions v1.lua
 --   ek_Core functions GUI.lua
 --   [nomain] curl/*
 --
 -- @changelog
---    Minor bug fix with "Smart renaming depending on focus" script
+--    Added new features for GUI
 
 local function CoreLoadFunctions()
     local info = debug.getinfo(1,'S');

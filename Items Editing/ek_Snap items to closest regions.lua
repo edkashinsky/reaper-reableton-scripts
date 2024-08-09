@@ -15,7 +15,10 @@ end
 
 local loaded = CoreFunctionsLoaded("ek_Core functions.lua")
 if not loaded then
-	if loaded == nil then reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0) end
+	if loaded == nil then
+		reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0)
+		reaper.ReaPack_BrowsePackages("ek_Core functions")
+	end
 	return
 end
 
@@ -32,8 +35,16 @@ for i = 0, reaper.CountSelectedMediaItems(proj) - 1 do
 	end
 end
 
+-- initing values --
+for i, block in pairs(data) do
+	data[i].value = EK_GetExtState(block.key, block.default)
+end
+
 reaper.Undo_BeginBlock()
 
-SnapItems(true, FindNearestMarkerNum(true, min_position), true)
+local region = FindNearestMarker(SNAP_TO_REGIONS, min_position)
+if region then
+	SnapItems(SNAP_TO_REGIONS, region.num, data)
+end
 
 reaper.Undo_EndBlock(SCRIPT_NAME, -1)

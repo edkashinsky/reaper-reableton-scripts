@@ -15,15 +15,19 @@ local window_width = 0
 local window_height = 0
 local font_name = 'Arial'
 local font_size = EK_GetExtState(key_gui_font_size, 14)
-local default_enter_action = nil
-local cached_fonts = nil
+local default_enter_action
+local cached_fonts
 local cached_values = {}
+local cached_images = {}
 
 local gui_themes = { GUI_THEME_DARK, GUI_THEME_LIGHT }
 local theme = EK_GetExtState(key_gui_theme, GUI_THEME_DARK)
 local version = EK_GetScriptVersion()
-local coreVersion = EK_GetScriptVersion(debug.getinfo(1, 'S').source:sub(2, -5):match("(.*" .. dir_sep .. ")") .. "ek_Core functions.lua")
+local coreVersion = EK_GetScriptVersion(CORE_PATH .. "ek_Core functions.lua")
 local _, _, imGuiVersion = reaper.ImGui_GetVersion()
+GUI_OnWindowClose = nil
+GUI_DrawMenu = nil
+FLT_MIN, FLT_MAX = reaper.ImGui_NumericLimits_Float and reaper.ImGui_NumericLimits_Float() or 0, 0
 
 gui_fonts = {
 	None = 1,
@@ -128,13 +132,17 @@ gui_input_types = {
 	Checkbox = 6,
 	Combo = 7,
 	Color = 8,
-	ColorView = 9
+	ColorView = 9,
+	ComboImages = 10,
 }
 
-GUI_OnWindowClose = nil
-GUI_DrawMenu = nil
-FLT_MIN, FLT_MAX = reaper.ImGui_NumericLimits_Float and reaper.ImGui_NumericLimits_Float() or 0, 0
-
+local gui_settings = {
+	border = 2,
+	borderRad = {
+		image = 6,
+		block = 6
+	},
+}
 
 local function GUI_GetWindowFlags()
 	return reaper.ImGui_WindowFlags_NoCollapse() |
@@ -170,6 +178,26 @@ local function GUI_GetFonts()
 	end
 
 	return cached_fonts
+end
+
+local function GUI_GetImage(src)
+	for id, image in pairs(cached_images) do
+		if not ImGui.ValidatePtr(image.obj, 'ImGui_Image*') then
+			cached_images[id] = nil
+		end
+	end
+
+	if cached_images[src] == nil then
+		local img = ImGui.CreateImage(src)
+		local w, h = ImGui.Image_GetSize(img)
+		cached_images[src] = {
+			obj = img,
+			width = w,
+			height = h
+		}
+	end
+
+	return cached_images[src]
 end
 
 function GUI_GetFont(font_type)
@@ -495,11 +523,12 @@ end
 --	ImGui.SetNextWindowSizeConstraints(ctx, -1, 0, -1, FLT_MAX)
 --end
 
+local btn_padding_factor = font_size / 14
 function GUI_DrawButton(label, action, btn_type, prevent_close_wnd, keyboard_key_action)
 	if not btn_type then btn_type = gui_buttons_types.Action end
 
-	local gui_btn_padding = 10
-	local gui_btn_height = 25
+	local gui_btn_padding = 10 * btn_padding_factor
+	local gui_btn_height = 25 * btn_padding_factor
 	local width = ImGui.CalcTextSize(ctx, label)
 	width = width + (gui_btn_padding * 2)
 
@@ -549,13 +578,55 @@ function GUI_DrawGap(height)
 	ImGui.Dummy(ctx, 0, height)
 end
 
+function GUI_DrawImage(src, settings)
+	local image = GUI_GetImage(src)
+	local width = image.width
+	local height = image.height
+
+	if settings then
+		if settings.width and not settings.height then
+			height = (height * settings.width) / width
+			width = settings.width
+		elseif settings.height and not settings.width then
+			width = (width * settings.height) / height
+			height = settings.height
+		elseif  settings.width and settings.height then
+			width = settings.width
+			height = settings.height
+		end
+	end
+
+	width = width / 4
+	height = height / 4
+
+	local border = settings and settings.border or gui_settings.border
+	local borderRad = settings and settings.borderRad or gui_settings.borderRad.image
+
+	if ImGui.BeginChild(ctx, "img_" .. src, 0, height + border, nil, ImGui.WindowFlags_NoScrollbar() | ImGui.WindowFlags_NoScrollWithMouse()) then
+		local draw_list = ImGui.GetWindowDrawList(ctx)
+
+		local avail_w, avail_h = ImGui.GetContentRegionAvail(ctx)
+		local p_min_x, p_min_y = ImGui.GetItemRectMin(ctx)
+
+		p_min_x = p_min_x + math.max(0, (avail_w - width) // 2)
+		p_min_y = p_min_y + math.max(0, (avail_h - height) // 2)
+
+		--ImGui.DrawList_AddRect(draw_list, p_min_x, p_min_y, p_max_x, p_max_y, col_rgba, number rounding = 0.0, integer flags = DrawFlags_None, number thickness = 1.0)
+
+		ImGui.DrawList_AddRect(draw_list, p_min_x, p_min_y, p_min_x + width, p_min_y + height, settings and settings.borderBg or GUI_GetColor(gui_cols.Header.Background), borderRad, nil, border)
+	 	ImGui.DrawList_AddImageRounded(draw_list, image.obj, p_min_x + border, p_min_y + border, p_min_x + width - border, p_min_y + height - border, 0, 0, 1, 1, GUI_GetColor(gui_cols.White), borderRad)
+	 	--ImGui.Dummy(ctx, width, height)
+		ImGui.EndChild(ctx)
+	end
+end
+
 function GUI_ClearValuesCache()
 	for key, _ in pairs(cached_values) do
 		cached_values[key] = nil
 	end
 end
 
-function GUI_DrawSettingsTable(settingsTable)
+function GUI_DrawSettingsTable(settingsTable, data)
 	for i = 1, #settingsTable do
 		local newVal, curVal
 		local s = settingsTable[i]
@@ -573,6 +644,16 @@ function GUI_DrawSettingsTable(settingsTable)
 				else
 					curVal = EK_GetExtState(s.key, s.default)
 					cached_values[s.key] = curVal
+					if data then
+						for id, block in pairs(data) do
+							if block.key == s.key then data[id].value = curVal
+							elseif block.key == nil then
+								for key, info in pairs(block) do
+									if info.key == s.key then data[id][key].value = curVal end
+								end
+							end
+						end
+					end
 				end
 
 				if disabled then ImGui.BeginDisabled(ctx, true) end
@@ -622,6 +703,9 @@ function GUI_DrawInput(i_type, i_label, i_value, i_settings)
 	ImGui.PushFont(ctx, GUI_GetFont(gui_fonts.Bold))
 	GUI_PushColor(ImGui.Col_Text(), gui_cols.Input.Text)
 
+	if i_settings.gap_top then GUI_DrawGap(i_settings.gap_top) end
+	if type(i_label) == "function" then i_label = i_label() end
+
 	if i_type == gui_input_types.Text then
 		_, newVal = ImGui.InputText(ctx, '##' .. i_label, i_value, input_flags)
 	elseif i_type == gui_input_types.Number then
@@ -664,7 +748,7 @@ function GUI_DrawInput(i_type, i_label, i_value, i_settings)
 			select_values = i_settings.select_values
 		end
 
-		_, newVal = ImGui.Combo(ctx, '##' .. i_label, i_value, join(i_settings.select_values, "\0") .. "\0")
+		_, newVal = ImGui.Combo(ctx, '##' .. i_label, i_value, join(select_values, "\0") .. "\0")
 
 		ImGui.PopStyleColor(ctx, 3)
 	elseif i_type == gui_input_types.Color then
@@ -685,6 +769,45 @@ function GUI_DrawInput(i_type, i_label, i_value, i_settings)
 		ImGui.PopStyleColor(ctx)
 
 		needLabel = false
+	elseif i_type == gui_input_types.ComboImages then
+		local select_values
+		needLabel = false
+
+		if type(i_settings.select_values) == "function" then
+			select_values = i_settings.select_values()
+		else
+			select_values = i_settings.select_values
+		end
+
+		GUI_DrawText(i_settings.title .. ":", gui_fonts.Bold)
+
+		if ImGui.BeginTable(ctx, "table_comboimage_" .. i_settings.key, #select_values) then
+			for i = 1, #select_values do
+				local value = select_values[i]
+
+				if value then
+					ImGui.TableNextColumn(ctx)
+
+					local selColor = GUI_GetColor(i_value == value.id and gui_cols.Input.CheckMark or gui_cols.Background)
+					GUI_DrawImage(value.image, { borderBg = selColor })
+
+					if ImGui.IsItemClicked(ctx) then
+						newVal = value.id
+					end
+
+					if ImGui.IsItemHovered(ctx, ImGui.HoveredFlags_DelayShort()) and ImGui.BeginTooltip(ctx) then
+						ImGui.PushTextWrapPos(ctx, ImGui.GetFontSize(ctx) * 35.0)
+						ImGui.Text(ctx, value.title)
+						ImGui.PopTextWrapPos(ctx)
+						ImGui.EndTooltip(ctx)
+					end
+				end
+			end
+
+			ImGui.EndTable(ctx)
+		end
+
+		if not newVal then newVal = i_value end
 	end
 
 	ImGui.PopStyleColor(ctx)
@@ -704,6 +827,13 @@ function GUI_DrawInput(i_type, i_label, i_value, i_settings)
 		if i_settings.label_not_bold ~= true then ImGui.PopFont(ctx) end
 		ImGui.PopStyleColor(ctx)
 	end
+
+	if (i_settings.hint) then
+		ImGui.SameLine(ctx)
+		GUI_DrawHint(i_settings.hint)
+	end
+
+	if i_settings.gap_bottom then GUI_DrawGap(i_settings.gap_bottom) end
 
 	return newVal
 end
