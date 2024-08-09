@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="aeddc436c5fb3384e57f7827d6ae41c940a0693e">
+<index version="1" name="Reableton Scripts" commit="b4748e4c74af0d13e1d80dd4f438e71ea2db42e8">
   <category name="AI">
     <reapack name="ek_Generate SFX via ElevenLabs.lua" type="script" desc="ek_Generate SFX via ElevenLabs">
       <metadata>
@@ -441,6 +441,15 @@ Added about window]]></changelog>
         <source file="curl/curl-ca-bundle.crt">https://github.com/edkashinsky/reaper-reableton-scripts/raw/92e920ce280b4082e5ce466a745a988d7b8b8b2c/Core/curl/curl-ca-bundle.crt</source>
         <source file="curl/curl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/92e920ce280b4082e5ce466a745a988d7b8b8b2c/Core/curl/curl.exe</source>
         <source file="curl/trurl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/92e920ce280b4082e5ce466a745a988d7b8b8b2c/Core/curl/trurl.exe</source>
+      </version>
+      <version name="1.0.57" author="Ed Kashinsky" time="2024-08-09T13:55:44Z">
+        <changelog><![CDATA[Added new features for GUI]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/b4748e4c74af0d13e1d80dd4f438e71ea2db42e8/Core/ek_Core%20functions.lua</source>
+        <source file="ek_Core functions v1.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/b4748e4c74af0d13e1d80dd4f438e71ea2db42e8/Core/ek_Core%20functions%20v1.lua</source>
+        <source file="ek_Core functions GUI.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/b4748e4c74af0d13e1d80dd4f438e71ea2db42e8/Core/ek_Core%20functions%20GUI.lua</source>
+        <source file="curl/curl-ca-bundle.crt">https://github.com/edkashinsky/reaper-reableton-scripts/raw/b4748e4c74af0d13e1d80dd4f438e71ea2db42e8/Core/curl/curl-ca-bundle.crt</source>
+        <source file="curl/curl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/b4748e4c74af0d13e1d80dd4f438e71ea2db42e8/Core/curl/curl.exe</source>
+        <source file="curl/trurl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/b4748e4c74af0d13e1d80dd4f438e71ea2db42e8/Core/curl/trurl.exe</source>
       </version>
     </reapack>
     <reapack name="ek_Focus virtual MIDI keyboard.lua" type="script" desc="ek_Focus virtual MIDI keyboard">
@@ -1140,6 +1149,17 @@ Please restart Reaper for taking effect]]></changelog>
         <source main="main" file="ek_Edge silence cropper - apply Preset 4.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fd44fe18d2b99d003815af895a82497ef7c9101b/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%204.lua</source>
         <source main="main" file="ek_Edge silence cropper - apply Preset 5.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fd44fe18d2b99d003815af895a82497ef7c9101b/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%205.lua</source>
       </version>
+      <version name="1.2.6" author="Ed Kashinsky" time="2024-08-09T13:55:44Z">
+        <changelog><![CDATA[small GUI refactoring]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/b4748e4c74af0d13e1d80dd4f438e71ea2db42e8/Items%20Editing/ek_Edge%20silence%20cropper.lua</source>
+        <source file="../Core/ek_Edge silence cropper functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/b4748e4c74af0d13e1d80dd4f438e71ea2db42e8/Core/ek_Edge%20silence%20cropper%20functions.lua</source>
+        <source main="main" file="ek_Edge silence cropper (no prompt).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/b4748e4c74af0d13e1d80dd4f438e71ea2db42e8/Items%20Editing/ek_Edge%20silence%20cropper%20(no%20prompt).lua</source>
+        <source main="main" file="ek_Edge silence cropper - apply Preset 1.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/b4748e4c74af0d13e1d80dd4f438e71ea2db42e8/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%201.lua</source>
+        <source main="main" file="ek_Edge silence cropper - apply Preset 2.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/b4748e4c74af0d13e1d80dd4f438e71ea2db42e8/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%202.lua</source>
+        <source main="main" file="ek_Edge silence cropper - apply Preset 3.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/b4748e4c74af0d13e1d80dd4f438e71ea2db42e8/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%203.lua</source>
+        <source main="main" file="ek_Edge silence cropper - apply Preset 4.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/b4748e4c74af0d13e1d80dd4f438e71ea2db42e8/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%204.lua</source>
+        <source main="main" file="ek_Edge silence cropper - apply Preset 5.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/b4748e4c74af0d13e1d80dd4f438e71ea2db42e8/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%205.lua</source>
+      </version>
     </reapack>
     <reapack name="ek_Pitch Tool.lua" type="script" desc="ek_Pitch Tool">
       <metadata>
@@ -1303,7 +1323,7 @@ Please restart Reaper for taking effect]]></changelog>
 {\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
 \widowctrl\hyphauto
 
-{\pard \ql \f0 \sa180 \li0 \fi0 {\cf1 [image: /Assets/images/pin_items_to_markers_preview.gif]\cf0} This script snaps selected items to markers or regions started from specified number. It requires ReaImGui extension.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 This script snaps selected items to markers or regions started from specified number. It requires ReaImGui extension. It has 3 behaviours: simple, stems, consider overlapped items. You can see how it works shematically on pictograms in GUI You can set custom offset depends on your need: just begin of item, snap offset, first cue marker, peak of item Script gives posibility to limit markers/regions snapping. For example only 2 markers after specified.\par}
 }
 ]]></description>
       </metadata>
@@ -1314,6 +1334,20 @@ UI update]]></changelog>
         <source file="../Core/ek_Snap items to markers functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/736649cb7e3d3183668cc589e61d166ef88c4c67/Core/ek_Snap%20items%20to%20markers%20functions.lua</source>
         <source main="main" file="ek_Snap items to closest markers.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/736649cb7e3d3183668cc589e61d166ef88c4c67/Items%20Editing/ek_Snap%20items%20to%20closest%20markers.lua</source>
         <source main="main" file="ek_Snap items to closest regions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/736649cb7e3d3183668cc589e61d166ef88c4c67/Items%20Editing/ek_Snap%20items%20to%20closest%20regions.lua</source>
+      </version>
+      <version name="1.1.0" author="Ed Kashinsky" time="2024-08-09T13:55:44Z">
+        <changelog><![CDATA[Added brand new snapping behaviours: simple, stems, consider overlapped items
+Also there is flexible offset: just begin of item, snap offset, first cue marker, peak of item]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/b4748e4c74af0d13e1d80dd4f438e71ea2db42e8/Items%20Editing/ek_Snap%20items%20to%20markers%20or%20regions.lua</source>
+        <source file="../Core/ek_Snap items to markers functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/b4748e4c74af0d13e1d80dd4f438e71ea2db42e8/Core/ek_Snap%20items%20to%20markers%20functions.lua</source>
+        <source file="../Core/images/marker_overlapped.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/b4748e4c74af0d13e1d80dd4f438e71ea2db42e8/Core/images/marker_overlapped.png</source>
+        <source file="../Core/images/marker_single.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/b4748e4c74af0d13e1d80dd4f438e71ea2db42e8/Core/images/marker_single.png</source>
+        <source file="../Core/images/marker_stems.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/b4748e4c74af0d13e1d80dd4f438e71ea2db42e8/Core/images/marker_stems.png</source>
+        <source file="../Core/images/region_overlapped.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/b4748e4c74af0d13e1d80dd4f438e71ea2db42e8/Core/images/region_overlapped.png</source>
+        <source file="../Core/images/region_single.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/b4748e4c74af0d13e1d80dd4f438e71ea2db42e8/Core/images/region_single.png</source>
+        <source file="../Core/images/region_stems.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/b4748e4c74af0d13e1d80dd4f438e71ea2db42e8/Core/images/region_stems.png</source>
+        <source main="main" file="ek_Snap items to closest markers.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/b4748e4c74af0d13e1d80dd4f438e71ea2db42e8/Items%20Editing/ek_Snap%20items%20to%20closest%20markers.lua</source>
+        <source main="main" file="ek_Snap items to closest regions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/b4748e4c74af0d13e1d80dd4f438e71ea2db42e8/Items%20Editing/ek_Snap%20items%20to%20closest%20regions.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Toggle group for selected items.lua" type="script" desc="ek_Toggle group for selected items">
