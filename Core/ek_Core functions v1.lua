@@ -2,6 +2,8 @@
 -- @author Ed Kashinsky
 -- @noindex
 
+IS_WINDOWS = reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32"
+
 proj = 0
 defProjPitchMode = -1
 dir_sep = IS_WINDOWS and "\\" or "/"
@@ -10,8 +12,6 @@ CONTEXT = ({reaper.get_action_context()})
 SCRIPT_NAME = CONTEXT[2]:match("([^/\\]+)%.lua$"):gsub("ek_", "")
 SCRIPT_PATH = CONTEXT[2]:match("(.*[/\\])")
 CORE_PATH = debug.getinfo(1, 'S').source:sub(2, -5):match("(.*" .. dir_sep .. ")")
-
-IS_WINDOWS = reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32"
 
 CURL_GET = 'GET'
 CURL_POST = 'POST'
