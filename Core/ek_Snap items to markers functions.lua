@@ -288,7 +288,7 @@ local function isSnapPlaceBusyForItem(marker, item)
 		local length = reaper.GetMediaItemInfo_Value(cur_item, "D_LENGTH")
 		local endPosition = startPosition + length
 
-		if (not (endPosition < startRange or startPosition > endRange)) and (not (startPosition == item.position and length == item.length)) then
+		if not reaper.IsMediaItemSelected(cur_item) and (not (endPosition < startRange or startPosition > endRange)) and (not (startPosition == item.position and length == item.length)) then
 			return true
 		end
 	end
@@ -363,7 +363,7 @@ local function GetItemOffset(type, item)
 		return ret == 1 and time or 0
 	elseif type == POSITION_PEAK and not reaper.TakeIsMIDI(take) then
 		local db = GetMaxPeakPosition(item)
-		local threshold = 80 -- %
+		local threshold = 95 -- %
         local abs_percent = 10 ^ (db / 40)
         local rel_db = 40 * log10(abs_percent * (threshold / 100))
 		local _, position = GetPeakThresholdPosition(item, rel_db)

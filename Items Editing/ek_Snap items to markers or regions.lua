@@ -1,5 +1,5 @@
 -- @description ek_Snap items to markers or regions
--- @version 1.1.1
+-- @version 1.1.2
 -- @author Ed Kashinsky
 -- @about
 --   This script snaps selected items to markers or regions started from specified number. It requires ReaImGui extension.
@@ -8,8 +8,7 @@
 --   Script gives posibility to limit markers/regions snapping. For example only 2 markers after specified.
 -- @readme_skip
 -- @changelog
---   Added brand new snapping behaviours: simple, stems, consider overlapped items
---   Also there is flexible offset: just begin of item, snap offset, first cue marker, peak of item
+--   Small bug fixes
 -- @provides
 --   ../Core/ek_Snap items to markers functions.lua
 --   ../Core/images/marker_overlapped.png
