@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="0451b411e737b0d946ab66d0a364c056eb3d628d">
+<index version="1" name="Reableton Scripts" commit="f8c61fab98323740df9b7b17333219b0151de576">
   <category name="AI">
     <reapack name="ek_Generate SFX via ElevenLabs.lua" type="script" desc="ek_Generate SFX via ElevenLabs">
       <metadata>
@@ -797,6 +797,10 @@ Please restart Reaper for taking effect]]></changelog>
         <changelog><![CDATA[- Improved stability]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/656009a1990d9dea3ec7975b084954a3137e91f8/Core/ek_Save%20project%20with%20a%20check%20of%20unused%20media%20files.lua</source>
       </version>
+      <version name="1.0.6" author="Ed Kashinsky" time="2024-09-18T14:34:55Z">
+        <changelog><![CDATA[Rare crash fix]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f8c61fab98323740df9b7b17333219b0151de576/Core/ek_Save%20project%20with%20a%20check%20of%20unused%20media%20files.lua</source>
+      </version>
     </reapack>
   </category>
   <category name="Grid">
@@ -1371,6 +1375,19 @@ Also there is flexible offset: just begin of item, snap offset, first cue marker
         <source file="../Core/images/region_stems.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a3ceaa526468b8fb9fa7f5def999ff6b1cf453ee/Core/images/region_stems.png</source>
         <source main="main" file="ek_Snap items to closest markers.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a3ceaa526468b8fb9fa7f5def999ff6b1cf453ee/Items%20Editing/ek_Snap%20items%20to%20closest%20markers.lua</source>
         <source main="main" file="ek_Snap items to closest regions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a3ceaa526468b8fb9fa7f5def999ff6b1cf453ee/Items%20Editing/ek_Snap%20items%20to%20closest%20regions.lua</source>
+      </version>
+      <version name="1.1.2" author="Ed Kashinsky" time="2024-09-18T14:34:55Z">
+        <changelog><![CDATA[Small bug fixes]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f8c61fab98323740df9b7b17333219b0151de576/Items%20Editing/ek_Snap%20items%20to%20markers%20or%20regions.lua</source>
+        <source file="../Core/ek_Snap items to markers functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f8c61fab98323740df9b7b17333219b0151de576/Core/ek_Snap%20items%20to%20markers%20functions.lua</source>
+        <source file="../Core/images/marker_overlapped.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f8c61fab98323740df9b7b17333219b0151de576/Core/images/marker_overlapped.png</source>
+        <source file="../Core/images/marker_single.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f8c61fab98323740df9b7b17333219b0151de576/Core/images/marker_single.png</source>
+        <source file="../Core/images/marker_stems.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f8c61fab98323740df9b7b17333219b0151de576/Core/images/marker_stems.png</source>
+        <source file="../Core/images/region_overlapped.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f8c61fab98323740df9b7b17333219b0151de576/Core/images/region_overlapped.png</source>
+        <source file="../Core/images/region_single.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f8c61fab98323740df9b7b17333219b0151de576/Core/images/region_single.png</source>
+        <source file="../Core/images/region_stems.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f8c61fab98323740df9b7b17333219b0151de576/Core/images/region_stems.png</source>
+        <source main="main" file="ek_Snap items to closest markers.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f8c61fab98323740df9b7b17333219b0151de576/Items%20Editing/ek_Snap%20items%20to%20closest%20markers.lua</source>
+        <source main="main" file="ek_Snap items to closest regions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f8c61fab98323740df9b7b17333219b0151de576/Items%20Editing/ek_Snap%20items%20to%20closest%20regions.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Toggle group for selected items.lua" type="script" desc="ek_Toggle group for selected items">
