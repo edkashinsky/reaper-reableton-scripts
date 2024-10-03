@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="f8c61fab98323740df9b7b17333219b0151de576">
+<index version="1" name="Reableton Scripts" commit="219490b85ce399ccaabc2dd5da201cc51863118a">
   <category name="AI">
     <reapack name="ek_Generate SFX via ElevenLabs.lua" type="script" desc="ek_Generate SFX via ElevenLabs">
       <metadata>
@@ -459,6 +459,15 @@ Added about window]]></changelog>
         <source file="curl/curl-ca-bundle.crt">https://github.com/edkashinsky/reaper-reableton-scripts/raw/b23f9392dee9826c0d34ad7bcda296f4d00fd62a/Core/curl/curl-ca-bundle.crt</source>
         <source file="curl/curl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/b23f9392dee9826c0d34ad7bcda296f4d00fd62a/Core/curl/curl.exe</source>
         <source file="curl/trurl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/b23f9392dee9826c0d34ad7bcda296f4d00fd62a/Core/curl/trurl.exe</source>
+      </version>
+      <version name="1.0.59" author="Ed Kashinsky" time="2024-10-03T12:46:45Z">
+        <changelog><![CDATA[Added new features for GUI]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/219490b85ce399ccaabc2dd5da201cc51863118a/Core/ek_Core%20functions.lua</source>
+        <source file="ek_Core functions v1.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/219490b85ce399ccaabc2dd5da201cc51863118a/Core/ek_Core%20functions%20v1.lua</source>
+        <source file="ek_Core functions GUI.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/219490b85ce399ccaabc2dd5da201cc51863118a/Core/ek_Core%20functions%20GUI.lua</source>
+        <source file="curl/curl-ca-bundle.crt">https://github.com/edkashinsky/reaper-reableton-scripts/raw/219490b85ce399ccaabc2dd5da201cc51863118a/Core/curl/curl-ca-bundle.crt</source>
+        <source file="curl/curl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/219490b85ce399ccaabc2dd5da201cc51863118a/Core/curl/curl.exe</source>
+        <source file="curl/trurl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/219490b85ce399ccaabc2dd5da201cc51863118a/Core/curl/trurl.exe</source>
       </version>
     </reapack>
     <reapack name="ek_Focus virtual MIDI keyboard.lua" type="script" desc="ek_Focus virtual MIDI keyboard">
@@ -1681,6 +1690,20 @@ Also there is flexible offset: just begin of item, snap offset, first cue marker
       <version name="1.0.1" author="Ed Kashinsky" time="2024-07-07T16:44:19Z">
         <changelog><![CDATA[When selected track is folder, track will be created at the end of track list]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fe61ca9bce9e7cf69112e3b5c5bc0bd89ed03cc2/Tracks%20Properties/ek_Insert%20new%20track.lua</source>
+      </version>
+    </reapack>
+    <reapack name="ek_Move selected tracks under specified track.lua" type="script" desc="ek_Move selected tracks under specified track">
+      <metadata>
+        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \ql \f0 \sa180 \li0 \fi0 Script moves selected tracks to new track as childs\par}
+}
+]]></description>
+      </metadata>
+      <version name="1.0.0" author="Ed Kashinsky" time="2024-10-03T12:46:45Z">
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/219490b85ce399ccaabc2dd5da201cc51863118a/Tracks%20Properties/ek_Move%20selected%20tracks%20under%20specified%20track.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Nudge volume for selected tracks down.lua" type="script" desc="ek_Nudge volume for selected tracks down">
