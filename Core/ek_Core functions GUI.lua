@@ -636,7 +636,9 @@ function GUI_DrawSettingsTable(settingsTable, data)
 			local disabled = s.disabled == true or (type(s.disabled) == "function" and s.disabled())
 
 			if s.type == gui_input_types.Label then
+				if s.font then ImGui.PushFont(ctx, GUI_GetFont(s.font)) end
 				ImGui.TextWrapped(ctx, s.title)
+				if s.font then ImGui.PopFont(ctx) end
 			else
 				if type(s.value) == "function" then curVal = s.value()
 				elseif s.value then curVal = s.value
