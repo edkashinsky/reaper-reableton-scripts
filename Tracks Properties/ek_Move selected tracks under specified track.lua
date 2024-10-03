@@ -1,5 +1,5 @@
 -- @description ek_Move selected tracks under specified track
--- @version 1.0.0
+-- @version 1.0.1
 -- @author Ed Kashinsky
 -- @about
 --   Script moves selected tracks to new track as childs
@@ -23,7 +23,7 @@ end
 local extNameKey = "move_tracks_to_track_name"
 local extAsChildKey = "move_tracks_to_track_as_child"
 local newTrackName = EK_GetExtState(extNameKey)
-local moveAsChild = EK_GetExtState(extAsChildKey)
+local moveAsChild = EK_GetExtState(extAsChildKey, true)
 
 local window, _, _ = reaper.BR_GetMouseCursorContext()
 if window == "transport" or not newTrackName then
