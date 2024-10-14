@@ -1,10 +1,10 @@
 -- @description ek_Toggle time selection by razor or selected items
--- @version 1.0.7
+-- @version 1.0.8
 -- @author Ed Kashinsky
 -- @changelog
---   Now script follows the option "Options: Move edit cursor to start of time selection, when time selection changes". If it's true, edit cursor moves to start of time selection after script execution
+--   If you select envelope lane and some points on it, script creates time selection between start and end points
 -- @about
---   This script toggle time selection by razor or selected items. Actually it works with loop points, so it supports behaviour when loop points and time selection is unlinked. Also it toggles transport repeat like in Ableton
+--   This script toggle time selection by razor or selected items or envelope lines. Actually it works with loop points, so it supports behaviour when loop points and time selection is unlinked. Also it toggles transport repeat like in Ableton
 
 function CoreFunctionsLoaded()
 	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
@@ -34,7 +34,7 @@ local function ToggleTransportRepeat(enable)
 end
 
 local proj = 0
-local rStart, rEnd
+local rStart, rEnd, eStart, eEnd
 
 for i = 0, reaper.CountTracks(proj) - 1 do
 	local track = reaper.GetTrack(proj, i)
@@ -60,6 +60,18 @@ local sStart, sEnd = reaper.GetSet_LoopTimeRange(false, true, 0, 0, false)
 local needToLinkTS = false
 local availableForToggle = true
 local lastSelection = EK_GetExtState("last_selected_ts", {}, true)
+local selectedEnvelope = reaper.GetSelectedEnvelope(proj)
+
+if selectedEnvelope ~= nil then
+	for i = 0, reaper.CountEnvelopePoints(selectedEnvelope) - 1 do
+		local retval, time, _,  _, _, selected = reaper.GetEnvelopePoint(selectedEnvelope, i)
+
+		if retval and selected then
+			if not eStart or time < eStart then eStart = time end
+			if not eEnd or time > eEnd then eEnd = time end
+		end
+	end
+end
 
 if sEndTS ~= 0 and (sStartTS ~= sStart or sEndTS ~= sEnd) then
 	--- Link loop points and time selection
@@ -69,6 +81,9 @@ elseif rStart and rEnd then
 	reaper.GetSet_LoopTimeRange(true, true, rStart, rEnd, true)
 
 	needToLinkTS = true
+elseif eStart and eEnd then
+	--- Link loop points and time selection
+	reaper.GetSet_LoopTimeRange(true, true, eStart, eEnd, true)
 elseif (reaper.CountSelectedMediaItems(proj) > 0) then
 	--- Selected items
 	-- Loop points: Set loop points to items
