@@ -164,7 +164,7 @@ Installation:
 
 This script extremely useful for wokirng with markers and videos. It snaps selected items to markers or regions started from specified number.
 
-<img src="/Assets/images/pin_items_to_markers_or_regions.png" alt="pin_items_to_markers_or_regions" width="650"/>
+<img src="/Assets/images/pin_items_to_markers_or_regions.png" alt="pin_items_to_markers_or_regions" width="500"/>
 
 It has 3 behaviours (You can see how it works shematically on pictograms in GUI): 
 1. Simple - every item will be snapped to one marker, 
@@ -184,7 +184,7 @@ Script requires ReaImGui, but also it has 2 useful additional scripts without GU
 - ek_Snap items to closest regions
 
 
-## List of other scripts
+## List of other useful scripts
 
 #### ek_Add 1 sec gap between selected items
 

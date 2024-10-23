@@ -164,7 +164,7 @@ Installation:
 
 This script extremely useful for wokirng with markers and videos. It snaps selected items to markers or regions started from specified number.
 
-<img src="/Assets/images/pin_items_to_markers_or_regions.png" alt="pin_items_to_markers_or_regions" width="650"/>
+<img src="/Assets/images/pin_items_to_markers_or_regions.png" alt="pin_items_to_markers_or_regions" width="500"/>
 
 It has 3 behaviours (You can see how it works shematically on pictograms in GUI): 
 1. Simple - every item will be snapped to one marker, 
