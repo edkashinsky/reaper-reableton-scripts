@@ -183,3 +183,5 @@ Script requires ReaImGui, but also it has 2 useful additional scripts without GU
 - ek_Snap items to closest markers
 - ek_Snap items to closest regions
 
+Installation:
+1. Install script **ek_Snap items to markers or regions**
