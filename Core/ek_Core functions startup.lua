@@ -266,24 +266,6 @@ ga_settings = {
 		disabled = not ga_enabled,
 		order = 12,
 	},
-	backup_files = {
-		key = "ga_backup_files",
-		type = gui_input_types.Checkbox,
-		title = "Automatic limit timestamp backup files",
-		description = "If you want to keep only last limited amount of backup files, you can enable this option. Make sure that option 'Timestamp backup' is on in general preferences.",
-		default = false,
-		disabled = not ga_enabled,
-		order = 13,
-	},
-	backup_files_limit = {
-		key = "ga_backup_files_limit",
-		type = gui_input_types.Number,
-		title = "Amount of backup files",
-		description = "Specify count of fresh backup files you want to keep.",
-		default = 15,
-		disabled = not ga_enabled,
-		order = 14,
-	},
 	dark_mode = {
 		key = "ga_dark_mode",
 		type = gui_input_types.Checkbox,
@@ -291,7 +273,7 @@ ga_settings = {
 		description = "If you want to use special theme for dark mode, turn on this option.",
 		default = false,
 		disabled = not ga_enabled,
-		order = 15,
+		order = 13,
 	},
 	dark_mode_theme = {
 		key = "ga_dark_mode_theme_combo",
@@ -332,7 +314,7 @@ ga_settings = {
 			end
 		end,
 		disabled = not ga_enabled,
-		order = 16,
+		order = 14,
 	},
 	dark_mode_time = {
 		key = "ga_dark_mode_time",
@@ -341,7 +323,7 @@ ga_settings = {
 		description = "Specify time interval for dark mode. Format: \"HH:mm-HH:mm\"",
 		default = "20:00-09:00",
 		disabled = not ga_enabled,
-		order = 17,
+		order = 15,
 	},
 	additional_action = {
 		key = "ga_additional_action",
@@ -369,7 +351,7 @@ ga_settings = {
 		end,
 		default = "",
 		disabled = not ga_enabled,
-		order = 18,
+		order = 16,
 	},
 }
 
@@ -708,105 +690,6 @@ function GA_ObserveArmRec(changes, values)
 			reaper.Audio_Init()
 
 			cached_first_selected_track_sample_rate_marked = values.first_selected_track
-		end
-	end
-end
-
-
---
--- Backup projects
---
-local opts = reaper.SNM_GetIntConfigVar("saveopts", 0)
-local enabledBackups = opts & 16 > 0
-local cached_backup_last_time = 0
-local backup_timer_limit = (reaper.SNM_GetIntConfigVar("autosaveint", 1) * 60) + 5
-
-function GA_ObserveAndRemoveOldBackupFiles(changes, values)
-	if not enabledBackups then return end
-
-	local time = reaper.time_precise()
-	local GetBackupFiles = function(root)
-		local i = 0
-		local file
-		local backup_files = {}
-
-		local project = reaper.GetProjectName(proj)
-
-		if root:sub(-1) ~= dir_sep then root = root .. dir_sep end
-
-		project = string.gsub(project, ".[rR][pP][pP]", "")
-		project = string.gsub(project, '[$().*+?^%-%[%]%%]', '[%1]')
-
-		local pattern = project .. "[0-9_-]+[.]rpp[-]bak"
-
-		Log("[BACKUP] Watching in \"{param}\"", ek_log_levels.Warning, root)
-
-		if string.len(project) == 0 then return {} end
-
-		while file ~= nil or i == 0 do
-			file = reaper.EnumerateFiles(root, i)
-
-			if file ~= nil and string.match(file, pattern) then
-				table.insert(backup_files, file)
-			end
-
-			i = i + 1
-		end
-
-		table.sort(backup_files)
-
-		return backup_files
-	end
-
-	local removeBackupFilesIfNeeded = function(root)
-		local max_limit = tonumber(GA_GetSettingValue(ga_settings.backup_files_limit))
-		local backup_files = GetBackupFiles(root)
-
-		if #backup_files > max_limit then
-			for j = 1, #backup_files - max_limit do
-				Log("[BACKUP] Deleting \"{param}\"", ek_log_levels.Warning, root .. dir_sep .. backup_files[j])
-
-				os.remove(root .. dir_sep .. backup_files[j])
-			end
-		end
-	end
-
-	if time > cached_backup_last_time + backup_timer_limit then
-		Log("[BACKUP] Observing...", ek_log_levels.Warning)
-
-		local project_root = reaper.GetProjectPath() .. dir_sep .. ".."
-
-		opts = reaper.SNM_GetIntConfigVar("saveopts", 0)
-		backup_timer_limit = (reaper.SNM_GetIntConfigVar("autosaveint", 1) * 60) + 5
-		cached_backup_last_time = time + backup_timer_limit
-
-		-- Save to timestamped file in project directory
-		if (opts & 4 > 0) then
-			removeBackupFilesIfNeeded(project_root)
-		end
-
-		-- Save to timestamped file in additional directory
-		if (opts & 8 > 0) then
-			local dir = GetReaperIniValue("REAPER", "autosavedir")
-			local root = GetAbsolutePath(dir)
-
-			-- When overwriting project file, rename old project to .rpp-bak
-			-- moving to additional directory
-			if (opts & 1 > 0) then
-				local projectBackupFiles = GetBackupFiles(project_root)
-				for j = 1, #projectBackupFiles do
-					Log("[BACKUP] Moving \"{param}\" to \"" .. root .. "\"", ek_log_levels.Warning, projectBackupFiles[j])
-
-					os.rename(
-						project_root .. dir_sep .. projectBackupFiles[j],
-						root .. dir_sep .. projectBackupFiles[j]
-					)
-				end
-			end
-
-			if dir then
-				removeBackupFilesIfNeeded(root)
-			end
 		end
 	end
 end

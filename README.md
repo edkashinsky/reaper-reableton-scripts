@@ -160,8 +160,31 @@ Installation:
 
 **KNOWN ISSUES**: Script doesn't work with projects with non-latin characters in the path
 
+### Snap items to markers or regions
 
-## List of scripts
+This script extremely useful for wokirng with markers and videos. It snaps selected items to markers or regions started from specified number.
+
+<img src="/Assets/images/pin_items_to_markers_or_regions.png" alt="pin_items_to_markers_or_regions" width="650"/>
+
+It has 3 behaviours (You can see how it works shematically on pictograms in GUI): 
+1. Simple - every item will be snapped to one marker, 
+2. Stems - items on different tracks will be snapped to one marker in order of selection, 
+3. Consider overlapped items - overlapped items will be joined to one stem and will be snapped to one marker 
+
+You can set custom offset depends on your need: 
+1. Beginning of leading item 
+2. Snap offset of leading item 
+3. First cue marker in leading item
+4. Peak of leading item
+
+Script gives posibility to limit markers/regions snapping. For example only 2 markers after specified.
+
+Script requires ReaImGui, but also it has 2 useful additional scripts without GUI:
+- ek_Snap items to closest markers
+- ek_Snap items to closest regions
+
+
+## List of other scripts
 
 #### ek_Add 1 sec gap between selected items
 
@@ -188,11 +211,6 @@ Installation for better experience:
 
 ![Preview](/Assets/images/delete_selected_items_with_color_of_item_under_mouse_position.gif)
 This script deletes selected items with the same color of item under mouse position
-
-#### ek_Pin selected items at markers started from
-
-![Preview](/Assets/images/pin_items_to_markers_preview.gif)
-This script pins selected items to markers started from specified number. It requires ReaImGui extension.
 
 #### ek_Pitch Tool
 
@@ -242,7 +260,7 @@ This script helps live with Project Limit option is on. It makes zoom available 
 
 #### ek_Toggle time selection by razor or selected items
 
-This script toggle time selection by razor or selected items. Actually it works with loop points, so it supports behaviour when loop points and time selection is unlinked. Also it toggles transport repeat like in Ableton
+This script toggle time selection by razor or selected items or envelope lines. Actually it works with loop points, so it supports behaviour when loop points and time selection is unlinked. Also it toggles transport repeat like in Ableton
 
 #### ek_Tracks navigator
 
@@ -279,6 +297,10 @@ If any item is selected, it duplicate item. In other case is duplicate track
 #### ek_Insert new track
 
 It just inserts track or inserts it in the end of list depending on situation
+
+#### ek_Move selected tracks under specified track
+
+Script moves selected tracks to new track as childs
 
 #### ek_Nudge volume for selected tracks down
 

@@ -41,7 +41,7 @@ class Intro:
             self.__readMeFile.write(f.read() + "\n")
 
     def __fill_scripts(self):
-        self.__readMeFile.write("## List of scripts\n\n")
+        self.__readMeFile.write("## List of other useful scripts\n\n")
 
         for category in self.__pathCategories:
             for root, dirnames, filenames in os.walk(self.__rootPath + "/" + category):

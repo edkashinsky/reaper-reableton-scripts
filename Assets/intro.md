@@ -160,3 +160,26 @@ Installation:
 
 **KNOWN ISSUES**: Script doesn't work with projects with non-latin characters in the path
 
+### Snap items to markers or regions
+
+This script extremely useful for wokirng with markers and videos. It snaps selected items to markers or regions started from specified number.
+
+<img src="/Assets/images/pin_items_to_markers_or_regions.png" alt="pin_items_to_markers_or_regions" width="650"/>
+
+It has 3 behaviours (You can see how it works shematically on pictograms in GUI): 
+1. Simple - every item will be snapped to one marker, 
+2. Stems - items on different tracks will be snapped to one marker in order of selection, 
+3. Consider overlapped items - overlapped items will be joined to one stem and will be snapped to one marker 
+
+You can set custom offset depends on your need: 
+1. Beginning of leading item 
+2. Snap offset of leading item 
+3. First cue marker in leading item
+4. Peak of leading item
+
+Script gives posibility to limit markers/regions snapping. For example only 2 markers after specified.
+
+Script requires ReaImGui, but also it has 2 useful additional scripts without GUI:
+- ek_Snap items to closest markers
+- ek_Snap items to closest regions
+

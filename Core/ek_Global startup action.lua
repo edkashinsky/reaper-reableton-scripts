@@ -1,5 +1,5 @@
 -- @description ek_Global startup action
--- @version 1.0.43
+-- @version 1.0.44
 -- @author Ed Kashinsky
 -- @about
 --   This is startup action brings some ableton-like features in realtime. You can control any option by 'ek_Global startup action settings' script.
@@ -12,7 +12,7 @@
 --      5. Open 'ek_Global startup action settings' again for customize options
 --      6. If you want to use auto-grid for MIDI Editor, install script **ek_Auto grid for MIDI Editor** and set it on zoom shortcut.
 -- @changelog
---   UI update
+--   Script no longer supports feature "Automatic limit timestamp backup files", because it works natively in Reaper 7. See "Preferences" -> "Project" -> "Backup": Limit backups to most recent
 -- @provides
 --   ek_Core functions startup.lua
 --   ek_Adaptive grid functions.lua
@@ -150,11 +150,6 @@ local function observeGlobalAction()
 	-- Up Sample Rate
 	if GA_GetSettingValue(ga_settings.rec_sample_rate) then
 		GA_ObserveArmRec(changes, cached_changes)
-	end
-
-	-- Backup files
-	if GA_GetSettingValue(ga_settings.backup_files) then
-		GA_ObserveAndRemoveOldBackupFiles(changes, cached_changes)
 	end
 
 	-- Dark mode
