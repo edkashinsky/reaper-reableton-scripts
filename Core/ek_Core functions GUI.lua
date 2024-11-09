@@ -181,23 +181,30 @@ local function GUI_GetFonts()
 end
 
 local function GUI_GetImage(src)
-	for id, image in pairs(cached_images) do
-		if not ImGui.ValidatePtr(image.obj, 'ImGui_Image*') then
-			cached_images[id] = nil
+	local img = cached_images[src]
+	if not img then
+		img = {}
+		cached_images[src] = img
+	end
+
+	if not ImGui.ValidatePtr(img.obj, 'ImGui_Image*') then
+		if img.obj then cached_images[img.obj] = nil end
+
+		img.obj = ImGui.CreateImage(src)
+
+		--reaper.ShowConsoleMsg('create ' .. src .. '\n')
+
+		local prev = cached_images[img.obj]
+		if prev and prev ~= img then
+			prev.obj = nil
 		end
+
+		cached_images[img.obj] = img
 	end
 
-	if cached_images[src] == nil then
-		local img = ImGui.CreateImage(src)
-		local w, h = ImGui.Image_GetSize(img)
-		cached_images[src] = {
-			obj = img,
-			width = w,
-			height = h
-		}
-	end
+	img.width, img.height = ImGui.Image_GetSize(img.obj)
 
-	return cached_images[src]
+	return img
 end
 
 function GUI_GetFont(font_type)
