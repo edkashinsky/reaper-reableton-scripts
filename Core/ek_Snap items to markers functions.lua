@@ -354,13 +354,26 @@ local function GetItemOffset(type, item)
 
 	local take = reaper.GetActiveTake(item)
 
-
 	if type == POSITION_SNAP_OFFSET then
 		return reaper.GetMediaItemInfo_Value(item, "D_SNAPOFFSET")
 	elseif type == POSITION_FIRST_CUE and not reaper.TakeIsMIDI(take) then
 		local source = reaper.GetMediaItemTake_Source(take)
-		local ret, time, _, _, _, _ = reaper.CF_EnumMediaSourceCues(source, 0) -- First marker cue
-		return ret == 1 and time or 0
+		local offset = reaper.GetMediaItemTakeInfo_Value(take, "D_STARTOFFS")
+		local length = reaper.GetMediaItemInfo_Value(item, "D_LENGTH")
+		local ret = 1
+		local relTime, time
+		local index = 0
+
+		while ret > 0 and not relTime do
+			ret, time, _, _, _, _ = reaper.CF_EnumMediaSourceCues(source, index)
+			if ret > 0 and time >= offset and time <= offset + length then
+				relTime = time - offset
+			end
+
+			index = index + 1
+		end
+
+		return relTime or 0
 	elseif type == POSITION_PEAK and not reaper.TakeIsMIDI(take) then
 		local db = GetMaxPeakPosition(item)
 		local threshold = 95 -- %
