@@ -1,5 +1,5 @@
 -- @description ek_Snap items to markers or regions
--- @version 1.1.3
+-- @version 1.1.4
 -- @author Ed Kashinsky
 -- @about
 --   This script snaps selected items to markers or regions started from specified number. It requires ReaImGui extension.
@@ -8,7 +8,7 @@
 --   Script gives posibility to limit markers/regions snapping. For example only 2 markers after specified.
 -- @readme_skip
 -- @changelog
---   Bug fix of applying First cue marker in leading item mode
+--   Added setting for detecting selected start marker number by mouse position. Before opening script move your mouse on desire marker/region and it will be selected after opening.
 -- @provides
 --   ../Core/ek_Snap items to markers functions.lua
 --   ../Core/images/marker_overlapped.png
@@ -44,6 +44,10 @@ CoreFunctionsLoaded("ek_Snap items to markers functions.lua")
 local window_open = true
 local markers_list = { "No markers" }
 local count_list = {}
+local settings_key = "si_settings"
+local settings = EK_GetExtState(settings_key, {
+	detect_by_mouse = true,
+})
 
 local gui_config = {
 	{
@@ -197,20 +201,20 @@ local function UpdateMarkersList()
 	return window_open
 end
 
-function frame(ImGui, ctx, is_first_frame)
-	if is_first_frame then
-		local min_position
-
-		for i = 0, reaper.CountSelectedMediaItems(proj) - 1 do
-			local item = reaper.GetSelectedMediaItem(proj, i)
-			local position = reaper.GetMediaItemInfo_Value(item, "D_POSITION")
-
-			if not min_position or position < min_position then
-				min_position = position
-			end
+function GUI_DrawMenu(ImGui, ctx)
+	if ImGui.MenuItem(ctx, 'Settings') then
+		return function()
+			ImGui.OpenPopup(ctx, 'Settings')
 		end
+	end
+end
 
-		local marker = FindNearestMarker(data.snap_to.value, min_position or 0)
+function frame(ImGui, ctx, is_first_frame)
+	local newVal
+	local is_changed = false
+
+	if is_first_frame then
+		local marker = FindNearestMarker(data.snap_to.value, GetMinPosition())
 		if marker then
 			for i = 1, #markers_list do
 				if markers_list[i] == GetStartMarkerTitle(marker) then
@@ -219,6 +223,24 @@ function frame(ImGui, ctx, is_first_frame)
 			end
 		end
 	end
+
+	GUI_DrawModalPopup('Settings', function()
+		GUI_DrawText(data.snap_to.value == SNAP_TO_MARKERS and "Start marker number detection:" or "Start region number detection:", gui_fonts.Bold)
+		newVal = GUI_DrawInput(gui_input_types.Checkbox, "By mouse position", settings.detect_by_mouse)
+		if newVal ~= settings.detect_by_mouse then
+			settings.detect_by_mouse = newVal
+			is_changed = true
+		end
+
+		GUI_DrawText("(If disabled, it will be detected by started position of leading selected item)")
+
+		GUI_DrawGap(10)
+
+		GUI_SetCursorCenter('   Close   ')
+		GUI_DrawButton('Close', function()
+			ImGui.CloseCurrentPopup(ctx)
+		end, gui_buttons_types.Cancel, true)
+	end)
 
 	ImGui.PushItemWidth(ctx, 220)
 
@@ -249,6 +271,11 @@ function frame(ImGui, ctx, is_first_frame)
     ImGui.SameLine(ctx)
 
 	GUI_DrawButton('Cancel', nil, gui_buttons_types.Cancel)
+
+	if is_changed then
+		is_changed = false
+		EK_SetExtState(settings_key, settings)
+	end
 end
 
 EK_DeferWithCooldown(UpdateMarkersList, { last_time = 0, cooldown = 0.5 })

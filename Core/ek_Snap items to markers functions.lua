@@ -224,18 +224,6 @@ local function FindIndexByMarkerNumber(markers, number)
 	return nil
 end
 
-local function GetMinPosition(item)
-	local minPosition = nil
-
-	for i = 1, #item do
-		if minPosition == nil or item[i].position < minPosition then
-			minPosition = item[i].position
-		end
-	end
-
-	return minPosition
-end
-
 local function CreateNewTracksForItemsGroup(index)
 	local curItemGroup = items_map[index]
 	local getNewTrackIndex = function()
@@ -316,6 +304,36 @@ local function CreateNewTrackForItem(item)
 	end
 
 	cur_track_index = cur_track_index + 1
+end
+
+function GetMinPosition()
+	local min_position
+	local settings = EK_GetExtState("si_settings", {
+		detect_by_mouse = true,
+	})
+
+	if settings.detect_by_mouse then
+		local arrange_view = reaper.JS_Window_FindChildByID(reaper.GetMainHwnd(), 1000) -- Идентификатор окна Arrange View
+		if arrange_view then
+			local mouse_x, _ = reaper.GetMousePosition()
+			local arrange_x, _ = reaper.JS_Window_ScreenToClient(arrange_view, mouse_x, 0)
+			local start_time, end_time = reaper.GetSet_ArrangeView2(0, false, 0, 0)
+			local _, arrange_width = reaper.JS_Window_GetClientSize(arrange_view)
+
+			min_position = start_time + (end_time - start_time) * (arrange_x / arrange_width)
+		end
+	else
+		for i = 0, reaper.CountSelectedMediaItems(proj) - 1 do
+			local item = reaper.GetSelectedMediaItem(proj, i)
+			local position = reaper.GetMediaItemInfo_Value(item, "D_POSITION")
+
+			if not min_position or position < min_position then
+				min_position = position
+			end
+		end
+	end
+
+	return min_position or 0
 end
 
 function FindNearestMarker(snap_to, position)
