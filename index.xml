@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="0f2374bd35fa32d33644b2997be90179690a345b">
+<index version="1" name="Reableton Scripts" commit="53d1f4000ad9e2a1ae442ffab27510657fb9a40f">
   <category name="AI">
     <reapack name="ek_Generate SFX via ElevenLabs.lua" type="script" desc="ek_Generate SFX via ElevenLabs">
       <metadata>
@@ -1910,6 +1910,20 @@ Also there is flexible offset: just begin of item, snap offset, first cue marker
         <changelog><![CDATA[small color UI update]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/aeddc436c5fb3384e57f7827d6ae41c940a0693e/Tracks%20Properties/ek_Smart%20renaming%20depending%20on%20focus.lua</source>
         <source file="../Core/ek_Smart renaming functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/aeddc436c5fb3384e57f7827d6ae41c940a0693e/Core/ek_Smart%20renaming%20functions.lua</source>
+      </version>
+    </reapack>
+    <reapack name="ek_Toggle exclusive arm for selected tracks.lua" type="script" desc="Toggle exclusive arm for selected tracks">
+      <metadata>
+        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \ql \f0 \sa180 \li0 \fi0 It just toggles exclusive arm for selected tracks\par}
+}
+]]></description>
+      </metadata>
+      <version name="1.0.0" author="Ed Kashinsky" time="2024-12-01T19:17:19Z">
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/53d1f4000ad9e2a1ae442ffab27510657fb9a40f/Tracks%20Properties/ek_Toggle%20exclusive%20arm%20for%20selected%20tracks.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Toggle mute and offline FX for selected tracks.lua" type="script" desc="ek_Toggle mute and offline FX for selected tracks">
