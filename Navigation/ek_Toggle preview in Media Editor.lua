@@ -1,0 +1,9 @@
+-- @author Ed Kashinsky
+-- @description ek_Toggle preview in Media Editor
+-- @version 1.0.0
+-- @about
+--   This action allows preview playback in the Media Explorer (if available) within the arrangement window
+-- @metapackage
+-- @provides
+--   [main=main] ek_Play preview in Media Editor.lua
+--   [main=main] ek_Stop preview in Media Editor.lua
