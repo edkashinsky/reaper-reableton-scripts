@@ -260,6 +260,10 @@ This script helps live with Project Limit option is on. It makes zoom available 
 
 This script helps live with Project Limit option is on. It makes zoom available to places behind limits
 
+#### ek_Toggle preview in Media Editor
+
+This action allows preview playback in the Media Explorer (if available) within the arrangement window
+
 #### ek_Toggle time selection by razor or selected items
 
 This script toggle time selection by razor or selected items or envelope lines. Actually it works with loop points, so it supports behaviour when loop points and time selection is unlinked. Also it toggles transport repeat like in Ableton
@@ -315,6 +319,10 @@ It increase volume for selected track a bit and shows tooltip with set volume
 #### ek_Set volume for selected tracks
 
 Script shows window with input to set volume
+
+#### Toggle exclusive arm for selected tracks
+
+It just toggles exclusive arm for selected tracks
 
 #### ek_Toggle mute and offline FX for selected tracks
 
