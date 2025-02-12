@@ -49,18 +49,18 @@ This function has many useful perks that processed in real-time:
 2. **Automatically adjust grid to zoom**. When you change zoom level, grid adjusts to it. Also you can choose grid level like in Ableton (adaptive or fixed). For detailed control recommended to install 'ek_Adaptive grid settings' script
 3. **Automatically limit zoom to size of project**. Max zoom level limits by the farthest item in the project.
 4. **Automatically focus to MIDI editor when you click on an item**. When you single click on item, you see only one MIDI editor and focus on this particular item.
-5. **Automatically highlight buttons**. This option highlights toolbar buttons in real-time. This applies to scripts: 'ek_Toggle preserve pitch for selected items', 'ek_Toggle trim mode for selected trackes', 'ek_Toggle monitoring fx plugin'
-6. **Toggle monitoring fx slots in exclusive mode**. If you use spectrum correction plugins (such as Realphones, Sonarworks Reference 4, SoundID Reference and etc.) on Monitoring FX when using headphones, you can always see if the plugin is enabled. For using it, add script 'ek_Toggle monitoring FX on slot 1-5' to your toolbar and this button will be highlighted automatically when the plugin on monitoring FX in particular slot is enabled.
-7. **Different sample rate for recording**. This option useful for sound designers, who usually uses 48kHz and forget to increase the sampling rate before recording to get better recording quality.
-8. **Automatic limit timestamp backup files**. Useful, if you want to keep only last limited amount of backup files.
+5. **Auto-Switch playback via selected track in Media Explorer**. If you use previewing in the "Play through the first selected track" mode in Media Explorer and want playback to follow the currently selected track.
+6. **Automatically highlight buttons**. This option highlights toolbar buttons in real-time. This applies to scripts: 'ek_Toggle preserve pitch for selected items', 'ek_Toggle trim mode for selected trackes', 'ek_Toggle monitoring fx plugin'
+7. **Toggle monitoring fx slots in exclusive mode**. If you use spectrum correction plugins (such as Realphones, Sonarworks Reference 4, SoundID Reference and etc.) on Monitoring FX when using headphones, you can always see if the plugin is enabled. For using it, add script 'ek_Toggle monitoring FX on slot 1-5' to your toolbar and this button will be highlighted automatically when the plugin on monitoring FX in particular slot is enabled.
+8. **Different sample rate for recording**. This option useful for sound designers, who usually uses 48kHz and forget to increase the sampling rate before recording to get better recording quality.
 9. **Dark mode theme**. If you want to turn on special dark theme in night hours, you can use this feature
 10. **Additional global startup action**. If you have your own action on startup, you can specified command Id and it will be executed on startup.
 
 For installation:
 1. Install '**ek_Global startup action**' script via Extensions -> ReaPack -> Browse Packages
-2. Execute script '**ek_Global startup action settings**' in Action List and enable 'Enable global action' checkbox
+2. Execute script '**ek_Global startup action - settings**' in Action List and enable 'Enable global action' checkbox
 3. Restart Reaper
-4. Check script '**ek_Global startup action settings**' again and enable features you need
+4. Check script '**ek_Global startup action - settings**' again and enable features you need
 
 ### Adaptive grid
 
