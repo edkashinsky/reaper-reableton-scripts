@@ -708,8 +708,8 @@ function GA_ObserveArmRec(changes, values)
 end
 
 local function inTimeInterval(stParam, edParam)
-	local time = math.floor(reaper.time_precise())
-	local date = os.date("*t", time)
+	local time = os.time()
+	local date = os.date("*t")
 
 	local startTime = modifyTime(date, {
 		hour = stParam.hour,
@@ -948,7 +948,7 @@ function GA_ObservePlayStateInMediaExplorer()
 end
 
 function GA_ObserveAutoSwitchTrackInMediaExplorer(something_is_changed, values)
-	local output = GetReaperIniValue("reaper_sexplorer", "outputidx")
+	local output = GetReaperIniValue(IS_WINDOWS and "reaper_explorer" or "reaper_sexplorer", "outputidx")
 	local isEnabled = EK_GetExtState(ga_auto_switch_preview_me)
 
 	if output == -1 and not isEnabled then
