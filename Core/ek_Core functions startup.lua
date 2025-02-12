@@ -34,6 +34,10 @@ local ga_slots_data = {
 	{ btn = ga_highlight_buttons.mfx_slot_5, slot = ga_mfx_slots.mfx_slot_5 },
 }
 
+local ga_auto_switch_preview_me = "auto_switch_preview_enabled"
+local ga_me_state_is_playing = "me_is_playing"
+local ga_me_current_time = "me_playing_time"
+
 local cachedAdditionalScriptVal = {}
 
 local function GA_GetThemesList()
@@ -227,6 +231,15 @@ ga_settings = {
 		disabled = not ga_enabled,
 		order = 8,
 	},
+	auto_switch_track_on_preview = {
+		key = "auto_switch_track_on_preview",
+		type = gui_input_types.Checkbox,
+		title = "Auto-Switch playback via selected track in Media Explorer",
+		description = "If you use previewing in the \"Play through the first selected track\" mode in Media Explorer and want playback to follow the currently selected track.",
+		default = false,
+		disabled = not ga_enabled,
+		order = 9,
+	},
 	highlight_buttons = {
 		key = "ga_highlight_buttons",
 		type = gui_input_types.Checkbox,
@@ -234,7 +247,7 @@ ga_settings = {
 		description = "This option highlights toolbar buttons in real-time. This applies to scripts: 'ek_Toggle preserve pitch for selected items', 'ek_Toggle trim mode for selected trackes', 'ek_Toggle monitoring fx plugin'",
 		default = true,
 		disabled = not ga_enabled,
-		order = 9,
+		order = 10,
 	},
 	mfx_slots_exclusive = {
 		key = "ga_mfx_slots_exclusive",
@@ -243,7 +256,7 @@ ga_settings = {
 		description = "If you use script 'ek_Toggle monitoring FX on slot 1-5' and want to toggle plugins between slots in monitoring chain exclusively (when you turn on some plugin, others are turning off)",
 		default = false,
 		disabled = not ga_enabled,
-		order = 10,
+		order = 11,
 	},
 	rec_sample_rate = {
 		key = "ga_rec_sample_rate",
@@ -252,7 +265,7 @@ ga_settings = {
 		description = "This option useful for sound designers, who usually uses 48kHz and forget to increase the sampling rate before recording to get better recording quality.",
 		default = false,
 		disabled = not ga_enabled,
-		order = 11,
+		order = 12,
 	},
 	rec_sample_rate_value = {
 		key = "ga_rec_sample_rate_value",
@@ -264,7 +277,7 @@ ga_settings = {
 		},
 		default = 1,
 		disabled = not ga_enabled,
-		order = 12,
+		order = 13,
 	},
 	dark_mode = {
 		key = "ga_dark_mode",
@@ -273,7 +286,7 @@ ga_settings = {
 		description = "If you want to use special theme for dark mode, turn on this option.",
 		default = false,
 		disabled = not ga_enabled,
-		order = 13,
+		order = 14,
 	},
 	dark_mode_theme = {
 		key = "ga_dark_mode_theme_combo",
@@ -314,7 +327,7 @@ ga_settings = {
 			end
 		end,
 		disabled = not ga_enabled,
-		order = 14,
+		order = 15,
 	},
 	dark_mode_time = {
 		key = "ga_dark_mode_time",
@@ -323,7 +336,7 @@ ga_settings = {
 		description = "Specify time interval for dark mode. Format: \"HH:mm-HH:mm\"",
 		default = "20:00-09:00",
 		disabled = not ga_enabled,
-		order = 15,
+		order = 16,
 	},
 	additional_action = {
 		key = "ga_additional_action",
@@ -351,7 +364,7 @@ ga_settings = {
 		end,
 		default = "",
 		disabled = not ga_enabled,
-		order = 16,
+		order = 17,
 	},
 }
 
@@ -884,6 +897,81 @@ function GA_ObserveProjectWorkingTime(something_is_changed, values)
 		pwt_downtime_time = time + pwt_downtime_cooldown
 		pwt_play_state = values.play_state
 	end
+end
+
+function GA_ObservePlayStateInMediaExplorer()
+	local isPlaying = EK_GetExtState(ga_me_state_is_playing)
+
+	if not EK_GetExtState(ga_auto_switch_preview_me) then
+		if isPlaying then EK_SetExtState(ga_me_state_is_playing, false) end
+		return
+	end
+
+	local media_explorer = reaper.JS_Window_Find(reaper.JS_Localize("Media Explorer", 'common'), true)
+	if not media_explorer and isPlaying then
+		if isPlaying then EK_SetExtState(ga_me_state_is_playing, false) end
+		return
+	end
+
+	local mx_timer_view = reaper.JS_Window_FindChildByID(media_explorer, 1016)
+	if not mx_timer_view then
+		if isPlaying then EK_SetExtState(ga_me_state_is_playing, false) end
+		return
+	end
+
+	local current, length = string.match(reaper.JS_Window_GetTitle(mx_timer_view), "(.-)/(.*)")
+	if not length then
+		if isPlaying then EK_SetExtState(ga_me_state_is_playing, false) end
+		return
+	end
+
+	local total_seconds = 0
+	local last_time = EK_GetExtState(ga_me_current_time, 0)
+	if string.match(current, "^%d+:%d%d%.%d%d%d$") ~= nil then
+		-- 0:02.924 (Seconds)
+		local minutes, seconds, milliseconds = string.match(current, "(%d+):(%d+)%.(%d+)")
+		total_seconds = tonumber(minutes) * 60 + tonumber(seconds) + tonumber(milliseconds) / 1000
+	else
+		-- 1.324 (Beats)
+		total_seconds = tonumber(current)
+	end
+
+	if total_seconds ~= last_time and not isPlaying then
+		EK_SetExtState(ga_me_state_is_playing, true)
+	elseif total_seconds == last_time and isPlaying then
+		EK_SetExtState(ga_me_state_is_playing, false)
+	end
+
+	if last_time ~= total_seconds then
+		EK_SetExtState(ga_me_current_time, total_seconds)
+	end
+end
+
+function GA_ObserveAutoSwitchTrackInMediaExplorer(something_is_changed, values)
+	local output = GetReaperIniValue("reaper_sexplorer", "outputidx")
+	local isEnabled = EK_GetExtState(ga_auto_switch_preview_me)
+
+	if output == -1 and not isEnabled then
+		EK_SetExtState(ga_auto_switch_preview_me, true)
+	elseif output ~= -1 and isEnabled then
+		EK_DeleteExtState(ga_auto_switch_preview_me)
+	end
+
+	local isPlaying = EK_GetExtState(ga_me_state_is_playing)
+	if isPlaying then
+		local media_explorer = reaper.JS_Window_Find(reaper.JS_Localize("Media Explorer", 'common'), true)
+		if media_explorer then
+			-- Preview: Display position in whole seconds or beats (must be disabled)
+			if reaper.GetToggleCommandStateEx(32063, 40032) == 1 then
+				reaper.JS_Window_OnCommand(media_explorer, 40032)
+			end
+
+			reaper.JS_Window_OnCommand(media_explorer, 1010) -- Preview: Pause
+			reaper.JS_Window_OnCommand(media_explorer, 1008) -- Preview: Play
+		end
+	end
+
+	Log("Media Explorer playing state: " .. tostring(isPlaying), ek_log_levels.Warning)
 end
 
 function getDfiItem()

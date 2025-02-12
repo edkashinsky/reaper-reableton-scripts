@@ -1,5 +1,5 @@
 -- @description ek_Global startup action
--- @version 1.0.45
+-- @version 1.0.46
 -- @author Ed Kashinsky
 -- @about
 --   This is startup action brings some ableton-like features in realtime. You can control any option by 'ek_Global startup action settings' script.
@@ -12,7 +12,7 @@
 --      5. Open 'ek_Global startup action settings' again for customize options
 --      6. If you want to use auto-grid for MIDI Editor, install script **ek_Auto grid for MIDI Editor** and set it on zoom shortcut.
 -- @changelog
---   Fixed bug when theme for dark mode is being cleared
+--   Added new setting "Auto-Switch playback via selected track in Media Explorer"
 -- @provides
 --   ek_Core functions startup.lua
 --   ek_Adaptive grid functions.lua
@@ -50,6 +50,7 @@ local cached_changes = {
 	first_selected_item = nil,
 }
 
+local ga_debug = false
 local ga_cooldown = 0.2
 local ga_last_time = reaper.time_precise()
 
@@ -140,6 +141,11 @@ local function observeGlobalAction()
 		if changes.project_path or changes.play_state then
 			TD_SyncOpenedWindows()
 		end
+
+		-- Auto-Switch playback via selected track in Media Explorer
+		if GA_GetSettingValue(ga_settings.auto_switch_track_on_preview) then
+			GA_ObserveAutoSwitchTrackInMediaExplorer(something_is_changed, cached_changes)
+		end
 	end
 
 	-- Auto grid
@@ -160,6 +166,21 @@ local function observeGlobalAction()
 	-- Track working time
 	if GA_GetSettingValue(ga_settings.track_time) then
 		GA_ObserveProjectWorkingTime(something_is_changed, cached_changes)
+	end
+
+	-- Auto-Switch playback via selected track in Media Explorer
+	-- follow to playing state in Media Explorer
+	if GA_GetSettingValue(ga_settings.auto_switch_track_on_preview) then
+		GA_ObservePlayStateInMediaExplorer()
+	end
+
+	if ga_debug then
+		local exec_time = round((reaper.time_precise() - time_precise) * 1000, 3)
+		local desc = ""
+		if exec_time > 10 then desc = "[DANGER]"
+		elseif exec_time > 1 then desc = "[WARNING]" end
+
+		Log(exec_time .. "ms. " .. desc, ek_log_levels.Debug)
 	end
 
 	reaper.defer(observeGlobalAction)
