@@ -908,7 +908,7 @@ function GA_ObservePlayStateInMediaExplorer()
 	end
 
 	local media_explorer = reaper.JS_Window_Find(reaper.JS_Localize("Media Explorer", 'common'), true)
-	if not media_explorer and isPlaying then
+	if not media_explorer then
 		if isPlaying then EK_SetExtState(ga_me_state_is_playing, false) end
 		return
 	end
@@ -927,9 +927,9 @@ function GA_ObservePlayStateInMediaExplorer()
 
 	local total_seconds = 0
 	local last_time = EK_GetExtState(ga_me_current_time, 0)
-	if string.match(current, "^%d+:%d%d%.%d%d%d$") ~= nil then
+	local minutes, seconds, milliseconds = string.match(current, "(%d+):(%d+)%.(%d+)")
+	if minutes and seconds and milliseconds then
 		-- 0:02.924 (Seconds)
-		local minutes, seconds, milliseconds = string.match(current, "(%d+):(%d+)%.(%d+)")
 		total_seconds = tonumber(minutes) * 60 + tonumber(seconds) + tonumber(milliseconds) / 1000
 	else
 		-- 1.324 (Beats)
