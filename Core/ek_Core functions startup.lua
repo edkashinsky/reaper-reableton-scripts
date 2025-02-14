@@ -44,27 +44,24 @@ local function GA_GetThemesList()
 	local result = {}
 	local themeName
 	local i = 0
-	local curThemeNamePath = reaper.GetLastColorThemeFile()
-	local curThemeNamePathPart = split(curThemeNamePath, dir_sep)
-
-	local curThemeName = curThemeNamePathPart[#curThemeNamePathPart]
-	if not curThemeName then curThemeName = "" end
-	local themePath = curThemeNamePath:match("(.*" .. dir_sep .. ")")
+	local themePath = EK_ConcatPath(reaper.GetResourcePath(), 'ColorThemes')
 
 	while themeName ~= nil or i == 0 do
 		themeName = reaper.EnumerateFiles(themePath, i)
+		if themeName ~= nil then
+			local filename, ext = themeName:match("([^\\/]+)%.([^.]+)$")
+			if filename and ext and ext:lower() == "reaperthemezip" then
+				local name = ""
+				local nameParts = split(themeName, "[.]")
 
-		if themeName ~= nil and string.match(themeName, "[%g]+[.][Rr][Ee][Aa][Pp][Ee][Rr][Tt][Hh][Ee][Mm][Ee]") then
-			local name = ""
-			local nameParts = split(themeName, "[.]")
+				for j = 1, #nameParts - 1 do
+					name = name .. nameParts[j]
+					if j < #nameParts - 1 then name = name .. "." end
+				end
 
-			for j = 1, #nameParts - 1 do
-				name = name .. nameParts[j]
-				if j < #nameParts - 1 then name = name .. "." end
-			end
-
-			if not in_array(result, name) then
-				table.insert(result, name)
+				if not in_array(result, name) then
+					table.insert(result, name)
+				end
 			end
 		end
 
@@ -789,32 +786,31 @@ function GA_ObserveDarkMode(changes, values)
 	local curThemeNamePathPart = split(curThemeNamePath, dir_sep)
 	local curThemeName = curThemeNamePathPart[#curThemeNamePathPart]
 	if not curThemeName then curThemeName = "" end
-	local themePath = curThemeNamePath:match("(.*" .. dir_sep .. ")")
 	local isExecutedToday = EK_GetExtState(is_executed_key)
 
 	Log("[DARK THEME] Observing...", ek_log_levels.Notice)
 	Log({ inInterval and 1 or 0, themeName, curThemeName, EK_GetExtState(theme_key) }, ek_log_levels.Notice)
 
-	if reaper.file_exists(themePath .. themeName .. ".ReaperTheme") then
+	if reaper.file_exists(EK_ConcatPath(reaper.GetResourcePath(), 'ColorThemes', themeName .. ".ReaperTheme")) then
 		themeName = themeName .. ".ReaperTheme"
-	elseif reaper.file_exists(themePath .. themeName .. ".ReaperThemeZip") then
+	elseif reaper.file_exists(EK_ConcatPath(reaper.GetResourcePath(), 'ColorThemes', themeName .. ".ReaperThemeZip")) then
 		themeName = themeName .. ".ReaperThemeZip"
 	else
-		Log("[DARK THEME] Theme \"{param}\" does not exists", ek_log_levels.Important, themePath .. themeName)
+		Log("[DARK THEME] Theme \"{param}\" does not exists", ek_log_levels.Important, EK_ConcatPath(reaper.GetResourcePath(), 'ColorThemes', themeName))
 		EK_DeleteExtState(ga_dark_theme_key)
 		return
 	end
 
 	if inInterval and curThemeName ~= themeName then
 		EK_SetExtState(theme_key, curThemeName)
-		reaper.OpenColorThemeFile(themePath .. themeName)
+		reaper.OpenColorThemeFile(EK_ConcatPath(reaper.GetResourcePath(), 'ColorThemes', themeName))
 		Log("[DARK THEME] Turn on dark mode to \"{param}\"", ek_log_levels.Important, themeName)
 		EK_DeleteExtState(is_executed_key, false)
 	elseif not inInterval and not isExecutedToday and curThemeName == themeName then
 		local curThemeNameCached = EK_GetExtState(theme_key)
 
 		if curThemeNameCached ~= nil and curThemeNameCached ~= curThemeName then
-			reaper.OpenColorThemeFile(themePath .. curThemeNameCached)
+			reaper.OpenColorThemeFile(EK_ConcatPath(reaper.GetResourcePath(), 'ColorThemes', curThemeNameCached))
 			Log("[DARK THEME] Turn on light mode to \"{param}\"", ek_log_levels.Important, curThemeNameCached)
 			EK_SetExtState(is_executed_key, true, false, true)
 		end
