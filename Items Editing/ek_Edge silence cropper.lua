@@ -1,5 +1,5 @@
 -- @description ek_Edge silence cropper
--- @version 1.2.6
+-- @version 1.2.7
 -- @author Ed Kashinsky
 -- @readme_skip
 -- @about
@@ -7,7 +7,7 @@
 --
 --   Also it provides UI for configuration
 -- @changelog
---   small GUI refactoring
+--   fixed bug for preview lines on vertical scroll
 -- @provides
 --   ../Core/ek_Edge silence cropper functions.lua
 --   [main=main] ek_Edge silence cropper (no prompt).lua
@@ -40,7 +40,7 @@ GUI_ShowMainWindow()
 local min_step = 0.00001
 local using_eel = reaper.APIExists("ImGui_CreateFunctionFromEEL")
 local window_open = true
-local cachedPositions = { zoom = nil, hor = nil, count_sel_items = 0, values = {}, items_values = {} }
+local cachedPositions = { zoom = nil, hor = nil, ver = nil, count_sel_items = 0, values = {}, items_values = {} }
 local MainHwnd = reaper.GetMainHwnd()
 local ArrangeHwnd = reaper.JS_Window_FindChildByID(MainHwnd, 0x3E8)
 local Cropper = EdgeCropper.new()
@@ -101,12 +101,14 @@ local function PreviewCropResultInArrangeView()
     if not window_open then return false end
 
     local zoom = reaper.GetHZoomLevel()
+    local _, scrollposv = reaper.JS_Window_GetScrollInfo(ArrangeHwnd, "v")
     local _, scrollposh = reaper.JS_Window_GetScrollInfo(ArrangeHwnd, "h")
     local countSelectedItems = reaper.CountSelectedMediaItems(proj)
 
     local preview = p.preview_result.value
 
     cachedPositions.zoom = zoom
+    cachedPositions.ver = scrollposv
     cachedPositions.hor = scrollposh
 
     if cachedPositions.count_sel_items ~= countSelectedItems then
@@ -275,6 +277,7 @@ function frame(ImGui, ctx)
 end
 
 EK_DeferWithCooldown(PreviewCropResultInArrangeView, { last_time = 0, cooldown = using_eel and 0.01 or 0.7, eventTick = function()
+    local _, scrollposv = reaper.JS_Window_GetScrollInfo(ArrangeHwnd, "v")
     local _, scrollposh = reaper.JS_Window_GetScrollInfo(ArrangeHwnd, "h")
 
     if not window_open then
@@ -287,6 +290,10 @@ EK_DeferWithCooldown(PreviewCropResultInArrangeView, { last_time = 0, cooldown =
     end
 
     if cachedPositions.hor ~= nil and cachedPositions.hor ~= scrollposh then
+        ResetPreview()
+    end
+
+    if cachedPositions.ver ~= nil and cachedPositions.ver ~= scrollposv then
         ResetPreview()
     end
 
