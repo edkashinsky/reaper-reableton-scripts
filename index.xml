@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="a60148e62a8c658140d4f9a489c84d9838506c40">
+<index version="1" name="Reableton Scripts" commit="86b47af7e42968762fcc88cafa17f6d0535b17d0">
   <category name="AI">
     <reapack name="ek_Generate SFX via ElevenLabs.lua" type="script" desc="ek_Generate SFX via ElevenLabs">
       <metadata>
@@ -823,6 +823,14 @@ Small bug fixes]]></changelog>
         <source file="ek_Core functions startup.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/194b5f10a27dbeebb8b47f24dfe781749809943c/Core/ek_Core%20functions%20startup.lua</source>
         <source file="ek_Adaptive grid functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/194b5f10a27dbeebb8b47f24dfe781749809943c/Core/ek_Adaptive%20grid%20functions.lua</source>
         <source main="main" file="ek_Global startup action - settings.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/194b5f10a27dbeebb8b47f24dfe781749809943c/Core/ek_Global%20startup%20action%20-%20settings.lua</source>
+      </version>
+      <version name="1.0.50" author="Ed Kashinsky" time="2025-03-11T15:26:27Z">
+        <changelog><![CDATA[- Improved performance for "Auto-Switch playback via selected track in Media Explorer" option
+- Added option "Stop preview in Media Explorer when playback started"]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/86b47af7e42968762fcc88cafa17f6d0535b17d0/Core/ek_Global%20startup%20action.lua</source>
+        <source file="ek_Core functions startup.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/86b47af7e42968762fcc88cafa17f6d0535b17d0/Core/ek_Core%20functions%20startup.lua</source>
+        <source file="ek_Adaptive grid functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/86b47af7e42968762fcc88cafa17f6d0535b17d0/Core/ek_Adaptive%20grid%20functions.lua</source>
+        <source main="main" file="ek_Global startup action - settings.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/86b47af7e42968762fcc88cafa17f6d0535b17d0/Core/ek_Global%20startup%20action%20-%20settings.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Save project with a check of unused media files.lua" type="script" desc="ek_Save project with a check of unused media files">
