@@ -34,7 +34,6 @@ local ga_slots_data = {
 	{ btn = ga_highlight_buttons.mfx_slot_5, slot = ga_mfx_slots.mfx_slot_5 },
 }
 
-local ga_auto_switch_preview_me = "auto_switch_preview_enabled"
 local ga_me_state_is_playing = "me_is_playing"
 local ga_me_current_time = "me_playing_time"
 
@@ -237,6 +236,15 @@ ga_settings = {
 		disabled = not ga_enabled,
 		order = 9,
 	},
+	stop_media_explorer_on_playback = {
+		key = "stop_media_explorer_on_playback",
+		type = gui_input_types.Checkbox,
+		title = "Stop preview in Media Explorer when playback started",
+		description = "This option stops preview in Media Explorer, when main playback in arrange view is started",
+		default = false,
+		disabled = not ga_enabled,
+		order = 10,
+	},
 	highlight_buttons = {
 		key = "ga_highlight_buttons",
 		type = gui_input_types.Checkbox,
@@ -244,7 +252,7 @@ ga_settings = {
 		description = "This option highlights toolbar buttons in real-time. This applies to scripts: 'ek_Toggle preserve pitch for selected items', 'ek_Toggle trim mode for selected trackes', 'ek_Toggle monitoring fx plugin'",
 		default = true,
 		disabled = not ga_enabled,
-		order = 10,
+		order = 11,
 	},
 	mfx_slots_exclusive = {
 		key = "ga_mfx_slots_exclusive",
@@ -253,7 +261,7 @@ ga_settings = {
 		description = "If you use script 'ek_Toggle monitoring FX on slot 1-5' and want to toggle plugins between slots in monitoring chain exclusively (when you turn on some plugin, others are turning off)",
 		default = false,
 		disabled = not ga_enabled,
-		order = 11,
+		order = 12,
 	},
 	rec_sample_rate = {
 		key = "ga_rec_sample_rate",
@@ -262,7 +270,7 @@ ga_settings = {
 		description = "This option useful for sound designers, who usually uses 48kHz and forget to increase the sampling rate before recording to get better recording quality.",
 		default = false,
 		disabled = not ga_enabled,
-		order = 12,
+		order = 13,
 	},
 	rec_sample_rate_value = {
 		key = "ga_rec_sample_rate_value",
@@ -274,7 +282,7 @@ ga_settings = {
 		},
 		default = 1,
 		disabled = not ga_enabled,
-		order = 13,
+		order = 14,
 	},
 	dark_mode = {
 		key = "ga_dark_mode",
@@ -283,7 +291,7 @@ ga_settings = {
 		description = "If you want to use special theme for dark mode, turn on this option.",
 		default = false,
 		disabled = not ga_enabled,
-		order = 14,
+		order = 15,
 	},
 	dark_mode_theme = {
 		key = "ga_dark_mode_theme_combo",
@@ -324,7 +332,7 @@ ga_settings = {
 			end
 		end,
 		disabled = not ga_enabled,
-		order = 15,
+		order = 16,
 	},
 	dark_mode_time = {
 		key = "ga_dark_mode_time",
@@ -333,7 +341,7 @@ ga_settings = {
 		description = "Specify time interval for dark mode. Format: \"HH:mm-HH:mm\"",
 		default = "20:00-09:00",
 		disabled = not ga_enabled,
-		order = 16,
+		order = 17,
 	},
 	additional_action = {
 		key = "ga_additional_action",
@@ -361,7 +369,7 @@ ga_settings = {
 		end,
 		default = "",
 		disabled = not ga_enabled,
-		order = 17,
+		order = 18,
 	},
 }
 
@@ -624,6 +632,7 @@ function GA_ObserveMidiEditor(changes, values)
 		if state ~= -1 then
 			Log("[MIDI EDITOR] {param} midi editor observing...", ek_log_levels.Warning, ga_settings.highlight_buttons.key)
 
+			reaper.JS_Window_OnCommand(midiEditor, 40214) -- Edit: Unselect all
 			reaper.Main_OnCommand(reaper.NamedCommandLookup(40153), 0) -- Item: Open in built-in MIDI editor (set default behavior in preferences)
 		end
 
@@ -895,15 +904,35 @@ function GA_ObserveProjectWorkingTime(something_is_changed, values)
 	end
 end
 
+local cached_media_explorer
+local function GetMediaExplorerHWND()
+	if cached_media_explorer and reaper.JS_Window_IsWindow(cached_media_explorer) then
+		return cached_media_explorer
+	end
+
+	cached_media_explorer = reaper.JS_Window_Find(reaper.JS_Localize("Media Explorer", 'common'), true)
+
+	if cached_media_explorer then
+		-- Preview: Display position in whole seconds or beats (must be disabled)
+		if reaper.GetToggleCommandStateEx(32063, 40032) == 1 then
+			reaper.JS_Window_OnCommand(cached_media_explorer, 40032)
+		end
+	end
+
+	Log("[MEX] Fetch Media Explorer window...", ek_log_levels.Notice)
+
+	return cached_media_explorer
+end
+
 function GA_ObservePlayStateInMediaExplorer()
 	local isPlaying = EK_GetExtState(ga_me_state_is_playing)
 
-	if not EK_GetExtState(ga_auto_switch_preview_me) then
+	if reaper.GetToggleCommandState(50124) == 0 then -- Media explorer: Show/hide media explorer
 		if isPlaying then EK_SetExtState(ga_me_state_is_playing, false) end
 		return
 	end
 
-	local media_explorer = reaper.JS_Window_Find(reaper.JS_Localize("Media Explorer", 'common'), true)
+	local media_explorer = GetMediaExplorerHWND()
 	if not media_explorer then
 		if isPlaying then EK_SetExtState(ga_me_state_is_playing, false) end
 		return
@@ -934,8 +963,12 @@ function GA_ObservePlayStateInMediaExplorer()
 
 	if total_seconds ~= last_time and not isPlaying then
 		EK_SetExtState(ga_me_state_is_playing, true)
+
+		Log("[MEX] Media Explorer preview playback started...", ek_log_levels.Notice)
 	elseif total_seconds == last_time and isPlaying then
 		EK_SetExtState(ga_me_state_is_playing, false)
+
+		Log("[MEX] Media Explorer preview playback stopped...", ek_log_levels.Notice)
 	end
 
 	if last_time ~= total_seconds then
@@ -943,31 +976,40 @@ function GA_ObservePlayStateInMediaExplorer()
 	end
 end
 
-function GA_ObserveAutoSwitchTrackInMediaExplorer(something_is_changed, values)
-	local output = GetReaperIniValue(IS_WINDOWS and "reaper_explorer" or "reaper_sexplorer", "outputidx")
-	local isEnabled = EK_GetExtState(ga_auto_switch_preview_me)
+function GA_ObserveAutoSwitchTrackInMediaExplorer(changes, values)
+	if changes.play_state then
+		return
+	end
 
-	if output == -1 and not isEnabled then
-		EK_SetExtState(ga_auto_switch_preview_me, true)
-	elseif output ~= -1 and isEnabled then
-		EK_DeleteExtState(ga_auto_switch_preview_me)
+	local output = GetReaperIniValue(IS_WINDOWS and "reaper_explorer" or "reaper_sexplorer", "outputidx")
+	if output ~= -1 then
+		return
 	end
 
 	local isPlaying = EK_GetExtState(ga_me_state_is_playing)
 	if isPlaying then
 		local media_explorer = reaper.JS_Window_Find(reaper.JS_Localize("Media Explorer", 'common'), true)
 		if media_explorer then
-			-- Preview: Display position in whole seconds or beats (must be disabled)
-			if reaper.GetToggleCommandStateEx(32063, 40032) == 1 then
-				reaper.JS_Window_OnCommand(media_explorer, 40032)
-			end
-
 			reaper.JS_Window_OnCommand(media_explorer, 1010) -- Preview: Pause
 			reaper.JS_Window_OnCommand(media_explorer, 1008) -- Preview: Play
+
+			Log("[MEX] Changed channel for preview in Media Explorer", ek_log_levels.Warning)
 		end
 	end
+end
 
-	Log("Media Explorer playing state: " .. tostring(isPlaying), ek_log_levels.Warning)
+function GA_StopPreviewMediaExplorerOnPlayback(changes, values)
+	if changes.play_state then
+		local isPlaying = EK_GetExtState(ga_me_state_is_playing)
+		if isPlaying then
+			local media_explorer = GetMediaExplorerHWND()
+			if media_explorer then
+				reaper.JS_Window_OnCommand(media_explorer, 1009) -- Preview: Stop
+
+				Log("[MEX] Stoped media Explorer preview playback", ek_log_levels.Warning)
+			end
+		end
+	end
 end
 
 function getDfiItem()

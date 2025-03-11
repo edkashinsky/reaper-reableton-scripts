@@ -1,5 +1,5 @@
 -- @description ek_Global startup action
--- @version 1.0.49
+-- @version 1.0.50
 -- @author Ed Kashinsky
 -- @about
 --   This is startup action brings some ableton-like features in realtime. You can control any option by 'ek_Global startup action settings' script.
@@ -12,7 +12,8 @@
 --      5. Open 'ek_Global startup action settings' again for customize options
 --      6. If you want to use auto-grid for MIDI Editor, install script **ek_Auto grid for MIDI Editor** and set it on zoom shortcut.
 -- @changelog
---   Bug fixes for portable version of Reaper
+--   - Improved performance for "Auto-Switch playback via selected track in Media Explorer" option
+--   - Added option "Stop preview in Media Explorer when playback started"
 -- @provides
 --   ek_Core functions startup.lua
 --   ek_Adaptive grid functions.lua
@@ -116,6 +117,9 @@ local function observeGlobalAction()
 
 	::end_of_changes::
 
+	local auto_switch_track_on_preview = GA_GetSettingValue(ga_settings.auto_switch_track_on_preview)
+	local stop_media_explorer_on_playback = GA_GetSettingValue(ga_settings.stop_media_explorer_on_playback)
+
 	if something_is_changed then
 		Log("[GLOBAL] Something has changed: \n {param}", ek_log_levels.Notice, changes)
 
@@ -143,8 +147,13 @@ local function observeGlobalAction()
 		end
 
 		-- Auto-Switch playback via selected track in Media Explorer
-		if GA_GetSettingValue(ga_settings.auto_switch_track_on_preview) then
-			GA_ObserveAutoSwitchTrackInMediaExplorer(something_is_changed, cached_changes)
+		if auto_switch_track_on_preview then
+			GA_ObserveAutoSwitchTrackInMediaExplorer(changes, cached_changes)
+		end
+
+		-- Stop preview in Media Explorer when playback started
+		if stop_media_explorer_on_playback then
+			GA_StopPreviewMediaExplorerOnPlayback(changes, cached_changes)
 		end
 	end
 
@@ -168,9 +177,9 @@ local function observeGlobalAction()
 		GA_ObserveProjectWorkingTime(something_is_changed, cached_changes)
 	end
 
-	-- Auto-Switch playback via selected track in Media Explorer
-	-- follow to playing state in Media Explorer
-	if GA_GetSettingValue(ga_settings.auto_switch_track_on_preview) then
+	-- Follow to playing state in Media Explorer
+	-- (for "Auto-Switch playback via selected track in Media Explorer" or "Stop preview in Media Explorer when playback started")
+	if auto_switch_track_on_preview or stop_media_explorer_on_playback then
 		GA_ObservePlayStateInMediaExplorer()
 	end
 
