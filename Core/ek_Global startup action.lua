@@ -1,5 +1,5 @@
 -- @description ek_Global startup action
--- @version 1.0.50
+-- @version 1.0.51
 -- @author Ed Kashinsky
 -- @about
 --   This is startup action brings some ableton-like features in realtime. You can control any option by 'ek_Global startup action settings' script.
@@ -14,6 +14,7 @@
 -- @changelog
 --   - Improved performance for "Auto-Switch playback via selected track in Media Explorer" option
 --   - Added option "Stop preview in Media Explorer when playback started"
+--   - Small bug fixes
 -- @provides
 --   ek_Core functions startup.lua
 --   ek_Adaptive grid functions.lua

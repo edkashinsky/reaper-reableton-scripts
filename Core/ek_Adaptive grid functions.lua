@@ -73,6 +73,8 @@ function AG_SetGridScale(for_midi_editor, id, swingamt)
     local _, division, _, _ = reaper.GetSetProjectGrid(proj, false)
     local scale = ag_scale_types_config[id]
 
+    if not division then division = 1 end
+
 	if scale.title == "Swing" then
 		reaper.GetSetProjectGrid(proj, true, division, 1, swingamt)
 	else
@@ -85,7 +87,7 @@ function AG_SetGridScale(for_midi_editor, id, swingamt)
     if for_midi_editor then
         reaper.SetMIDIEditorGrid(proj, 1)
     else
-         reaper.SetProjectGrid(proj, 1)
+        reaper.SetProjectGrid(proj, 1)
     end
 
     AG_UpdateGrid()
