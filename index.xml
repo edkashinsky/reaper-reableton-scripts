@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="854f8579731ede74c4c2d39c9adfedc5ee657db3">
+<index version="1" name="Reableton Scripts" commit="d24c97ce3583b7616d5fc0b289c1507376589798">
   <category name="AI">
     <reapack name="ek_Generate SFX via ElevenLabs.lua" type="script" desc="ek_Generate SFX via ElevenLabs">
       <metadata>
@@ -1342,6 +1342,20 @@ Please restart Reaper for taking effect]]></changelog>
       </metadata>
       <version name="1.0.0" author="Ed Kashinsky" time="2023-04-08T14:27:50Z">
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/afc4fd920760f4095055add9ffeabd7089bffd3c/Items%20Editing/ek_Remove%201%20sec%20gap%20between%20selected%20items.lua</source>
+      </version>
+    </reapack>
+    <reapack name="ek_Select all notes or CC events.lua" type="script" desc="ek_Select all notes or CC events">
+      <metadata>
+        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \ql \f0 \sa180 \li0 \fi0 Script selects all notes or all CC events depends on focused element. For example, if CC lane is focused, script selects CC events. You can attach this script on "Ctrl+A" hotkey in MIDI Editor.\par}
+}
+]]></description>
+      </metadata>
+      <version name="1.0.0" author="Ed Kashinsky" time="2025-04-14T18:07:06Z">
+        <source main="midi_editor">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d24c97ce3583b7616d5fc0b289c1507376589798/Items%20Editing/ek_Select%20all%20notes%20or%20CC%20events.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Select items on track with color of item under mouse position.lua" type="script" desc="ek_Select items on track with color of item under mouse position">
