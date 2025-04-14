@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="30aedbfb836ceb99d7e5a8ec4dabeaeb413c8336">
+<index version="1" name="Reableton Scripts" commit="854f8579731ede74c4c2d39c9adfedc5ee657db3">
   <category name="AI">
     <reapack name="ek_Generate SFX via ElevenLabs.lua" type="script" desc="ek_Generate SFX via ElevenLabs">
       <metadata>
@@ -478,6 +478,15 @@ Added about window]]></changelog>
         <source file="curl/curl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/bca90e746391ad9e581a44c2c34768fc75d5f5b1/Core/curl/curl.exe</source>
         <source file="curl/trurl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/bca90e746391ad9e581a44c2c34768fc75d5f5b1/Core/curl/trurl.exe</source>
       </version>
+      <version name="1.1.0" author="Ed Kashinsky" time="2025-04-14T11:45:23Z">
+        <changelog><![CDATA[Support of core dat-files]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Core/ek_Core%20functions.lua</source>
+        <source file="data/core_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Core/data/core_5.3.dat</source>
+        <source file="data/core_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Core/data/core_5.4.dat</source>
+        <source file="curl/curl-ca-bundle.crt">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Core/curl/curl-ca-bundle.crt</source>
+        <source file="curl/curl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Core/curl/curl.exe</source>
+        <source file="curl/trurl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Core/curl/trurl.exe</source>
+      </version>
     </reapack>
     <reapack name="ek_Focus virtual MIDI keyboard.lua" type="script" desc="ek_Focus virtual MIDI keyboard">
       <metadata>
@@ -841,6 +850,13 @@ Small bug fixes]]></changelog>
         <source file="ek_Adaptive grid functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/30aedbfb836ceb99d7e5a8ec4dabeaeb413c8336/Core/ek_Adaptive%20grid%20functions.lua</source>
         <source main="main" file="ek_Global startup action - settings.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/30aedbfb836ceb99d7e5a8ec4dabeaeb413c8336/Core/ek_Global%20startup%20action%20-%20settings.lua</source>
       </version>
+      <version name="1.1.0" author="Ed Kashinsky" time="2025-04-14T11:45:23Z">
+        <changelog><![CDATA[Support of core dat-files]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Core/ek_Global%20startup%20action.lua</source>
+        <source file="data/corebg_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Core/data/corebg_5.3.dat</source>
+        <source file="data/corebg_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Core/data/corebg_5.4.dat</source>
+        <source main="main" file="ek_Global startup action - settings.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Core/ek_Global%20startup%20action%20-%20settings.lua</source>
+      </version>
     </reapack>
     <reapack name="ek_Save project with a check of unused media files.lua" type="script" desc="ek_Save project with a check of unused media files">
       <metadata>
@@ -879,6 +895,10 @@ Small bug fixes]]></changelog>
       <version name="1.0.6" author="Ed Kashinsky" time="2024-09-18T14:34:55Z">
         <changelog><![CDATA[Rare crash fix]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f8c61fab98323740df9b7b17333219b0151de576/Core/ek_Save%20project%20with%20a%20check%20of%20unused%20media%20files.lua</source>
+      </version>
+      <version name="1.0.7" author="Ed Kashinsky" time="2025-04-14T11:45:23Z">
+        <changelog><![CDATA[Small fix]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Core/ek_Save%20project%20with%20a%20check%20of%20unused%20media%20files.lua</source>
       </version>
     </reapack>
   </category>
@@ -921,6 +941,15 @@ Please restart Reaper for taking effect]]></changelog>
         <source main="midi_editor" file="ek_Adaptive grid switch to next grid step (MIDI Editor).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/cc5cdcbab6120b8b9a61db20f82722185ac3629b/Grid/ek_Adaptive%20grid%20switch%20to%20next%20grid%20step%20(MIDI%20Editor).lua</source>
         <source main="midi_editor" file="ek_Adaptive grid switch to prev grid step (MIDI Editor).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/cc5cdcbab6120b8b9a61db20f82722185ac3629b/Grid/ek_Adaptive%20grid%20switch%20to%20prev%20grid%20step%20(MIDI%20Editor).lua</source>
         <source main="midi_editor" file="ek_Adaptive grid settings (MIDI Editor).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/cc5cdcbab6120b8b9a61db20f82722185ac3629b/Grid/ek_Adaptive%20grid%20settings%20(MIDI%20Editor).lua</source>
+      </version>
+      <version name="1.0.3" author="Ed Kashinsky" time="2025-04-14T11:45:23Z">
+        <changelog><![CDATA[Support of core dat-files]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Grid/ek_Adaptive%20grid%20settings.lua</source>
+        <source main="main" file="ek_Adaptive grid switch to next grid step.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Grid/ek_Adaptive%20grid%20switch%20to%20next%20grid%20step.lua</source>
+        <source main="main" file="ek_Adaptive grid switch to prev grid step.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Grid/ek_Adaptive%20grid%20switch%20to%20prev%20grid%20step.lua</source>
+        <source main="midi_editor" file="ek_Adaptive grid switch to next grid step (MIDI Editor).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Grid/ek_Adaptive%20grid%20switch%20to%20next%20grid%20step%20(MIDI%20Editor).lua</source>
+        <source main="midi_editor" file="ek_Adaptive grid switch to prev grid step (MIDI Editor).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Grid/ek_Adaptive%20grid%20switch%20to%20prev%20grid%20step%20(MIDI%20Editor).lua</source>
+        <source main="midi_editor" file="ek_Adaptive grid settings (MIDI Editor).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Grid/ek_Adaptive%20grid%20settings%20(MIDI%20Editor).lua</source>
       </version>
     </reapack>
   </category>
@@ -1263,6 +1292,18 @@ Please restart Reaper for taking effect]]></changelog>
         <source main="main" file="ek_Edge silence cropper - apply Preset 4.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a60148e62a8c658140d4f9a489c84d9838506c40/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%204.lua</source>
         <source main="main" file="ek_Edge silence cropper - apply Preset 5.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a60148e62a8c658140d4f9a489c84d9838506c40/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%205.lua</source>
       </version>
+      <version name="1.2.8" author="Ed Kashinsky" time="2025-04-14T11:45:23Z">
+        <changelog><![CDATA[Support of core dat-files]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Items%20Editing/ek_Edge%20silence%20cropper.lua</source>
+        <source file="../Core/data/edge_silence_cropper_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Core/data/edge_silence_cropper_5.3.dat</source>
+        <source file="../Core/data/edge_silence_cropper_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Core/data/edge_silence_cropper_5.4.dat</source>
+        <source main="main" file="ek_Edge silence cropper (no prompt).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Items%20Editing/ek_Edge%20silence%20cropper%20(no%20prompt).lua</source>
+        <source main="main" file="ek_Edge silence cropper - apply Preset 1.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%201.lua</source>
+        <source main="main" file="ek_Edge silence cropper - apply Preset 2.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%202.lua</source>
+        <source main="main" file="ek_Edge silence cropper - apply Preset 3.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%203.lua</source>
+        <source main="main" file="ek_Edge silence cropper - apply Preset 4.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%204.lua</source>
+        <source main="main" file="ek_Edge silence cropper - apply Preset 5.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%205.lua</source>
+      </version>
     </reapack>
     <reapack name="ek_Pitch Tool.lua" type="script" desc="ek_Pitch Tool">
       <metadata>
@@ -1536,6 +1577,10 @@ Also there is flexible offset: just begin of item, snap offset, first cue marker
       <version name="1.0.1" author="Ed Kashinsky" time="2022-05-31T08:06:26Z">
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Items%20Editing/ek_Toggle%20overlaping%20items%20vertically%20option.lua</source>
       </version>
+      <version name="1.0.2" author="Ed Kashinsky" time="2025-04-14T11:45:23Z">
+        <changelog><![CDATA[Support of core dat-files]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Items%20Editing/ek_Toggle%20overlaping%20items%20vertically%20option.lua</source>
+      </version>
     </reapack>
   </category>
   <category name="Navigation">
@@ -1571,6 +1616,10 @@ Also there is flexible offset: just begin of item, snap offset, first cue marker
       </metadata>
       <version name="1.0.0" author="Ed Kashinsky" time="2022-10-09T22:54:02Z">
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d069a7ec585981ae2bc3c50f2ed73f8682875b8f/Navigation/ek_Select%20items%20from%20selected%20to%20mouse%20cursor.lua</source>
+      </version>
+      <version name="1.0.1" author="Ed Kashinsky" time="2025-04-14T11:45:23Z">
+        <changelog><![CDATA[Support of core dat-files]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Navigation/ek_Select%20items%20from%20selected%20to%20mouse%20cursor.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Smart horizontal zoom in.lua" type="script" desc="ek_Smart horizontal zoom in">
@@ -1679,6 +1728,13 @@ Also there is flexible offset: just begin of item, snap offset, first cue marker
         <source main="main" file="ek_Tracks navigator - go to next track.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/0921a2b73f591106cbcff8245a2ad8b2633b54d1/Navigation/ek_Tracks%20navigator%20-%20go%20to%20next%20track.lua</source>
         <source main="main" file="ek_Tracks navigator - go to prev track.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/0921a2b73f591106cbcff8245a2ad8b2633b54d1/Navigation/ek_Tracks%20navigator%20-%20go%20to%20prev%20track.lua</source>
       </version>
+      <version name="1.0.2" author="Ed Kashinsky" time="2025-04-14T11:45:23Z">
+        <changelog><![CDATA[Support of core dat-files]]></changelog>
+        <source file="../Core/data/tracks_navigator_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Core/data/tracks_navigator_5.3.dat</source>
+        <source file="../Core/data/tracks_navigator_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Core/data/tracks_navigator_5.4.dat</source>
+        <source main="main" file="ek_Tracks navigator - go to next track.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Navigation/ek_Tracks%20navigator%20-%20go%20to%20next%20track.lua</source>
+        <source main="main" file="ek_Tracks navigator - go to prev track.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Navigation/ek_Tracks%20navigator%20-%20go%20to%20prev%20track.lua</source>
+      </version>
     </reapack>
   </category>
   <category name="Regions">
@@ -1721,6 +1777,20 @@ Also there is flexible offset: just begin of item, snap offset, first cue marker
         <source main="main midi_editor" file="ek_Toggle Docker - toggle bottom window.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/e2fcf80930f22fc7f31806111c86329aae469723/Toolbars/ek_Toggle%20Docker%20-%20toggle%20bottom%20window.lua</source>
         <source main="main midi_editor" file="ek_Toggle Docker - toggle right window.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/e2fcf80930f22fc7f31806111c86329aae469723/Toolbars/ek_Toggle%20Docker%20-%20toggle%20right%20window.lua</source>
       </version>
+      <version name="1.0.1" author="Ed Kashinsky" time="2025-04-14T11:45:23Z">
+        <changelog><![CDATA[Support of core dat-files]]></changelog>
+        <source main="main" file="ek_Toggle Docker - FX Browser.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Toolbars/ek_Toggle%20Docker%20-%20FX%20Browser.lua</source>
+        <source main="main" file="ek_Toggle Docker - Loudness.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Toolbars/ek_Toggle%20Docker%20-%20Loudness.lua</source>
+        <source main="main mediaexplorer" file="ek_Toggle Docker - Media Explorer.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Toolbars/ek_Toggle%20Docker%20-%20Media%20Explorer.lua</source>
+        <source main="main midi_editor" file="ek_Toggle Docker - MIDI Editor.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Toolbars/ek_Toggle%20Docker%20-%20MIDI%20Editor.lua</source>
+        <source main="main" file="ek_Toggle Docker - Mixer.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Toolbars/ek_Toggle%20Docker%20-%20Mixer.lua</source>
+        <source main="main" file="ek_Toggle Docker - Project Bay.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Toolbars/ek_Toggle%20Docker%20-%20Project%20Bay.lua</source>
+        <source main="main" file="ek_Toggle Docker - Region manager.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Toolbars/ek_Toggle%20Docker%20-%20Region%20manager.lua</source>
+        <source main="main" file="ek_Toggle Docker - Render Matrix.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Toolbars/ek_Toggle%20Docker%20-%20Render%20Matrix.lua</source>
+        <source main="main" file="ek_Toggle Docker - Video.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Toolbars/ek_Toggle%20Docker%20-%20Video.lua</source>
+        <source main="main midi_editor" file="ek_Toggle Docker - toggle bottom window.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Toolbars/ek_Toggle%20Docker%20-%20toggle%20bottom%20window.lua</source>
+        <source main="main midi_editor" file="ek_Toggle Docker - toggle right window.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Toolbars/ek_Toggle%20Docker%20-%20toggle%20right%20window.lua</source>
+      </version>
     </reapack>
     <reapack name="ek_Toggle monitoring FX.lua" type="script" desc="ek_Toggle monitoring FX">
       <metadata>
@@ -1740,6 +1810,15 @@ Also there is flexible offset: just begin of item, snap offset, first cue marker
         <source main="main" file="ek_Toggle monitoring FX on slot 3.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/e2fcf80930f22fc7f31806111c86329aae469723/Toolbars/ek_Toggle%20monitoring%20FX%20on%20slot%203.lua</source>
         <source main="main" file="ek_Toggle monitoring FX on slot 4.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/e2fcf80930f22fc7f31806111c86329aae469723/Toolbars/ek_Toggle%20monitoring%20FX%20on%20slot%204.lua</source>
         <source main="main" file="ek_Toggle monitoring FX on slot 5.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/e2fcf80930f22fc7f31806111c86329aae469723/Toolbars/ek_Toggle%20monitoring%20FX%20on%20slot%205.lua</source>
+      </version>
+      <version name="1.0.1" author="Ed Kashinsky" time="2025-04-14T11:45:23Z">
+        <changelog><![CDATA[Support of core dat-files]]></changelog>
+        <source main="main" file="ek_Toggle monitoring FX on custom slot.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Toolbars/ek_Toggle%20monitoring%20FX%20on%20custom%20slot.lua</source>
+        <source main="main" file="ek_Toggle monitoring FX on slot 1.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Toolbars/ek_Toggle%20monitoring%20FX%20on%20slot%201.lua</source>
+        <source main="main" file="ek_Toggle monitoring FX on slot 2.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Toolbars/ek_Toggle%20monitoring%20FX%20on%20slot%202.lua</source>
+        <source main="main" file="ek_Toggle monitoring FX on slot 3.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Toolbars/ek_Toggle%20monitoring%20FX%20on%20slot%203.lua</source>
+        <source main="main" file="ek_Toggle monitoring FX on slot 4.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Toolbars/ek_Toggle%20monitoring%20FX%20on%20slot%204.lua</source>
+        <source main="main" file="ek_Toggle monitoring FX on slot 5.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Toolbars/ek_Toggle%20monitoring%20FX%20on%20slot%205.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Toggle random color for selected items or tracks.lua" type="script" desc="ek_Toggle random color for selected items or tracks">
@@ -1991,6 +2070,12 @@ Also there is flexible offset: just begin of item, snap offset, first cue marker
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/aeddc436c5fb3384e57f7827d6ae41c940a0693e/Tracks%20Properties/ek_Smart%20renaming%20depending%20on%20focus.lua</source>
         <source file="../Core/ek_Smart renaming functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/aeddc436c5fb3384e57f7827d6ae41c940a0693e/Core/ek_Smart%20renaming%20functions.lua</source>
       </version>
+      <version name="1.0.17" author="Ed Kashinsky" time="2025-04-14T11:45:23Z">
+        <changelog><![CDATA[Support of core dat-files]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Tracks%20Properties/ek_Smart%20renaming%20depending%20on%20focus.lua</source>
+        <source file="../Core/data/smart_renaming_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Core/data/smart_renaming_5.3.dat</source>
+        <source file="../Core/data/smart_renaming_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Core/data/smart_renaming_5.4.dat</source>
+      </version>
     </reapack>
     <reapack name="ek_Toggle exclusive arm for selected tracks.lua" type="script" desc="Toggle exclusive arm for selected tracks">
       <metadata>
@@ -2075,6 +2160,10 @@ Also there is flexible offset: just begin of item, snap offset, first cue marker
         <changelog><![CDATA[- Added core functions]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Tracks%20Properties/ek_Toggle%20trim%20mode%20for%20selected%20trackes.lua</source>
       </version>
+      <version name="1.0.3" author="Ed Kashinsky" time="2025-04-14T11:45:23Z">
+        <changelog><![CDATA[Support of core dat-files]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Tracks%20Properties/ek_Toggle%20trim%20mode%20for%20selected%20trackes.lua</source>
+      </version>
     </reapack>
     <reapack name="ek_Tracks collapser.lua" type="script" desc="ek_Tracks collapser">
       <metadata>
@@ -2107,6 +2196,13 @@ Also there is flexible offset: just begin of item, snap offset, first cue marker
         <source file="../Core/ek_Tracks collapser functions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/779591c514ce98b29b304c7f47b679fe5071661d/Core/ek_Tracks%20collapser%20functions.lua</source>
         <source main="main" file="ek_Tracks collapser - collapse.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/779591c514ce98b29b304c7f47b679fe5071661d/Tracks%20Properties/ek_Tracks%20collapser%20-%20collapse.lua</source>
         <source main="main" file="ek_Tracks collapser - expand.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/779591c514ce98b29b304c7f47b679fe5071661d/Tracks%20Properties/ek_Tracks%20collapser%20-%20expand.lua</source>
+      </version>
+      <version name="1.0.4" author="Ed Kashinsky" time="2025-04-14T11:45:23Z">
+        <changelog><![CDATA[Support of core dat-files]]></changelog>
+        <source file="../Core/data/tracks_collapser_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Core/data/tracks_collapser_5.3.dat</source>
+        <source file="../Core/data/tracks_collapser_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Core/data/tracks_collapser_5.4.dat</source>
+        <source main="main" file="ek_Tracks collapser - collapse.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Tracks%20Properties/ek_Tracks%20collapser%20-%20collapse.lua</source>
+        <source main="main" file="ek_Tracks collapser - expand.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Tracks%20Properties/ek_Tracks%20collapser%20-%20expand.lua</source>
       </version>
     </reapack>
   </category>
