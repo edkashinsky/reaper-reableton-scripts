@@ -1,13 +1,13 @@
 -- @author Ed Kashinsky
 -- @description ek_Tracks collapser
--- @version 1.0.3
+-- @version 1.0.4
 -- @about
 --   This package has 2 scripts "ek_Collapse selected tracks" and "ek_Expand selected tracks". They toggle selected tracks/envelope lanes between 3 states: small, medium, large.
 --   Execute one of these scripts on transport panel and put height values there
 -- @changelog
---   Bug fix for extremely high tracks heights
+--   Support of core dat-files
 -- @metapackage
 -- @provides
---   ../Core/ek_Tracks collapser functions.lua
+--   ../Core/data/tracks_collapser_*.dat
 --   [main=main] ek_Tracks collapser - collapse.lua
 --   [main=main] ek_Tracks collapser - expand.lua

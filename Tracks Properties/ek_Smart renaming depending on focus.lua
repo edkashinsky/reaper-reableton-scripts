@@ -1,31 +1,29 @@
 -- @description ek_Smart renaming depending on focus
--- @version 1.0.16
+-- @version 1.0.17
 -- @author Ed Kashinsky
 -- @readme_skip
 -- @about
 --   Renaming stuff for takes, items, markers, regions and tracks depending on focus
 -- @changelog
---   small color UI update
+--   Support of core dat-files
 -- @provides
---   ../Core/ek_Smart renaming functions.lua
+--   ../Core/data/smart_renaming_*.dat
 
-function CoreFunctionsLoaded(script)
-	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
+local function CoreLibraryLoad(lib)
+	local sep = package.config:sub(1,1)
 	local root_path = debug.getinfo(1, 'S').source:sub(2, -5):match("(.*" .. sep .. ")")
-	local script_path = root_path .. ".." .. sep .. "Core" .. sep .. script
-	local file = io.open(script_path, 'r')
+	local version = string.match(_VERSION, "%d+%.?%d*")
+	local dat_path = root_path .. ".." .. sep .. "Core" .. sep .. "data" .. sep .. lib .. "_" .. version .. ".dat"
+	local file = io.open(dat_path, 'r')
 
-	if file then file:close() dofile(script_path) else return nil end
-	return not not _G["EK_HasExtState"]
+	if file then file:close() dofile(dat_path) return true else return false end
 end
 
-local loaded = CoreFunctionsLoaded("ek_Core functions.lua")
-if not loaded then
-	if loaded == nil then reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0) end
+if not CoreLibraryLoad("core") or not CoreLibraryLoad("smart_renaming") then
+	reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0)
+	reaper.ReaPack_BrowsePackages("ek_Core functions")
 	return
 end
-
-CoreFunctionsLoaded("ek_Smart renaming functions.lua")
 
 local defaultPalette = {
 	0xc93b10, 0xc95a10, 0xc9a510, 0xcaca11, 0x80ca0d, 0x51a31a, 0x5bc910, 0x10c92e, 0x13ca5a, 0x12caa5, 0x0ea5ca, 0x2696cf, 0x3682d4, 0x4644d8, 0x4341b0, 0x5e40d5, 0x7738d3, 0x902ed1, 0xa40fc9, 0xca11c9,
@@ -122,11 +120,9 @@ local function UpdateLastColorsList(new_color)
 		for _, val in pairs(list) do
 			if val == lastColorsList[i] then
 				isExists = true
-				goto end_looking
+				break
 			end
 		end
-
-		::end_looking::
 
 		if not isExists then table.insert(list, lastColorsList[i]) end
 
@@ -273,12 +269,14 @@ local function frameForAdvancedForm(ImGui, ctx)
 
 	ImGui.Separator(ctx)
 
-	GUI_DrawText('Example:')
-	ImGui.SameLine(ctx)
-	ImGui.PushFont(ctx, GUI_GetFont(gui_fonts.Bold))
-	GUI_DrawText(GetProcessedTitleByAdvanced(element.value, 1))
-
-	ImGui.PopFont(ctx)
+	local exampleText = GetProcessedTitleByAdvanced(element.value, 1)
+	if not isEmpty(exampleText) then
+		GUI_DrawText('Example:')
+		ImGui.SameLine(ctx)
+		ImGui.PushFont(ctx, GUI_GetFont(gui_fonts.Bold))
+		GUI_DrawText(exampleText)
+		ImGui.PopFont(ctx)
+	end
 end
 
 local start_time = reaper.time_precise()

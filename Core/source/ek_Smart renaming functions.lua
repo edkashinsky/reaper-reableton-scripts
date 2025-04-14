@@ -81,6 +81,11 @@ rename_advanced_config = {
 	},
 }
 
+rename_advanced_config_common = {
+    sr_trim = { key = "sr_trim", title = "Trim Whitespaces", type = gui_input_types.Checkbox, default = true },
+    sr_close_after_action = { key = "sr_close_after_action", title = "Auto-Close on Rename", type = gui_input_types.Checkbox, default = true },
+}
+
 local advanced_format_iterator = 0
 local tf_data = {}
 
@@ -190,11 +195,9 @@ function GetProcessedTitleByAdvanced(title, id)
                 config[f_config.key] = EK_GetExtState(f_config.key, f_config.default)
             end
 
-            goto gp_end_looking
+            break
         end
 	end
-
-    ::gp_end_looking::
 
     if a_type == rename_advanced_types.Replace then
         local find = config.sr_replace_find
@@ -467,6 +470,7 @@ end
 
 function SaveData(element, isTitleSet, isColorSet, isAdvanced)
     local color = isColorSet and reaper.ImGui_ColorConvertNative(element.color) or 0
+    local isTrim = EK_GetExtState(rename_advanced_config_common.sr_trim.key, rename_advanced_config_common.sr_trim.default)
 
     for _, guid in pairs(element.data) do
         if element.type == rename_types.Marker then
@@ -481,6 +485,8 @@ function SaveData(element, isTitleSet, isColorSet, isAdvanced)
             else
                 newTitle = name
             end
+
+            if isTrim then newTitle = trim(newTitle) end
 
             if isColorSet then
                 if color == 0 then
@@ -514,6 +520,8 @@ function SaveData(element, isTitleSet, isColorSet, isAdvanced)
                         newTitle = element.value
                     end
 
+                    if isTrim then newTitle = trim(newTitle) end
+
                     reaper.GetSetMediaTrackInfo_String(track, "P_NAME", newTitle, true)
                 end
 
@@ -541,6 +549,8 @@ function SaveData(element, isTitleSet, isColorSet, isAdvanced)
                 else
                     newTitle = element.value
                 end
+
+                if isTrim then newTitle = trim(newTitle) end
 
                 for i = 0, reaper.CountTakes(item) - 1 do
                     local i_take = reaper.GetTake(item, i)

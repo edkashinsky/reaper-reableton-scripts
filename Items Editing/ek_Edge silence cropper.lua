@@ -1,5 +1,5 @@
 -- @description ek_Edge silence cropper
--- @version 1.2.7
+-- @version 1.2.8
 -- @author Ed Kashinsky
 -- @readme_skip
 -- @about
@@ -7,9 +7,9 @@
 --
 --   Also it provides UI for configuration
 -- @changelog
---   fixed bug for preview lines on vertical scroll
+--   Support of core dat-files
 -- @provides
---   ../Core/ek_Edge silence cropper functions.lua
+--   ../Core/data/edge_silence_cropper_*.dat
 --   [main=main] ek_Edge silence cropper (no prompt).lua
 --   [main=main] ek_Edge silence cropper - apply Preset 1.lua
 --   [main=main] ek_Edge silence cropper - apply Preset 2.lua
@@ -17,23 +17,21 @@
 --   [main=main] ek_Edge silence cropper - apply Preset 4.lua
 --   [main=main] ek_Edge silence cropper - apply Preset 5.lua
 
-function CoreFunctionsLoaded(script)
-	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
+local function CoreLibraryLoad(lib)
+	local sep = package.config:sub(1,1)
 	local root_path = debug.getinfo(1, 'S').source:sub(2, -5):match("(.*" .. sep .. ")")
-	local script_path = root_path .. ".." .. sep .. "Core" .. sep .. script
-	local file = io.open(script_path, 'r')
+	local version = string.match(_VERSION, "%d+%.?%d*")
+	local dat_path = root_path .. ".." .. sep .. "Core" .. sep .. "data" .. sep .. lib .. "_" .. version .. ".dat"
+	local file = io.open(dat_path, 'r')
 
-	if file then file:close() dofile(script_path) else return nil end
-	return not not _G["EK_HasExtState"]
+	if file then file:close() dofile(dat_path) return true else return false end
 end
 
-local loaded = CoreFunctionsLoaded("ek_Core functions.lua")
-if not loaded then
-	if loaded == nil then reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0) end
+if not CoreLibraryLoad("core") or not CoreLibraryLoad("edge_silence_cropper") then
+	reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0)
+	reaper.ReaPack_BrowsePackages("ek_Core functions")
 	return
 end
-
-CoreFunctionsLoaded("ek_Edge silence cropper functions.lua")
 
 GUI_ShowMainWindow()
 

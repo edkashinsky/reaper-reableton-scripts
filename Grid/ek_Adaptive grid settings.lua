@@ -1,12 +1,11 @@
 -- @description ek_Adaptive grid settings
--- @version 1.0.2
+-- @version 1.0.3
 -- @author Ed Kashinsky
 -- @readme_skip
 -- @about
 --   Switching to next grid step settings depending on adaptive or not
 -- @changelog
---    Now tracking for MIDI Editor is working automatically. No need need to attach additional tracking scripts to zoom actions in MIDI Editor.
---    Please restart Reaper for taking effect
+--    Support of core dat-files
 -- @provides
 --   [main=main] ek_Adaptive grid switch to next grid step.lua
 --   [main=main] ek_Adaptive grid switch to prev grid step.lua
@@ -14,23 +13,25 @@
 --   [main=midi_editor] ek_Adaptive grid switch to prev grid step (MIDI Editor).lua
 --   [main=midi_editor] ek_Adaptive grid settings (MIDI Editor).lua
 
-function CoreFunctionsLoaded(script)
-	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
+local function CoreLibraryLoad(lib)
+	local sep = package.config:sub(1,1)
 	local root_path = debug.getinfo(1, 'S').source:sub(2, -5):match("(.*" .. sep .. ")")
-	local script_path = root_path .. ".." .. sep .. "Core" .. sep .. script
-	local file = io.open(script_path, 'r')
+	local version = string.match(_VERSION, "%d+%.?%d*")
+	local dat_path = root_path .. ".." .. sep .. "Core" .. sep .. "data" .. sep .. lib .. "_" .. version .. ".dat"
+	local file = io.open(dat_path, 'r')
 
-	if file then file:close() dofile(script_path) else return nil end
-	return not not _G["EK_HasExtState"]
+	if file then file:close() dofile(dat_path) return true else return false end
 end
 
-if not CoreFunctionsLoaded("ek_Core functions.lua") then
+if not CoreLibraryLoad("core") then
 	reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0)
+	reaper.ReaPack_BrowsePackages("ek_Core functions")
 	return
 end
 
-if not CoreFunctionsLoaded("ek_Adaptive grid functions.lua") then
+if not CoreLibraryLoad("corebg") then
 	reaper.MB('Global startup action is missing. Please install "ek_Global startup action" it via ReaPack (Action: Browse packages)', '', 0)
+	reaper.ReaPack_BrowsePackages("ek_Global startup action")
 	return
 end
 

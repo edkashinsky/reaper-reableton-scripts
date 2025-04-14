@@ -1,10 +1,12 @@
 -- @author Ed Kashinsky
 -- @description ek_Toggle monitoring FX
--- @version 1.0.0
+-- @version 1.0.1
 -- @about
 --   ![Preview](/Assets/images/mfx_slots_preview.gif)
 --
 --   This script monitors a certain fx slot in the monitoring chain and switches the bypass on it. For realtime highlighting install 'Global startup action'
+-- @changelog
+--   Support of core dat-files
 -- @metapackage
 -- @provides
 --   [main=main] ek_Toggle monitoring FX on custom slot.lua

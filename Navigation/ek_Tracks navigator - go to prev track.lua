@@ -3,17 +3,21 @@
 -- @about ek_Tracks navigator - go to prev track
 -- @readme_skip
 
-function CoreFunctionsLoaded(script)
-	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
+local function CoreLibraryLoad(lib)
+	local sep = package.config:sub(1,1)
 	local root_path = debug.getinfo(1, 'S').source:sub(2, -5):match("(.*" .. sep .. ")")
-	local script_path = root_path .. ".." .. sep .. "Core" .. sep .. script
-	local file = io.open(script_path, 'r')
+	local version = string.match(_VERSION, "%d+%.?%d*")
+	local dat_path = root_path .. ".." .. sep .. "Core" .. sep .. "data" .. sep .. lib .. "_" .. version .. ".dat"
+	local file = io.open(dat_path, 'r')
 
-	if file then file:close() dofile(script_path) else return nil end
-	return not not _G["EK_HasExtState"]
+	if file then file:close() dofile(dat_path) return true else return false end
 end
 
-CoreFunctionsLoaded("ek_Tracks navigator functions.lua")
+if not CoreLibraryLoad("core") or not CoreLibraryLoad("tracks_navigator") then
+	reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0)
+	reaper.ReaPack_BrowsePackages("ek_Core functions")
+	return
+end
 
 -- IF take is selected, navigated by it
 local showAllTakesOption = reaper.SNM_GetIntConfigVar("projtakelane", 0) & 1 == 1 -- Show all takes in lane (when room)

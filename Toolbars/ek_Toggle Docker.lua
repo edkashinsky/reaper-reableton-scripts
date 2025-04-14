@@ -1,9 +1,11 @@
 -- @author Ed Kashinsky
 -- @description ek_Toggle Docker
--- @version 1.0.0
+-- @version 1.0.1
 -- @about
 --   Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes.
 --   Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"
+-- @changelog
+--   Support of core dat-files
 -- @metapackage
 -- @provides
 --   [main=main] ek_Toggle Docker - FX Browser.lua

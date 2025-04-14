@@ -7,26 +7,23 @@
 -- @changelog
 --   UI updates
 -- @provides
---   ../Core/ek_Smart split items by mouse cursor functions.lua
+--   ../Core/data/smart_split_items_*.dat
 
-function CoreFunctionsLoaded(script)
-	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
+local function CoreLibraryLoad(lib)
+	local sep = package.config:sub(1,1)
 	local root_path = debug.getinfo(1, 'S').source:sub(2, -5):match("(.*" .. sep .. ")")
-	local script_path = root_path .. ".." .. sep .. "Core" .. sep .. script
-	local file = io.open(script_path, 'r')
+	local version = string.match(_VERSION, "%d+%.?%d*")
+	local dat_path = root_path .. ".." .. sep .. "Core" .. sep .. "data" .. sep .. lib .. "_" .. version .. ".dat"
+	local file = io.open(dat_path, 'r')
 
-	if file then file:close() dofile(script_path) else return nil end
-	return not not _G["EK_HasExtState"]
+	if file then file:close() dofile(dat_path) return true else return false end
 end
 
-
-local loaded = CoreFunctionsLoaded("ek_Core functions.lua")
-if not loaded then
-	if loaded == nil then reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0) end
+if not CoreLibraryLoad("core") or not CoreLibraryLoad("smart_split_items") then
+	reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0)
+	reaper.ReaPack_BrowsePackages("ek_Core functions")
 	return
 end
-
-CoreFunctionsLoaded("ek_Smart split items by mouse cursor functions.lua")
 
 local window, _, _ = reaper.BR_GetMouseCursorContext()
 if window == "transport" then

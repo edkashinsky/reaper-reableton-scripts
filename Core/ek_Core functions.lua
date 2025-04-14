@@ -1,21 +1,22 @@
 -- @description ek_Core functions
 -- @author Ed Kashinsky
 -- @about Base functions used by ek-scripts.
--- @version 1.0.60
+-- @version 1.1.0
 -- @provides
---   ek_Core functions v1.lua
---   ek_Core functions GUI.lua
+--   data/core_*.dat
 --   [nomain] curl/*
 --
 -- @changelog
---    Fixed GUI bug: excessive creation of short-lived resources for images
+--    Support of core dat-files
 
 local function CoreLoadFunctions()
-    local info = debug.getinfo(1,'S');
-    local script_path = info.source:match([[^@?(.*[\/])[^\/]-$]])
+    local sep = package.config:sub(1,1)
+    local version = string.match(_VERSION, "%d+%.?%d*")
+    local info = debug.getinfo(1,'S')
+    local script_path = info.source:match([[^@?(.*[\/])[^\/]-$]]) .. "data" .. sep .. "core_" .. version .. ".dat"
+    local file = io.open(script_path, 'r')
 
-    dofile(script_path .. "ek_Core functions v1.lua")
-    dofile(script_path .. "ek_Core functions GUI.lua")
+    if file then file:close() dofile(script_path) return true else return false end
 end
 
 if not reaper.APIExists("SNM_SetIntConfigVar") then
@@ -29,4 +30,6 @@ if not reaper.APIExists("JS_Mouse_GetState") then
 	return
 end
 
-CoreLoadFunctions()
+if not CoreLoadFunctions() then
+    reaper.MB("Your version of Lua does not support.\n Your version is: " .. _VERSION, '', 0)
+end

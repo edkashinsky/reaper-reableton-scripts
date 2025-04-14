@@ -2,30 +2,6 @@
 -- @author Ed Kashinsky
 -- @noindex
 
-function CoreFunctionsLoaded(script)
-	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
-	local root_path = debug.getinfo(1, 'S').source:sub(2, -5):match("(.*" .. sep .. ")")
-	local script_path = root_path .. sep .. script
-	local file = io.open(script_path, 'r')
-
-	if file then file:close() dofile(script_path) else return nil end
-	return not not _G["EK_HasExtState"]
-end
-
-local loaded = CoreFunctionsLoaded("ek_Core functions.lua")
-if not loaded then
-	if loaded == nil then reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0) end
-	return
-end
-
-if not reaper.APIExists("JS_ReaScriptAPI_Version") then
-	local answer = reaper.MB("You have to install JS_ReaScriptAPI for this script to work. Would you like to open the relative web page in your browser?", "JS_ReaScriptAPI not installed", 4 )
-
-	if answer == 6 then reaper.CF_ShellExecute("https://forum.cockos.com/showthread.php?t=212174") end
-
-	return reaper.defer(function() end)
-end
-
 local key_last_height = "tc_last_height"
 local key = "tc_config"
 heights = {
@@ -67,13 +43,11 @@ function GetHeightData(track, for_collapse)
 	for i = 1, #heights do
 		if height <= heights[i].val then
 			current_id = i
-			goto end_looking
+			break
 		end
 	end
 
 	if not current_id then current_id = #heights end
-
-	::end_looking::
 
 	local new_id = current_id
 

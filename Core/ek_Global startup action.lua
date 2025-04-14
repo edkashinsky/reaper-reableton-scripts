@@ -1,5 +1,5 @@
 -- @description ek_Global startup action
--- @version 1.0.51
+-- @version 1.1.0
 -- @author Ed Kashinsky
 -- @about
 --   This is startup action brings some ableton-like features in realtime. You can control any option by 'ek_Global startup action settings' script.
@@ -12,34 +12,26 @@
 --      5. Open 'ek_Global startup action settings' again for customize options
 --      6. If you want to use auto-grid for MIDI Editor, install script **ek_Auto grid for MIDI Editor** and set it on zoom shortcut.
 -- @changelog
---   - Improved performance for "Auto-Switch playback via selected track in Media Explorer" option
---   - Added option "Stop preview in Media Explorer when playback started"
---   - Small bug fixes
+--   Support of core dat-files
 -- @provides
---   ek_Core functions startup.lua
---   ek_Adaptive grid functions.lua
+--   data/corebg_*.dat
 --   [main=main] ek_Global startup action - settings.lua
 
-function CoreFunctionsLoaded(script)
-	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
+local function CoreLibraryLoad(lib)
+	local sep = package.config:sub(1,1)
 	local root_path = debug.getinfo(1, 'S').source:sub(2, -5):match("(.*" .. sep .. ")")
-	local script_path = root_path .. ".." .. sep .. "Core" .. sep .. script
-	local file = io.open(script_path, 'r')
+	local version = string.match(_VERSION, "%d+%.?%d*")
+	local dat_path = root_path .. ".." .. sep .. "Core" .. sep .. "data" .. sep .. lib .. "_" .. version .. ".dat"
+	local file = io.open(dat_path, 'r')
 
-	if file then file:close() dofile(script_path) else return nil end
-	return not not _G["EK_HasExtState"]
+	if file then file:close() dofile(dat_path) return true else return false end
 end
 
-local loaded = CoreFunctionsLoaded("ek_Core functions.lua")
-if not loaded then
-	if loaded == nil then
-		reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0)
-		reaper.ReaPack_BrowsePackages("ek_Core functions")
-	end
+if not CoreLibraryLoad("core") or not CoreLibraryLoad("corebg") then
+	reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0)
+	reaper.ReaPack_BrowsePackages("ek_Core functions")
 	return
 end
-
-CoreFunctionsLoaded("ek_Core functions startup.lua")
 
 local cached_changes = {
 	project_path = nil,
@@ -112,11 +104,9 @@ local function observeGlobalAction()
 	for _, is_changed in pairs(changes) do
 		if is_changed then
 			something_is_changed = true
-			goto end_of_changes
+			break
 		end
 	end
-
-	::end_of_changes::
 
 	local auto_switch_track_on_preview = GA_GetSettingValue(ga_settings.auto_switch_track_on_preview)
 	local stop_media_explorer_on_playback = GA_GetSettingValue(ga_settings.stop_media_explorer_on_playback)

@@ -2,8 +2,6 @@
 -- @author Ed Kashinsky
 -- @noindex
 
-EK_CoreFunctionsLoaded("ek_Adaptive grid functions.lua")
-
 local ga_key_prefix = "ga_"
 ga_highlight_buttons = {
     preserve_pitch = "preserve_pitch_btn",

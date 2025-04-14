@@ -82,11 +82,9 @@ local function isEnvelopeVisible(env)
 
 		if retval and selected then
 			anyPointIsSelected = true
-			goto end_for_looking
+			break
 		end
 	end
-
-	::end_for_looking::
 
 	return not anyPointIsSelected
 end

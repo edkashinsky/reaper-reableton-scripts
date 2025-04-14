@@ -1,10 +1,10 @@
 -- @description ek_Save project with a check of unused media files
--- @version 1.0.6
+-- @version 1.0.7
 -- @author Ed Kashinsky
 -- @about
 --   This helps to keep track of file garbage in your projects. It shows a special warning if you have unused files in the project when saving.
 -- @changelog
---   Rare crash fix
+--   Small fix
 
 function CoreFunctionsLoaded(script)
 	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
@@ -63,16 +63,14 @@ for i = 0, reaper.CountMediaItems(proj) - 1 do
 			local take_file = reaper.GetMediaSourceFileName(source)
 
 			if cached_found_files[take_file] == true then
-				goto end_for_searching
+				break
 			end
 
 			if files[take_file] == true then
 				files[take_file] = nil
 				cached_found_files[take_file] = true
-				goto end_for_searching
+				break
 			end
-
-			::end_for_searching::
 		end
 	end
 end
@@ -81,11 +79,9 @@ local hasAnyUnusedFile = false
 for path, _ in pairs(files) do
 	if not ignored_list[path] then
 		hasAnyUnusedFile = true
-		goto result
+		break
 	end
 end
-
-::result::
 
 -- for do not disturbing
 ignored_list = {}

@@ -16,10 +16,14 @@ POSITION_PEAK = 3
 data = {
 	snap_to = { key = 'sn_snap_to', default = SNAP_TO_MARKERS, value = nil, },
 	start_marker = { key = 'sn_start', default = 1, value = nil, },
+	end_marker = { key = 'sn_end', default = 0, value = nil, },
+	offset = { key = 'sn_offset', default = 0, value = nil, },
 	count_on_track = { key = 'sn_count', default = 1, value = nil, },
 	behaviour = { key = 'sn_behaviour', default = BEHAVIOUR_TYPE_SINGLE, value = nil, },
 	position = { key = 'sn_position', default = POSITION_BEGIN, value = nil, },
 	ignore_when_unavailable = { key = 'sn_ignore_when_unavailable', default = true, value = nil, },
+	s_detect = { key = 'sn_settings_detect', default = 0, value = nil, },
+	s_create_tracks = { key = 'sn_settings_create_tracks', default = true, value = nil, },
 }
 
 local cur_track_index = 0
@@ -62,7 +66,9 @@ local function BuildSamplesBuffer(item, isPortioned, Callback)
 	for cur_block = startBlock, endBlock, iterBlock do
 		local block = cur_block == endBlock and extra_spls or block_size
 
-		if block == 0 then goto end_looking end
+		if block == 0 then
+			break
+		end
 
 		samplebuffer.clear()
 
@@ -72,13 +78,11 @@ local function BuildSamplesBuffer(item, isPortioned, Callback)
 		Log("\t" .. cur_block .. " block: [" .. n_channels .. "ch.][" .. block .. "spl.][" .. round((starttime_sec + (block / samplerate)) - starttime_sec, 3) .. "s.] " .. round(starttime_sec, 3) .. " - " .. round(starttime_sec + (block / samplerate), 3) .. "s.", ek_log_levels.Warning)
 
 		if Callback(samplebuffer, block, samplerate, n_channels, starttime_sec) then
-			goto end_looking
+			break
 		end
 
 		starttime_sec = starttime_sec + (block / samplerate)
 	end
-
-	::end_looking::
 
 	-- Tell r we're done working with this item, so the memory can be freed
 	reaper.DestroyAudioAccessor(audio)
@@ -367,14 +371,15 @@ function FindNearestMarker(snap_to, position)
 	end
 end
 
-local function GetItemOffset(type, item)
+local function GetItemOffset(data, item)
 	if not item then return 0 end
 
+	local result = 0
 	local take = reaper.GetActiveTake(item)
 
-	if type == POSITION_SNAP_OFFSET then
-		return reaper.GetMediaItemInfo_Value(item, "D_SNAPOFFSET")
-	elseif type == POSITION_FIRST_CUE and not reaper.TakeIsMIDI(take) then
+	if data.position.value == POSITION_SNAP_OFFSET then
+		result = reaper.GetMediaItemInfo_Value(item, "D_SNAPOFFSET")
+	elseif data.position.value == POSITION_FIRST_CUE and not reaper.TakeIsMIDI(take) then
 		local source = reaper.GetMediaItemTake_Source(take)
 		local offset = reaper.GetMediaItemTakeInfo_Value(take, "D_STARTOFFS")
 		local length = reaper.GetMediaItemInfo_Value(item, "D_LENGTH")
@@ -391,18 +396,18 @@ local function GetItemOffset(type, item)
 			index = index + 1
 		end
 
-		return relTime or 0
-	elseif type == POSITION_PEAK and not reaper.TakeIsMIDI(take) then
+		result = relTime or 0
+	elseif data.position.value == POSITION_PEAK and not reaper.TakeIsMIDI(take) then
 		local db = GetMaxPeakPosition(item)
 		local threshold = 95 -- %
         local abs_percent = 10 ^ (db / 40)
         local rel_db = 40 * log10(abs_percent * (threshold / 100))
 		local _, position = GetPeakThresholdPosition(item, rel_db)
 
-		return position
+		result = position
 	end
 
-	return 0
+	return result - data.offset.value
 end
 
 local mIndex = 1
@@ -437,8 +442,8 @@ local function HandleItemSnapping(item_data, markers, data, startIndex)
 	end
 
 	if isMovingAvailable then
-		local newPosition = markers[mIndex].position -  GetItemOffset(data.position.value, item)
-		Log("Setting position: " .. markers[mIndex].position .. ", offset: " ..  GetItemOffset(data.position.value, item), ek_log_levels.Important)
+		local newPosition = markers[mIndex].position -  GetItemOffset(data, item)
+		Log("Setting position: " .. markers[mIndex].position .. ", offset: " ..  GetItemOffset(data, item), ek_log_levels.Important)
 		reaper.SetMediaItemInfo_Value(item, "D_POSITION", newPosition)
 		item_data.position = newPosition
 	end
@@ -489,7 +494,7 @@ local function SnapItemsAsOverlappedType(markers, startIndex, items_map, data)
 		if not isMarkerAvailable then
 			if data.ignore_when_unavailable.value then
 				Log("End of avalible markers...", ek_log_levels.Important)
-				goto end_snap_overlapped
+				break
 			else
 				Log("Marker #" .. mIndex .. " is not available...", ek_log_levels.Important)
 				mIndex = startIndex
@@ -524,7 +529,7 @@ local function SnapItemsAsOverlappedType(markers, startIndex, items_map, data)
 
 			if isMovingAvailable then
 				local newPosition
-				local offset = GetItemOffset(data.position.value, item)
+				local offset = GetItemOffset(data, item)
 				if j == 1 then
 					newPosition = markers[mIndex].position - offset
 					newRootPosition = newPosition
@@ -542,8 +547,6 @@ local function SnapItemsAsOverlappedType(markers, startIndex, items_map, data)
 		mIndex = mIndex + 1
 		iIndex = iIndex + 1
 	end
-
-	::end_snap_overlapped::
 end
 
 function SnapItems(snap_to, marker_num, data)

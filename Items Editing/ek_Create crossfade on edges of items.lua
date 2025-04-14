@@ -60,12 +60,10 @@ if selected_track ~= nil then
             reaper.SetMediaItemSelected(prev_item, true)
 
             can_crossfade = true
-            goto done
+            break
         end
     end
 end
-
-::done::
 
 if can_crossfade then
     reaper.Main_OnCommand(reaper.NamedCommandLookup(41059), 0) -- Item: Crossfade any overlapping items

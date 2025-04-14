@@ -6,12 +6,12 @@ IS_WINDOWS = reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32"
 
 proj = 0
 defProjPitchMode = -1
-dir_sep = IS_WINDOWS and "\\" or "/"
+dir_sep = package.config:sub(1,1)
 
 CONTEXT = ({reaper.get_action_context()})
 SCRIPT_NAME = CONTEXT[2]:match("([^/\\]+)%.lua$"):gsub("ek_", "")
 SCRIPT_PATH = CONTEXT[2]:match("(.*[/\\])")
-CORE_PATH = debug.getinfo(1, 'S').source:sub(2, -5):match("(.*" .. dir_sep .. ")")
+CORE_PATH = SCRIPT_PATH .. ".." .. dir_sep .. "Core" .. dir_sep
 
 CURL_GET = 'GET'
 CURL_POST = 'POST'
@@ -78,14 +78,6 @@ if IS_WINDOWS then
 	gfx.ext_retina = tonumber(dpi) >= 512 and 1 or 0
 else
 	gfx.ext_retina = tonumber(dpi) > 512 and 1 or 0
-end
-
-function EK_CoreFunctionsLoaded(script)
-	local script_path = CORE_PATH .. script
-	local file = io.open(script_path, 'r')
-
-	if file then file:close() dofile(script_path) else return nil end
-	return not not _G["EK_HasExtState"]
 end
 
 function Log(msg, level, param)
@@ -420,12 +412,10 @@ function TD_ToggleLastWindow(dockerId)
 
 				if did == dockerId then
 					opened = wTitle
-					goto end_searching_window
+					break
 				end
 			end
 		end
-
-		::end_searching_window::
 
 		return opened
 	end
@@ -808,9 +798,9 @@ function unserializeTable(s)
 	end
 end
 
-function in_array(tab, val)
-    for _, value in ipairs(tab) do
-        if value == val then return true end
+function in_array(table, value)
+    for _, val in ipairs(table) do
+        if val == value then return true end
     end
 
     return false
@@ -852,7 +842,7 @@ function GetAbsolutePath(path)
 end
 
 function GetReaperIniValue(section, key)
-	local fileName = reaper.GetResourcePath() .. dir_sep .. "reaper.ini"
+	local fileName = reaper.get_ini_file()
 
 	local file = assert(io.open(fileName, 'r'), 'Error loading file : ' .. fileName);
 	local data = {};
@@ -1270,11 +1260,9 @@ function EK_LookupCommandIdByName(script_name)
 
 		if name == script_name then
 			cmdId = string.match(line, "%a+ %d %d \"?([^%s]+)\"? ")
-			goto end_looking
+			break
 		end
 	end
-
-	::end_looking::
 
 	file:close();
 

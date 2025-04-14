@@ -630,7 +630,9 @@ function EdgeCropper.new()
         for cur_block = startBlock, endBlock, iterBlock do
             local block = cur_block == endBlock and extra_spls or block_size
 
-            if block == 0 then goto end_looking end
+            if block == 0 then
+                break
+            end
 
             samplebuffer.clear()
 
@@ -640,7 +642,7 @@ function EdgeCropper.new()
             Log("\t" .. cur_block .. " block: [" .. n_channels .. "ch.][" .. block .. "spl.][" .. round((starttime_sec + (block / samplerate)) - starttime_sec, 3) .. "s.] " .. round(starttime_sec, 3) .. " - " .. round(starttime_sec + (block / samplerate), 3) .. "s.", ek_log_levels.Warning)
 
             if Callback(samplebuffer, block, samplerate, n_channels, starttime_sec) then
-                goto end_looking
+                break
             end
 
             if isReverse then
@@ -650,8 +652,6 @@ function EdgeCropper.new()
                 starttime_sec = starttime_sec + (block / samplerate)
             end
         end
-
-        ::end_looking::
 
         -- Tell r we're done working with this item, so the memory can be freed
         r.DestroyAudioAccessor(audio)

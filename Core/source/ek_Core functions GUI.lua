@@ -847,10 +847,10 @@ function GUI_DrawInput(i_type, i_label, i_value, i_settings)
 	return newVal
 end
 
-function GUI_SetWindowSize(width, height)
-	window_width = width
-	window_height = height
-end
+--function GUI_SetWindowSize(width, height)
+--	window_width = width
+--	window_height = height
+--end
 
 function GUI_SetFocusOnWidget()
 	if window_first_frame_showed == false then
