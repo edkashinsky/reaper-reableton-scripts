@@ -1,5 +1,5 @@
 -- @description ek_Separated actions for Media item in Mouse modifiers
--- @version 1.1.4
+-- @version 1.1.5
 -- @author Ed Kashinsky
 -- @readme_skip
 -- @about
@@ -9,13 +9,7 @@
 --		- If option enabled, header label is positioned above the item and "header part" calculates as 1/4 of the upper part of the item
 --      - If option disabled, header label is positioned on item and header part calculates as header label height
 -- @changelog
---   Added helpers for not installed dependencies
-
-if not reaper.APIExists("JS_ReaScriptAPI_Version") then
-	reaper.MB('Please install "js_ReaScriptAPI: API functions for ReaScripts" via ReaPack', '', 0)
-    reaper.ReaPack_BrowsePackages("js_ReaScriptAPI: API functions for ReaScripts")
-    return
-end
+--   Bug fix for hyphen-symbol in theme name
 
 function CoreFunctionsLoaded()
 	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
@@ -27,12 +21,9 @@ function CoreFunctionsLoaded()
 	return not not _G["EK_HasExtState"]
 end
 
-local loaded = CoreFunctionsLoaded()
-if not loaded then
-	if loaded == nil then
-        reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0)
-        reaper.ReaPack_BrowsePackages("ek_Core functions")
-    end
+if not CoreFunctionsLoaded() then
+    reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0)
+    reaper.ReaPack_BrowsePackages("ek_Core functions")
 	return
 end
 
@@ -47,7 +38,7 @@ local function GetMediaItemFontData()
         local theme = reaper.GetLastColorThemeFile()
         _, mi_font = reaper.BR_Win32_GetPrivateProfileString("reaper", "mi_font", "Error", theme)
         if mi_font == "Error" then
-            local ext = theme:find("(.-)%Zip")
+            local ext = theme:find("(.+)%.ReaperThemeZip$")
             if not ext then
                 theme = theme .. "Zip"
             end
