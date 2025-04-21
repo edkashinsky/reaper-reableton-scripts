@@ -1,5 +1,5 @@
 -- @description ek_Smart renaming depending on focus
--- @version 1.0.17
+-- @version 1.0.18
 -- @author Ed Kashinsky
 -- @readme_skip
 -- @about
@@ -7,7 +7,7 @@
 -- @changelog
 --   Support of core dat-files
 -- @provides
---   ../Core/data/smart_renaming_*.dat
+--   ../Core/data/smart-renaming_*.dat
 
 local function CoreLibraryLoad(lib)
 	local sep = package.config:sub(1,1)
@@ -19,7 +19,7 @@ local function CoreLibraryLoad(lib)
 	if file then file:close() dofile(dat_path) return true else return false end
 end
 
-if not CoreLibraryLoad("core") or not CoreLibraryLoad("smart_renaming") then
+if not CoreLibraryLoad("core") or not CoreLibraryLoad("smart-renaming") then
 	reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0)
 	reaper.ReaPack_BrowsePackages("ek_Core functions")
 	return

@@ -1,5 +1,5 @@
 -- @description ek_Smart split items by mouse cursor
--- @version 1.0.6
+-- @version 1.0.7
 -- @author Ed Kashinsky
 -- @about
 --   Remake of amazing script by AZ and it works a bit different way. You can split by edit cursor if mouse position on it (or in Tolerance range in pixels).
@@ -7,7 +7,7 @@
 -- @changelog
 --   UI updates
 -- @provides
---   ../Core/data/smart_split_items_*.dat
+--   ../Core/data/smart-split-items_*.dat
 
 local function CoreLibraryLoad(lib)
 	local sep = package.config:sub(1,1)
@@ -19,7 +19,7 @@ local function CoreLibraryLoad(lib)
 	if file then file:close() dofile(dat_path) return true else return false end
 end
 
-if not CoreLibraryLoad("core") or not CoreLibraryLoad("smart_split_items") then
+if not CoreLibraryLoad("core") or not CoreLibraryLoad("smart-split-items") then
 	reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0)
 	reaper.ReaPack_BrowsePackages("ek_Core functions")
 	return

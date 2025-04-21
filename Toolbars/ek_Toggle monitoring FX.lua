@@ -1,6 +1,6 @@
 -- @author Ed Kashinsky
 -- @description ek_Toggle monitoring FX
--- @version 1.0.1
+-- @version 1.0.2
 -- @about
 --   ![Preview](/Assets/images/mfx_slots_preview.gif)
 --

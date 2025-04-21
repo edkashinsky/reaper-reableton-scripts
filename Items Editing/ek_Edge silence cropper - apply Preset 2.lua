@@ -13,7 +13,7 @@ local function CoreLibraryLoad(lib)
 	if file then file:close() dofile(dat_path) return true else return false end
 end
 
-if not CoreLibraryLoad("core") or not CoreLibraryLoad("edge_silence_cropper") then
+if not CoreLibraryLoad("core") or not CoreLibraryLoad("edge-silence-cropper") then
 	reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0)
 	reaper.ReaPack_BrowsePackages("ek_Core functions")
 	return

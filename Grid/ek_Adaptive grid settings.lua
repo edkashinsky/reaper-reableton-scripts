@@ -1,5 +1,5 @@
 -- @description ek_Adaptive grid settings
--- @version 1.0.3
+-- @version 1.0.4
 -- @author Ed Kashinsky
 -- @readme_skip
 -- @about
@@ -29,7 +29,7 @@ if not CoreLibraryLoad("core") then
 	return
 end
 
-if not CoreLibraryLoad("corebg") then
+if not CoreLibraryLoad("core-bg") then
 	reaper.MB('Global startup action is missing. Please install "ek_Global startup action" it via ReaPack (Action: Browse packages)', '', 0)
 	reaper.ReaPack_BrowsePackages("ek_Global startup action")
 	return

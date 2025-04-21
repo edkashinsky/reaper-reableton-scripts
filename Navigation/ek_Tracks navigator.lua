@@ -1,6 +1,6 @@
 -- @author Ed Kashinsky
 -- @description ek_Tracks navigator
--- @version 1.0.2
+-- @version 1.0.3
 -- @about
 --   This package has 2 scripts "ek_Tracks navigator - go to prev track" and "ek_Tracks navigator - go to next track".
 --   With these scripts you can navigate between non-tiny visible tracks and envelopes. You can attach scripts to arrow keys
@@ -8,6 +8,6 @@
 --   Support of core dat-files
 -- @metapackage
 -- @provides
---   ../Core/data/tracks_navigator_*.dat
+--   ../Core/data/tracks-navigator_*.dat
 --   [main=main] ek_Tracks navigator - go to next track.lua
 --   [main=main] ek_Tracks navigator - go to prev track.lua

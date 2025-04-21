@@ -1,5 +1,5 @@
 -- @description ek_Global startup action
--- @version 1.1.0
+-- @version 1.1.1
 -- @author Ed Kashinsky
 -- @about
 --   This is startup action brings some ableton-like features in realtime. You can control any option by 'ek_Global startup action settings' script.
@@ -14,7 +14,7 @@
 -- @changelog
 --   Support of core dat-files
 -- @provides
---   data/corebg_*.dat
+--   data/core-bg_*.dat
 --   [main=main] ek_Global startup action - settings.lua
 
 local function CoreLibraryLoad(lib)
@@ -27,7 +27,7 @@ local function CoreLibraryLoad(lib)
 	if file then file:close() dofile(dat_path) return true else return false end
 end
 
-if not CoreLibraryLoad("core") or not CoreLibraryLoad("corebg") then
+if not CoreLibraryLoad("core") or not CoreLibraryLoad("core-bg") then
 	reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0)
 	reaper.ReaPack_BrowsePackages("ek_Core functions")
 	return

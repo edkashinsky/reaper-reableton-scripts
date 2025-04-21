@@ -1,5 +1,5 @@
 -- @description ek_Edge silence cropper
--- @version 1.2.8
+-- @version 1.2.9
 -- @author Ed Kashinsky
 -- @readme_skip
 -- @about
@@ -9,7 +9,7 @@
 -- @changelog
 --   Support of core dat-files
 -- @provides
---   ../Core/data/edge_silence_cropper_*.dat
+--   ../Core/data/edge-silence-cropper_*.dat
 --   [main=main] ek_Edge silence cropper (no prompt).lua
 --   [main=main] ek_Edge silence cropper - apply Preset 1.lua
 --   [main=main] ek_Edge silence cropper - apply Preset 2.lua
@@ -27,7 +27,7 @@ local function CoreLibraryLoad(lib)
 	if file then file:close() dofile(dat_path) return true else return false end
 end
 
-if not CoreLibraryLoad("core") or not CoreLibraryLoad("edge_silence_cropper") then
+if not CoreLibraryLoad("core") or not CoreLibraryLoad("edge-silence-cropper") then
 	reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0)
 	reaper.ReaPack_BrowsePackages("ek_Core functions")
 	return

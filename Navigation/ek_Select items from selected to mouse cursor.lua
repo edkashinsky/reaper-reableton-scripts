@@ -1,5 +1,5 @@
 -- @description ek_Select items from selected to mouse cursor
--- @version 1.0.1
+-- @version 1.0.2
 -- @author Ed Kashinsky
 -- @about
 --   This script extends selection of items from selected to mouse cursor. As usual this action attaches in mouse modifiers on media item section
@@ -22,7 +22,7 @@ if not CoreLibraryLoad("core") then
 	return
 end
 
-if not CoreLibraryLoad("corebg") then
+if not CoreLibraryLoad("core-bg") then
 	reaper.MB('Global startup action is missing. Please install "ek_Global startup action" it via ReaPack (Action: Browse packages)', '', 0)
 	reaper.ReaPack_BrowsePackages("ek_Global startup action")
 	return
