@@ -1,11 +1,11 @@
 -- @description ek_Smart renaming depending on focus
--- @version 1.0.18
+-- @version 1.0.19
 -- @author Ed Kashinsky
 -- @readme_skip
 -- @about
 --   Renaming stuff for takes, items, markers, regions and tracks depending on focus
 -- @changelog
---   Support of core dat-files
+--   Small bug fixes of bitwise
 -- @provides
 --   ../Core/data/smart-renaming_*.dat
 
