@@ -1,13 +1,13 @@
 -- @description ek_Core functions
 -- @author Ed Kashinsky
 -- @about Base functions used by ek-scripts.
--- @version 1.1.2
+-- @version 1.1.3
 -- @provides
 --   data/core_*.dat
 --   [nomain] curl/*
 --
 -- @changelog
---    Improved work with curl on Windows + small bug fixes of bitwise
+--    Small bug fix for cURL
 
 local function CoreLoadFunctions()
     local sep = package.config:sub(1,1)
