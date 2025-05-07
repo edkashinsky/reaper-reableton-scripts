@@ -1,12 +1,8 @@
-
-
 <img src="/Assets/images/logo.png" alt="Logo" />
-
-# Reableton - scripts for Reaper
 
 This scripts makes Reaper a bit close to Ableton workflow. Also it brings useful things to save time.
 
-## Installation
+# Installation
 
 1. Install [ReaPack](https://reapack.com)
 2. Install [SWS Extension](https://sws-extension.org)
@@ -23,9 +19,9 @@ https://raw.githubusercontent.com/edkashinsky/reaper-reableton-scripts/master/in
 8. Install script **ek_Core functions**, because many of scripts require this base script with common functions 
 9. From time to time please execute **Extensions** -> **ReaPack** -> **Synchronize Packages** to get new versions of scripts.
 
-## Main useful scripts
+# Main useful scripts
 
-### Ableton Clip Shortcuts
+## Ableton Clip Shortcuts
 
 One of the main thing is warping panel:  
 
@@ -43,7 +39,7 @@ It works similar like in Ableton:
 
 In two words, script changes pitch, if item has **preserve pitch** option and changes rate and length for selected items if items has this option off.
 
-### Global startup action
+## Global startup action
 
 <img src="/Assets/images/global_action_settings.png" alt="Global Functions preview" width="500"/>
 
@@ -66,7 +62,7 @@ For installation:
 3. Restart Reaper
 4. Check script '**ek_Global startup action - settings**' again and enable features you need
 
-### Adaptive grid
+## Adaptive grid
 
 <img src="/Assets/images/auto_grid_preview.gif" alt="Global Functions preview" width="500"/>
 
@@ -87,7 +83,7 @@ For installation:
 1. Install '**ek_Adaptive grid settings**' script via Extensions -> ReaPack -> Browse Packages
 2. Attach this script to any toolbar
 
-### Edge silence cropper
+## Edge silence cropper
 
 This complicated script helps to crop silence on the edges of items by individual thresholds. It is very useful for sounds with loud start and quite long tails. Additionally, you can set offset and fade time. For instant work, there is one more script **ek_Edge silence cropper (no prompt)** - it apply cropping by remembered values.
 
@@ -107,7 +103,7 @@ Script calculates the maximum peak (in db) in each item and applies a percentage
 Installation:
 1. Install script **ek_Edge silence cropper** for GUI and preview mode
 
-### Separated actions for Media item in Mouse modifiers
+## Separated actions for Media item in Mouse modifiers
 
 This small script helps to attach 2 independent actions on media item click: on header and zone below of it. Script have 2 workflows depends on option "Draw labels above the item when media item height is more than":
 - If option disabled, header label is positioned on item and header part calculates as header label height
@@ -124,7 +120,7 @@ Installation:
 
 If you want to attach different actions on different mouse modifiers (for example, on left click, left drag or double click), please make copy of this script manually and add it with new unique name to Reaper (via Action list window: New action... -> Load ReaScript...) and put new script instance on new action in Mouse modifiers 
 
-### Save project with a check of unused media files
+## Save project with a check of unused media files
 
 This helps to keep track of file garbage in your projects. It shows a special warning if you have unused files in the project when saving.
 
@@ -134,7 +130,7 @@ Installation:
 1. Install script **ek_Save project with a check of unused media files**
 2. Just attach it on Cmd/Ctrl+S instead of saving by default.
 
-### Smart renaming depending on focus
+## Smart renaming depending on focus
 
 The script helps to rename an unlimited number of elements of different types with one click. You can also change their color. In addition, script has advanced mode for replacing, additing, changing titles of elements.
 
@@ -144,7 +140,7 @@ Installation:
 1. Install script **ek_Smart renaming depending on focus**
 2. Just attach it on Cmd/Ctrl+R instead of renaming by default.
 
-### Generate SFX via ElevenLabs
+## Generate SFX via ElevenLabs
 
 You can import the generated SFX from [elevenlabs.io](https://elevenlabs.io/sound-effects) directly into the arrangement window using this script. It's simple, just enter your text prompt, press generate and that's it.
 
@@ -164,7 +160,7 @@ Installation:
 
 **KNOWN ISSUES**: Script doesn't work with projects with non-latin characters in the path
 
-### Snap items to markers or regions
+## Snap items to markers or regions
 
 This script extremely useful for wokirng with markers and videos. It snaps selected items to markers or regions started from specified number.
 
@@ -190,20 +186,20 @@ Script requires ReaImGui, but also it has 2 useful additional scripts without GU
 Installation:
 1. Install script **ek_Snap items to markers or regions**
 
-## List of other useful scripts
+# List of other useful scripts
 
-#### ek_Add 1 sec gap between selected items
+### ek_Add 1 sec gap between selected items
 
 <img src="/Assets/images/add_gap_between_items.gif" alt="add_gap_between_items" width="500"/>
 
 Script adds 1 second gap between selected items. Press CMD/CTRL to add 0.1 seconds gap.
 
-#### ek_Arrange selected items by notes in MIDI item
+### ek_Arrange selected items by notes in MIDI item
 
 This script arranges selected items by notes in first selected MIDI item
 
 
-#### ek_Create crossfade on edges of items
+### ek_Create crossfade on edges of items
 
 This script creates crossfade on edges of tracks. It useful when you don't use overlap on crossfades for better precise but anyway want to create crossfades
 
@@ -213,12 +209,12 @@ Installation for better experience:
 3. Choose this script in field **Default action**
 4. Done! It means that when you double click on edge between media items, you create crossfade between them
 
-#### ek_Delete selected items with color of item under mouse position
+### ek_Delete selected items with color of item under mouse position
 
 ![Preview](/Assets/images/delete_selected_items_with_color_of_item_under_mouse_position.gif)
 This script deletes selected items with the same color of item under mouse position
 
-#### ek_Pitch Tool
+### ek_Pitch Tool
 
 Pitch tool brings Ableton workflow for pitch manipulations of audio clips.
 - Change pitch mode for selected items menu
@@ -227,136 +223,136 @@ Pitch tool brings Ableton workflow for pitch manipulations of audio clips.
 - Switch to prev/next pitch mode for selected items
 - Clear pitch or rate for selected items
 
-#### ek_Remove 1 sec gap between selected items
+### ek_Remove 1 sec gap between selected items
 
 Script removes 1 second gap between selected items. Press CMD/CTRL to remove 0.1 seconds gap.
 
-#### ek_Select all notes or CC events
+### ek_Select all notes or CC events
 
 Script selects all notes or all CC events depends on focused element. For example, if CC lane is focused, script selects CC events. You can attach this script on "Ctrl+A" hotkey in MIDI Editor.
 
-#### ek_Select items on track with color of item under mouse position
+### ek_Select items on track with color of item under mouse position
 
 This script selects items with the same color and on same track of item under mouse position
 
-#### ek_Smart split items by mouse cursor
+### ek_Smart split items by mouse cursor
 
 Remake of amazing script by AZ and it works a bit different way. You can split by edit cursor if mouse position on it (or in Tolerance range in pixels).
 If you move mouse on transport panel and execute script, you will see settings window
 
-#### ek_Toggle group for selected items
+### ek_Toggle group for selected items
 
 This script makes group disable, if any selected item is grouped and otherwise if not.
 
-#### ek_Toggle overlaping items vertically option
+### ek_Toggle overlaping items vertically option
 
 This script toggles option of editing multiple items on one track at the same time
 
-#### ek_Move cursor or items pack
+### ek_Move cursor or items pack
 
 This package has many scripts which are making navigation in arrange view and at the same time are moving some items depends on selection
 
-#### ek_Select items from selected to mouse cursor
+### ek_Select items from selected to mouse cursor
 
 This script extends selection of items from selected to mouse cursor. As usual this action attaches in mouse modifiers on media item section
 
-#### ek_Smart horizontal zoom in
+### ek_Smart horizontal zoom in
 
 This script helps live with Project Limit option is on. It makes zoom available to places behind limits
 
-#### ek_Smart horizontal zoom out
+### ek_Smart horizontal zoom out
 
 This script helps live with Project Limit option is on. It makes zoom available to places behind limits
 
-#### ek_Toggle preview in Media Editor
+### ek_Toggle preview in Media Editor
 
 This action allows preview playback in the Media Explorer (if available) within the arrangement window
 
-#### ek_Toggle time selection by razor or selected items
+### ek_Toggle time selection by razor or selected items
 
 This script toggle time selection by razor or selected items or envelope lines. Actually it works with loop points, so it supports behaviour when loop points and time selection is unlinked. Also it toggles transport repeat like in Ableton
 
-#### ek_Tracks navigator
+### ek_Tracks navigator
 
 This package has 2 scripts "ek_Tracks navigator - go to prev track" and "ek_Tracks navigator - go to next track".
 With these scripts you can navigate between non-tiny visible tracks and envelopes. You can attach scripts to arrow keys
 
-#### ek_Create region depending on selection
+### ek_Create region depending on selection
 
 Create region based on razor, selected items or time selection
 
-#### ek_Region Render Matrix Filler
+### ek_Region Render Matrix Filler
 
 Create region based on razor, selected items or time selection
 
-#### ek_Region Render Matrix Filler
+### ek_Region Render Matrix Filler
 
 Create region based on razor, selected items or time selection
 
-#### ek_Toggle Docker
+### ek_Toggle Docker
 
 Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes.
 Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"
 
-#### ek_Toggle monitoring FX
+### ek_Toggle monitoring FX
 
 ![Preview](/Assets/images/mfx_slots_preview.gif)
 
 This script monitors a certain fx slot in the monitoring chain and switches the bypass on it. For realtime highlighting install 'Global startup action'
 
-#### ek_Toggle random color for selected items or tracks
+### ek_Toggle random color for selected items or tracks
 
 It changes color for items or tracks depending on focus
 
-#### ek_Delete selected tracks
+### ek_Delete selected tracks
 
 If item has several takes and option "Show all takes in lane (when room)" is on, we gonna delete active take. If automation lane in focus, delete it. And in other case it deletes track and select previous available track
 
-#### ek_Duplicate selected tracks or items
+### ek_Duplicate selected tracks or items
 
 If any item is selected, it duplicate item. In other case is duplicate track
 
-#### ek_Insert new track
+### ek_Insert new track
 
 It just inserts track or inserts it in the end of list depending on situation
 
-#### ek_Move selected tracks under specified track
+### ek_Move selected tracks under specified track
 
 Script moves selected tracks to new track as childs
 
-#### ek_Nudge volume for selected tracks down
+### ek_Nudge volume for selected tracks down
 
 It decrease volume for selected track a bit and shows tooltip with set volume
 
-#### ek_Nudge volume for selected tracks up
+### ek_Nudge volume for selected tracks up
 
 It increase volume for selected track a bit and shows tooltip with set volume
 
-#### ek_Set volume for selected tracks
+### ek_Set volume for selected tracks
 
 Script shows window with input to set volume
 
-#### Toggle exclusive arm for selected tracks
+### Toggle exclusive arm for selected tracks
 
 It just toggles exclusive arm for selected tracks
 
-#### ek_Toggle mute and offline FX for selected tracks
+### ek_Toggle mute and offline FX for selected tracks
 
 This script makes fx offline when selected track is muted
 
-#### ek_Toggle mute for selected tracks
+### ek_Toggle mute for selected tracks
 
 This script toggles mute for selected tracks and makes fx online if it is offine
 
-#### ek_Toggle single solo for selected tracks
+### ek_Toggle single solo for selected tracks
 
 Toggles selected track soloed
 
-#### ek_Toggle trim mode for selected trackes
+### ek_Toggle trim mode for selected trackes
 
 Toggles trim mode for selected tracks and shows current state as button highlight
 
-#### ek_Tracks collapser
+### ek_Tracks collapser
 
 This package has 2 scripts "ek_Collapse selected tracks" and "ek_Expand selected tracks". They toggle selected tracks/envelope lanes between 3 states: small, medium, large.
 Execute one of these scripts on transport panel and put height values there
