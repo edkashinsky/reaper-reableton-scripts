@@ -21,7 +21,7 @@ https://raw.githubusercontent.com/edkashinsky/reaper-reableton-scripts/master/in
 
 # Main useful scripts
 
-## Ableton Clip Shortcuts
+### Ableton Clip Shortcuts
 
 One of the main thing is warping panel:  
 
@@ -39,7 +39,7 @@ It works similar like in Ableton:
 
 In two words, script changes pitch, if item has **preserve pitch** option and changes rate and length for selected items if items has this option off.
 
-## Global startup action
+### Global startup action
 
 <img src="/Assets/images/global_action_settings.png" alt="Global Functions preview" width="500"/>
 
@@ -62,7 +62,7 @@ For installation:
 3. Restart Reaper
 4. Check script '**ek_Global startup action - settings**' again and enable features you need
 
-## Adaptive grid
+### Adaptive grid
 
 <img src="/Assets/images/auto_grid_preview.gif" alt="Global Functions preview" width="500"/>
 
@@ -83,7 +83,7 @@ For installation:
 1. Install '**ek_Adaptive grid settings**' script via Extensions -> ReaPack -> Browse Packages
 2. Attach this script to any toolbar
 
-## Edge silence cropper
+### Edge silence cropper
 
 This complicated script helps to crop silence on the edges of items by individual thresholds. It is very useful for sounds with loud start and quite long tails. Additionally, you can set offset and fade time. For instant work, there is one more script **ek_Edge silence cropper (no prompt)** - it apply cropping by remembered values.
 
@@ -103,7 +103,7 @@ Script calculates the maximum peak (in db) in each item and applies a percentage
 Installation:
 1. Install script **ek_Edge silence cropper** for GUI and preview mode
 
-## Separated actions for Media item in Mouse modifiers
+### Separated actions for Media item in Mouse modifiers
 
 This small script helps to attach 2 independent actions on media item click: on header and zone below of it. Script have 2 workflows depends on option "Draw labels above the item when media item height is more than":
 - If option disabled, header label is positioned on item and header part calculates as header label height
@@ -120,7 +120,7 @@ Installation:
 
 If you want to attach different actions on different mouse modifiers (for example, on left click, left drag or double click), please make copy of this script manually and add it with new unique name to Reaper (via Action list window: New action... -> Load ReaScript...) and put new script instance on new action in Mouse modifiers 
 
-## Save project with a check of unused media files
+### Save project with a check of unused media files
 
 This helps to keep track of file garbage in your projects. It shows a special warning if you have unused files in the project when saving.
 
@@ -130,7 +130,7 @@ Installation:
 1. Install script **ek_Save project with a check of unused media files**
 2. Just attach it on Cmd/Ctrl+S instead of saving by default.
 
-## Smart renaming depending on focus
+### Smart renaming depending on focus
 
 The script helps to rename an unlimited number of elements of different types with one click. You can also change their color. In addition, script has advanced mode for replacing, additing, changing titles of elements.
 
@@ -140,7 +140,7 @@ Installation:
 1. Install script **ek_Smart renaming depending on focus**
 2. Just attach it on Cmd/Ctrl+R instead of renaming by default.
 
-## Generate SFX via ElevenLabs
+### Generate SFX via ElevenLabs
 
 You can import the generated SFX from [elevenlabs.io](https://elevenlabs.io/sound-effects) directly into the arrangement window using this script. It's simple, just enter your text prompt, press generate and that's it.
 
@@ -160,7 +160,7 @@ Installation:
 
 **KNOWN ISSUES**: Script doesn't work with projects with non-latin characters in the path
 
-## Snap items to markers or regions
+### Snap items to markers or regions
 
 This script extremely useful for wokirng with markers and videos. It snaps selected items to markers or regions started from specified number.
 
