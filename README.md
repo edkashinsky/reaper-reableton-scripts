@@ -1,3 +1,7 @@
+
+
+<img src="/Assets/images/logo.png" alt="Logo" />
+
 # Reableton - scripts for Reaper
 
 This scripts makes Reaper a bit close to Ableton workflow. Also it brings useful things to save time.
@@ -227,6 +231,10 @@ Pitch tool brings Ableton workflow for pitch manipulations of audio clips.
 
 Script removes 1 second gap between selected items. Press CMD/CTRL to remove 0.1 seconds gap.
 
+#### ek_Select all notes or CC events
+
+Script selects all notes or all CC events depends on focused element. For example, if CC lane is focused, script selects CC events. You can attach this script on "Ctrl+A" hotkey in MIDI Editor.
+
 #### ek_Select items on track with color of item under mouse position
 
 This script selects items with the same color and on same track of item under mouse position
@@ -274,6 +282,14 @@ This package has 2 scripts "ek_Tracks navigator - go to prev track" and "ek_Trac
 With these scripts you can navigate between non-tiny visible tracks and envelopes. You can attach scripts to arrow keys
 
 #### ek_Create region depending on selection
+
+Create region based on razor, selected items or time selection
+
+#### ek_Region Render Matrix Filler
+
+Create region based on razor, selected items or time selection
+
+#### ek_Region Render Matrix Filler
 
 Create region based on razor, selected items or time selection
 

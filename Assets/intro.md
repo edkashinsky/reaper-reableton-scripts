@@ -1,3 +1,7 @@
+
+
+<img src="/Assets/images/logo.png" alt="Logo" />
+
 # Reableton - scripts for Reaper
 
 This scripts makes Reaper a bit close to Ableton workflow. Also it brings useful things to save time.
