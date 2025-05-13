@@ -1,4 +1,5 @@
 # End-User License Agreement
+
                        Version 4, 13 May 2025
 
 This End-User License Agreement (“EULA”) is a legal agreement between you (the “User”) and Eduard Kashinskii, sole proprietor, operating under the name “ek.scripts”.
@@ -50,6 +51,10 @@ ek.scripts may, but is not obligated to, provide updates or improvements to the 
 ## Third-Party Software
 
 The Software may rely on or integrate with third-party software or APIs, including but not limited to REAPER®, ReaScript, or ReaImGui. All trademarks are the property of their respective owners.
+
+## Legacy Licensing
+
+Scripts released prior to the effective date of this Agreement (13 May 2025) remain licensed under the GNU General Public License (GPL), unless otherwise specified. This EULA applies only to scripts released on or after that date.
 
 ## Governing Law
 
