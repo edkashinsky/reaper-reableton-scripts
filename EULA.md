@@ -54,7 +54,8 @@ The Software may rely on or integrate with third-party software or APIs, includi
 
 ## Legacy Licensing
 
-Scripts released prior to the effective date of this Agreement (13 May 2025) remain licensed under the GNU General Public License (GPL), unless otherwise specified. This EULA applies only to scripts released on or after that date.
+Scripts released prior to the effective date of this Agreement (13 May 2025) remain licensed under the GNU General Public License (GPL), unless otherwise specified.
+This EULA applies to all scripts released on or after that date, as well as any future updates to previously released scripts.
 
 ## Governing Law
 
