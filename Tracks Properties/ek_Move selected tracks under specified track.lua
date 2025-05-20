@@ -1,8 +1,10 @@
 -- @description ek_Move selected tracks under specified track
--- @version 1.0.1
+-- @version 1.0.2
 -- @author Ed Kashinsky
 -- @about
 --   Script moves selected tracks to new track as childs
+-- @changelog
+--   New UI support
 
 function CoreFunctionsLoaded(script)
 	local sep = (reaper.GetOS() == "Win64" or reaper.GetOS() == "Win32") and "\\" or "/"
@@ -53,13 +55,12 @@ if window == "transport" or not newTrackName then
 		},
 	}
 
-	function frame(ImGui, ctx)
+	GUI_ShowMainWindow(function(ImGui, ctx)
 		ImGui.PushItemWidth(ctx, 224)
 		GUI_DrawSettingsTable(settings)
 		ImGui.PopItemWidth(ctx)
-	end
+	end)
 
-	GUI_ShowMainWindow()
 	return
 end
 

@@ -1,11 +1,11 @@
 -- @description ek_Smart renaming depending on focus
--- @version 1.0.19
+-- @version 1.0.20
 -- @author Ed Kashinsky
 -- @readme_skip
 -- @about
 --   Renaming stuff for takes, items, markers, regions and tracks depending on focus
 -- @changelog
---   Small bug fixes of bitwise
+--   New UI support
 -- @provides
 --   ../Core/data/smart-renaming_*.dat
 
@@ -202,8 +202,8 @@ local function drawAddColorButton(ImGui, ctx)
 		end, gui_buttons_types.Cancel, true)
 
 		GUI_DrawText()
-		GUI_DrawText( 'Default color palette settings', gui_fonts.Bold)
-		ImGui.Separator(ctx)
+		GUI_DrawText('Default color palette settings', gui_fonts.Bold)
+		GUI_DrawGap(2)
 
 		GUI_DrawSettingsTable(rename_default_colors_config)
 
@@ -212,7 +212,7 @@ local function drawAddColorButton(ImGui, ctx)
 end
 
 local function frameForColorSection(ImGui, ctx)
-	ImGui.Separator(ctx)
+	GUI_DrawGap(2)
 
 	drawClearButton(ImGui, ctx)
 
@@ -239,7 +239,7 @@ local function frameForColorSection(ImGui, ctx)
 		if i ~= #GetDefaultColor() and i % 10 ~= 0 then ImGui.SameLine(ctx, nil, 4) end
 	end
 
-	ImGui.Separator(ctx)
+	GUI_DrawGap(2)
 end
 
 local function frameForAdvancedForm(ImGui, ctx)
@@ -267,7 +267,7 @@ local function frameForAdvancedForm(ImGui, ctx)
 
 	ImGui.PopItemWidth(ctx)
 
-	ImGui.Separator(ctx)
+	GUI_DrawGap(2)
 
 	local exampleText = GetProcessedTitleByAdvanced(element.value, 1)
 	if not isEmpty(exampleText) then
@@ -291,7 +291,7 @@ local function NeedToUpdateFocusedElement()
 	end
 end
 
-function frame(ImGui, ctx)
+GUI_ShowMainWindow(function(ImGui, ctx)
 	if NeedToUpdateFocusedElement() then
 		element = GetFocusedElement()
 	end
@@ -373,7 +373,7 @@ function frame(ImGui, ctx)
 		frameForAdvancedForm(ImGui, ctx)
 	end
 
-	ImGui.Separator(ctx)
+	GUI_DrawGap(7)
 
 	GUI_SetCursorCenter('   Rename       Cancel   ')
 	GUI_DrawButton('Rename', function()
@@ -399,6 +399,4 @@ function frame(ImGui, ctx)
 	ImGui.SameLine(ctx)
 
 	GUI_DrawButton('Cancel', nil, gui_buttons_types.Cancel)
-end
-
-GUI_ShowMainWindow()
+end)

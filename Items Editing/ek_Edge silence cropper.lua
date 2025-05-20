@@ -1,5 +1,5 @@
 -- @description ek_Edge silence cropper
--- @version 1.2.9
+-- @version 1.2.10
 -- @author Ed Kashinsky
 -- @readme_skip
 -- @about
@@ -7,7 +7,7 @@
 --
 --   Also it provides UI for configuration
 -- @changelog
---   Support of core dat-files
+--   New UI support
 -- @provides
 --   ../Core/data/edge-silence-cropper_*.dat
 --   [main=main] ek_Edge silence cropper (no prompt).lua
@@ -32,8 +32,6 @@ if not CoreLibraryLoad("core") or not CoreLibraryLoad("edge-silence-cropper") th
 	reaper.ReaPack_BrowsePackages("ek_Core functions")
 	return
 end
-
-GUI_ShowMainWindow()
 
 local min_step = 0.00001
 local using_eel = reaper.APIExists("ImGui_CreateFunctionFromEEL")
@@ -259,7 +257,7 @@ local function CropSilence()
     reaper.Undo_EndBlock("Edge silence cropper", -1)
 end
 
-function frame(ImGui, ctx)
+GUI_ShowMainWindow(function(ImGui, ctx)
     GUI_DrawSettingsTable(gui_config, p)
 
     GUI_DrawGap()
@@ -272,7 +270,7 @@ function frame(ImGui, ctx)
     ImGui.SameLine(ctx)
 
     GUI_DrawButton('Cancel', nil, gui_buttons_types.Cancel)
-end
+end)
 
 EK_DeferWithCooldown(PreviewCropResultInArrangeView, { last_time = 0, cooldown = using_eel and 0.01 or 0.7, eventTick = function()
     local _, scrollposv = reaper.JS_Window_GetScrollInfo(ArrangeHwnd, "v")

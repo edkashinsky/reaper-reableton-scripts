@@ -1,13 +1,16 @@
 -- @description ek_Core functions
 -- @author Ed Kashinsky
 -- @about Base functions used by ek-scripts.
--- @version 1.1.3
+-- @version 1.1.4
+-- @changelog
+--    Added new functions
+--    Big UI update: improved view, added table view, improved about popup, many other tweaks
+--    Improved core performance
 -- @provides
 --   data/core_*.dat
 --   [nomain] curl/*
---
--- @changelog
---    Small bug fix for cURL
+--   images/logo-black.png
+--   images/logo-white.png
 
 local function CoreLoadFunctions()
     local sep = package.config:sub(1,1)

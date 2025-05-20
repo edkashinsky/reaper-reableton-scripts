@@ -1,5 +1,5 @@
 -- @description ek_Global startup action
--- @version 1.1.3
+-- @version 1.1.4
 -- @author Ed Kashinsky
 -- @about
 --   This is startup action brings some ableton-like features in realtime. You can control any option by 'ek_Global startup action settings' script.
@@ -12,7 +12,8 @@
 --      5. Open 'ek_Global startup action settings' again for customize options
 --      6. If you want to use auto-grid for MIDI Editor, install script **ek_Auto grid for MIDI Editor** and set it on zoom shortcut.
 -- @changelog
---   Bug fix for adaptive grid setting
+--   Added new UI
+--   Improved performance
 -- @provides
 --   data/core-bg_*.dat
 --   [main=main] ek_Global startup action - settings.lua
@@ -180,7 +181,7 @@ local function observeGlobalAction()
 		if exec_time > 10 then desc = "[DANGER]"
 		elseif exec_time > 1 then desc = "[WARNING]" end
 
-		Log(exec_time .. "ms. " .. desc, ek_log_levels.Debug)
+		Log(exec_time .. "ms. " .. desc, ek_log_levels.Important)
 	end
 
 	reaper.defer(observeGlobalAction)

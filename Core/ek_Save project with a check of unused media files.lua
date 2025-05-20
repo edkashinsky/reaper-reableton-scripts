@@ -1,5 +1,5 @@
 -- @description ek_Save project with a check of unused media files
--- @version 1.0.7
+-- @version 1.0.8
 -- @author Ed Kashinsky
 -- @about
 --   This helps to keep track of file garbage in your projects. It shows a special warning if you have unused files in the project when saving.
@@ -46,7 +46,7 @@ while file ~= nil or i == 0 do
 	file = reaper.EnumerateFiles(root, i)
 
 	if file ~= nil and file:sub(0, 1) ~= "." then
-		files[root .. dir_sep .. file] = true
+		files[pathJoin(root, file)] = true
 	end
 
 	i = i + 1
