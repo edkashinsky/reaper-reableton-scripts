@@ -1,11 +1,9 @@
 -- @description ek_Core functions
 -- @author Ed Kashinsky
 -- @about Base functions used by ek-scripts.
--- @version 1.1.4
+-- @version 1.1.5
 -- @changelog
---    Added new functions
---    Big UI update: improved view, added table view, improved about popup, many other tweaks
---    Improved core performance
+--    GUI fixes
 -- @provides
 --   data/core_*.dat
 --   [nomain] curl/*
