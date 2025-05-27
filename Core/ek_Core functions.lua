@@ -1,9 +1,9 @@
 -- @description ek_Core functions
 -- @author Ed Kashinsky
 -- @about Base functions used by ek-scripts.
--- @version 1.1.5
+-- @version 1.1.6
 -- @changelog
---    GUI fixes
+--    Small GUI improvements
 -- @provides
 --   data/core_*.dat
 --   [nomain] curl/*
