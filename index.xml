@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="Reableton Scripts" commit="5b061f0823ee98d001e153b4d8854d3c62a00baf">
+<index version="1" name="Reableton Scripts" commit="c1b675307fe723a532067677297b9baa7fc00226">
   <category name="AI">
     <reapack name="ek_Generate SFX via ElevenLabs.lua" type="script" desc="ek_Generate SFX via ElevenLabs">
       <metadata>
@@ -1980,6 +1980,30 @@ Also there is flexible offset: just begin of item, snap offset, first cue marker
       </metadata>
       <version name="1.0.0" author="Ed Kashinsky" time="2023-02-01T13:34:59Z">
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/6f03ee4926af5534156ad3d4698e100f1555e1aa/Regions/ek_Create%20region%20depending%20on%20selection.lua</source>
+      </version>
+    </reapack>
+    <reapack name="ek_Region Render Matrix Filler.lua" type="script" desc="ek_Region Render Matrix Filler">
+      <metadata>
+        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \ql \f0 \sa180 \li0 \fi0 Region Render Matrix Filler significantly speeds up the process of filling the Render Matrix in REAPER, especially in projects with a large number of regions. It\u8217's particularly useful for tasks like layer-based sound rendering, gameplay VO synced to video, voiceover exports, and other scenarios where batch rendering is needed. Features:\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab Automatic track assignment in the Render Matrix based on settings\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab Optional automatic channel count detection based on region name\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab Region and track preview with navigation\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab Manual override of track assignment for individual regions\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab Ability to rename regions or tracks\sa180\par}
+}
+]]></description>
+        <link rel="website" href="https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Render-Region-Matrix-Filler">Documentation</link>
+        <link rel="website" href="https://ekscripts.gumroad.com/l/rrm-filler">Buy Licence</link>
+      </metadata>
+      <version name="1.0.0" author="Ed Kashinsky" time="2025-05-27T08:38:17Z">
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/c1b675307fe723a532067677297b9baa7fc00226/Regions/ek_Region%20Render%20Matrix%20Filler.lua</source>
+        <source file="../Core/data/rrm-filler_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/c1b675307fe723a532067677297b9baa7fc00226/Core/data/rrm-filler_5.3.dat</source>
+        <source file="../Core/data/rrm-filler_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/c1b675307fe723a532067677297b9baa7fc00226/Core/data/rrm-filler_5.4.dat</source>
+        <source main="main" file="ek_Region Render Matrix Filler (no prompt).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/c1b675307fe723a532067677297b9baa7fc00226/Regions/ek_Region%20Render%20Matrix%20Filler%20(no%20prompt).lua</source>
       </version>
     </reapack>
   </category>
