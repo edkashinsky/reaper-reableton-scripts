@@ -12,14 +12,14 @@
 -- @links
 --   Documentation https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Render-Region-Matrix-Filler
 --   Buy Licence https://ekscripts.gumroad.com/l/rrm-filler
--- @provides
---   ../Core/data/rrm-filler_*.dat
---   [main=main] ek_Region Render Matrix Filler (no prompt).lua
 -- @changelog
 --   - Script follows to all changes in the project
 --	 - Table sorting fixed: when the sorted column contained identical values, sorting behaved incorrectly
 --	 - Added setting "Close after action"
 --	 - Performance improved
+-- @provides
+--   ../Core/data/rrm-filler_*.dat
+--   [main=main] ek_Region Render Matrix Filler (no prompt).lua
 
 local function CoreLibraryLoad(lib)
 	local sep = package.config:sub(1,1)
