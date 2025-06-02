@@ -1,14 +1,15 @@
 -- @description ek_Core functions
 -- @author Ed Kashinsky
 -- @about Base functions used by ek-scripts.
--- @version 1.1.6
--- @changelog
---    Small GUI improvements
+-- @version 1.1.7
 -- @provides
 --   data/core_*.dat
 --   [nomain] curl/*
 --   images/logo-black.png
 --   images/logo-white.png
+-- @changelog
+--    - Table sorting fixed: when the sorted column contained identical values, sorting behaved incorrectly
+
 
 local function CoreLoadFunctions()
     local sep = package.config:sub(1,1)
