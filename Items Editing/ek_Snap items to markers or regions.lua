@@ -1,5 +1,5 @@
 -- @description ek_Snap items to markers or regions
--- @version 1.1.6
+-- @version 1.1.7
 -- @author Ed Kashinsky
 -- @about
 --   This script snaps selected items to markers or regions started from specified number. It requires ReaImGui extension.
@@ -8,7 +8,7 @@
 --   Script gives posibility to limit markers/regions snapping. For example only 2 markers after specified.
 -- @readme_skip
 -- @changelog
---    UI updates
+--    Returned menu to GUI
 -- @provides
 --   ../Core/data/snap-items_*.dat
 --   ../Core/images/snap-items/*
