@@ -1,9 +1,17 @@
 -- @description ek_Core functions
 -- @author Ed Kashinsky
 -- @about Base functions used by ek-scripts.
--- @version 1.1.8
+-- @version 1.1.9
 -- @changelog
---    - Improved work with curl
+--    Big UI update:
+--    - Custom theme color in About popup
+--    - Focus widgets feature - you can navigate between inputs by arrows keys and execute actions by enter
+--    - Full dociking support
+--    - Improved view for big and small fonts
+--    - Added knob input
+--    - Added enum slider
+--    - Work in background feature
+--    - Many small improvements
 -- @provides
 --   data/core_*.dat
 --   [nomain] curl/*
