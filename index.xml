@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="EK Scripts" commit="eec4628b66bb4e722efec74a9dc4c375e3fd4061">
+<index version="1" name="EK Scripts" commit="b53c0faf4e4f8de35b0d98443c02b1493f0fa16e">
   <category name="AI">
     <reapack name="ek_Generate SFX via ElevenLabs.lua" type="script" desc="ek_Generate SFX via ElevenLabs">
       <metadata>
@@ -615,6 +615,25 @@ Improved core performance]]></changelog>
         <source file="curl/trurl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/eec4628b66bb4e722efec74a9dc4c375e3fd4061/Core/curl/trurl.exe</source>
         <source file="images/logo-black.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/eec4628b66bb4e722efec74a9dc4c375e3fd4061/Core/images/logo-black.png</source>
         <source file="images/logo-white.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/eec4628b66bb4e722efec74a9dc4c375e3fd4061/Core/images/logo-white.png</source>
+      </version>
+      <version name="1.1.10" author="Ed Kashinsky" time="2025-07-02T17:48:47Z">
+        <changelog><![CDATA[Big UI update:
+- Custom theme color in About popup
+- Focus widgets feature - you can navigate between inputs by arrows keys and execute actions by enter
+- Full dociking support
+- Improved view for big and small fonts
+- Added knob input
+- Added enum slider
+- Work in background feature
+- Many small improvements]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/b53c0faf4e4f8de35b0d98443c02b1493f0fa16e/Core/ek_Core%20functions.lua</source>
+        <source file="data/core_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/b53c0faf4e4f8de35b0d98443c02b1493f0fa16e/Core/data/core_5.3.dat</source>
+        <source file="data/core_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/b53c0faf4e4f8de35b0d98443c02b1493f0fa16e/Core/data/core_5.4.dat</source>
+        <source file="curl/curl-ca-bundle.crt">https://github.com/edkashinsky/reaper-reableton-scripts/raw/b53c0faf4e4f8de35b0d98443c02b1493f0fa16e/Core/curl/curl-ca-bundle.crt</source>
+        <source file="curl/curl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/b53c0faf4e4f8de35b0d98443c02b1493f0fa16e/Core/curl/curl.exe</source>
+        <source file="curl/trurl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/b53c0faf4e4f8de35b0d98443c02b1493f0fa16e/Core/curl/trurl.exe</source>
+        <source file="images/logo-black.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/b53c0faf4e4f8de35b0d98443c02b1493f0fa16e/Core/images/logo-black.png</source>
+        <source file="images/logo-white.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/b53c0faf4e4f8de35b0d98443c02b1493f0fa16e/Core/images/logo-white.png</source>
       </version>
     </reapack>
     <reapack name="ek_Focus virtual MIDI keyboard.lua" type="script" desc="ek_Focus virtual MIDI keyboard">
