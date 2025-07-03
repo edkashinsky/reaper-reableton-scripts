@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="EK Scripts" commit="73445d96c8cb6c2bdc77f690d6cab09ee4e091bc">
+<index version="1" name="EK Scripts" commit="5b38c0e1b40f2e54d0bc3d44018daadd8983937d">
   <category name="AI">
     <reapack name="ek_Generate SFX via ElevenLabs.lua" type="script" desc="ek_Generate SFX via ElevenLabs">
       <metadata>
@@ -1583,13 +1583,10 @@ Please restart Reaper for taking effect]]></changelog>
 \widowctrl\hyphauto
 
 {\pard \ql \f0 \sa180 \li0 \fi0 Pitch tool brings Ableton workflow for pitch manipulations of audio clips.\par}
-{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab Change pitch mode for selected items menu\par}
-{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab Toggle preserve pitch for selected items\par}
-{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab Increase/Decrease pitch or rate for selected items\par}
-{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab Switch to prev/next pitch mode for selected items\par}
-{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab Clear pitch or rate for selected items\sa180\par}
 }
 ]]></description>
+        <link rel="website" href="https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Pitch-Tool">Documentation</link>
+        <link rel="website" href="https://ekscripts.gumroad.com/l/pitch-tool">Buy Licence</link>
       </metadata>
       <version name="1.0.0" author="Ed Kashinsky" time="2023-10-22T22:07:23Z">
         <source main="main" file="ek_Pitch Tool - Change pitch mode for selected items menu.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/49e091cff51018db4711ba1c25f53dcb8c6eb97b/Items%20Editing/ek_Pitch%20Tool%20-%20Change%20pitch%20mode%20for%20selected%20items%20menu.lua</source>
@@ -1599,6 +1596,12 @@ Please restart Reaper for taking effect]]></changelog>
         <source main="main" file="ek_Pitch Tool - Switch to next pitch mode for selected items.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/49e091cff51018db4711ba1c25f53dcb8c6eb97b/Items%20Editing/ek_Pitch%20Tool%20-%20Switch%20to%20next%20pitch%20mode%20for%20selected%20items.lua</source>
         <source main="main" file="ek_Pitch Tool - Switch to prev pitch mode for selected items.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/49e091cff51018db4711ba1c25f53dcb8c6eb97b/Items%20Editing/ek_Pitch%20Tool%20-%20Switch%20to%20prev%20pitch%20mode%20for%20selected%20items.lua</source>
         <source main="main" file="ek_Pitch Tool - Toggle preserve pitch for selected items.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/49e091cff51018db4711ba1c25f53dcb8c6eb97b/Items%20Editing/ek_Pitch%20Tool%20-%20Toggle%20preserve%20pitch%20for%20selected%20items.lua</source>
+      </version>
+      <version name="2.0.0" author="Ed Kashinsky" time="2025-07-03T10:56:36Z">
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/5b38c0e1b40f2e54d0bc3d44018daadd8983937d/Items%20Editing/ek_Pitch%20Tool.lua</source>
+        <source file="../Core/data/pitch-tool_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/5b38c0e1b40f2e54d0bc3d44018daadd8983937d/Core/data/pitch-tool_5.3.dat</source>
+        <source file="../Core/data/pitch-tool_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/5b38c0e1b40f2e54d0bc3d44018daadd8983937d/Core/data/pitch-tool_5.4.dat</source>
+        <source main="main" file="ek_Pitch Tool - Tooltip (background).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/5b38c0e1b40f2e54d0bc3d44018daadd8983937d/Items%20Editing/ek_Pitch%20Tool%20-%20Tooltip%20(background).lua</source>
       </version>
     </reapack>
     <reapack name="ek_Remove 1 sec gap between selected items.lua" type="script" desc="ek_Remove 1 sec gap between selected items">
