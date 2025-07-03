@@ -1,7 +1,7 @@
 -- @description ek_Core functions
 -- @author Ed Kashinsky
 -- @about Base functions used by ek-scripts.
--- @version 1.1.10
+-- @version 1.1.11
 -- @changelog
 --    Big UI update:
 --    - Custom theme color in About popup
