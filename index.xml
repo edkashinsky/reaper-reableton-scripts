@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="EK Scripts" commit="5b38c0e1b40f2e54d0bc3d44018daadd8983937d">
+<index version="1" name="EK Scripts" commit="5e719ae1c0199d98e889579a4877a2282ba368be">
   <category name="AI">
     <reapack name="ek_Generate SFX via ElevenLabs.lua" type="script" desc="ek_Generate SFX via ElevenLabs">
       <metadata>
@@ -653,6 +653,20 @@ Improved core performance]]></changelog>
         <source file="curl/trurl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/73445d96c8cb6c2bdc77f690d6cab09ee4e091bc/Core/curl/trurl.exe</source>
         <source file="images/logo-black.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/73445d96c8cb6c2bdc77f690d6cab09ee4e091bc/Core/images/logo-black.png</source>
         <source file="images/logo-white.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/73445d96c8cb6c2bdc77f690d6cab09ee4e091bc/Core/images/logo-white.png</source>
+      </version>
+      <version name="1.1.12" author="Ed Kashinsky" time="2025-07-06T12:42:39Z">
+        <changelog><![CDATA[Big UI update:
+  - GUI scripts has toggle state in toolbar
+  - Undock button hides on small window size
+  - knob fixes]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/5e719ae1c0199d98e889579a4877a2282ba368be/Core/ek_Core%20functions.lua</source>
+        <source file="data/core_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/5e719ae1c0199d98e889579a4877a2282ba368be/Core/data/core_5.3.dat</source>
+        <source file="data/core_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/5e719ae1c0199d98e889579a4877a2282ba368be/Core/data/core_5.4.dat</source>
+        <source file="curl/curl-ca-bundle.crt">https://github.com/edkashinsky/reaper-reableton-scripts/raw/5e719ae1c0199d98e889579a4877a2282ba368be/Core/curl/curl-ca-bundle.crt</source>
+        <source file="curl/curl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/5e719ae1c0199d98e889579a4877a2282ba368be/Core/curl/curl.exe</source>
+        <source file="curl/trurl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/5e719ae1c0199d98e889579a4877a2282ba368be/Core/curl/trurl.exe</source>
+        <source file="images/logo-black.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/5e719ae1c0199d98e889579a4877a2282ba368be/Core/images/logo-black.png</source>
+        <source file="images/logo-white.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/5e719ae1c0199d98e889579a4877a2282ba368be/Core/images/logo-white.png</source>
       </version>
     </reapack>
     <reapack name="ek_Focus virtual MIDI keyboard.lua" type="script" desc="ek_Focus virtual MIDI keyboard">
@@ -1602,6 +1616,18 @@ Please restart Reaper for taking effect]]></changelog>
         <source file="../Core/data/pitch-tool_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/5b38c0e1b40f2e54d0bc3d44018daadd8983937d/Core/data/pitch-tool_5.3.dat</source>
         <source file="../Core/data/pitch-tool_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/5b38c0e1b40f2e54d0bc3d44018daadd8983937d/Core/data/pitch-tool_5.4.dat</source>
         <source main="main" file="ek_Pitch Tool - Tooltip (background).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/5b38c0e1b40f2e54d0bc3d44018daadd8983937d/Items%20Editing/ek_Pitch%20Tool%20-%20Tooltip%20(background).lua</source>
+      </version>
+      <version name="2.0.1" author="Ed Kashinsky" time="2025-07-06T12:42:39Z">
+        <changelog><![CDATA[- GUI scripts has toggle state in toolbar
+- Undock button hides on small window size
+- Fixed bug of positioning toontip view for Windows and hidpi monitors
+- Fixed double click on knob - now it clear pitch to 0
+- Now, for UI consistency, the knob responds to left and right movements instead of up and down.
+- Fixed translations for UI (thanks to @alanofoz)]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/5e719ae1c0199d98e889579a4877a2282ba368be/Items%20Editing/ek_Pitch%20Tool.lua</source>
+        <source file="../Core/data/pitch-tool_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/5e719ae1c0199d98e889579a4877a2282ba368be/Core/data/pitch-tool_5.3.dat</source>
+        <source file="../Core/data/pitch-tool_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/5e719ae1c0199d98e889579a4877a2282ba368be/Core/data/pitch-tool_5.4.dat</source>
+        <source main="main" file="ek_Pitch Tool - Tooltip (background).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/5e719ae1c0199d98e889579a4877a2282ba368be/Items%20Editing/ek_Pitch%20Tool%20-%20Tooltip%20(background).lua</source>
       </version>
     </reapack>
     <reapack name="ek_Remove 1 sec gap between selected items.lua" type="script" desc="ek_Remove 1 sec gap between selected items">
