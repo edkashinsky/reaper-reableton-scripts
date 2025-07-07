@@ -25,7 +25,7 @@ https://raw.githubusercontent.com/edkashinsky/reaper-reableton-scripts/master/in
 
 Pitch Tool is a script that allows you to adjust pitch quickly and flexibly. It inherits the convenient pitch workflow features from Ableton while also introducing its own unique enhancements for an even smoother experience.
 
-![Pitch Tool](/Assets/images/pitch_tool.png)
+<img src="/Assets/images/pitch_tool.png" alt="Global Functions preview" width="400"/>
 
 #### [Documentation](https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Pitch-Tool)
 
@@ -34,7 +34,7 @@ Pitch Tool is a script that allows you to adjust pitch quickly and flexibly. It 
 
 Region Render Matrix Filler significantly speeds up the process of filling the Render Matrix in REAPER, especially in projects with a large number of regions. It’s particularly useful for tasks like layer-based sound rendering, gameplay VO synced to video, voiceover exports, and other scenarios where batch rendering is needed.
 
-<img src="/Assets/images/rrm_filler.png" alt="Global Functions preview" width="300"/>
+![Region Render Matrix Filler](/Assets/images/rrm_filler.png)
 
 #### [Documentation](https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Render-Region-Matrix-Filler)
 
