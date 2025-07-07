@@ -34,7 +34,7 @@ Pitch Tool is a script that allows you to adjust pitch quickly and flexibly. It 
 
 Region Render Matrix Filler significantly speeds up the process of filling the Render Matrix in REAPER, especially in projects with a large number of regions. It’s particularly useful for tasks like layer-based sound rendering, gameplay VO synced to video, voiceover exports, and other scenarios where batch rendering is needed.
 
-![Pitch Tool](/Assets/images/rrm_filler.png)
+<img src="/Assets/images/rrm_filler.png" alt="Global Functions preview" width="300"/>
 
 #### [Documentation](https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Render-Region-Matrix-Filler)
 
@@ -290,6 +290,9 @@ Features:
 - Region and track preview with navigation
 - Manual override of track assignment for individual regions
 - Ability to rename regions or tracks
+@links
+Documentation https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Render-Region-Matrix-Filler
+Buy Licence https://ekscripts.gumroad.com/l/rrm-filler
 
 ### ek_Toggle Docker
 
