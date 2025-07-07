@@ -21,23 +21,23 @@ https://raw.githubusercontent.com/edkashinsky/reaper-reableton-scripts/master/in
 
 # Main useful scripts
 
-### Ableton Clip Shortcuts
+### Pitch Tool
 
-One of the main thing is warping panel:  
+Pitch Tool is a script that allows you to adjust pitch quickly and flexibly. It inherits the convenient pitch workflow features from Ableton while also introducing its own unique enhancements for an even smoother experience.
 
-![Ableton Clip Shortcuts](/Assets/images/ableton_clip_shortcuts_preview.png)
+![Pitch Tool](/Assets/images/pitch_tool.png)
 
-1. **Mode** - ek_Change pitch mode for selected items
-2. **Warp** - ek_Toggle preserve pitch for selected items
-3. **-1 semi** - ek_Decrease pitch or rate for selected items
-4. **+1 semi** - ek_Increase pitch or rate for selected items
-5. **Clear** - ek_Clear pitch or rate for selected items
+#### [Documentation](https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Pitch-Tool)
 
-It works similar like in Ableton:
 
-![Ableton Clip Shortcuts](/Assets/images/ableton_clip_shortcuts_demo.gif)
+### Region Render Matrix Filler
 
-In two words, script changes pitch, if item has **preserve pitch** option and changes rate and length for selected items if items has this option off.
+Region Render Matrix Filler significantly speeds up the process of filling the Render Matrix in REAPER, especially in projects with a large number of regions. It’s particularly useful for tasks like layer-based sound rendering, gameplay VO synced to video, voiceover exports, and other scenarios where batch rendering is needed.
+
+![Pitch Tool](/Assets/images/rrm_filler.png)
+
+#### [Documentation](https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Render-Region-Matrix-Filler)
+
 
 ### Global startup action
 
@@ -217,11 +217,11 @@ This script deletes selected items with the same color of item under mouse posit
 ### ek_Pitch Tool
 
 Pitch tool brings Ableton workflow for pitch manipulations of audio clips.
-- Change pitch mode for selected items menu
-- Toggle preserve pitch for selected items
-- Increase/Decrease pitch or rate for selected items
-- Switch to prev/next pitch mode for selected items
-- Clear pitch or rate for selected items
+- Ableton-style pitch shifting for intuitive and musical pitch control
+- Detailed pitch-stretching adjustments with a user-friendly interface
+- Multi-mode control for adjusting the pitch of an unlimited number of items
+- Flexible window docking, plus the option to display the tool contextually above selected items
+- Theme-adaptive interface that matches your REAPER theme for seamless visual integration
 
 ### ek_Remove 1 sec gap between selected items
 
@@ -283,11 +283,13 @@ Create region based on razor, selected items or time selection
 
 ### ek_Region Render Matrix Filler
 
-Create region based on razor, selected items or time selection
-
-### ek_Region Render Matrix Filler
-
-Create region based on razor, selected items or time selection
+Region Render Matrix Filler significantly speeds up the process of filling the Render Matrix in REAPER, especially in projects with a large number of regions. It’s particularly useful for tasks like layer-based sound rendering, gameplay VO synced to video, voiceover exports, and other scenarios where batch rendering is needed.
+Features:
+- Automatic track assignment in the Render Matrix based on settings
+- Optional automatic channel count detection based on region name
+- Region and track preview with navigation
+- Manual override of track assignment for individual regions
+- Ability to rename regions or tracks
 
 ### ek_Toggle Docker
 

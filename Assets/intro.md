@@ -21,23 +21,23 @@ https://raw.githubusercontent.com/edkashinsky/reaper-reableton-scripts/master/in
 
 # Main useful scripts
 
-### Ableton Clip Shortcuts
+### Pitch Tool
 
-One of the main thing is warping panel:  
+Pitch Tool is a script that allows you to adjust pitch quickly and flexibly. It inherits the convenient pitch workflow features from Ableton while also introducing its own unique enhancements for an even smoother experience.
 
-![Ableton Clip Shortcuts](/Assets/images/ableton_clip_shortcuts_preview.png)
+![Pitch Tool](/Assets/images/pitch_tool.png)
 
-1. **Mode** - ek_Change pitch mode for selected items
-2. **Warp** - ek_Toggle preserve pitch for selected items
-3. **-1 semi** - ek_Decrease pitch or rate for selected items
-4. **+1 semi** - ek_Increase pitch or rate for selected items
-5. **Clear** - ek_Clear pitch or rate for selected items
+#### [Documentation](https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Pitch-Tool)
 
-It works similar like in Ableton:
 
-![Ableton Clip Shortcuts](/Assets/images/ableton_clip_shortcuts_demo.gif)
+### Region Render Matrix Filler
 
-In two words, script changes pitch, if item has **preserve pitch** option and changes rate and length for selected items if items has this option off.
+Region Render Matrix Filler significantly speeds up the process of filling the Render Matrix in REAPER, especially in projects with a large number of regions. It’s particularly useful for tasks like layer-based sound rendering, gameplay VO synced to video, voiceover exports, and other scenarios where batch rendering is needed.
+
+![Pitch Tool](/Assets/images/rrm_filler.png)
+
+#### [Documentation](https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Render-Region-Matrix-Filler)
+
 
 ### Global startup action
 
