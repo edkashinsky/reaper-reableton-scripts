@@ -1,12 +1,16 @@
 -- @description ek_Core functions
 -- @author Ed Kashinsky
 -- @about Base functions used by ek-scripts.
--- @version 1.1.12
+-- @version 1.1.13
 -- @changelog
---    Big UI update:
---      - GUI scripts has toggle state in toolbar
---      - Undock button hides on small window size
---      - knob fixes
+--  • Fixed a bug where pressing Enter while an element was focused would close the window
+--	• Fixed a bug where closing a window didn’t update the toolbar state
+--	• Merged Drag and Slider into a new custom drag element with value display, like in Ableton. It also supports vertical drag to change the value
+--	• Fixed a bug where window height was sometimes calculated incorrectly
+--	• Added a secret message in the About window for licensed users
+--	• Fixed a bug where double-clicking a knob didn’t reset the value to 0
+--	• Re-enabled vertical drag to change knob values
+--	• Improved keyboard navigation
 -- @provides
 --   data/core_*.dat
 --   [nomain] curl/*
