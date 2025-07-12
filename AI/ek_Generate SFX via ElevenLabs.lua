@@ -1,11 +1,11 @@
 -- @description ek_Generate SFX via ElevenLabs
--- @version 1.1.11
+-- @version 1.1.12
 -- @author Ed Kashinsky
 -- @readme_skip
 -- @about
 --   Script uses ElevenLabs API to generate sound effects and inserts them into the project.
 -- @changelog
---   Support of new UI features
+--   Added new custom drag element
 -- @provides
 --   ../Core/data/ai-11-labs-sfx_*.dat
 

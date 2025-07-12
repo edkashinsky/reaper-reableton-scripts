@@ -1,5 +1,5 @@
 -- @description ek_Edge silence cropper
--- @version 1.2.12
+-- @version 1.2.13
 -- @author Ed Kashinsky
 -- @readme_skip
 -- @about
@@ -7,7 +7,7 @@
 --
 --   Also it provides UI for configuration
 -- @changelog
---   Support of new UI features
+--   Added new custom drag element
 -- @provides
 --   ../Core/data/edge-silence-cropper_*.dat
 --   [main=main] ek_Edge silence cropper (no prompt).lua
