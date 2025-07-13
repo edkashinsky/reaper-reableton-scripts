@@ -1,6 +1,6 @@
 -- @author Ed Kashinsky
 -- @description ek_Pitch Tool
--- @version 2.0.2
+-- @version 2.0.3
 -- @about
 --    Pitch tool brings Ableton workflow for pitch manipulations of audio clips.
 --		- Ableton-style pitch shifting for intuitive and musical pitch control
