@@ -1,6 +1,6 @@
 --[[
 @description ek_Global startup action
-@version 1.1.7
+@version 1.1.8
 @author Ed Kashinsky
 @about
   This is startup action brings some ableton-like features in realtime. You can control any option by 'ek_Global startup action settings' script.
