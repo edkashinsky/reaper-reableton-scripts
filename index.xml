@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="EK Scripts" commit="abb48dfee76b954a8f8296b25a4b650e58d10a41">
+<index version="1" name="EK Scripts" commit="fbc702df55ef6f0820ede72f65afe02585d7414a">
   <category name="AI">
     <reapack name="ek_Generate SFX via ElevenLabs.lua" type="script" desc="ek_Generate SFX via ElevenLabs">
       <metadata>
@@ -7,7 +7,7 @@
 {\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
 \widowctrl\hyphauto
 
-{\pard \ql \f0 \sa180 \li0 \fi0 Script uses ElevenLabs API to generate sound effects and inserts them into the project.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 This script allows you to generate sounds via Eleven Labs directly from Reaper. Simply enter a prompt describing the sound you want to create - whether it\u8217's the crackle of fire or an alarm signal on an orbital station. The script will generate the sound and insert it directly onto the timeline.\par}
 }
 ]]></description>
         <link rel="website" href="https://github.com/edkashinsky/reaper-reableton-scripts/wiki/ElevenLabs-SFX-Generator">Documentation</link>
@@ -109,6 +109,25 @@ new UI support]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d932383e98c2bcbf0b1a91a30c8e7d5b74221bcf/AI/ek_Generate%20SFX%20via%20ElevenLabs.lua</source>
         <source file="../Core/data/ai-11-labs-sfx_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d932383e98c2bcbf0b1a91a30c8e7d5b74221bcf/Core/data/ai-11-labs-sfx_5.3.dat</source>
         <source file="../Core/data/ai-11-labs-sfx_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d932383e98c2bcbf0b1a91a30c8e7d5b74221bcf/Core/data/ai-11-labs-sfx_5.4.dat</source>
+      </version>
+      <version name="1.2.1" author="Ed Kashinsky" time="2025-08-10T16:40:47Z">
+        <changelog><![CDATA[* Gumroad integration – The script is now connected to Gumroad. To use it, you must obtain a free license from the website.
+* API request queue viewer – You can now view the queue of pending API requests.
+* Edit cursor repositioning – After inserting content, the edit cursor is automatically moved to the beginning of that content.
+* Improved stability and performance – The script runs more reliably and efficiently.
+* GUI: ImGui 0.10 Support
+* GUI: Added "Close window after action" option to the About window.
+* GUI: Improved keyboard navigation – Use Tab / Shift+Tab or the Left/Right arrow keys to move focus between input fields. Use the Up/Down arrow keys to perform actions.
+* GUI: Consistent text field navigation – All text fields now follow the same navigation rules.
+* GUI: Dynamic font updates in the About window – Font changes now apply instantly without reopening the window.
+* GUI: New Help button in About – Provides quick access to documentation and the related forum thread.
+* GUI: Better link display – Links are now easier to read and click.
+* GUI: Improved tooltips – More readable and better positioned.
+* GUI: Enhanced input field behavior – More consistent and user*friendly across different types of fields.
+* GUI: Library dependency check added – The application now verifies that all required libraries are present before running.]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fbc702df55ef6f0820ede72f65afe02585d7414a/AI/ek_Generate%20SFX%20via%20ElevenLabs.lua</source>
+        <source file="../Core/data/ai-11-labs-sfx_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fbc702df55ef6f0820ede72f65afe02585d7414a/Core/data/ai-11-labs-sfx_5.3.dat</source>
+        <source file="../Core/data/ai-11-labs-sfx_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fbc702df55ef6f0820ede72f65afe02585d7414a/Core/data/ai-11-labs-sfx_5.4.dat</source>
       </version>
     </reapack>
   </category>
@@ -704,6 +723,17 @@ Improved core performance]]></changelog>
         <source file="curl/trurl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a32303d0cd977af45b6d830e0493cdb2df860663/Core/curl/trurl.exe</source>
         <source file="images/logo-black.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a32303d0cd977af45b6d830e0493cdb2df860663/Core/images/logo-black.png</source>
         <source file="images/logo-white.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a32303d0cd977af45b6d830e0493cdb2df860663/Core/images/logo-white.png</source>
+      </version>
+      <version name="1.2.1" author="Ed Kashinsky" time="2025-08-10T16:40:47Z">
+        <changelog><![CDATA[* ImGui 0.10 Support]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fbc702df55ef6f0820ede72f65afe02585d7414a/Core/ek_Core%20functions.lua</source>
+        <source file="data/core_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fbc702df55ef6f0820ede72f65afe02585d7414a/Core/data/core_5.3.dat</source>
+        <source file="data/core_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fbc702df55ef6f0820ede72f65afe02585d7414a/Core/data/core_5.4.dat</source>
+        <source file="curl/curl-ca-bundle.crt">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fbc702df55ef6f0820ede72f65afe02585d7414a/Core/curl/curl-ca-bundle.crt</source>
+        <source file="curl/curl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fbc702df55ef6f0820ede72f65afe02585d7414a/Core/curl/curl.exe</source>
+        <source file="curl/trurl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fbc702df55ef6f0820ede72f65afe02585d7414a/Core/curl/trurl.exe</source>
+        <source file="images/logo-black.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fbc702df55ef6f0820ede72f65afe02585d7414a/Core/images/logo-black.png</source>
+        <source file="images/logo-white.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fbc702df55ef6f0820ede72f65afe02585d7414a/Core/images/logo-white.png</source>
       </version>
     </reapack>
     <reapack name="ek_Focus virtual MIDI keyboard.lua" type="script" desc="ek_Focus virtual MIDI keyboard">
@@ -1324,8 +1354,7 @@ Please restart Reaper for taking effect]]></changelog>
 {\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
 \widowctrl\hyphauto
 
-{\pard \ql \f0 \sa180 \li0 \fi0 This script helps to remove silence at the start and at the end of selected items by individual thresholds, pads and fades.\par}
-{\pard \ql \f0 \sa180 \li0 \fi0 Also it provides UI for configuration\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 This script allows you to trim silence from the edges of items using individual thresholds. It significantly speeds up work with voiceovers, impacts, and other sounds that often have silent tails or heads \u8212- especially when dealing with large batches. It can be used alongside Reaper's built-in Dynamic Split for more precise timing adjustments without silence.\par}
 }
 ]]></description>
         <link rel="website" href="https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Edge-Silence-Cropper">Documentation</link>
@@ -1660,6 +1689,28 @@ Please restart Reaper for taking effect]]></changelog>
         <source main="main" file="ek_Edge silence cropper - apply Preset 4.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d932383e98c2bcbf0b1a91a30c8e7d5b74221bcf/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%204.lua</source>
         <source main="main" file="ek_Edge silence cropper - apply Preset 5.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d932383e98c2bcbf0b1a91a30c8e7d5b74221bcf/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%205.lua</source>
       </version>
+      <version name="1.3.1" author="Ed Kashinsky" time="2025-08-10T16:40:47Z">
+        <changelog><![CDATA[* Gumroad integration – The script is now connected to Gumroad. To use it, you must obtain a free license from the website.
+* Improved stability and performance – The script runs more reliably and efficiently.
+* GUI: ImGui 0.10 Support
+* GUI: Added "Close window after action" option to the About window.
+* GUI: Improved keyboard navigation – Use Tab / Shift+Tab or the Left/Right arrow keys to move focus between input fields. Use the Up/Down arrow keys to perform actions.
+* GUI: Dynamic font updates in the About window – Font changes now apply instantly without reopening the window.
+* GUI: New Help button in About – Provides quick access to documentation and the related forum thread.
+* GUI: Better link display – Links are now easier to read and click.
+* GUI: Improved tooltips – More readable and better positioned.
+* GUI: Enhanced input field behavior – More consistent and user*friendly across different types of fields.
+* GUI: Library dependency check added – The application now verifies that all required libraries are present before running.]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fbc702df55ef6f0820ede72f65afe02585d7414a/Items%20Editing/ek_Edge%20silence%20cropper.lua</source>
+        <source file="../Core/data/edge-silence-cropper_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fbc702df55ef6f0820ede72f65afe02585d7414a/Core/data/edge-silence-cropper_5.3.dat</source>
+        <source file="../Core/data/edge-silence-cropper_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fbc702df55ef6f0820ede72f65afe02585d7414a/Core/data/edge-silence-cropper_5.4.dat</source>
+        <source main="main" file="ek_Edge silence cropper (no prompt).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fbc702df55ef6f0820ede72f65afe02585d7414a/Items%20Editing/ek_Edge%20silence%20cropper%20(no%20prompt).lua</source>
+        <source main="main" file="ek_Edge silence cropper - apply Preset 1.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fbc702df55ef6f0820ede72f65afe02585d7414a/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%201.lua</source>
+        <source main="main" file="ek_Edge silence cropper - apply Preset 2.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fbc702df55ef6f0820ede72f65afe02585d7414a/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%202.lua</source>
+        <source main="main" file="ek_Edge silence cropper - apply Preset 3.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fbc702df55ef6f0820ede72f65afe02585d7414a/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%203.lua</source>
+        <source main="main" file="ek_Edge silence cropper - apply Preset 4.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fbc702df55ef6f0820ede72f65afe02585d7414a/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%204.lua</source>
+        <source main="main" file="ek_Edge silence cropper - apply Preset 5.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fbc702df55ef6f0820ede72f65afe02585d7414a/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%205.lua</source>
+      </version>
     </reapack>
     <reapack name="ek_Pitch Tool.lua" type="script" desc="ek_Pitch Tool">
       <metadata>
@@ -1667,7 +1718,7 @@ Please restart Reaper for taking effect]]></changelog>
 {\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
 \widowctrl\hyphauto
 
-{\pard \ql \f0 \sa180 \li0 \fi0 Pitch tool brings Ableton workflow for pitch manipulations of audio clips.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Pitch Tool is a script for REAPER that allows you to adjust pitch quickly and flexibly. It inherits the convenient pitch workflow features from Ableton while also introducing its own unique enhancements for an even smoother experience.\par}
 }
 ]]></description>
         <link rel="website" href="https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Pitch-Tool">Documentation</link>
@@ -1721,6 +1772,27 @@ Please restart Reaper for taking effect]]></changelog>
         <source file="../Core/data/pitch-tool_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/aec9c16cec5aa585e739027aca812a7dc293a46a/Core/data/pitch-tool_5.3.dat</source>
         <source file="../Core/data/pitch-tool_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/aec9c16cec5aa585e739027aca812a7dc293a46a/Core/data/pitch-tool_5.4.dat</source>
         <source main="main" file="ek_Pitch Tool - Tooltip (background).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/aec9c16cec5aa585e739027aca812a7dc293a46a/Items%20Editing/ek_Pitch%20Tool%20-%20Tooltip%20(background).lua</source>
+      </version>
+      <version name="2.0.5" author="Ed Kashinsky" time="2025-08-10T16:40:47Z">
+        <changelog><![CDATA[* Added support for élastique v2 modes on Windows
+* Improved Tooltip version – Now more compact and significantly faster.
+* New setting: Pitch Range – Allows adjusting the pitch range.
+* New Tooltip settings – Includes Min item width for showing, Opacity when inactive, and Keep tooltip focused after action.
+* New unfocused mode for Tooltip – When enabled, the script returns focus to the REAPER window after an action, instead of keeping it.
+* GUI: Improved knob display – Knobs now look cleaner and more consistent.
+* GUI: ImGui 0.10 Support
+* GUI: "Close window after action" option moved – This setting is now located in the About window.
+* GUI: Improved keyboard navigation – Use Tab / Shift+Tab or the Left/Right arrow keys to move focus between input fields. Use the Up/Down arrow keys to perform actions.
+* GUI: Dynamic font updates in the About window – Font changes now apply instantly without reopening the window.
+* GUI: New Help button in About – Provides quick access to documentation and the related forum thread.
+* GUI: Better link display – Links are now easier to read and click.
+* GUI: Improved tooltips – More readable and better positioned.
+* GUI: Enhanced input field behavior – More consistent and user*friendly across different types of fields.
+* GUI: Library dependency check added – The application now verifies that all required libraries are present before running.]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fbc702df55ef6f0820ede72f65afe02585d7414a/Items%20Editing/ek_Pitch%20Tool.lua</source>
+        <source file="../Core/data/pitch-tool_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fbc702df55ef6f0820ede72f65afe02585d7414a/Core/data/pitch-tool_5.3.dat</source>
+        <source file="../Core/data/pitch-tool_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fbc702df55ef6f0820ede72f65afe02585d7414a/Core/data/pitch-tool_5.4.dat</source>
+        <source main="main" file="ek_Pitch Tool - Tooltip (background).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fbc702df55ef6f0820ede72f65afe02585d7414a/Items%20Editing/ek_Pitch%20Tool%20-%20Tooltip%20(background).lua</source>
       </version>
     </reapack>
     <reapack name="ek_Remove 1 sec gap between selected items.lua" type="script" desc="ek_Remove 1 sec gap between selected items">
@@ -2359,6 +2431,26 @@ Also there is flexible offset: just begin of item, snap offset, first cue marker
         <source file="../Core/data/rrm-filler_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d932383e98c2bcbf0b1a91a30c8e7d5b74221bcf/Core/data/rrm-filler_5.4.dat</source>
         <source main="main" file="ek_Region Render Matrix Filler (no prompt).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d932383e98c2bcbf0b1a91a30c8e7d5b74221bcf/Regions/ek_Region%20Render%20Matrix%20Filler%20(no%20prompt).lua</source>
       </version>
+      <version name="1.0.9" author="Ed Kashinsky" time="2025-08-10T16:40:47Z">
+        <changelog><![CDATA[* New Length field for regions – Displays and allows editing of region length.
+* Improved script performance – Runs faster and more efficiently.
+* Bug fix: Overridden track not always highlighted in the table.
+* Bug fix: Track hierarchy for override not always displayed correctly.
+* Hierarch Offset field redesigned – Now supports drag-and-drop adjustment. No need to enter -1 for Master; simply drag to set the desired value.
+* ImGui 0.10 Support
+* "Close window after action" option moved – This setting is now located in the About window.
+* Improved keyboard navigation – Use Tab / Shift+Tab or the Left/Right arrow keys to move focus between input fields. Use the Up/Down arrow keys to perform actions.
+* Dynamic font updates in the About window – Font changes now apply instantly without reopening the window.
+* New Help button in About – Provides quick access to documentation and the related forum thread.
+* Better link display – Links are now easier to read and click.
+* Improved tooltips – More readable and better positioned.
+* Enhanced input field behavior – More consistent and user-friendly across different types of fields.
+* Library dependency check added – The application now verifies that all required libraries are present before running.]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fbc702df55ef6f0820ede72f65afe02585d7414a/Regions/ek_Region%20Render%20Matrix%20Filler.lua</source>
+        <source file="../Core/data/rrm-filler_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fbc702df55ef6f0820ede72f65afe02585d7414a/Core/data/rrm-filler_5.3.dat</source>
+        <source file="../Core/data/rrm-filler_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fbc702df55ef6f0820ede72f65afe02585d7414a/Core/data/rrm-filler_5.4.dat</source>
+        <source main="main" file="ek_Region Render Matrix Filler (no prompt).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fbc702df55ef6f0820ede72f65afe02585d7414a/Regions/ek_Region%20Render%20Matrix%20Filler%20(no%20prompt).lua</source>
+      </version>
     </reapack>
   </category>
   <category name="Toolbars">
@@ -2612,7 +2704,7 @@ Also there is flexible offset: just begin of item, snap offset, first cue marker
 {\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
 \widowctrl\hyphauto
 
-{\pard \ql \f0 \sa180 \li0 \fi0 Renaming stuff for takes, items, markers, regions and tracks depending on focus\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 This script allows for convenient context-aware renaming of objects in REAPER. It also offers advanced features for batch renaming using simple rules. As a bonus, it lets you change the color of selected elements.\par}
 }
 ]]></description>
         <link rel="website" href="https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Smart-Renamer">Documentation</link>
@@ -2750,6 +2842,28 @@ Also there is flexible offset: just begin of item, snap offset, first cue marker
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/aec9c16cec5aa585e739027aca812a7dc293a46a/Tracks%20Properties/ek_Smart%20renaming%20depending%20on%20focus.lua</source>
         <source file="../Core/data/smart-renamer_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/aec9c16cec5aa585e739027aca812a7dc293a46a/Core/data/smart-renamer_5.3.dat</source>
         <source file="../Core/data/smart-renamer_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/aec9c16cec5aa585e739027aca812a7dc293a46a/Core/data/smart-renamer_5.4.dat</source>
+      </version>
+      <version name="1.1.1" author="Ed Kashinsky" time="2025-08-10T16:40:47Z">
+        <changelog><![CDATA[* Gumroad integration – The script is now connected to Gumroad. To use it, you must obtain a free license from the website.
+* Added option to trim spaces from the start and end of the final name
+* Added wildcard mode for names
+* Added case*insensitive search mode for Replace Text
+* Added ability to move and delete custom colors in the palette
+* Script window now reopens in the same state it was closed
+* On open, focus is set to the appropriate field
+* GUI: ImGui 0.10 Support
+* GUI: History for text fields – A new history button appears on the right side of certain text fields. Click it to view previously entered queries. You can also navigate through the history using the Up/Down arrow keys while the text field is focused.
+* GUI: "Close window after action" option moved – This setting is now located in the About window.
+* GUI: Improved keyboard navigation – Use Tab / Shift+Tab or the Left/Right arrow keys to move focus between input fields. Use the Up/Down arrow keys to perform actions.
+* GUI: Consistent text field navigation – All text fields now follow the same navigation rules.
+* GUI: Dynamic font updates in the About window – Font changes now apply instantly without reopening the window.
+* GUI: New Help button in About – Provides quick access to documentation and the related forum thread.
+* GUI: Better link display – Links are now easier to read and click.
+* GUI: Improved tooltips – More readable and better positioned.
+* GUI: Enhanced input field behavior – More consistent and user*friendly across different types of fields.]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fbc702df55ef6f0820ede72f65afe02585d7414a/Tracks%20Properties/ek_Smart%20renaming%20depending%20on%20focus.lua</source>
+        <source file="../Core/data/smart-renamer_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fbc702df55ef6f0820ede72f65afe02585d7414a/Core/data/smart-renamer_5.3.dat</source>
+        <source file="../Core/data/smart-renamer_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fbc702df55ef6f0820ede72f65afe02585d7414a/Core/data/smart-renamer_5.4.dat</source>
       </version>
     </reapack>
     <reapack name="ek_Toggle exclusive arm for selected tracks.lua" type="script" desc="Toggle exclusive arm for selected tracks">
