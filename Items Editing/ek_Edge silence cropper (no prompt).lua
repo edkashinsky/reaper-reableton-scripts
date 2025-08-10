@@ -26,10 +26,12 @@ local countSelectedItems = reaper.CountSelectedMediaItems(proj)
 if countSelectedItems > 0 then
     local Cropper = EdgeCropper.new()
 
-    for i = 0, countSelectedItems - 1 do
-        local item = reaper.GetSelectedMediaItem(proj, i)
-        Cropper.SetItem(item).Crop()
-    end
+	if Cropper then
+		for i = 0, countSelectedItems - 1 do
+			local item = reaper.GetSelectedMediaItem(proj, i)
+			Cropper.SetItem(item).Crop()
+		end
+	end
 
     reaper.UpdateArrange()
 end
