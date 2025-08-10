@@ -1,34 +1,35 @@
--- @description ek_Smart renaming depending on focus
--- @version 1.1.0
--- @author Ed Kashinsky
--- @readme_skip
--- @about
---   Renaming stuff for takes, items, markers, regions and tracks depending on focus
--- @changelog
---  • Gumroad integration – The script is now connected to Gumroad. To use it, you must obtain a free license from the website.
---  • Added option to trim spaces from the start and end of the final name
--- 	• Added wildcard mode for names
---	• Added case-insensitive search mode for Replace Text
---	• Added ability to move and delete custom colors in the palette
---	• Script window now reopens in the same state it was closed
---	• On open, focus is set to the appropriate field
---  • GUI: ImGui 0.10 Support
---	• GUI: History for text fields – A new history button appears on the right side of certain text fields. Click it to view previously entered queries. You can also navigate through the history using the Up/Down arrow keys while the text field is focused.
--- 	• GUI: "Close window after action" option moved – This setting is now located in the About window.
---	• GUI: Improved keyboard navigation – Use Tab / Shift+Tab or the Left/Right arrow keys to move focus between input fields. Use the Up/Down arrow keys to perform actions.
---	• GUI: Consistent text field navigation – All text fields now follow the same navigation rules.
---	• GUI: Dynamic font updates in the About window – Font changes now apply instantly without reopening the window.
---	• GUI: New Help button in About – Provides quick access to documentation and the related forum thread.
---	• GUI: Better link display – Links are now easier to read and click.
---	• GUI: Improved tooltips – More readable and better positioned.
---	• GUI: Enhanced input field behavior – More consistent and user-friendly across different types of fields.
---  • GUI: Library dependency check added – The application now verifies that all required libraries are present before running.
--- @links
---   Documentation https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Smart-Renamer
---   Forum thread https://forum.cockos.com/showthread.php?t=279036
---   Buy Licence https://ekscripts.gumroad.com/l/smart-renamer
--- @provides
---   ../Core/data/smart-renamer_*.dat
+--[[
+@description ek_Smart renaming depending on focus
+@version 1.1.1
+@author Ed Kashinsky
+@readme_skip
+@about This script allows for convenient context-aware renaming of objects in REAPER. It also offers advanced features for batch renaming using simple rules. As a bonus, it lets you change the color of selected elements.
+@changelog
+	* Gumroad integration – The script is now connected to Gumroad. To use it, you must obtain a free license from the website.
+	* Added option to trim spaces from the start and end of the final name
+	* Added wildcard mode for names
+	* Added case*insensitive search mode for Replace Text
+	* Added ability to move and delete custom colors in the palette
+	* Script window now reopens in the same state it was closed
+	* On open, focus is set to the appropriate field
+	* GUI: ImGui 0.10 Support
+	* GUI: History for text fields – A new history button appears on the right side of certain text fields. Click it to view previously entered queries. You can also navigate through the history using the Up/Down arrow keys while the text field is focused.
+	* GUI: "Close window after action" option moved – This setting is now located in the About window.
+	* GUI: Improved keyboard navigation – Use Tab / Shift+Tab or the Left/Right arrow keys to move focus between input fields. Use the Up/Down arrow keys to perform actions.
+	* GUI: Consistent text field navigation – All text fields now follow the same navigation rules.
+	* GUI: Dynamic font updates in the About window – Font changes now apply instantly without reopening the window.
+	* GUI: New Help button in About – Provides quick access to documentation and the related forum thread.
+	* GUI: Better link display – Links are now easier to read and click.
+	* GUI: Improved tooltips – More readable and better positioned.
+	* GUI: Enhanced input field behavior – More consistent and user*friendly across different types of fields.
+ 	* GUI: Library dependency check added – The application now verifies that all required libraries are present before running.
+@links
+	Documentation https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Smart-Renamer
+	Forum thread https://forum.cockos.com/showthread.php?t=279036
+	Buy Licence https://ekscripts.gumroad.com/l/smart-renamer
+@provides
+	../Core/data/smart-renamer_*.dat
+]]--
 
 local CONTEXT = ({reaper.get_action_context()})
 local SCRIPT_NAME = CONTEXT[2]:match("([^/\\]+)%.lua$"):gsub("ek_", "")

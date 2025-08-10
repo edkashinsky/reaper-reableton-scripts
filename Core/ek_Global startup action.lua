@@ -1,21 +1,23 @@
--- @description ek_Global startup action
--- @version 1.1.7
--- @author Ed Kashinsky
--- @about
---   This is startup action brings some ableton-like features in realtime. You can control any option by 'ek_Global startup action settings' script.
---
---   For installation:
---      1. Install 'ek_Core functions.lua'
---		2. Install this script via **Extensions** -> **ReaPack** -> **Browse Packages**
---	    3. Open script 'ek_Global startup action settings' and turn on "Enable global action"
---      4. Restart Reaper
---      5. Open 'ek_Global startup action settings' again for customize options
---      6. If you want to use auto-grid for MIDI Editor, install script **ek_Auto grid for MIDI Editor** and set it on zoom shortcut.
--- @changelog
---   Library dependency check added – The application now verifies that all required libraries are present before running.
--- @provides
---   data/core-bg_*.dat
---   [main=main] ek_Global startup action - settings.lua
+--[[
+@description ek_Global startup action
+@version 1.1.7
+@author Ed Kashinsky
+@about
+  This is startup action brings some ableton-like features in realtime. You can control any option by 'ek_Global startup action settings' script.
+
+  For installation:
+     1. Install 'ek_Core functions.lua'
+	 2. Install this script via **Extensions** -> **ReaPack** -> **Browse Packages**
+	 3. Open script 'ek_Global startup action settings' and turn on "Enable global action"
+     4. Restart Reaper
+     5. Open 'ek_Global startup action settings' again for customize options
+     6. If you want to use auto-grid for MIDI Editor, install script **ek_Auto grid for MIDI Editor** and set it on zoom shortcut.
+@changelog
+	* Library dependency check added – The application now verifies that all required libraries are present before running.
+@provides
+	data/core-bg_*.dat
+	[main=main] ek_Global startup action - settings.lua
+]]--
 
 local CONTEXT = ({reaper.get_action_context()})
 local SCRIPT_NAME = CONTEXT[2]:match("([^/\\]+)%.lua$"):gsub("ek_", "")

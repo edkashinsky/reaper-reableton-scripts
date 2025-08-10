@@ -1,30 +1,32 @@
--- @description ek_Generate SFX via ElevenLabs
--- @version 1.2.0
--- @author Ed Kashinsky
--- @readme_skip
--- @about
---   Script uses ElevenLabs API to generate sound effects and inserts them into the project.
--- @changelog
---  • Gumroad integration – The script is now connected to Gumroad. To use it, you must obtain a free license from the website.
--- 	• API request queue viewer – You can now view the queue of pending API requests.
---	• Edit cursor repositioning – After inserting content, the edit cursor is automatically moved to the beginning of that content.
---	• Improved stability and performance – The script runs more reliably and efficiently.
---  • GUI: ImGui 0.10 Support
--- 	• GUI: Added "Close window after action" option to the About window.
---	• GUI: Improved keyboard navigation – Use Tab / Shift+Tab or the Left/Right arrow keys to move focus between input fields. Use the Up/Down arrow keys to perform actions.
---	• GUI: Consistent text field navigation – All text fields now follow the same navigation rules.
---	• GUI: Dynamic font updates in the About window – Font changes now apply instantly without reopening the window.
---	• GUI: New Help button in About – Provides quick access to documentation and the related forum thread.
---	• GUI: Better link display – Links are now easier to read and click.
---	• GUI: Improved tooltips – More readable and better positioned.
---	• GUI: Enhanced input field behavior – More consistent and user-friendly across different types of fields.
---  • GUI: Library dependency check added – The application now verifies that all required libraries are present before running.
--- @links
---   Documentation https://github.com/edkashinsky/reaper-reableton-scripts/wiki/ElevenLabs-SFX-Generator
---   Forum thread https://forum.cockos.com/showthread.php?t=292807
---   Buy Licence https://ekscripts.gumroad.com/l/ai-11-labs-sfx
--- @provides
---   ../Core/data/ai-11-labs-sfx_*.dat
+--[[
+@description ek_Generate SFX via ElevenLabs
+@version 1.2.1
+@author Ed Kashinsky
+@readme_skip
+@about
+   This script allows you to generate sounds via Eleven Labs directly from Reaper. Simply enter a prompt describing the sound you want to create - whether it’s the crackle of fire or an alarm signal on an orbital station. The script will generate the sound and insert it directly onto the timeline.
+@changelog
+   * Gumroad integration – The script is now connected to Gumroad. To use it, you must obtain a free license from the website.
+   * API request queue viewer – You can now view the queue of pending API requests.
+   * Edit cursor repositioning – After inserting content, the edit cursor is automatically moved to the beginning of that content.
+   * Improved stability and performance – The script runs more reliably and efficiently.
+   * GUI: ImGui 0.10 Support
+   * GUI: Added "Close window after action" option to the About window.
+   * GUI: Improved keyboard navigation – Use Tab / Shift+Tab or the Left/Right arrow keys to move focus between input fields. Use the Up/Down arrow keys to perform actions.
+   * GUI: Consistent text field navigation – All text fields now follow the same navigation rules.
+   * GUI: Dynamic font updates in the About window – Font changes now apply instantly without reopening the window.
+   * GUI: New Help button in About – Provides quick access to documentation and the related forum thread.
+   * GUI: Better link display – Links are now easier to read and click.
+   * GUI: Improved tooltips – More readable and better positioned.
+   * GUI: Enhanced input field behavior – More consistent and user*friendly across different types of fields.
+   * GUI: Library dependency check added – The application now verifies that all required libraries are present before running.
+@links
+	Documentation https://github.com/edkashinsky/reaper-reableton-scripts/wiki/ElevenLabs-SFX-Generator
+	Forum thread https://forum.cockos.com/showthread.php?t=292807
+	Buy Licence https://ekscripts.gumroad.com/l/ai-11-labs-sfx
+@provides
+	../Core/data/ai-11-labs-sfx_*.dat
+]]--
 
 local CONTEXT = ({reaper.get_action_context()})
 local SCRIPT_NAME = CONTEXT[2]:match("([^/\\]+)%.lua$"):gsub("ek_", "")
