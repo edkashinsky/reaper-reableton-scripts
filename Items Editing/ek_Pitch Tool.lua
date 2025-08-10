@@ -26,6 +26,7 @@
 --  • GUI: Library dependency check added – The application now verifies that all required libraries are present before running.
 -- @links
 --   Documentation https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Pitch-Tool
+--   Forum thread https://forum.cockos.com/showthread.php?t=301698
 --   Buy Licence https://ekscripts.gumroad.com/l/pitch-tool
 -- @provides
 --   ../Core/data/pitch-tool_*.dat

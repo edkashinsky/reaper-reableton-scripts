@@ -19,6 +19,10 @@
 --	• GUI: Improved tooltips – More readable and better positioned.
 --	• GUI: Enhanced input field behavior – More consistent and user-friendly across different types of fields.
 --  • GUI: Library dependency check added – The application now verifies that all required libraries are present before running.
+-- @links
+--   Documentation https://github.com/edkashinsky/reaper-reableton-scripts/wiki/ElevenLabs-SFX-Generator
+--   Forum thread https://forum.cockos.com/showthread.php?t=292807
+--   Buy Licence https://ekscripts.gumroad.com/l/ai-11-labs-sfx
 -- @provides
 --   ../Core/data/ai-11-labs-sfx_*.dat
 
