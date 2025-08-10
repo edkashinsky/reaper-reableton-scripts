@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="EK Scripts" commit="cb5a7e6b09fe2bb51ab29b9487e624aef3927409">
+<index version="1" name="EK Scripts" commit="abb48dfee76b954a8f8296b25a4b650e58d10a41">
   <category name="AI">
     <reapack name="ek_Generate SFX via ElevenLabs.lua" type="script" desc="ek_Generate SFX via ElevenLabs">
       <metadata>
@@ -10,6 +10,9 @@
 {\pard \ql \f0 \sa180 \li0 \fi0 Script uses ElevenLabs API to generate sound effects and inserts them into the project.\par}
 }
 ]]></description>
+        <link rel="website" href="https://github.com/edkashinsky/reaper-reableton-scripts/wiki/ElevenLabs-SFX-Generator">Documentation</link>
+        <link rel="website" href="https://forum.cockos.com/showthread.php?t=292807">Forum thread</link>
+        <link rel="website" href="https://ekscripts.gumroad.com/l/ai-11-labs-sfx">Buy Licence</link>
       </metadata>
       <version name="1.0.0" author="Ed Kashinsky" time="2024-07-07T16:44:19Z">
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fe61ca9bce9e7cf69112e3b5c5bc0bd89ed03cc2/AI/ek_Generate%20SFX%20via%20ElevenLabs.lua</source>
@@ -100,6 +103,12 @@ new UI support]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/94931f333fbbaff5408d6e1e474789f9c6d1bbe7/AI/ek_Generate%20SFX%20via%20ElevenLabs.lua</source>
         <source file="../Core/data/ai-11-labs-sfx_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/94931f333fbbaff5408d6e1e474789f9c6d1bbe7/Core/data/ai-11-labs-sfx_5.3.dat</source>
         <source file="../Core/data/ai-11-labs-sfx_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/94931f333fbbaff5408d6e1e474789f9c6d1bbe7/Core/data/ai-11-labs-sfx_5.4.dat</source>
+      </version>
+      <version name="1.2.0" author="Ed Kashinsky" time="2025-08-10T15:07:18Z">
+        <changelog><![CDATA[• Gumroad integration – The script is now connected to Gumroad. To use it, you must obtain a free license from the website.]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d932383e98c2bcbf0b1a91a30c8e7d5b74221bcf/AI/ek_Generate%20SFX%20via%20ElevenLabs.lua</source>
+        <source file="../Core/data/ai-11-labs-sfx_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d932383e98c2bcbf0b1a91a30c8e7d5b74221bcf/Core/data/ai-11-labs-sfx_5.3.dat</source>
+        <source file="../Core/data/ai-11-labs-sfx_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d932383e98c2bcbf0b1a91a30c8e7d5b74221bcf/Core/data/ai-11-labs-sfx_5.4.dat</source>
       </version>
     </reapack>
   </category>
@@ -685,6 +694,17 @@ Improved core performance]]></changelog>
         <source file="images/logo-black.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1f7fe4bf3ea3b7cd0285c801e582ac8bc910db4/Core/images/logo-black.png</source>
         <source file="images/logo-white.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1f7fe4bf3ea3b7cd0285c801e582ac8bc910db4/Core/images/logo-white.png</source>
       </version>
+      <version name="1.2.0" author="Ed Kashinsky" time="2025-08-10T15:06:24Z">
+        <changelog><![CDATA[• ImGui 0.10 Support]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a32303d0cd977af45b6d830e0493cdb2df860663/Core/ek_Core%20functions.lua</source>
+        <source file="data/core_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a32303d0cd977af45b6d830e0493cdb2df860663/Core/data/core_5.3.dat</source>
+        <source file="data/core_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a32303d0cd977af45b6d830e0493cdb2df860663/Core/data/core_5.4.dat</source>
+        <source file="curl/curl-ca-bundle.crt">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a32303d0cd977af45b6d830e0493cdb2df860663/Core/curl/curl-ca-bundle.crt</source>
+        <source file="curl/curl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a32303d0cd977af45b6d830e0493cdb2df860663/Core/curl/curl.exe</source>
+        <source file="curl/trurl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a32303d0cd977af45b6d830e0493cdb2df860663/Core/curl/trurl.exe</source>
+        <source file="images/logo-black.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a32303d0cd977af45b6d830e0493cdb2df860663/Core/images/logo-black.png</source>
+        <source file="images/logo-white.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a32303d0cd977af45b6d830e0493cdb2df860663/Core/images/logo-white.png</source>
+      </version>
     </reapack>
     <reapack name="ek_Focus virtual MIDI keyboard.lua" type="script" desc="ek_Focus virtual MIDI keyboard">
       <metadata>
@@ -1098,6 +1118,13 @@ Improved performance]]></changelog>
         <source file="data/core-bg_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/eec4628b66bb4e722efec74a9dc4c375e3fd4061/Core/data/core-bg_5.4.dat</source>
         <source main="main" file="ek_Global startup action - settings.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/eec4628b66bb4e722efec74a9dc4c375e3fd4061/Core/ek_Global%20startup%20action%20-%20settings.lua</source>
       </version>
+      <version name="1.1.7" author="Ed Kashinsky" time="2025-08-10T15:06:24Z">
+        <changelog><![CDATA[Library dependency check added – The application now verifies that all required libraries are present before running.]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a32303d0cd977af45b6d830e0493cdb2df860663/Core/ek_Global%20startup%20action.lua</source>
+        <source file="data/core-bg_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a32303d0cd977af45b6d830e0493cdb2df860663/Core/data/core-bg_5.3.dat</source>
+        <source file="data/core-bg_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a32303d0cd977af45b6d830e0493cdb2df860663/Core/data/core-bg_5.4.dat</source>
+        <source main="main" file="ek_Global startup action - settings.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a32303d0cd977af45b6d830e0493cdb2df860663/Core/ek_Global%20startup%20action%20-%20settings.lua</source>
+      </version>
     </reapack>
     <reapack name="ek_Save project with a check of unused media files.lua" type="script" desc="ek_Save project with a check of unused media files">
       <metadata>
@@ -1301,6 +1328,9 @@ Please restart Reaper for taking effect]]></changelog>
 {\pard \ql \f0 \sa180 \li0 \fi0 Also it provides UI for configuration\par}
 }
 ]]></description>
+        <link rel="website" href="https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Edge-Silence-Cropper">Documentation</link>
+        <link rel="website" href="https://forum.cockos.com/showthread.php?t=271671">Forum thread</link>
+        <link rel="website" href="https://ekscripts.gumroad.com/l/edge-silence-cropper">Buy Licence</link>
       </metadata>
       <version name="1.0.0" author="Ed Kashinsky" time="2022-10-14T23:10:01Z">
         <changelog><![CDATA[- Small fixes]]></changelog>
@@ -1618,6 +1648,18 @@ Please restart Reaper for taking effect]]></changelog>
         <source main="main" file="ek_Edge silence cropper - apply Preset 4.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/94931f333fbbaff5408d6e1e474789f9c6d1bbe7/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%204.lua</source>
         <source main="main" file="ek_Edge silence cropper - apply Preset 5.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/94931f333fbbaff5408d6e1e474789f9c6d1bbe7/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%205.lua</source>
       </version>
+      <version name="1.3.0" author="Ed Kashinsky" time="2025-08-10T15:07:18Z">
+        <changelog><![CDATA[• Gumroad integration – The script is now connected to Gumroad. To use it, you must obtain a free license from the website.]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d932383e98c2bcbf0b1a91a30c8e7d5b74221bcf/Items%20Editing/ek_Edge%20silence%20cropper.lua</source>
+        <source file="../Core/data/edge-silence-cropper_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d932383e98c2bcbf0b1a91a30c8e7d5b74221bcf/Core/data/edge-silence-cropper_5.3.dat</source>
+        <source file="../Core/data/edge-silence-cropper_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d932383e98c2bcbf0b1a91a30c8e7d5b74221bcf/Core/data/edge-silence-cropper_5.4.dat</source>
+        <source main="main" file="ek_Edge silence cropper (no prompt).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d932383e98c2bcbf0b1a91a30c8e7d5b74221bcf/Items%20Editing/ek_Edge%20silence%20cropper%20(no%20prompt).lua</source>
+        <source main="main" file="ek_Edge silence cropper - apply Preset 1.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d932383e98c2bcbf0b1a91a30c8e7d5b74221bcf/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%201.lua</source>
+        <source main="main" file="ek_Edge silence cropper - apply Preset 2.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d932383e98c2bcbf0b1a91a30c8e7d5b74221bcf/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%202.lua</source>
+        <source main="main" file="ek_Edge silence cropper - apply Preset 3.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d932383e98c2bcbf0b1a91a30c8e7d5b74221bcf/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%203.lua</source>
+        <source main="main" file="ek_Edge silence cropper - apply Preset 4.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d932383e98c2bcbf0b1a91a30c8e7d5b74221bcf/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%204.lua</source>
+        <source main="main" file="ek_Edge silence cropper - apply Preset 5.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d932383e98c2bcbf0b1a91a30c8e7d5b74221bcf/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%205.lua</source>
+      </version>
     </reapack>
     <reapack name="ek_Pitch Tool.lua" type="script" desc="ek_Pitch Tool">
       <metadata>
@@ -1629,6 +1671,7 @@ Please restart Reaper for taking effect]]></changelog>
 }
 ]]></description>
         <link rel="website" href="https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Pitch-Tool">Documentation</link>
+        <link rel="website" href="https://forum.cockos.com/showthread.php?t=301698">Forum thread</link>
         <link rel="website" href="https://ekscripts.gumroad.com/l/pitch-tool">Buy Licence</link>
       </metadata>
       <version name="1.0.0" author="Ed Kashinsky" time="2023-10-22T22:07:23Z">
@@ -1672,6 +1715,13 @@ Please restart Reaper for taking effect]]></changelog>
         <source file="../Core/data/pitch-tool_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/cb5a7e6b09fe2bb51ab29b9487e624aef3927409/Core/data/pitch-tool_5.4.dat</source>
         <source main="main" file="ek_Pitch Tool - Tooltip (background).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/cb5a7e6b09fe2bb51ab29b9487e624aef3927409/Items%20Editing/ek_Pitch%20Tool%20-%20Tooltip%20(background).lua</source>
       </version>
+      <version name="2.0.4" author="Ed Kashinsky" time="2025-08-10T15:11:55Z">
+        <changelog><![CDATA[• Added support for élastique v2 modes on Windows]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/aec9c16cec5aa585e739027aca812a7dc293a46a/Items%20Editing/ek_Pitch%20Tool.lua</source>
+        <source file="../Core/data/pitch-tool_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/aec9c16cec5aa585e739027aca812a7dc293a46a/Core/data/pitch-tool_5.3.dat</source>
+        <source file="../Core/data/pitch-tool_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/aec9c16cec5aa585e739027aca812a7dc293a46a/Core/data/pitch-tool_5.4.dat</source>
+        <source main="main" file="ek_Pitch Tool - Tooltip (background).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/aec9c16cec5aa585e739027aca812a7dc293a46a/Items%20Editing/ek_Pitch%20Tool%20-%20Tooltip%20(background).lua</source>
+      </version>
     </reapack>
     <reapack name="ek_Remove 1 sec gap between selected items.lua" type="script" desc="ek_Remove 1 sec gap between selected items">
       <metadata>
@@ -1699,6 +1749,9 @@ Please restart Reaper for taking effect]]></changelog>
       </metadata>
       <version name="1.0.0" author="Ed Kashinsky" time="2025-04-14T18:07:06Z">
         <source main="midi_editor">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d24c97ce3583b7616d5fc0b289c1507376589798/Items%20Editing/ek_Select%20all%20notes%20or%20CC%20events.lua</source>
+      </version>
+      <version name="1.0.1" author="Ed Kashinsky" time="2025-08-10T15:06:24Z">
+        <source main="midi_editor">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a32303d0cd977af45b6d830e0493cdb2df860663/Items%20Editing/ek_Select%20all%20notes%20or%20CC%20events.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Select items on track with color of item under mouse position.lua" type="script" desc="ek_Select items on track with color of item under mouse position">
@@ -1775,6 +1828,12 @@ Please restart Reaper for taking effect]]></changelog>
       <version name="1.1.5" author="Ed Kashinsky" time="2025-04-15T12:22:52Z">
         <changelog><![CDATA[Bug fix for hyphen-symbol in theme name]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/38955b3ecadf51bda6433345041fc0b24fa6d54f/Items%20Editing/ek_Separated%20actions%20for%20Media%20item%20in%20Mouse%20modifiers.lua</source>
+      </version>
+      <version name="1.1.6" author="Ed Kashinsky" time="2025-08-10T15:06:24Z">
+        <changelog><![CDATA[Move action to dat-file]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a32303d0cd977af45b6d830e0493cdb2df860663/Items%20Editing/ek_Separated%20actions%20for%20Media%20item%20in%20Mouse%20modifiers.lua</source>
+        <source file="../Core/data/dual-header-action_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a32303d0cd977af45b6d830e0493cdb2df860663/Core/data/dual-header-action_5.3.dat</source>
+        <source file="../Core/data/dual-header-action_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a32303d0cd977af45b6d830e0493cdb2df860663/Core/data/dual-header-action_5.4.dat</source>
       </version>
     </reapack>
     <reapack name="ek_Smart split items by mouse cursor.lua" type="script" desc="ek_Smart split items by mouse cursor">
@@ -2235,6 +2294,7 @@ Also there is flexible offset: just begin of item, snap offset, first cue marker
 }
 ]]></description>
         <link rel="website" href="https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Render-Region-Matrix-Filler">Documentation</link>
+        <link rel="website" href="https://forum.cockos.com/showthread.php?t=300927">Forum Thread</link>
         <link rel="website" href="https://ekscripts.gumroad.com/l/rrm-filler">Buy Licence</link>
       </metadata>
       <version name="1.0.0" author="Ed Kashinsky" time="2025-05-27T08:38:17Z">
@@ -2291,6 +2351,13 @@ Also there is flexible offset: just begin of item, snap offset, first cue marker
         <source file="../Core/data/rrm-filler_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/94931f333fbbaff5408d6e1e474789f9c6d1bbe7/Core/data/rrm-filler_5.3.dat</source>
         <source file="../Core/data/rrm-filler_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/94931f333fbbaff5408d6e1e474789f9c6d1bbe7/Core/data/rrm-filler_5.4.dat</source>
         <source main="main" file="ek_Region Render Matrix Filler (no prompt).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/94931f333fbbaff5408d6e1e474789f9c6d1bbe7/Regions/ek_Region%20Render%20Matrix%20Filler%20(no%20prompt).lua</source>
+      </version>
+      <version name="1.0.8" author="Ed Kashinsky" time="2025-08-10T15:07:18Z">
+        <changelog><![CDATA[• New Length field for regions – Displays and allows editing of region length.]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d932383e98c2bcbf0b1a91a30c8e7d5b74221bcf/Regions/ek_Region%20Render%20Matrix%20Filler.lua</source>
+        <source file="../Core/data/rrm-filler_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d932383e98c2bcbf0b1a91a30c8e7d5b74221bcf/Core/data/rrm-filler_5.3.dat</source>
+        <source file="../Core/data/rrm-filler_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d932383e98c2bcbf0b1a91a30c8e7d5b74221bcf/Core/data/rrm-filler_5.4.dat</source>
+        <source main="main" file="ek_Region Render Matrix Filler (no prompt).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d932383e98c2bcbf0b1a91a30c8e7d5b74221bcf/Regions/ek_Region%20Render%20Matrix%20Filler%20(no%20prompt).lua</source>
       </version>
     </reapack>
   </category>
@@ -2548,6 +2615,9 @@ Also there is flexible offset: just begin of item, snap offset, first cue marker
 {\pard \ql \f0 \sa180 \li0 \fi0 Renaming stuff for takes, items, markers, regions and tracks depending on focus\par}
 }
 ]]></description>
+        <link rel="website" href="https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Smart-Renamer">Documentation</link>
+        <link rel="website" href="https://forum.cockos.com/showthread.php?t=279036">Forum thread</link>
+        <link rel="website" href="https://ekscripts.gumroad.com/l/smart-renamer">Buy Licence</link>
       </metadata>
       <version name="1.0.0" author="Ed Kashinsky" time="2023-04-18T15:32:36Z">
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/42a29473b455910446d01dfd51ead01b59bcb538/Tracks%20Properties/ek_Smart%20renaming%20depending%20on%20focus.lua</source>
@@ -2673,6 +2743,13 @@ Also there is flexible offset: just begin of item, snap offset, first cue marker
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/94931f333fbbaff5408d6e1e474789f9c6d1bbe7/Tracks%20Properties/ek_Smart%20renaming%20depending%20on%20focus.lua</source>
         <source file="../Core/data/smart-renaming_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/94931f333fbbaff5408d6e1e474789f9c6d1bbe7/Core/data/smart-renaming_5.3.dat</source>
         <source file="../Core/data/smart-renaming_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/94931f333fbbaff5408d6e1e474789f9c6d1bbe7/Core/data/smart-renaming_5.4.dat</source>
+      </version>
+      <version name="1.1.0" author="Ed Kashinsky" time="2025-08-10T15:11:55Z">
+        <changelog><![CDATA[• Gumroad integration – The script is now connected to Gumroad. To use it, you must obtain a free license from the website.
+• Added option to trim spaces from the start and end of the final name]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/aec9c16cec5aa585e739027aca812a7dc293a46a/Tracks%20Properties/ek_Smart%20renaming%20depending%20on%20focus.lua</source>
+        <source file="../Core/data/smart-renamer_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/aec9c16cec5aa585e739027aca812a7dc293a46a/Core/data/smart-renamer_5.3.dat</source>
+        <source file="../Core/data/smart-renamer_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/aec9c16cec5aa585e739027aca812a7dc293a46a/Core/data/smart-renamer_5.4.dat</source>
       </version>
     </reapack>
     <reapack name="ek_Toggle exclusive arm for selected tracks.lua" type="script" desc="Toggle exclusive arm for selected tracks">
