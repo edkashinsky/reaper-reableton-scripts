@@ -36,7 +36,7 @@ Pitch Tool is a script that allows you to adjust pitch quickly and flexibly. It 
 
 This script allows for convenient context-aware renaming of objects in REAPER. It also offers advanced features for batch renaming using simple rules. As a bonus, it lets you change the color of selected elements.
 
-<img src="/Assets/images/smart_renamer.png" alt="Global Functions preview" width="350"/>
+<img src="/Assets/images/smart_renamer.png" alt="Global Functions preview" width="400"/>
 
 #### [Documentation](https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Smart-Renamer)
 
@@ -63,7 +63,7 @@ Region Render Matrix Filler significantly speeds up the process of filling the R
 
 This script allows you to generate sounds via Eleven Labs directly from Reaper. Simply enter a prompt describing the sound you want to create - whether it’s the crackle of fire or an alarm signal on an orbital station. The script will generate the sound and insert it directly onto the timeline.
 
-<img src="/Assets/images/elevenlabs_sfx_generator.png" alt="Global Functions preview" width="400"/>
+<img src="/Assets/images/elevenlabs_sfx_generator.png" alt="Global Functions preview" width="450"/>
 
 #### [Documentation](https://github.com/edkashinsky/reaper-reableton-scripts/wiki/ElevenLabs-SFX-Generator)
 
