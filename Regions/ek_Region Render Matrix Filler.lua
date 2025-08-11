@@ -1,6 +1,6 @@
 --[[
 @description ek_Region Render Matrix Filler
-@version 1.0.9
+@version 1.0.10
 @author Ed Kashinsky
 @about
   Region Render Matrix Filler significantly speeds up the process of filling the Render Matrix in REAPER, especially in projects with a large number of regions. It’s particularly useful for tasks like layer-based sound rendering, gameplay VO synced to video, voiceover exports, and other scenarios where batch rendering is needed.
@@ -32,6 +32,7 @@
 @provides
 	../Core/data/rrm-filler_*.dat
 	[main=main] ek_Region Render Matrix Filler (no prompt).lua
+]]--
 
 local CONTEXT = ({reaper.get_action_context()})
 local SCRIPT_NAME = CONTEXT[2]:match("([^/\\]+)%.lua$"):gsub("ek_", "")
