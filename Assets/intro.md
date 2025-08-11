@@ -25,9 +25,27 @@ https://raw.githubusercontent.com/edkashinsky/reaper-reableton-scripts/master/in
 
 Pitch Tool is a script that allows you to adjust pitch quickly and flexibly. It inherits the convenient pitch workflow features from Ableton while also introducing its own unique enhancements for an even smoother experience.
 
-<img src="/Assets/images/pitch_tool.png" alt="Global Functions preview" width="400"/>
+<img src="/Assets/images/pitch_tool.png" alt="Global Functions preview" width="300"/>
 
 #### [Documentation](https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Pitch-Tool)
+
+
+### Smart Renamer
+
+This script allows for convenient context-aware renaming of objects in REAPER. It also offers advanced features for batch renaming using simple rules. As a bonus, it lets you change the color of selected elements.
+
+<img src="/Assets/images/smart_renamer.png" alt="Global Functions preview" width="350"/>
+
+#### [Documentation](https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Smart-Renamer)
+
+
+### Edge Silence Cropper
+
+This script allows you to trim silence from the edges of items using individual thresholds. It significantly speeds up work with voiceovers, impacts, and other sounds that often have silent tails or heads — especially when dealing with large batches. It can be used alongside Reaper's built-in Dynamic Split for more precise timing adjustments without silence.
+
+<img src="/Assets/images/edge_silence_cropper.png" alt="Global Functions preview" width="350"/>
+
+#### [Documentation](https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Edge-Silence-Cropper)
 
 
 ### Region Render Matrix Filler
@@ -37,6 +55,15 @@ Region Render Matrix Filler significantly speeds up the process of filling the R
 ![Region Render Matrix Filler](/Assets/images/rrm_filler.png)
 
 #### [Documentation](https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Render-Region-Matrix-Filler)
+
+
+### ElevenLabs SFX Generator
+
+This script allows you to generate sounds via Eleven Labs directly from Reaper. Simply enter a prompt describing the sound you want to create - whether it’s the crackle of fire or an alarm signal on an orbital station. The script will generate the sound and insert it directly onto the timeline.
+
+![ElevenLabs SFX Generator](/Assets/images/elevenlabs_sfx_generator.png)
+
+#### [Documentation](https://github.com/edkashinsky/reaper-reableton-scripts/wiki/ElevenLabs-SFX-Generator)
 
 
 ### Global startup action
@@ -83,26 +110,6 @@ For installation:
 1. Install '**ek_Adaptive grid settings**' script via Extensions -> ReaPack -> Browse Packages
 2. Attach this script to any toolbar
 
-### Edge silence cropper
-
-This complicated script helps to crop silence on the edges of items by individual thresholds. It is very useful for sounds with loud start and quite long tails. Additionally, you can set offset and fade time. For instant work, there is one more script **ek_Edge silence cropper (no prompt)** - it apply cropping by remembered values.
-
-![Edge silence cropper preview](/Assets/images/edge_silence_cropper_preview.png)
-
-It has preview mode and it is very handy. Every setting has it own color:
-- ![#1589F0](https://via.placeholder.com/15/1589F0/1589F0.png) Threshold - Blue - leading threshold is searched in the forward direction from the start of item, and the trailing one in the reverse direction from the end
-- ![#f03c15](https://via.placeholder.com/15/f03c15/f03c15.png) Pad - Red - offset from threshold position
-- ![#c5f015](https://via.placeholder.com/15/c5f015/c5f015.png) Fade - Green - started from pad position
-
-Script has an adaptive relative mode to get more accurate results with a single preset at different sound volumes:
-
-![Edge silence cropper preview](/Assets/images/edge_silence_cropper/example_2.gif)
-
-Script calculates the maximum peak (in db) in each item and applies a percentage of its volume to leading and trailing thresholds
-
-Installation:
-1. Install script **ek_Edge silence cropper** for GUI and preview mode
-
 ### Separated actions for Media item in Mouse modifiers
 
 This small script helps to attach 2 independent actions on media item click: on header and zone below of it. Script have 2 workflows depends on option "Draw labels above the item when media item height is more than":
@@ -129,36 +136,6 @@ This helps to keep track of file garbage in your projects. It shows a special wa
 Installation:
 1. Install script **ek_Save project with a check of unused media files**
 2. Just attach it on Cmd/Ctrl+S instead of saving by default.
-
-### Smart renaming depending on focus
-
-The script helps to rename an unlimited number of elements of different types with one click. You can also change their color. In addition, script has advanced mode for replacing, additing, changing titles of elements.
-
-<img src="/Assets/images/smart_renaming_depending_on_focus.png" alt="smart_renaming_depending_on_focus" width="400"/>
-
-Installation:
-1. Install script **ek_Smart renaming depending on focus**
-2. Just attach it on Cmd/Ctrl+R instead of renaming by default.
-
-### Generate SFX via ElevenLabs
-
-You can import the generated SFX from [elevenlabs.io](https://elevenlabs.io/sound-effects) directly into the arrangement window using this script. It's simple, just enter your text prompt, press generate and that's it.
-
-<img src="/Assets/images/generate_sfx_via_elevenlabs.png" alt="smart_renaming_depending_on_focus" width="650"/>
-
-Installation:
-1. Install script **ek_Generate SFX via ElevenLabs**
-2. Go to profile on [elevenlabs.io](https://elevenlabs.io/sound-effects) and generate API key
-
-<img src="/Assets/images/generate_sfx_via_elevenlabs_settings.png" alt="smart_renaming_depending_on_focus" width="170"/>
-
-3. Insert API-key in settings of the script
-
-<img src="/Assets/images/generate_sfx_via_elevenlabs_settings_2.png" alt="smart_renaming_depending_on_focus" width="400"/>
-
-4. Enter some text prompt and click "Generate and import"
-
-**KNOWN ISSUES**: Script doesn't work with projects with non-latin characters in the path
 
 ### Snap items to markers or regions
 

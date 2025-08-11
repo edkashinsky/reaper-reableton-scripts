@@ -25,9 +25,27 @@ https://raw.githubusercontent.com/edkashinsky/reaper-reableton-scripts/master/in
 
 Pitch Tool is a script that allows you to adjust pitch quickly and flexibly. It inherits the convenient pitch workflow features from Ableton while also introducing its own unique enhancements for an even smoother experience.
 
-<img src="/Assets/images/pitch_tool.png" alt="Global Functions preview" width="400"/>
+<img src="/Assets/images/pitch_tool.png" alt="Global Functions preview" width="300"/>
 
 #### [Documentation](https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Pitch-Tool)
+
+
+### Smart Renamer
+
+This script allows for convenient context-aware renaming of objects in REAPER. It also offers advanced features for batch renaming using simple rules. As a bonus, it lets you change the color of selected elements.
+
+<img src="/Assets/images/smart_renamer.png" alt="Global Functions preview" width="350"/>
+
+#### [Documentation](https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Smart-Renamer)
+
+
+### Edge Silence Cropper
+
+This script allows you to trim silence from the edges of items using individual thresholds. It significantly speeds up work with voiceovers, impacts, and other sounds that often have silent tails or heads — especially when dealing with large batches. It can be used alongside Reaper's built-in Dynamic Split for more precise timing adjustments without silence.
+
+<img src="/Assets/images/edge_silence_cropper.png" alt="Global Functions preview" width="350"/>
+
+#### [Documentation](https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Edge-Silence-Cropper)
 
 
 ### Region Render Matrix Filler
@@ -37,6 +55,15 @@ Region Render Matrix Filler significantly speeds up the process of filling the R
 ![Region Render Matrix Filler](/Assets/images/rrm_filler.png)
 
 #### [Documentation](https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Render-Region-Matrix-Filler)
+
+
+### ElevenLabs SFX Generator
+
+This script allows you to generate sounds via Eleven Labs directly from Reaper. Simply enter a prompt describing the sound you want to create - whether it’s the crackle of fire or an alarm signal on an orbital station. The script will generate the sound and insert it directly onto the timeline.
+
+![ElevenLabs SFX Generator](/Assets/images/elevenlabs_sfx_generator.png)
+
+#### [Documentation](https://github.com/edkashinsky/reaper-reableton-scripts/wiki/ElevenLabs-SFX-Generator)
 
 
 ### Global startup action
@@ -83,26 +110,6 @@ For installation:
 1. Install '**ek_Adaptive grid settings**' script via Extensions -> ReaPack -> Browse Packages
 2. Attach this script to any toolbar
 
-### Edge silence cropper
-
-This complicated script helps to crop silence on the edges of items by individual thresholds. It is very useful for sounds with loud start and quite long tails. Additionally, you can set offset and fade time. For instant work, there is one more script **ek_Edge silence cropper (no prompt)** - it apply cropping by remembered values.
-
-![Edge silence cropper preview](/Assets/images/edge_silence_cropper_preview.png)
-
-It has preview mode and it is very handy. Every setting has it own color:
-- ![#1589F0](https://via.placeholder.com/15/1589F0/1589F0.png) Threshold - Blue - leading threshold is searched in the forward direction from the start of item, and the trailing one in the reverse direction from the end
-- ![#f03c15](https://via.placeholder.com/15/f03c15/f03c15.png) Pad - Red - offset from threshold position
-- ![#c5f015](https://via.placeholder.com/15/c5f015/c5f015.png) Fade - Green - started from pad position
-
-Script has an adaptive relative mode to get more accurate results with a single preset at different sound volumes:
-
-![Edge silence cropper preview](/Assets/images/edge_silence_cropper/example_2.gif)
-
-Script calculates the maximum peak (in db) in each item and applies a percentage of its volume to leading and trailing thresholds
-
-Installation:
-1. Install script **ek_Edge silence cropper** for GUI and preview mode
-
 ### Separated actions for Media item in Mouse modifiers
 
 This small script helps to attach 2 independent actions on media item click: on header and zone below of it. Script have 2 workflows depends on option "Draw labels above the item when media item height is more than":
@@ -129,36 +136,6 @@ This helps to keep track of file garbage in your projects. It shows a special wa
 Installation:
 1. Install script **ek_Save project with a check of unused media files**
 2. Just attach it on Cmd/Ctrl+S instead of saving by default.
-
-### Smart renaming depending on focus
-
-The script helps to rename an unlimited number of elements of different types with one click. You can also change their color. In addition, script has advanced mode for replacing, additing, changing titles of elements.
-
-<img src="/Assets/images/smart_renaming_depending_on_focus.png" alt="smart_renaming_depending_on_focus" width="400"/>
-
-Installation:
-1. Install script **ek_Smart renaming depending on focus**
-2. Just attach it on Cmd/Ctrl+R instead of renaming by default.
-
-### Generate SFX via ElevenLabs
-
-You can import the generated SFX from [elevenlabs.io](https://elevenlabs.io/sound-effects) directly into the arrangement window using this script. It's simple, just enter your text prompt, press generate and that's it.
-
-<img src="/Assets/images/generate_sfx_via_elevenlabs.png" alt="smart_renaming_depending_on_focus" width="650"/>
-
-Installation:
-1. Install script **ek_Generate SFX via ElevenLabs**
-2. Go to profile on [elevenlabs.io](https://elevenlabs.io/sound-effects) and generate API key
-
-<img src="/Assets/images/generate_sfx_via_elevenlabs_settings.png" alt="smart_renaming_depending_on_focus" width="170"/>
-
-3. Insert API-key in settings of the script
-
-<img src="/Assets/images/generate_sfx_via_elevenlabs_settings_2.png" alt="smart_renaming_depending_on_focus" width="400"/>
-
-4. Enter some text prompt and click "Generate and import"
-
-**KNOWN ISSUES**: Script doesn't work with projects with non-latin characters in the path
 
 ### Snap items to markers or regions
 
@@ -213,15 +190,6 @@ Installation for better experience:
 
 ![Preview](/Assets/images/delete_selected_items_with_color_of_item_under_mouse_position.gif)
 This script deletes selected items with the same color of item under mouse position
-
-### ek_Pitch Tool
-
-Pitch tool brings Ableton workflow for pitch manipulations of audio clips.
-- Ableton-style pitch shifting for intuitive and musical pitch control
-- Detailed pitch-stretching adjustments with a user-friendly interface
-- Multi-mode control for adjusting the pitch of an unlimited number of items
-- Flexible window docking, plus the option to display the tool contextually above selected items
-- Theme-adaptive interface that matches your REAPER theme for seamless visual integration
 
 ### ek_Remove 1 sec gap between selected items
 
@@ -280,92 +248,4 @@ With these scripts you can navigate between non-tiny visible tracks and envelope
 ### ek_Create region depending on selection
 
 Create region based on razor, selected items or time selection
-
-### ek_Region Render Matrix Filler
-
-Region Render Matrix Filler significantly speeds up the process of filling the Render Matrix in REAPER, especially in projects with a large number of regions. It’s particularly useful for tasks like layer-based sound rendering, gameplay VO synced to video, voiceover exports, and other scenarios where batch rendering is needed.
-Features:
-- Automatic track assignment in the Render Matrix based on settings
-- Optional automatic channel count detection based on region name
-- Region and track preview with navigation
-- Manual override of track assignment for individual regions
-- Ability to rename regions or tracks
-@links
-Documentation https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Render-Region-Matrix-Filler
-Buy Licence https://ekscripts.gumroad.com/l/rrm-filler
-
-### ek_Toggle Docker
-
-Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes.
-Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"
-
-### ek_Toggle monitoring FX
-
-![Preview](/Assets/images/mfx_slots_preview.gif)
-
-This script monitors a certain fx slot in the monitoring chain and switches the bypass on it. For realtime highlighting install 'Global startup action'
-
-### ek_Toggle random color for selected items or tracks
-
-It changes color for items or tracks depending on focus
-
-### ek_Delete selected tracks
-
-If item has several takes and option "Show all takes in lane (when room)" is on, we gonna delete active take. If automation lane in focus, delete it. And in other case it deletes track and select previous available track
-
-### ek_Duplicate selected tracks or items
-
-If any item is selected, it duplicate item. In other case is duplicate track
-
-### ek_Insert new track
-
-It just inserts track or inserts it in the end of list depending on situation
-
-### ek_Move selected tracks under specified track
-
-Script moves selected tracks to new track as childs
-
-### ek_Nudge volume for selected tracks down
-
-It decrease volume for selected track a bit and shows tooltip with set volume
-
-### ek_Nudge volume for selected tracks up
-
-It increase volume for selected track a bit and shows tooltip with set volume
-
-### ek_Set volume for selected tracks
-
-Script shows window with input to set volume
-
-### Toggle exclusive arm for selected tracks
-
-It just toggles exclusive arm for selected tracks
-
-### ek_Toggle mute and offline FX for selected tracks
-
-This script makes fx offline when selected track is muted
-
-### ek_Toggle mute for selected tracks
-
-This script toggles mute for selected tracks and makes fx online if it is offine
-
-### ek_Toggle single solo for selected tracks
-
-Toggles selected track soloed
-
-### ek_Toggle trim mode for selected trackes
-
-Toggles trim mode for selected tracks and shows current state as button highlight
-
-### ek_Tracks collapser
-
-This package has 2 scripts "ek_Collapse selected tracks" and "ek_Expand selected tracks". They toggle selected tracks/envelope lanes between 3 states: small, medium, large.
-Execute one of these scripts on transport panel and put height values there
-
-## Support and feedback
-
-Please fill free to contact me here or on [LinkedIn](https://www.linkedin.com/in/edkashinsky/) or [Facebook](https://www.facebook.com/edkashinsky.music/) if you have any questions.
-
-If you like my scripts, you can support me via [PayPal](https://www.paypal.com/paypalme/kashinsky), [BuyMeACoffee](https://buymeacoffee.com/edkashinsky) or subscribe on my [Soundcloud](https://soundcloud.com/edkashinsky).
-
 
