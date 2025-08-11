@@ -1,4 +1,6 @@
-<img src="/Assets/images/logo.png" alt="Logo" />
+<p align="center">
+   <img src="/Assets/images/logo.png" alt="Logo" width="300" />
+</p>
 
 This scripts makes Reaper a bit close to Ableton workflow. Also it brings useful things to save time.
 
