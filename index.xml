@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="EK Scripts" commit="9c518c252bac65cc4819ef84a5976db53651a623">
+<index version="1" name="EK Scripts" commit="d44caceb8b2303d58ed8e06d91693ec91f03f0e5">
   <category name="AI">
     <reapack name="ek_Generate SFX via ElevenLabs.lua" type="script" desc="ek_Generate SFX via ElevenLabs">
       <metadata>
@@ -2478,6 +2478,26 @@ Also there is flexible offset: just begin of item, snap offset, first cue marker
         <source file="../Core/data/rrm-filler_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fbc702df55ef6f0820ede72f65afe02585d7414a/Core/data/rrm-filler_5.3.dat</source>
         <source file="../Core/data/rrm-filler_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fbc702df55ef6f0820ede72f65afe02585d7414a/Core/data/rrm-filler_5.4.dat</source>
         <source main="main" file="ek_Region Render Matrix Filler (no prompt).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fbc702df55ef6f0820ede72f65afe02585d7414a/Regions/ek_Region%20Render%20Matrix%20Filler%20(no%20prompt).lua</source>
+      </version>
+      <version name="1.0.10" author="Ed Kashinsky" time="2025-08-11T11:53:08Z">
+        <changelog><![CDATA[* New Length field for regions – Displays and allows editing of region length.
+* Improved script performance – Runs faster and more efficiently.
+* Bug fix: Overridden track not always highlighted in the table.
+* Bug fix: Track hierarchy for override not always displayed correctly.
+* Hierarch Offset field redesigned – Now supports drag-and-drop adjustment. No need to enter -1 for Master; simply drag to set the desired value.
+* ImGui 0.10 Support
+* "Close window after action" option moved – This setting is now located in the About window.
+* Improved keyboard navigation – Use Tab / Shift+Tab or the Left/Right arrow keys to move focus between input fields. Use the Up/Down arrow keys to perform actions.
+* Dynamic font updates in the About window – Font changes now apply instantly without reopening the window.
+* New Help button in About – Provides quick access to documentation and the related forum thread.
+* Better link display – Links are now easier to read and click.
+* Improved tooltips – More readable and better positioned.
+* Enhanced input field behavior – More consistent and user-friendly across different types of fields.
+* Library dependency check added – The application now verifies that all required libraries are present before running.]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d44caceb8b2303d58ed8e06d91693ec91f03f0e5/Regions/ek_Region%20Render%20Matrix%20Filler.lua</source>
+        <source file="../Core/data/rrm-filler_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d44caceb8b2303d58ed8e06d91693ec91f03f0e5/Core/data/rrm-filler_5.3.dat</source>
+        <source file="../Core/data/rrm-filler_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d44caceb8b2303d58ed8e06d91693ec91f03f0e5/Core/data/rrm-filler_5.4.dat</source>
+        <source main="main" file="ek_Region Render Matrix Filler (no prompt).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d44caceb8b2303d58ed8e06d91693ec91f03f0e5/Regions/ek_Region%20Render%20Matrix%20Filler%20(no%20prompt).lua</source>
       </version>
     </reapack>
   </category>
