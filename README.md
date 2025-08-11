@@ -63,7 +63,7 @@ Region Render Matrix Filler significantly speeds up the process of filling the R
 
 This script allows you to generate sounds via Eleven Labs directly from Reaper. Simply enter a prompt describing the sound you want to create - whether it’s the crackle of fire or an alarm signal on an orbital station. The script will generate the sound and insert it directly onto the timeline.
 
-![ElevenLabs SFX Generator](/Assets/images/elevenlabs_sfx_generator.png)
+<img src="/Assets/images/elevenlabs_sfx_generator.png" alt="Global Functions preview" width="400"/>
 
 #### [Documentation](https://github.com/edkashinsky/reaper-reableton-scripts/wiki/ElevenLabs-SFX-Generator)
 
