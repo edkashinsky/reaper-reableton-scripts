@@ -1,20 +1,31 @@
--- @description ek_Snap items to markers or regions
--- @version 1.1.10
--- @author Ed Kashinsky
--- @about
---   This script snaps selected items to markers or regions started from specified number. It requires ReaImGui extension.
---   It has 3 behaviours: simple, stems, consider overlapped items. You can see how it works shematically on pictograms in GUI
---   You can set custom offset depends on your need: just begin of item, snap offset, first cue marker, peak of item
---   Script gives posibility to limit markers/regions snapping. For example only 2 markers after specified.
--- @readme_skip
--- @changelog
---    Added new custom drag element
--- @provides
---   ../Core/data/snap-items_*.dat
---   ../Core/images/snap-items/*
---   [main=main] ek_Snap items to closest markers.lua
---   [main=main] ek_Snap items to closest regions.lua
+--[[
+@description ek_Snap items to markers or regions
+@version 1.2.0
+@author Ed Kashinsky
+@about
+   This script snaps selected items to markers or regions started from specified number. It requires ReaImGui extension.
+   It has 3 behaviours: simple, stems, consider overlapped items. You can see how it works shematically on pictograms in GUI
+   You can set custom offset depends on your need: just begin of item, snap offset, first cue marker, peak of item
+   Script gives posibility to limit markers/regions snapping. For example only 2 markers after specified.
+@readme_skip
+@changelog
+	*  Script added to Gumroad
+	* Added new mode: All items to one marker/region
+	* Removed snapping limit
+	* Added new mode for determining the start marker based on the edit cursor position
+	* Added support for ImGui 0.10
+	* Improved UI
+	* Fixed minor bugs
+	* Improved performance
+@provides
+   ../Core/data/smart-snap_*.dat
+   ../Core/images/smart-snap/*
+   [main=main] ek_Snap items to closest markers.lua
+   [main=main] ek_Snap items to closest regions.lua
+]]--
 
+local CONTEXT = ({reaper.get_action_context()})
+local SCRIPT_NAME = CONTEXT[2]:match("([^/\\]+)%.lua$"):gsub("ek_", "")
 local function CoreLibraryLoad(lib)
 	local sep = package.config:sub(1,1)
 	local root_path = debug.getinfo(1, 'S').source:sub(2, -5):match("(.*" .. sep .. ")")
@@ -25,8 +36,25 @@ local function CoreLibraryLoad(lib)
 	if file then file:close() dofile(dat_path) return true else return false end
 end
 
-if not CoreLibraryLoad("core") or not CoreLibraryLoad("snap-items") then
-	reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0)
+if not reaper.APIExists("SNM_SetIntConfigVar") then
+    reaper.MB('Please install SWS extension via https://sws-extension.org', SCRIPT_NAME, 0)
+	return
+end
+
+if not reaper.APIExists("JS_Mouse_GetState") then
+    reaper.MB('Please install "js_ReaScriptAPI: API functions for ReaScripts" via ReaPack', SCRIPT_NAME, 0)
+    reaper.ReaPack_BrowsePackages("js_ReaScriptAPI: API functions for ReaScripts")
+	return
+end
+
+if not reaper.APIExists("ImGui_GetVersion") then
+    reaper.MB('Please install "ReaImGui: ReaScript binding for Dear ImGui" via ReaPack', SCRIPT_NAME, 0)
+    reaper.ReaPack_BrowsePackages("ReaImGui: ReaScript binding for Dear ImGui")
+	return
+end
+
+if not CoreLibraryLoad("core") or not CoreLibraryLoad("smart-snap") then
+	reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages). \nLua version is: ' .. _VERSION, SCRIPT_NAME, 0)
 	reaper.ReaPack_BrowsePackages("ek_Core functions")
 	return
 end
