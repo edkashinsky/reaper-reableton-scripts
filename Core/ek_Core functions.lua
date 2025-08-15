@@ -2,19 +2,11 @@
 @description ek_Core functions
 @author Ed Kashinsky
 @about Base functions used by ek-scripts.
-@version 1.2.2
+@version 1.2.3
 @changelog
-    * ImGui 0.10 Support
-    * History for text fields – A new history button appears on the right side of certain text fields. Click it to view previously entered queries. You can also navigate through the history using the Up/Down arrow keys while the text field is focused.
-    * "Close window after action" option moved – This setting is now located in the About window.
-    * Improved keyboard navigation – Use Tab / Shift+Tab or the Left/Right arrow keys to move focus between input fields. Use the Up/Down arrow keys to perform actions.
-    * Consistent text field navigation – All text fields now follow the same navigation rules.
-    * Dynamic font updates in the About window – Font changes now apply instantly without reopening the window.
-    * New Help button in About – Provides quick access to documentation and the related forum thread.
-    * Better link display – Links are now easier to read and click.
-    * Improved tooltips – More readable and better positioned.
-    * Enhanced input field behavior – More consistent and user*friendly across different types of fields.
-    * Library dependency check added – The application now verifies that all required libraries are present before running.
+    * Fixed a bug where a disabled button could still trigger an action via hotkey
+	* Fixed a bug where images had zero size
+	* Added Cyrillic support for search
  @provides
     data/core_*.dat
     [nomain] curl/*
