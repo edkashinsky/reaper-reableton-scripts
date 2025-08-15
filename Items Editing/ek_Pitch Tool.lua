@@ -1,12 +1,11 @@
 --[[
 @author Ed Kashinsky
 @description ek_Pitch Tool
-@version 2.0.6
+@version 2.0.7
 @about Pitch Tool is a script for REAPER that allows you to adjust pitch quickly and flexibly. It inherits the convenient pitch workflow features from Ableton while also introducing its own unique enhancements for an even smoother experience.
 @changelog
-	* Added Cyrillic support for text replacement
-	* Fixed a bug where combo boxes appeared empty
-	* Minor UI improvements
+	* Fixed tooltip display for the first track
+	* Tooltip now takes items on lanes into account
 @links
 	Documentation https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Pitch-Tool
 	Forum thread https://forum.cockos.com/showthread.php?t=301698

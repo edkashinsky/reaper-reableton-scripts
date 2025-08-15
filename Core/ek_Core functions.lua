@@ -2,7 +2,7 @@
 @description ek_Core functions
 @author Ed Kashinsky
 @about Base functions used by ek-scripts.
-@version 1.2.3
+@version 1.2.4
 @changelog
     * Fixed a bug where a disabled button could still trigger an action via hotkey
 	* Fixed a bug where images had zero size
