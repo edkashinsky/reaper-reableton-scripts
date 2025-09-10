@@ -2,7 +2,7 @@
 @description ek_Core functions
 @author Ed Kashinsky
 @about Base functions used by ek-scripts.
-@version 1.2.5
+@version 1.2.6
 @changelog
     * Improved cURL support
 	* Added JSON support
