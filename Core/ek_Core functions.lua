@@ -2,16 +2,21 @@
 @description ek_Core functions
 @author Ed Kashinsky
 @about Base functions used by ek-scripts.
-@version 1.2.4
+@version 1.2.5
 @changelog
-    * Fixed a bug where a disabled button could still trigger an action via hotkey
-	* Fixed a bug where images had zero size
-	* Added Cyrillic support for search
+    * Improved cURL support
+	* Added JSON support
+	* Improved search for cyrrilic characters
+    * Added new UI elements: multiline text input, tags, new buttons and other
+    * Added images sets support
+    * Improved navigation by Tab/Shift+Tab
+    * When work with drag elements, mouse is hiding
+    * Improved work with modal popups
+    * Improved UI for links
  @provides
     data/core_*.dat
     [nomain] curl/*
-    images/logo-black.png
-    images/logo-white.png
+    images/core/*
 ]]--
 
 local function CoreLoadFunctions()

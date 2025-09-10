@@ -1,15 +1,11 @@
 --[[
 @description ek_Region Render Matrix Filler
-@version 1.0.11
+@version 1.0.12
 @author Ed Kashinsky
 @about
   Region Render Matrix Filler significantly speeds up the process of filling the Render Matrix in REAPER, especially in projects with a large number of regions. It’s particularly useful for tasks like layer-based sound rendering, gameplay VO synced to video, voiceover exports, and other scenarios where batch rendering is needed.
   Features:
-     * Automatic track assignment in the Render Matrix based on settings
-     * Optional automatic channel count detection based on region name
-     * Region and track preview with navigation
-     * Manual override of track assignment for individual regions
-     * Ability to rename regions or tracks
+     * Small UI improvements
 @changelog
 	* Added "Repeat override" button for region which apply last track override for each region
 @links

@@ -1,6 +1,6 @@
 --[[
 @description ek_Snap items to markers or regions
-@version 1.2.0
+@version 1.2.1
 @author Ed Kashinsky
 @about
    This script snaps selected items to markers or regions started from specified number. It requires ReaImGui extension.
@@ -9,14 +9,7 @@
    Script gives posibility to limit markers/regions snapping. For example only 2 markers after specified.
 @readme_skip
 @changelog
-	*  Script added to Gumroad
-	* Added new mode: All items to one marker/region
-	* Removed snapping limit
-	* Added new mode for determining the start marker based on the edit cursor position
-	* Added support for ImGui 0.10
-	* Improved UI
-	* Fixed minor bugs
-	* Improved performance
+	* Small UI improvements
 @provides
    ../Core/data/smart-snap_*.dat
    ../Core/images/smart-snap/*
