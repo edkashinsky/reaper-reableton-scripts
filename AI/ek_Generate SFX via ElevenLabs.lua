@@ -1,6 +1,6 @@
 --[[
 @description ek_Generate SFX via ElevenLabs
-@version 1.2.2
+@version 1.2.3
 @author Ed Kashinsky
 @readme_skip
 @about
