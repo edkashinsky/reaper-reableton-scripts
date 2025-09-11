@@ -1,6 +1,6 @@
 --[[
 @description ek_Generate voice via ElevenLabs
-@version 1.0.4
+@version 1.0.5
 @author Ed Kashinsky
 @readme_skip
 @about
