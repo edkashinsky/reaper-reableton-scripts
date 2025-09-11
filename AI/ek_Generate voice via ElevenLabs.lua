@@ -1,6 +1,6 @@
 --[[
 @description ek_Generate voice via ElevenLabs
-@version 1.0.0
+@version 1.0.1
 @author Ed Kashinsky
 @readme_skip
 @about
@@ -10,6 +10,7 @@
 	Buy Licence https://ekscripts.gumroad.com/l/ai-11-labs-voice
 @provides
 	../Core/data/ai-11-labs-voice_*.dat
+	[main=main] ek_Generate voice via ElevenLabs - Voice Manager.lua
 ]]--
 
 local CONTEXT = ({reaper.get_action_context()})
