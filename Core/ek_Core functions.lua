@@ -2,11 +2,11 @@
 @description ek_Core functions
 @author Ed Kashinsky
 @about Base functions used by ek-scripts.
-@version 1.2.6
+@version 1.2.7
 @changelog
     * Improved cURL support
-	* Added JSON support
-	* Improved search for cyrrilic characters
+    * Added JSON support
+    * Improved search for cyrrilic characters
     * Added new UI elements: multiline text input, tags, new buttons and other
     * Added images sets support
     * Improved navigation by Tab/Shift+Tab
