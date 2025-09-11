@@ -1,6 +1,6 @@
 --[[
 @description ek_Generate voice via ElevenLabs
-@version 1.0.2
+@version 1.0.3
 @author Ed Kashinsky
 @readme_skip
 @about
@@ -12,6 +12,7 @@
 	Buy Licence https://ekscripts.gumroad.com/l/ai-11-labs-voice
 @provides
 	../Core/data/ai-11-labs-voice_*.dat
+	../Core/images/ai-11-labs-voice/*
 	[main=main] ek_Generate voice via ElevenLabs - Voice Manager.lua
 ]]--
 
