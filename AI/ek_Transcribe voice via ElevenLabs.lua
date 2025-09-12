@@ -1,6 +1,6 @@
 --[[
 @description ek_Transcribe voice via ElevenLabs
-@version 1.0.1
+@version 1.0.2
 @author Ed Kashinsky
 @readme_skip
 @about
