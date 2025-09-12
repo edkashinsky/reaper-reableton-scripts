@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="EK Scripts" commit="13fa0f1bd5cb0e452f366483ab8fcfaeef346803">
+<index version="1" name="EK Scripts" commit="9d43014dae98af37665b7b01f22297a52b92507d">
   <category name="AI">
     <reapack name="ek_Generate SFX via ElevenLabs.lua" type="script" desc="ek_Generate SFX via ElevenLabs">
       <metadata>
@@ -252,6 +252,12 @@ new UI support]]></changelog>
         <source file="../Core/data/ai-11-labs-isolation_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/643ec337fe3cc34d0e139aeade8b3e9a4fc0aa49/Core/data/ai-11-labs-isolation_5.3.dat</source>
         <source file="../Core/data/ai-11-labs-isolation_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/643ec337fe3cc34d0e139aeade8b3e9a4fc0aa49/Core/data/ai-11-labs-isolation_5.4.dat</source>
       </version>
+      <version name="1.0.2" author="Ed Kashinsky" time="2025-09-12T09:49:58Z">
+        <changelog><![CDATA[- Small bug fixes]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/9d43014dae98af37665b7b01f22297a52b92507d/AI/ek_Isolate%20voice%20via%20ElevenLabs.lua</source>
+        <source file="../Core/data/ai-11-labs-isolation_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/9d43014dae98af37665b7b01f22297a52b92507d/Core/data/ai-11-labs-isolation_5.3.dat</source>
+        <source file="../Core/data/ai-11-labs-isolation_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/9d43014dae98af37665b7b01f22297a52b92507d/Core/data/ai-11-labs-isolation_5.4.dat</source>
+      </version>
     </reapack>
     <reapack name="ek_Transcribe voice via ElevenLabs.lua" type="script" desc="ek_Transcribe voice via ElevenLabs">
       <metadata>
@@ -275,6 +281,12 @@ new UI support]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/643ec337fe3cc34d0e139aeade8b3e9a4fc0aa49/AI/ek_Transcribe%20voice%20via%20ElevenLabs.lua</source>
         <source file="../Core/data/ai-11-labs-speech2text_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/643ec337fe3cc34d0e139aeade8b3e9a4fc0aa49/Core/data/ai-11-labs-speech2text_5.3.dat</source>
         <source file="../Core/data/ai-11-labs-speech2text_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/643ec337fe3cc34d0e139aeade8b3e9a4fc0aa49/Core/data/ai-11-labs-speech2text_5.4.dat</source>
+      </version>
+      <version name="1.0.2" author="Ed Kashinsky" time="2025-09-12T09:49:58Z">
+        <changelog><![CDATA[- Small bug fixes]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/9d43014dae98af37665b7b01f22297a52b92507d/AI/ek_Transcribe%20voice%20via%20ElevenLabs.lua</source>
+        <source file="../Core/data/ai-11-labs-speech2text_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/9d43014dae98af37665b7b01f22297a52b92507d/Core/data/ai-11-labs-speech2text_5.3.dat</source>
+        <source file="../Core/data/ai-11-labs-speech2text_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/9d43014dae98af37665b7b01f22297a52b92507d/Core/data/ai-11-labs-speech2text_5.4.dat</source>
       </version>
     </reapack>
   </category>
@@ -992,6 +1004,27 @@ Improved core performance]]></changelog>
         <source file="images/core/logo-black@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/360538a7f38f6c981e191693204ff91a5b6d7a50/Core/images/core/logo-black@2x.png</source>
         <source file="images/core/logo-white.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/360538a7f38f6c981e191693204ff91a5b6d7a50/Core/images/core/logo-white.png</source>
         <source file="images/core/logo-white@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/360538a7f38f6c981e191693204ff91a5b6d7a50/Core/images/core/logo-white@2x.png</source>
+      </version>
+      <version name="1.2.9" author="Ed Kashinsky" time="2025-09-12T09:49:58Z">
+        <changelog><![CDATA[* Improved cURL support
+* Added JSON support
+* Improved search for cyrrilic characters
+* Added new UI elements: multiline text input, tags, new buttons and other
+* Added images sets support
+* Improved navigation by Tab/Shift+Tab
+* When work with drag elements, mouse is hiding
+* Improved work with modal popups
+* Improved UI for links]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/9d43014dae98af37665b7b01f22297a52b92507d/Core/ek_Core%20functions.lua</source>
+        <source file="data/core_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/9d43014dae98af37665b7b01f22297a52b92507d/Core/data/core_5.3.dat</source>
+        <source file="data/core_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/9d43014dae98af37665b7b01f22297a52b92507d/Core/data/core_5.4.dat</source>
+        <source file="curl/curl-ca-bundle.crt">https://github.com/edkashinsky/reaper-reableton-scripts/raw/9d43014dae98af37665b7b01f22297a52b92507d/Core/curl/curl-ca-bundle.crt</source>
+        <source file="curl/curl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/9d43014dae98af37665b7b01f22297a52b92507d/Core/curl/curl.exe</source>
+        <source file="curl/trurl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/9d43014dae98af37665b7b01f22297a52b92507d/Core/curl/trurl.exe</source>
+        <source file="images/core/logo-black.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/9d43014dae98af37665b7b01f22297a52b92507d/Core/images/core/logo-black.png</source>
+        <source file="images/core/logo-black@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/9d43014dae98af37665b7b01f22297a52b92507d/Core/images/core/logo-black@2x.png</source>
+        <source file="images/core/logo-white.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/9d43014dae98af37665b7b01f22297a52b92507d/Core/images/core/logo-white.png</source>
+        <source file="images/core/logo-white@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/9d43014dae98af37665b7b01f22297a52b92507d/Core/images/core/logo-white@2x.png</source>
       </version>
     </reapack>
     <reapack name="ek_Focus virtual MIDI keyboard.lua" type="script" desc="ek_Focus virtual MIDI keyboard">
