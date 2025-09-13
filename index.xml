@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="EK Scripts" commit="9d43014dae98af37665b7b01f22297a52b92507d">
+<index version="1" name="EK Scripts" commit="41b9145f60490f7a2b40a6ef4f404c30a2b4962e">
   <category name="AI">
     <reapack name="ek_Generate SFX via ElevenLabs.lua" type="script" desc="ek_Generate SFX via ElevenLabs">
       <metadata>
@@ -287,6 +287,12 @@ new UI support]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/9d43014dae98af37665b7b01f22297a52b92507d/AI/ek_Transcribe%20voice%20via%20ElevenLabs.lua</source>
         <source file="../Core/data/ai-11-labs-speech2text_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/9d43014dae98af37665b7b01f22297a52b92507d/Core/data/ai-11-labs-speech2text_5.3.dat</source>
         <source file="../Core/data/ai-11-labs-speech2text_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/9d43014dae98af37665b7b01f22297a52b92507d/Core/data/ai-11-labs-speech2text_5.4.dat</source>
+      </version>
+      <version name="1.0.3" author="Ed Kashinsky" time="2025-09-13T13:46:17Z">
+        <changelog><![CDATA[- Small bug fixes]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/41b9145f60490f7a2b40a6ef4f404c30a2b4962e/AI/ek_Transcribe%20voice%20via%20ElevenLabs.lua</source>
+        <source file="../Core/data/ai-11-labs-speech2text_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/41b9145f60490f7a2b40a6ef4f404c30a2b4962e/Core/data/ai-11-labs-speech2text_5.3.dat</source>
+        <source file="../Core/data/ai-11-labs-speech2text_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/41b9145f60490f7a2b40a6ef4f404c30a2b4962e/Core/data/ai-11-labs-speech2text_5.4.dat</source>
       </version>
     </reapack>
   </category>
