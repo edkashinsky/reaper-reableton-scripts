@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="EK Scripts" commit="0ae05d22220dde26226f07b8bdf511dda1e846b9">
+<index version="1" name="EK Scripts" commit="43e29e5ba0bcaf5ebb18f9ac7ea859d15edba339">
   <category name="AI">
     <reapack name="ek_Generate SFX via ElevenLabs.lua" type="script" desc="ek_Generate SFX via ElevenLabs">
       <metadata>
@@ -1031,6 +1031,19 @@ Improved core performance]]></changelog>
         <source file="images/core/logo-black@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/9d43014dae98af37665b7b01f22297a52b92507d/Core/images/core/logo-black@2x.png</source>
         <source file="images/core/logo-white.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/9d43014dae98af37665b7b01f22297a52b92507d/Core/images/core/logo-white.png</source>
         <source file="images/core/logo-white@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/9d43014dae98af37665b7b01f22297a52b92507d/Core/images/core/logo-white@2x.png</source>
+      </version>
+      <version name="1.2.10" author="Ed Kashinsky" time="2025-09-16T11:14:03Z">
+        <changelog><![CDATA[* Fixed crash for GUI on Reaper 6 with some circumstances]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/43e29e5ba0bcaf5ebb18f9ac7ea859d15edba339/Core/ek_Core%20functions.lua</source>
+        <source file="data/core_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/43e29e5ba0bcaf5ebb18f9ac7ea859d15edba339/Core/data/core_5.3.dat</source>
+        <source file="data/core_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/43e29e5ba0bcaf5ebb18f9ac7ea859d15edba339/Core/data/core_5.4.dat</source>
+        <source file="curl/curl-ca-bundle.crt">https://github.com/edkashinsky/reaper-reableton-scripts/raw/43e29e5ba0bcaf5ebb18f9ac7ea859d15edba339/Core/curl/curl-ca-bundle.crt</source>
+        <source file="curl/curl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/43e29e5ba0bcaf5ebb18f9ac7ea859d15edba339/Core/curl/curl.exe</source>
+        <source file="curl/trurl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/43e29e5ba0bcaf5ebb18f9ac7ea859d15edba339/Core/curl/trurl.exe</source>
+        <source file="images/core/logo-black.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/43e29e5ba0bcaf5ebb18f9ac7ea859d15edba339/Core/images/core/logo-black.png</source>
+        <source file="images/core/logo-black@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/43e29e5ba0bcaf5ebb18f9ac7ea859d15edba339/Core/images/core/logo-black@2x.png</source>
+        <source file="images/core/logo-white.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/43e29e5ba0bcaf5ebb18f9ac7ea859d15edba339/Core/images/core/logo-white.png</source>
+        <source file="images/core/logo-white@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/43e29e5ba0bcaf5ebb18f9ac7ea859d15edba339/Core/images/core/logo-white@2x.png</source>
       </version>
     </reapack>
     <reapack name="ek_Focus virtual MIDI keyboard.lua" type="script" desc="ek_Focus virtual MIDI keyboard">
@@ -3316,6 +3329,12 @@ Also there is flexible offset: just begin of item, snap offset, first cue marker
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/0ae05d22220dde26226f07b8bdf511dda1e846b9/Tracks%20Properties/ek_Smart%20renaming%20depending%20on%20focus.lua</source>
         <source file="../Core/data/smart-renamer_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/0ae05d22220dde26226f07b8bdf511dda1e846b9/Core/data/smart-renamer_5.3.dat</source>
         <source file="../Core/data/smart-renamer_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/0ae05d22220dde26226f07b8bdf511dda1e846b9/Core/data/smart-renamer_5.4.dat</source>
+      </version>
+      <version name="1.1.6" author="Ed Kashinsky" time="2025-09-16T11:14:03Z">
+        <changelog><![CDATA[* Fixed crash for GUI on Reaper 6 with some circumstances]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/43e29e5ba0bcaf5ebb18f9ac7ea859d15edba339/Tracks%20Properties/ek_Smart%20renaming%20depending%20on%20focus.lua</source>
+        <source file="../Core/data/smart-renamer_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/43e29e5ba0bcaf5ebb18f9ac7ea859d15edba339/Core/data/smart-renamer_5.3.dat</source>
+        <source file="../Core/data/smart-renamer_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/43e29e5ba0bcaf5ebb18f9ac7ea859d15edba339/Core/data/smart-renamer_5.4.dat</source>
       </version>
     </reapack>
     <reapack name="ek_Toggle exclusive arm for selected tracks.lua" type="script" desc="Toggle exclusive arm for selected tracks">
