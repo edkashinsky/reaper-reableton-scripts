@@ -2,17 +2,9 @@
 @description ek_Core functions
 @author Ed Kashinsky
 @about Base functions used by ek-scripts.
-@version 1.2.9
+@version 1.2.10
 @changelog
-    * Improved cURL support
-    * Added JSON support
-    * Improved search for cyrrilic characters
-    * Added new UI elements: multiline text input, tags, new buttons and other
-    * Added images sets support
-    * Improved navigation by Tab/Shift+Tab
-    * When work with drag elements, mouse is hiding
-    * Improved work with modal popups
-    * Improved UI for links
+    * Fixed crash for GUI on Reaper 6 with some circumstances
  @provides
     data/core_*.dat
     [nomain] curl/*

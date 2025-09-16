@@ -1,11 +1,11 @@
 --[[
 @description ek_Smart renaming depending on focus
-@version 1.1.5
+@version 1.1.6
 @author Ed Kashinsky
 @readme_skip
 @about This script allows for convenient context-aware renaming of objects in REAPER. It also offers advanced features for batch renaming using simple rules. As a bonus, it lets you change the color of selected elements.
 @changelog
-	* Fixed bug when custom colors list do not being saved after sorting
+	* Fixed crash for GUI on Reaper 6 with some circumstances
 @links
 	Documentation https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Smart-Renamer
 	Forum thread https://forum.cockos.com/showthread.php?t=279036
