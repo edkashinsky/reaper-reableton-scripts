@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="EK Scripts" commit="1f778962ada0a9f329b6181ee1f6bc2f28f13ffb">
+<index version="1" name="EK Scripts" commit="fcfb9b736f0e1c08b21356b6a530df64df4f8ec1">
   <category name="AI">
     <reapack name="ek_Generate Music via ElevenLabs.lua" type="script" desc="ek_Generate Music via ElevenLabs">
       <metadata>
@@ -1490,6 +1490,13 @@ Improved performance]]></changelog>
         <source file="data/core-bg_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/9c518c252bac65cc4819ef84a5976db53651a623/Core/data/core-bg_5.3.dat</source>
         <source file="data/core-bg_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/9c518c252bac65cc4819ef84a5976db53651a623/Core/data/core-bg_5.4.dat</source>
         <source main="main" file="ek_Global startup action - settings.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/9c518c252bac65cc4819ef84a5976db53651a623/Core/ek_Global%20startup%20action%20-%20settings.lua</source>
+      </version>
+      <version name="1.2.0" author="Ed Kashinsky" time="2025-09-18T10:55:02Z">
+        <changelog><![CDATA[* Moved script to Gumroad. It is still for free]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fcfb9b736f0e1c08b21356b6a530df64df4f8ec1/Core/ek_Global%20startup%20action.lua</source>
+        <source file="data/core-bg_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fcfb9b736f0e1c08b21356b6a530df64df4f8ec1/Core/data/core-bg_5.3.dat</source>
+        <source file="data/core-bg_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fcfb9b736f0e1c08b21356b6a530df64df4f8ec1/Core/data/core-bg_5.4.dat</source>
+        <source main="main" file="ek_Global startup action - settings.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/fcfb9b736f0e1c08b21356b6a530df64df4f8ec1/Core/ek_Global%20startup%20action%20-%20settings.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Save project with a check of unused media files.lua" type="script" desc="ek_Save project with a check of unused media files">
