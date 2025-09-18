@@ -18,5 +18,10 @@ if not CoreLibraryLoad("core") or not CoreLibraryLoad("core-bg") then
 	return
 end
 
+GUI_SetAboutLinks({
+	{'Documentation', 'https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Global-Startup-Action'},
+	{'Forum thread', 'https://forum.cockos.com/showthread.php?t=298431'}
+})
+
 GA_ShowGui()
 
