@@ -18,5 +18,5 @@ if not CoreLibraryLoad("core") or not CoreLibraryLoad("core-bg") then
 	return
 end
 
-BG_ShowGui()
+GA_ShowGui()
 
