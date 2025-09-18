@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="EK Scripts" commit="8011a7536c2fd3fab240c918ed513d89298bb8e8">
+<index version="1" name="EK Scripts" commit="96e7bca8cbe135a4e1621ecb3eb75b2085ca95e4">
   <category name="AI">
     <reapack name="ek_Generate Music via ElevenLabs.lua" type="script" desc="ek_Generate Music via ElevenLabs">
       <metadata>
@@ -3381,6 +3381,12 @@ Also there is flexible offset: just begin of item, snap offset, first cue marker
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/43e29e5ba0bcaf5ebb18f9ac7ea859d15edba339/Tracks%20Properties/ek_Smart%20renaming%20depending%20on%20focus.lua</source>
         <source file="../Core/data/smart-renamer_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/43e29e5ba0bcaf5ebb18f9ac7ea859d15edba339/Core/data/smart-renamer_5.3.dat</source>
         <source file="../Core/data/smart-renamer_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/43e29e5ba0bcaf5ebb18f9ac7ea859d15edba339/Core/data/smart-renamer_5.4.dat</source>
+      </version>
+      <version name="1.1.7" author="Ed Kashinsky" time="2025-09-18T13:02:22Z">
+        <changelog><![CDATA[* Fixed crash for renaming markers]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/96e7bca8cbe135a4e1621ecb3eb75b2085ca95e4/Tracks%20Properties/ek_Smart%20renaming%20depending%20on%20focus.lua</source>
+        <source file="../Core/data/smart-renamer_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/96e7bca8cbe135a4e1621ecb3eb75b2085ca95e4/Core/data/smart-renamer_5.3.dat</source>
+        <source file="../Core/data/smart-renamer_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/96e7bca8cbe135a4e1621ecb3eb75b2085ca95e4/Core/data/smart-renamer_5.4.dat</source>
       </version>
     </reapack>
     <reapack name="ek_Toggle exclusive arm for selected tracks.lua" type="script" desc="Toggle exclusive arm for selected tracks">
