@@ -2,9 +2,9 @@
 @description ek_Core functions
 @author Ed Kashinsky
 @about Base functions used by ek-scripts.
-@version 1.2.10
+@version 1.2.11
 @changelog
-    * Fixed crash for GUI on Reaper 6 with some circumstances
+    * Added update notice
  @provides
     data/core_*.dat
     [nomain] curl/*
