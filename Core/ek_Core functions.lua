@@ -2,9 +2,9 @@
 @description ek_Core functions
 @author Ed Kashinsky
 @about Base functions used by ek-scripts.
-@version 1.2.12
+@version 1.2.13
 @changelog
-    * Added feature available feature
+    * Small fixes for curl requests
  @provides
     data/core_*.dat
     [nomain] curl/*

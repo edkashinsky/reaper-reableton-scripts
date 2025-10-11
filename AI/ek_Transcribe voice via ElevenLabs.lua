@@ -1,12 +1,12 @@
 --[[
 @description ek_Transcribe voice via ElevenLabs
-@version 1.0.3
+@version 1.0.4
 @author Ed Kashinsky
 @readme_skip
 @about
    A script that converts voice recordings into text. It processes content from selected items and writes the transcription into their notes.
 @changelog
-   - Small bug fixes
+   - Added feature to break text to phrases for markers and regions. Use setting "Break into phrases" for it
 @links
 	Documentation https://github.com/edkashinsky/reaper-reableton-scripts/wiki/ElevenLabs-Speech%E2%80%90to%E2%80%90Text-Translator
 	Buy Licence https://ekscripts.gumroad.com/l/ai-11-labs-speech2text
