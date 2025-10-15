@@ -1,13 +1,13 @@
 --[[
 @description ek_Region Render Matrix Filler
-@version 1.0.12
+@version 1.0.13
 @author Ed Kashinsky
 @about
   Region Render Matrix Filler significantly speeds up the process of filling the Render Matrix in REAPER, especially in projects with a large number of regions. It’s particularly useful for tasks like layer-based sound rendering, gameplay VO synced to video, voiceover exports, and other scenarios where batch rendering is needed.
   Features:
      * Small UI improvements
 @changelog
-	* Added "Repeat override" button for region which apply last track override for each region
+   * Added detailed message on error crash
 @links
 	Documentation https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Render-Region-Matrix-Filler
 	Forum Thread https://forum.cockos.com/showthread.php?t=300927
@@ -46,15 +46,32 @@ if not reaper.APIExists("ImGui_GetVersion") then
 	return
 end
 
-if not CoreLibraryLoad("core") or not CoreLibraryLoad("rrm-filler") then
-	reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages). \nLua version is: ' .. _VERSION, SCRIPT_NAME, 0)
-	reaper.ReaPack_BrowsePackages("ek_Core functions")
-	return
-end
+xpcall(function()
+	if not CoreLibraryLoad("core") or not CoreLibraryLoad("rrm-filler") then
+		reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages). \nLua version is: ' .. _VERSION, SCRIPT_NAME, 0)
+		reaper.ReaPack_BrowsePackages("ek_Core functions")
+		return
+	end
 
-GUI_SetAboutLinks({
-	{'Documentation', 'https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Render-Region-Matrix-Filler'},
-	{'Forum thread', 'https://forum.cockos.com/showthread.php?t=300927'}
-})
+	GUI_SetAboutLinks({
+		{'Documentation', 'https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Render-Region-Matrix-Filler'},
+		{'Forum thread', 'https://forum.cockos.com/showthread.php?t=300927'}
+	})
 
-RRM_ShowGui()
+	RRM_ShowGui()
+end, function(err)
+	local _, _, imGuiVersion = reaper.ImGui_GetVersion()
+
+	reaper.ShowConsoleMsg("\nERROR: " .. err .. "\n\n")
+	reaper.ShowConsoleMsg("Stack traceback:\n")
+	reaper.ShowConsoleMsg("\t" .. debug.traceback() .. "\n\n")
+	reaper.ShowConsoleMsg("Reaper: " .. reaper.GetAppVersion() .. "\n")
+	reaper.ShowConsoleMsg("Platform: " .. reaper.GetOS() .. "\n")
+	reaper.ShowConsoleMsg("Lua: " .. _VERSION .. "\n")
+	reaper.ShowConsoleMsg("ReaImGui: " .. imGuiVersion .. "\n")
+
+	if EK_GetScriptVersion ~= nil then
+		reaper.ShowConsoleMsg("Version: " .. tostring(EK_GetScriptVersion()) .. "\n")
+		reaper.ShowConsoleMsg("Core: " .. tostring(EK_GetScriptVersion(pathJoin(CORE_PATH, "ek_Core functions.lua"))) .. "\n")
+	end
+end)

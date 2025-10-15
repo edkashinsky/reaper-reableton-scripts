@@ -1,14 +1,12 @@
 --[[
 @description ek_Generate SFX via ElevenLabs
-@version 1.2.3
+@version 1.2.4
 @author Ed Kashinsky
 @readme_skip
 @about
    This script allows you to generate sounds via Eleven Labs directly from Reaper. Simply enter a prompt describing the sound you want to create - whether it’s the crackle of fire or an alarm signal on an orbital station. The script will generate the sound and insert it directly onto the timeline.
 @changelog
-   * Added Loop field
-   * Improved performance
-   * Improved settings popup
+   * Added detailed message on error crash
 @links
 	Documentation https://github.com/edkashinsky/reaper-reableton-scripts/wiki/ElevenLabs-SFX-Generator
 	Forum thread https://forum.cockos.com/showthread.php?t=292807
@@ -46,15 +44,32 @@ if not reaper.APIExists("ImGui_GetVersion") then
 	return
 end
 
-if not CoreLibraryLoad("core") or not CoreLibraryLoad("ai-11-labs-sfx") then
-	reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages).\nLua version is: ' .. _VERSION, SCRIPT_NAME, 0)
-	reaper.ReaPack_BrowsePackages("ek_Core functions")
-	return
-end
+xpcall(function()
+	if not CoreLibraryLoad("core") or not CoreLibraryLoad("ai-11-labs-sfx") then
+		reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages).\nLua version is: ' .. _VERSION, SCRIPT_NAME, 0)
+		reaper.ReaPack_BrowsePackages("ek_Core functions")
+		return
+	end
 
-GUI_SetAboutLinks({
-	{'Documentation', 'https://github.com/edkashinsky/reaper-reableton-scripts/wiki/ElevenLabs-SFX-Generator'},
-	{'Forum thread', 'https://forum.cockos.com/showthread.php?t=292807'}
-})
+	GUI_SetAboutLinks({
+		{'Documentation', 'https://github.com/edkashinsky/reaper-reableton-scripts/wiki/ElevenLabs-SFX-Generator'},
+		{'Forum thread', 'https://forum.cockos.com/showthread.php?t=292807'}
+	})
 
-AI_ShowGui()
+	AI_ShowGui()
+end, function(err)
+	local _, _, imGuiVersion = reaper.ImGui_GetVersion()
+
+	reaper.ShowConsoleMsg("\nERROR: " .. err .. "\n\n")
+	reaper.ShowConsoleMsg("Stack traceback:\n")
+	reaper.ShowConsoleMsg("\t" .. debug.traceback() .. "\n\n")
+	reaper.ShowConsoleMsg("Reaper: " .. reaper.GetAppVersion() .. "\n")
+	reaper.ShowConsoleMsg("Platform: " .. reaper.GetOS() .. "\n")
+	reaper.ShowConsoleMsg("Lua: " .. _VERSION .. "\n")
+	reaper.ShowConsoleMsg("ReaImGui: " .. imGuiVersion .. "\n")
+
+	if EK_GetScriptVersion ~= nil then
+		reaper.ShowConsoleMsg("Version: " .. tostring(EK_GetScriptVersion()) .. "\n")
+		reaper.ShowConsoleMsg("Core: " .. tostring(EK_GetScriptVersion(pathJoin(CORE_PATH, "ek_Core functions.lua"))) .. "\n")
+	end
+end)

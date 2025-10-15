@@ -1,6 +1,6 @@
 --[[
 @description ek_Snap items to markers or regions
-@version 1.2.1
+@version 1.2.2
 @author Ed Kashinsky
 @about
    This script snaps selected items to markers or regions started from specified number. It requires ReaImGui extension.
@@ -9,7 +9,7 @@
    Script gives posibility to limit markers/regions snapping. For example only 2 markers after specified.
 @readme_skip
 @changelog
-	* Small UI improvements
+   * Added detailed message on error crash
 @provides
    ../Core/data/smart-snap_*.dat
    ../Core/images/smart-snap/*
@@ -46,10 +46,27 @@ if not reaper.APIExists("ImGui_GetVersion") then
 	return
 end
 
-if not CoreLibraryLoad("core") or not CoreLibraryLoad("smart-snap") then
-	reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages). \nLua version is: ' .. _VERSION, SCRIPT_NAME, 0)
-	reaper.ReaPack_BrowsePackages("ek_Core functions")
-	return
-end
+xpcall(function()
+	if not CoreLibraryLoad("core") or not CoreLibraryLoad("smart-snap") then
+		reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages). \nLua version is: ' .. _VERSION, SCRIPT_NAME, 0)
+		reaper.ReaPack_BrowsePackages("ek_Core functions")
+		return
+	end
 
-SI_ShowGui()
+	SI_ShowGui()
+end, function(err)
+	local _, _, imGuiVersion = reaper.ImGui_GetVersion()
+
+	reaper.ShowConsoleMsg("\nERROR: " .. err .. "\n\n")
+	reaper.ShowConsoleMsg("Stack traceback:\n")
+	reaper.ShowConsoleMsg("\t" .. debug.traceback() .. "\n\n")
+	reaper.ShowConsoleMsg("Reaper: " .. reaper.GetAppVersion() .. "\n")
+	reaper.ShowConsoleMsg("Platform: " .. reaper.GetOS() .. "\n")
+	reaper.ShowConsoleMsg("Lua: " .. _VERSION .. "\n")
+	reaper.ShowConsoleMsg("ReaImGui: " .. imGuiVersion .. "\n")
+
+	if EK_GetScriptVersion ~= nil then
+		reaper.ShowConsoleMsg("Version: " .. tostring(EK_GetScriptVersion()) .. "\n")
+		reaper.ShowConsoleMsg("Core: " .. tostring(EK_GetScriptVersion(pathJoin(CORE_PATH, "ek_Core functions.lua"))) .. "\n")
+	end
+end)

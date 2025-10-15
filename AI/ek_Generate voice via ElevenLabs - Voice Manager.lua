@@ -32,14 +32,31 @@ if not reaper.APIExists("ImGui_GetVersion") then
 	return
 end
 
-if not CoreLibraryLoad("core") or not CoreLibraryLoad("ai-11-labs-voice") then
-	reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages).\nLua version is: ' .. _VERSION, SCRIPT_NAME, 0)
-	reaper.ReaPack_BrowsePackages("ek_Core functions")
-	return
-end
+xpcall(function()
+	if not CoreLibraryLoad("core") or not CoreLibraryLoad("ai-11-labs-voice") then
+		reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages).\nLua version is: ' .. _VERSION, SCRIPT_NAME, 0)
+		reaper.ReaPack_BrowsePackages("ek_Core functions")
+		return
+	end
 
-GUI_SetAboutLinks({
-	{'Documentation', 'https://github.com/edkashinsky/reaper-reableton-scripts/wiki/ElevenLabs-Voice-Generator'},
-})
+	GUI_SetAboutLinks({
+		{'Documentation', 'https://github.com/edkashinsky/reaper-reableton-scripts/wiki/ElevenLabs-Voice-Generator'},
+	})
 
-AI_Voice_Settings_GUI()
+	AI_Voice_Settings_GUI()
+end, function(err)
+	local _, _, imGuiVersion = reaper.ImGui_GetVersion()
+
+	reaper.ShowConsoleMsg("\nERROR: " .. err .. "\n\n")
+	reaper.ShowConsoleMsg("Stack traceback:\n")
+	reaper.ShowConsoleMsg("\t" .. debug.traceback() .. "\n\n")
+	reaper.ShowConsoleMsg("Reaper: " .. reaper.GetAppVersion() .. "\n")
+	reaper.ShowConsoleMsg("Platform: " .. reaper.GetOS() .. "\n")
+	reaper.ShowConsoleMsg("Lua: " .. _VERSION .. "\n")
+	reaper.ShowConsoleMsg("ReaImGui: " .. imGuiVersion .. "\n")
+
+	if EK_GetScriptVersion ~= nil then
+		reaper.ShowConsoleMsg("Version: " .. tostring(EK_GetScriptVersion()) .. "\n")
+		reaper.ShowConsoleMsg("Core: " .. tostring(EK_GetScriptVersion(pathJoin(CORE_PATH, "ek_Core functions.lua"))) .. "\n")
+	end
+end)

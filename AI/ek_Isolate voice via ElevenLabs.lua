@@ -1,12 +1,12 @@
 --[[
 @description ek_Isolate voice via ElevenLabs
-@version 1.0.2
+@version 1.0.3
 @author Ed Kashinsky
 @readme_skip
 @about
    This script removes background noise from voice recordings using the ElevenLabs service.
 @changelog
-   - Small bug fixes
+   * Added detailed message on error crash
 @links
 	Documentation https://github.com/edkashinsky/reaper-reableton-scripts/wiki/ElevenLabs-Voice-Isolation
 	Buy Licence https://ekscripts.gumroad.com/l/ai-11-labs-isolation
@@ -43,14 +43,31 @@ if not reaper.APIExists("ImGui_GetVersion") then
 	return
 end
 
-if not CoreLibraryLoad("core") or not CoreLibraryLoad("ai-11-labs-isolation") then
-	reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages).\nLua version is: ' .. _VERSION, SCRIPT_NAME, 0)
-	reaper.ReaPack_BrowsePackages("ek_Core functions")
-	return
-end
+xpcall(function()
+	if not CoreLibraryLoad("core") or not CoreLibraryLoad("ai-11-labs-isolation") then
+		reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages).\nLua version is: ' .. _VERSION, SCRIPT_NAME, 0)
+		reaper.ReaPack_BrowsePackages("ek_Core functions")
+		return
+	end
 
-GUI_SetAboutLinks({
-	{'Documentation', 'https://github.com/edkashinsky/reaper-reableton-scripts/wiki/ElevenLabs-Voice-Isolation'}
-})
+	GUI_SetAboutLinks({
+		{'Documentation', 'https://github.com/edkashinsky/reaper-reableton-scripts/wiki/ElevenLabs-Voice-Isolation'}
+	})
 
-EL_IsolateAudio()
+	EL_IsolateAudio()
+end, function(err)
+	local _, _, imGuiVersion = reaper.ImGui_GetVersion()
+
+	reaper.ShowConsoleMsg("\nERROR: " .. err .. "\n\n")
+	reaper.ShowConsoleMsg("Stack traceback:\n")
+	reaper.ShowConsoleMsg("\t" .. debug.traceback() .. "\n\n")
+	reaper.ShowConsoleMsg("Reaper: " .. reaper.GetAppVersion() .. "\n")
+	reaper.ShowConsoleMsg("Platform: " .. reaper.GetOS() .. "\n")
+	reaper.ShowConsoleMsg("Lua: " .. _VERSION .. "\n")
+	reaper.ShowConsoleMsg("ReaImGui: " .. imGuiVersion .. "\n")
+
+	if EK_GetScriptVersion ~= nil then
+		reaper.ShowConsoleMsg("Version: " .. tostring(EK_GetScriptVersion()) .. "\n")
+		reaper.ShowConsoleMsg("Core: " .. tostring(EK_GetScriptVersion(pathJoin(CORE_PATH, "ek_Core functions.lua"))) .. "\n")
+	end
+end)

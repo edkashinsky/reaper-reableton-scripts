@@ -13,27 +13,44 @@ local function CoreLibraryLoad(lib)
 	if file then file:close() dofile(dat_path) return true else return false end
 end
 
-if not CoreLibraryLoad("core") or not CoreLibraryLoad("edge-silence-cropper") then
-	reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0)
-	reaper.ReaPack_BrowsePackages("ek_Core functions")
-	return
-end
-
-reaper.Undo_BeginBlock()
-
-local countSelectedItems = reaper.CountSelectedMediaItems(proj)
-
-if countSelectedItems > 0 then
-    local Cropper = EdgeCropper.new()
-
-	if Cropper then
-		for i = 0, countSelectedItems - 1 do
-			local item = reaper.GetSelectedMediaItem(proj, i)
-			Cropper.SetItem(item).Crop()
-		end
+xpcall(function()
+	if not CoreLibraryLoad("core") or not CoreLibraryLoad("edge-silence-cropper") then
+		reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages)', '', 0)
+		reaper.ReaPack_BrowsePackages("ek_Core functions")
+		return
 	end
 
-    reaper.UpdateArrange()
-end
+	reaper.Undo_BeginBlock()
 
-reaper.Undo_EndBlock("Edge silence cropper (no prompt)", -1)
+	local countSelectedItems = reaper.CountSelectedMediaItems(proj)
+
+	if countSelectedItems > 0 then
+		local Cropper = EdgeCropper.new()
+
+		if Cropper then
+			for i = 0, countSelectedItems - 1 do
+				local item = reaper.GetSelectedMediaItem(proj, i)
+				Cropper.SetItem(item).Crop()
+			end
+		end
+
+		reaper.UpdateArrange()
+	end
+
+	reaper.Undo_EndBlock("Edge silence cropper (no prompt)", -1)
+end, function(err)
+	local _, _, imGuiVersion = reaper.ImGui_GetVersion()
+
+	reaper.ShowConsoleMsg("\nERROR: " .. err .. "\n\n")
+	reaper.ShowConsoleMsg("Stack traceback:\n")
+	reaper.ShowConsoleMsg("\t" .. debug.traceback() .. "\n\n")
+	reaper.ShowConsoleMsg("Reaper: " .. reaper.GetAppVersion() .. "\n")
+	reaper.ShowConsoleMsg("Platform: " .. reaper.GetOS() .. "\n")
+	reaper.ShowConsoleMsg("Lua: " .. _VERSION .. "\n")
+	reaper.ShowConsoleMsg("ReaImGui: " .. imGuiVersion .. "\n")
+
+	if EK_GetScriptVersion ~= nil then
+		reaper.ShowConsoleMsg("Version: " .. tostring(EK_GetScriptVersion()) .. "\n")
+		reaper.ShowConsoleMsg("Core: " .. tostring(EK_GetScriptVersion(pathJoin(CORE_PATH, "ek_Core functions.lua"))) .. "\n")
+	end
+end)
