@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="EK Scripts" commit="2615093e18ddfda4b630583a10d2cecc864ee45e">
+<index version="1" name="EK Scripts" commit="f1e2924afd809a6b2d0090e3e5ba8970e56e7111">
   <category name="AI">
     <reapack name="ek_Generate Music via ElevenLabs.lua" type="script" desc="ek_Generate Music via ElevenLabs">
       <metadata>
@@ -24,6 +24,13 @@
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/AI/ek_Generate%20Music%20via%20ElevenLabs.lua</source>
         <source file="../Core/data/ai-11-labs-music_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/data/ai-11-labs-music_5.3.dat</source>
         <source file="../Core/data/ai-11-labs-music_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/data/ai-11-labs-music_5.4.dat</source>
+      </version>
+      <version name="1.0.2" author="Ed Kashinsky" time="2025-10-15T11:10:00Z">
+        <changelog><![CDATA[* Added detailed message on error crash
+* Fixed curl crash for Reaper 5 + Win 10]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/AI/ek_Generate%20Music%20via%20ElevenLabs.lua</source>
+        <source file="../Core/data/ai-11-labs-music_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/data/ai-11-labs-music_5.3.dat</source>
+        <source file="../Core/data/ai-11-labs-music_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/data/ai-11-labs-music_5.4.dat</source>
       </version>
     </reapack>
     <reapack name="ek_Generate SFX via ElevenLabs.lua" type="script" desc="ek_Generate SFX via ElevenLabs">
@@ -176,6 +183,13 @@ new UI support]]></changelog>
         <source file="../Core/data/ai-11-labs-sfx_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/data/ai-11-labs-sfx_5.3.dat</source>
         <source file="../Core/data/ai-11-labs-sfx_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/data/ai-11-labs-sfx_5.4.dat</source>
       </version>
+      <version name="1.2.5" author="Ed Kashinsky" time="2025-10-15T11:10:00Z">
+        <changelog><![CDATA[* Added detailed message on error crash
+* Fixed curl crash for Reaper 5 + Win 10]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/AI/ek_Generate%20SFX%20via%20ElevenLabs.lua</source>
+        <source file="../Core/data/ai-11-labs-sfx_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/data/ai-11-labs-sfx_5.3.dat</source>
+        <source file="../Core/data/ai-11-labs-sfx_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/data/ai-11-labs-sfx_5.4.dat</source>
+      </version>
     </reapack>
     <reapack name="ek_Generate voice via ElevenLabs.lua" type="script" desc="ek_Generate voice via ElevenLabs">
       <metadata>
@@ -272,6 +286,20 @@ new UI support]]></changelog>
         <source file="../Core/images/ai-11-labs-voice/refresh@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/images/ai-11-labs-voice/refresh@2x.png</source>
         <source main="main" file="ek_Generate voice via ElevenLabs - Voice Manager.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/AI/ek_Generate%20voice%20via%20ElevenLabs%20-%20Voice%20Manager.lua</source>
       </version>
+      <version name="1.0.8" author="Ed Kashinsky" time="2025-10-15T11:10:00Z">
+        <changelog><![CDATA[* Added detailed message on error crash
+* Fixed curl crash for Reaper 5 + Win 10]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/AI/ek_Generate%20voice%20via%20ElevenLabs.lua</source>
+        <source file="../Core/data/ai-11-labs-voice_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/data/ai-11-labs-voice_5.3.dat</source>
+        <source file="../Core/data/ai-11-labs-voice_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/data/ai-11-labs-voice_5.4.dat</source>
+        <source file="../Core/images/ai-11-labs-voice/edit.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/images/ai-11-labs-voice/edit.png</source>
+        <source file="../Core/images/ai-11-labs-voice/edit@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/images/ai-11-labs-voice/edit@2x.png</source>
+        <source file="../Core/images/ai-11-labs-voice/find_similar.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/images/ai-11-labs-voice/find_similar.png</source>
+        <source file="../Core/images/ai-11-labs-voice/find_similar@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/images/ai-11-labs-voice/find_similar@2x.png</source>
+        <source file="../Core/images/ai-11-labs-voice/refresh.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/images/ai-11-labs-voice/refresh.png</source>
+        <source file="../Core/images/ai-11-labs-voice/refresh@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/images/ai-11-labs-voice/refresh@2x.png</source>
+        <source main="main" file="ek_Generate voice via ElevenLabs - Voice Manager.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/AI/ek_Generate%20voice%20via%20ElevenLabs%20-%20Voice%20Manager.lua</source>
+      </version>
     </reapack>
     <reapack name="ek_Isolate voice via ElevenLabs.lua" type="script" desc="ek_Isolate voice via ElevenLabs">
       <metadata>
@@ -307,6 +335,13 @@ new UI support]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/AI/ek_Isolate%20voice%20via%20ElevenLabs.lua</source>
         <source file="../Core/data/ai-11-labs-isolation_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/data/ai-11-labs-isolation_5.3.dat</source>
         <source file="../Core/data/ai-11-labs-isolation_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/data/ai-11-labs-isolation_5.4.dat</source>
+      </version>
+      <version name="1.0.4" author="Ed Kashinsky" time="2025-10-15T11:10:00Z">
+        <changelog><![CDATA[* Added detailed message on error crash
+* Fixed curl crash for Reaper 5 + Win 10]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/AI/ek_Isolate%20voice%20via%20ElevenLabs.lua</source>
+        <source file="../Core/data/ai-11-labs-isolation_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/data/ai-11-labs-isolation_5.3.dat</source>
+        <source file="../Core/data/ai-11-labs-isolation_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/data/ai-11-labs-isolation_5.4.dat</source>
       </version>
     </reapack>
     <reapack name="ek_Transcribe voice via ElevenLabs.lua" type="script" desc="ek_Transcribe voice via ElevenLabs">
@@ -355,6 +390,13 @@ new UI support]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/AI/ek_Transcribe%20voice%20via%20ElevenLabs.lua</source>
         <source file="../Core/data/ai-11-labs-speech2text_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/data/ai-11-labs-speech2text_5.3.dat</source>
         <source file="../Core/data/ai-11-labs-speech2text_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/data/ai-11-labs-speech2text_5.4.dat</source>
+      </version>
+      <version name="1.0.6" author="Ed Kashinsky" time="2025-10-15T11:10:00Z">
+        <changelog><![CDATA[* Added detailed message on error crash
+* Fixed curl crash for Reaper 5 + Win 10]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/AI/ek_Transcribe%20voice%20via%20ElevenLabs.lua</source>
+        <source file="../Core/data/ai-11-labs-speech2text_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/data/ai-11-labs-speech2text_5.3.dat</source>
+        <source file="../Core/data/ai-11-labs-speech2text_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/data/ai-11-labs-speech2text_5.4.dat</source>
       </version>
     </reapack>
   </category>
@@ -1160,6 +1202,20 @@ Improved core performance]]></changelog>
         <source file="images/core/logo-white.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/images/core/logo-white.png</source>
         <source file="images/core/logo-white@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/images/core/logo-white@2x.png</source>
       </version>
+      <version name="1.2.15" author="Ed Kashinsky" time="2025-10-15T11:10:00Z">
+        <changelog><![CDATA[* Added detailed message on error crash
+* Fixed cURL crash for Reaper 5 and Window 10]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/ek_Core%20functions.lua</source>
+        <source file="data/core_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/data/core_5.3.dat</source>
+        <source file="data/core_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/data/core_5.4.dat</source>
+        <source file="curl/curl-ca-bundle.crt">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/curl/curl-ca-bundle.crt</source>
+        <source file="curl/curl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/curl/curl.exe</source>
+        <source file="curl/trurl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/curl/trurl.exe</source>
+        <source file="images/core/logo-black.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/images/core/logo-black.png</source>
+        <source file="images/core/logo-black@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/images/core/logo-black@2x.png</source>
+        <source file="images/core/logo-white.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/images/core/logo-white.png</source>
+        <source file="images/core/logo-white@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/images/core/logo-white@2x.png</source>
+      </version>
     </reapack>
     <reapack name="ek_Focus virtual MIDI keyboard.lua" type="script" desc="ek_Focus virtual MIDI keyboard">
       <metadata>
@@ -1620,6 +1676,14 @@ Improved performance]]></changelog>
         <source file="data/core-bg_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/data/core-bg_5.3.dat</source>
         <source file="data/core-bg_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/data/core-bg_5.4.dat</source>
         <source main="main" file="ek_Global startup action - settings.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/ek_Global%20startup%20action%20-%20settings.lua</source>
+      </version>
+      <version name="1.2.4" author="Ed Kashinsky" time="2025-10-15T11:10:00Z">
+        <changelog><![CDATA[* Added detailed message on error crash
+* Fixed curl crash for Reaper 5 + Win 10]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/ek_Global%20startup%20action.lua</source>
+        <source file="data/core-bg_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/data/core-bg_5.3.dat</source>
+        <source file="data/core-bg_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/data/core-bg_5.4.dat</source>
+        <source main="main" file="ek_Global startup action - settings.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/ek_Global%20startup%20action%20-%20settings.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Save project with a check of unused media files.lua" type="script" desc="ek_Save project with a check of unused media files">
@@ -2230,6 +2294,19 @@ Please restart Reaper for taking effect]]></changelog>
         <source main="main" file="ek_Edge silence cropper - apply Preset 4.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%204.lua</source>
         <source main="main" file="ek_Edge silence cropper - apply Preset 5.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%205.lua</source>
       </version>
+      <version name="1.4.3" author="Ed Kashinsky" time="2025-10-15T11:10:00Z">
+        <changelog><![CDATA[* Added detailed message on error crash
+* Fixed curl crash for Reaper 5 + Win 10]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Items%20Editing/ek_Edge%20silence%20cropper.lua</source>
+        <source file="../Core/data/edge-silence-cropper_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/data/edge-silence-cropper_5.3.dat</source>
+        <source file="../Core/data/edge-silence-cropper_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/data/edge-silence-cropper_5.4.dat</source>
+        <source main="main" file="ek_Edge silence cropper (no prompt).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Items%20Editing/ek_Edge%20silence%20cropper%20(no%20prompt).lua</source>
+        <source main="main" file="ek_Edge silence cropper - apply Preset 1.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%201.lua</source>
+        <source main="main" file="ek_Edge silence cropper - apply Preset 2.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%202.lua</source>
+        <source main="main" file="ek_Edge silence cropper - apply Preset 3.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%203.lua</source>
+        <source main="main" file="ek_Edge silence cropper - apply Preset 4.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%204.lua</source>
+        <source main="main" file="ek_Edge silence cropper - apply Preset 5.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%205.lua</source>
+      </version>
     </reapack>
     <reapack name="ek_Pitch Tool.lua" type="script" desc="ek_Pitch Tool">
       <metadata>
@@ -2353,6 +2430,14 @@ Please restart Reaper for taking effect]]></changelog>
         <source file="../Core/data/pitch-tool_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/data/pitch-tool_5.3.dat</source>
         <source file="../Core/data/pitch-tool_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/data/pitch-tool_5.4.dat</source>
         <source main="main" file="ek_Pitch Tool - Tooltip (background).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Items%20Editing/ek_Pitch%20Tool%20-%20Tooltip%20(background).lua</source>
+      </version>
+      <version name="2.0.11" author="Ed Kashinsky" time="2025-10-15T11:10:00Z">
+        <changelog><![CDATA[* Added detailed message on error crash
+* Fixed curl crash for Reaper 5 + Win 10]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Items%20Editing/ek_Pitch%20Tool.lua</source>
+        <source file="../Core/data/pitch-tool_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/data/pitch-tool_5.3.dat</source>
+        <source file="../Core/data/pitch-tool_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/data/pitch-tool_5.4.dat</source>
+        <source main="main" file="ek_Pitch Tool - Tooltip (background).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Items%20Editing/ek_Pitch%20Tool%20-%20Tooltip%20(background).lua</source>
       </version>
     </reapack>
     <reapack name="ek_Remove 1 sec gap between selected items.lua" type="script" desc="ek_Remove 1 sec gap between selected items">
@@ -2771,6 +2856,31 @@ Also there is flexible offset: just begin of item, snap offset, first cue marker
         <source main="main" file="ek_Snap items to closest markers.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Items%20Editing/ek_Snap%20items%20to%20closest%20markers.lua</source>
         <source main="main" file="ek_Snap items to closest regions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Items%20Editing/ek_Snap%20items%20to%20closest%20regions.lua</source>
       </version>
+      <version name="1.2.3" author="Ed Kashinsky" time="2025-10-15T11:10:00Z">
+        <changelog><![CDATA[* Added detailed message on error crash
+* Fixed curl crash for Reaper 5 + Win 10]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Items%20Editing/ek_Snap%20items%20to%20markers%20or%20regions.lua</source>
+        <source file="../Core/data/smart-snap_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/data/smart-snap_5.3.dat</source>
+        <source file="../Core/data/smart-snap_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/data/smart-snap_5.4.dat</source>
+        <source file="../Core/images/smart-snap/marker_all.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/images/smart-snap/marker_all.png</source>
+        <source file="../Core/images/smart-snap/marker_all@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/images/smart-snap/marker_all@2x.png</source>
+        <source file="../Core/images/smart-snap/marker_overlapped.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/images/smart-snap/marker_overlapped.png</source>
+        <source file="../Core/images/smart-snap/marker_overlapped@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/images/smart-snap/marker_overlapped@2x.png</source>
+        <source file="../Core/images/smart-snap/marker_single.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/images/smart-snap/marker_single.png</source>
+        <source file="../Core/images/smart-snap/marker_single@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/images/smart-snap/marker_single@2x.png</source>
+        <source file="../Core/images/smart-snap/marker_stems.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/images/smart-snap/marker_stems.png</source>
+        <source file="../Core/images/smart-snap/marker_stems@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/images/smart-snap/marker_stems@2x.png</source>
+        <source file="../Core/images/smart-snap/region_all.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/images/smart-snap/region_all.png</source>
+        <source file="../Core/images/smart-snap/region_all@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/images/smart-snap/region_all@2x.png</source>
+        <source file="../Core/images/smart-snap/region_overlapped.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/images/smart-snap/region_overlapped.png</source>
+        <source file="../Core/images/smart-snap/region_overlapped@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/images/smart-snap/region_overlapped@2x.png</source>
+        <source file="../Core/images/smart-snap/region_single.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/images/smart-snap/region_single.png</source>
+        <source file="../Core/images/smart-snap/region_single@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/images/smart-snap/region_single@2x.png</source>
+        <source file="../Core/images/smart-snap/region_stems.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/images/smart-snap/region_stems.png</source>
+        <source file="../Core/images/smart-snap/region_stems@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/images/smart-snap/region_stems@2x.png</source>
+        <source main="main" file="ek_Snap items to closest markers.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Items%20Editing/ek_Snap%20items%20to%20closest%20markers.lua</source>
+        <source main="main" file="ek_Snap items to closest regions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Items%20Editing/ek_Snap%20items%20to%20closest%20regions.lua</source>
+      </version>
     </reapack>
     <reapack name="ek_Toggle group for selected items.lua" type="script" desc="ek_Toggle group for selected items">
       <metadata>
@@ -2995,7 +3105,11 @@ Also there is flexible offset: just begin of item, snap offset, first cue marker
 \widowctrl\hyphauto
 
 {\pard \ql \f0 \sa180 \li0 \fi0 Region Render Matrix Filler significantly speeds up the process of filling the Render Matrix in REAPER, especially in projects with a large number of regions. It\u8217's particularly useful for tasks like layer-based sound rendering, gameplay VO synced to video, voiceover exports, and other scenarios where batch rendering is needed. Features:\par}
-{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab Small UI improvements\sa180\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab Automatic track assignment in the Render Matrix based on settings\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab Optional automatic channel count detection based on region name\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab Region and track preview with navigation\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab Manual override of track assignment for individual regions\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab Ability to rename regions or tracks\sa180\par}
 }
 ]]></description>
         <link rel="website" href="https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Render-Region-Matrix-Filler">Documentation</link>
@@ -3124,6 +3238,14 @@ Also there is flexible offset: just begin of item, snap offset, first cue marker
         <source file="../Core/data/rrm-filler_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/data/rrm-filler_5.3.dat</source>
         <source file="../Core/data/rrm-filler_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/data/rrm-filler_5.4.dat</source>
         <source main="main" file="ek_Region Render Matrix Filler (no prompt).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Regions/ek_Region%20Render%20Matrix%20Filler%20(no%20prompt).lua</source>
+      </version>
+      <version name="1.0.14" author="Ed Kashinsky" time="2025-10-15T11:10:00Z">
+        <changelog><![CDATA[* Added detailed message on error crash
+* Fixed curl crash for Reaper 5 + Win 10]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Regions/ek_Region%20Render%20Matrix%20Filler.lua</source>
+        <source file="../Core/data/rrm-filler_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/data/rrm-filler_5.3.dat</source>
+        <source file="../Core/data/rrm-filler_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/data/rrm-filler_5.4.dat</source>
+        <source main="main" file="ek_Region Render Matrix Filler (no prompt).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Regions/ek_Region%20Render%20Matrix%20Filler%20(no%20prompt).lua</source>
       </version>
     </reapack>
   </category>
@@ -3580,6 +3702,13 @@ Also there is flexible offset: just begin of item, snap offset, first cue marker
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Tracks%20Properties/ek_Smart%20renaming%20depending%20on%20focus.lua</source>
         <source file="../Core/data/smart-renamer_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/data/smart-renamer_5.3.dat</source>
         <source file="../Core/data/smart-renamer_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/data/smart-renamer_5.4.dat</source>
+      </version>
+      <version name="1.1.9" author="Ed Kashinsky" time="2025-10-15T11:10:00Z">
+        <changelog><![CDATA[* Added detailed message on error crash
+* Fixed curl crash for Reaper 5 + Win 10]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Tracks%20Properties/ek_Smart%20renaming%20depending%20on%20focus.lua</source>
+        <source file="../Core/data/smart-renamer_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/data/smart-renamer_5.3.dat</source>
+        <source file="../Core/data/smart-renamer_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/data/smart-renamer_5.4.dat</source>
       </version>
     </reapack>
     <reapack name="ek_Toggle exclusive arm for selected tracks.lua" type="script" desc="Toggle exclusive arm for selected tracks">
