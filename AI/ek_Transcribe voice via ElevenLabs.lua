@@ -1,12 +1,13 @@
 --[[
 @description ek_Transcribe voice via ElevenLabs
-@version 1.0.5
+@version 1.0.6
 @author Ed Kashinsky
 @readme_skip
 @about
    A script that converts voice recordings into text. It processes content from selected items and writes the transcription into their notes.
 @changelog
    * Added detailed message on error crash
+   * Fixed curl crash for Reaper 5 + Win 10
 @links
 	Documentation https://github.com/edkashinsky/reaper-reableton-scripts/wiki/ElevenLabs-Speech%E2%80%90to%E2%80%90Text-Translator
 	Buy Licence https://ekscripts.gumroad.com/l/ai-11-labs-speech2text

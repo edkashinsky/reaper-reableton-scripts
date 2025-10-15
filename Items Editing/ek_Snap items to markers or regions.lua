@@ -1,6 +1,6 @@
 --[[
 @description ek_Snap items to markers or regions
-@version 1.2.2
+@version 1.2.3
 @author Ed Kashinsky
 @about
    This script snaps selected items to markers or regions started from specified number. It requires ReaImGui extension.
@@ -10,6 +10,7 @@
 @readme_skip
 @changelog
    * Added detailed message on error crash
+   * Fixed curl crash for Reaper 5 + Win 10
 @provides
    ../Core/data/smart-snap_*.dat
    ../Core/images/smart-snap/*

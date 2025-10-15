@@ -2,7 +2,7 @@
 @description ek_Core functions
 @author Ed Kashinsky
 @about Base functions used by ek-scripts.
-@version 1.2.14
+@version 1.2.15
 @changelog
    * Added detailed message on error crash
    * Fixed cURL crash for Reaper 5 and Window 10

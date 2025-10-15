@@ -1,6 +1,6 @@
 --[[
 @description ek_Global startup action
-@version 1.2.3
+@version 1.2.4
 @author Ed Kashinsky
 @about
   This is startup action brings some ableton-like features in realtime. You can control any option by 'ek_Global startup action settings' script.
@@ -14,6 +14,7 @@
      6. If you want to use auto-grid for MIDI Editor, install script **ek_Auto grid for MIDI Editor** and set it on zoom shortcut.
 @changelog
    * Added detailed message on error crash
+   * Fixed curl crash for Reaper 5 + Win 10
 @links
 	Documentation https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Global-Startup-Action
 	Forum thread https://forum.cockos.com/showthread.php?t=298431

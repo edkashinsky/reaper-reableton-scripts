@@ -1,12 +1,13 @@
 --[[
 @description ek_Generate voice via ElevenLabs
-@version 1.0.7
+@version 1.0.8
 @author Ed Kashinsky
 @readme_skip
 @about
    This script that lets you generate voices from text prompts using the ElevenLabs service. The script acts as a wrapper for the ElevenLabs API, sending requests and importing the generated audio directly into REAPER.
 @changelog
    * Added detailed message on error crash
+   * Fixed curl crash for Reaper 5 + Win 10
 @links
 	Documentation https://github.com/edkashinsky/reaper-reableton-scripts/wiki/ElevenLabs-Voice-Generator
 	Buy Licence https://ekscripts.gumroad.com/l/ai-11-labs-voice

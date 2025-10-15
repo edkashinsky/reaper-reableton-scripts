@@ -1,12 +1,13 @@
 --[[
 @description ek_Isolate voice via ElevenLabs
-@version 1.0.3
+@version 1.0.4
 @author Ed Kashinsky
 @readme_skip
 @about
    This script removes background noise from voice recordings using the ElevenLabs service.
 @changelog
    * Added detailed message on error crash
+   * Fixed curl crash for Reaper 5 + Win 10
 @links
 	Documentation https://github.com/edkashinsky/reaper-reableton-scripts/wiki/ElevenLabs-Voice-Isolation
 	Buy Licence https://ekscripts.gumroad.com/l/ai-11-labs-isolation

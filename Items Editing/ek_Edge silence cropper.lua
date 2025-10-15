@@ -1,12 +1,13 @@
 --[[
 @description ek_Edge silence cropper
-@version 1.4.2
+@version 1.4.3
 @author Ed Kashinsky
 @readme_skip
 @about
 	This script allows you to trim silence from the edges of items using individual thresholds. It significantly speeds up work with voiceovers, impacts, and other sounds that often have silent tails or heads — especially when dealing with large batches. It can be used alongside Reaper's built-in Dynamic Split for more precise timing adjustments without silence.
 @changelog
    * Added detailed message on error crash
+   * Fixed curl crash for Reaper 5 + Win 10
 @links
 	Documentation https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Edge-Silence-Cropper
 	Forum thread https://forum.cockos.com/showthread.php?t=271671
