@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="EK Scripts" commit="2ebd55af18d4506e1b6035c11d484703a9d69fe0">
+<index version="1" name="EK Scripts" commit="2615093e18ddfda4b630583a10d2cecc864ee45e">
   <category name="AI">
     <reapack name="ek_Generate Music via ElevenLabs.lua" type="script" desc="ek_Generate Music via ElevenLabs">
       <metadata>
@@ -18,6 +18,12 @@
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/1f778962ada0a9f329b6181ee1f6bc2f28f13ffb/AI/ek_Generate%20Music%20via%20ElevenLabs.lua</source>
         <source file="../Core/data/ai-11-labs-music_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/1f778962ada0a9f329b6181ee1f6bc2f28f13ffb/Core/data/ai-11-labs-music_5.3.dat</source>
         <source file="../Core/data/ai-11-labs-music_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/1f778962ada0a9f329b6181ee1f6bc2f28f13ffb/Core/data/ai-11-labs-music_5.4.dat</source>
+      </version>
+      <version name="1.0.1" author="Ed Kashinsky" time="2025-10-15T10:16:58Z">
+        <changelog><![CDATA[* Added detailed message on error crash]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/AI/ek_Generate%20Music%20via%20ElevenLabs.lua</source>
+        <source file="../Core/data/ai-11-labs-music_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/data/ai-11-labs-music_5.3.dat</source>
+        <source file="../Core/data/ai-11-labs-music_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/data/ai-11-labs-music_5.4.dat</source>
       </version>
     </reapack>
     <reapack name="ek_Generate SFX via ElevenLabs.lua" type="script" desc="ek_Generate SFX via ElevenLabs">
@@ -164,6 +170,12 @@ new UI support]]></changelog>
         <source file="../Core/data/ai-11-labs-sfx_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/67981da133eb50d1c4a135ce65c00b8e0c66a2e9/Core/data/ai-11-labs-sfx_5.3.dat</source>
         <source file="../Core/data/ai-11-labs-sfx_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/67981da133eb50d1c4a135ce65c00b8e0c66a2e9/Core/data/ai-11-labs-sfx_5.4.dat</source>
       </version>
+      <version name="1.2.4" author="Ed Kashinsky" time="2025-10-15T10:16:58Z">
+        <changelog><![CDATA[* Added detailed message on error crash]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/AI/ek_Generate%20SFX%20via%20ElevenLabs.lua</source>
+        <source file="../Core/data/ai-11-labs-sfx_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/data/ai-11-labs-sfx_5.3.dat</source>
+        <source file="../Core/data/ai-11-labs-sfx_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/data/ai-11-labs-sfx_5.4.dat</source>
+      </version>
     </reapack>
     <reapack name="ek_Generate voice via ElevenLabs.lua" type="script" desc="ek_Generate voice via ElevenLabs">
       <metadata>
@@ -247,6 +259,19 @@ new UI support]]></changelog>
         <source file="../Core/images/ai-11-labs-voice/refresh@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/13fa0f1bd5cb0e452f366483ab8fcfaeef346803/Core/images/ai-11-labs-voice/refresh@2x.png</source>
         <source main="main" file="ek_Generate voice via ElevenLabs - Voice Manager.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/13fa0f1bd5cb0e452f366483ab8fcfaeef346803/AI/ek_Generate%20voice%20via%20ElevenLabs%20-%20Voice%20Manager.lua</source>
       </version>
+      <version name="1.0.7" author="Ed Kashinsky" time="2025-10-15T10:16:58Z">
+        <changelog><![CDATA[* Added detailed message on error crash]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/AI/ek_Generate%20voice%20via%20ElevenLabs.lua</source>
+        <source file="../Core/data/ai-11-labs-voice_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/data/ai-11-labs-voice_5.3.dat</source>
+        <source file="../Core/data/ai-11-labs-voice_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/data/ai-11-labs-voice_5.4.dat</source>
+        <source file="../Core/images/ai-11-labs-voice/edit.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/images/ai-11-labs-voice/edit.png</source>
+        <source file="../Core/images/ai-11-labs-voice/edit@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/images/ai-11-labs-voice/edit@2x.png</source>
+        <source file="../Core/images/ai-11-labs-voice/find_similar.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/images/ai-11-labs-voice/find_similar.png</source>
+        <source file="../Core/images/ai-11-labs-voice/find_similar@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/images/ai-11-labs-voice/find_similar@2x.png</source>
+        <source file="../Core/images/ai-11-labs-voice/refresh.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/images/ai-11-labs-voice/refresh.png</source>
+        <source file="../Core/images/ai-11-labs-voice/refresh@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/images/ai-11-labs-voice/refresh@2x.png</source>
+        <source main="main" file="ek_Generate voice via ElevenLabs - Voice Manager.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/AI/ek_Generate%20voice%20via%20ElevenLabs%20-%20Voice%20Manager.lua</source>
+      </version>
     </reapack>
     <reapack name="ek_Isolate voice via ElevenLabs.lua" type="script" desc="ek_Isolate voice via ElevenLabs">
       <metadata>
@@ -276,6 +301,12 @@ new UI support]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/9d43014dae98af37665b7b01f22297a52b92507d/AI/ek_Isolate%20voice%20via%20ElevenLabs.lua</source>
         <source file="../Core/data/ai-11-labs-isolation_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/9d43014dae98af37665b7b01f22297a52b92507d/Core/data/ai-11-labs-isolation_5.3.dat</source>
         <source file="../Core/data/ai-11-labs-isolation_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/9d43014dae98af37665b7b01f22297a52b92507d/Core/data/ai-11-labs-isolation_5.4.dat</source>
+      </version>
+      <version name="1.0.3" author="Ed Kashinsky" time="2025-10-15T10:16:58Z">
+        <changelog><![CDATA[* Added detailed message on error crash]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/AI/ek_Isolate%20voice%20via%20ElevenLabs.lua</source>
+        <source file="../Core/data/ai-11-labs-isolation_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/data/ai-11-labs-isolation_5.3.dat</source>
+        <source file="../Core/data/ai-11-labs-isolation_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/data/ai-11-labs-isolation_5.4.dat</source>
       </version>
     </reapack>
     <reapack name="ek_Transcribe voice via ElevenLabs.lua" type="script" desc="ek_Transcribe voice via ElevenLabs">
@@ -318,6 +349,12 @@ new UI support]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2ebd55af18d4506e1b6035c11d484703a9d69fe0/AI/ek_Transcribe%20voice%20via%20ElevenLabs.lua</source>
         <source file="../Core/data/ai-11-labs-speech2text_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2ebd55af18d4506e1b6035c11d484703a9d69fe0/Core/data/ai-11-labs-speech2text_5.3.dat</source>
         <source file="../Core/data/ai-11-labs-speech2text_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2ebd55af18d4506e1b6035c11d484703a9d69fe0/Core/data/ai-11-labs-speech2text_5.4.dat</source>
+      </version>
+      <version name="1.0.5" author="Ed Kashinsky" time="2025-10-15T10:16:58Z">
+        <changelog><![CDATA[* Added detailed message on error crash]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/AI/ek_Transcribe%20voice%20via%20ElevenLabs.lua</source>
+        <source file="../Core/data/ai-11-labs-speech2text_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/data/ai-11-labs-speech2text_5.3.dat</source>
+        <source file="../Core/data/ai-11-labs-speech2text_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/data/ai-11-labs-speech2text_5.4.dat</source>
       </version>
     </reapack>
   </category>
@@ -1109,6 +1146,20 @@ Improved core performance]]></changelog>
         <source file="images/core/logo-white.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2ebd55af18d4506e1b6035c11d484703a9d69fe0/Core/images/core/logo-white.png</source>
         <source file="images/core/logo-white@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2ebd55af18d4506e1b6035c11d484703a9d69fe0/Core/images/core/logo-white@2x.png</source>
       </version>
+      <version name="1.2.14" author="Ed Kashinsky" time="2025-10-15T10:16:58Z">
+        <changelog><![CDATA[* Added detailed message on error crash
+* Fixed cURL crash for Reaper 5 and Window 10]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/ek_Core%20functions.lua</source>
+        <source file="data/core_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/data/core_5.3.dat</source>
+        <source file="data/core_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/data/core_5.4.dat</source>
+        <source file="curl/curl-ca-bundle.crt">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/curl/curl-ca-bundle.crt</source>
+        <source file="curl/curl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/curl/curl.exe</source>
+        <source file="curl/trurl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/curl/trurl.exe</source>
+        <source file="images/core/logo-black.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/images/core/logo-black.png</source>
+        <source file="images/core/logo-black@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/images/core/logo-black@2x.png</source>
+        <source file="images/core/logo-white.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/images/core/logo-white.png</source>
+        <source file="images/core/logo-white@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/images/core/logo-white@2x.png</source>
+      </version>
     </reapack>
     <reapack name="ek_Focus virtual MIDI keyboard.lua" type="script" desc="ek_Focus virtual MIDI keyboard">
       <metadata>
@@ -1562,6 +1613,13 @@ Improved performance]]></changelog>
         <source file="data/core-bg_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/8011a7536c2fd3fab240c918ed513d89298bb8e8/Core/data/core-bg_5.3.dat</source>
         <source file="data/core-bg_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/8011a7536c2fd3fab240c918ed513d89298bb8e8/Core/data/core-bg_5.4.dat</source>
         <source main="main" file="ek_Global startup action - settings.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/8011a7536c2fd3fab240c918ed513d89298bb8e8/Core/ek_Global%20startup%20action%20-%20settings.lua</source>
+      </version>
+      <version name="1.2.3" author="Ed Kashinsky" time="2025-10-15T10:16:58Z">
+        <changelog><![CDATA[* Added detailed message on error crash]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/ek_Global%20startup%20action.lua</source>
+        <source file="data/core-bg_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/data/core-bg_5.3.dat</source>
+        <source file="data/core-bg_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/data/core-bg_5.4.dat</source>
+        <source main="main" file="ek_Global startup action - settings.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/ek_Global%20startup%20action%20-%20settings.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Save project with a check of unused media files.lua" type="script" desc="ek_Save project with a check of unused media files">
@@ -2160,6 +2218,18 @@ Please restart Reaper for taking effect]]></changelog>
         <source main="main" file="ek_Edge silence cropper - apply Preset 4.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f2a3c2698078a6f784b7785f7da173a77d5f8ce9/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%204.lua</source>
         <source main="main" file="ek_Edge silence cropper - apply Preset 5.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f2a3c2698078a6f784b7785f7da173a77d5f8ce9/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%205.lua</source>
       </version>
+      <version name="1.4.2" author="Ed Kashinsky" time="2025-10-15T10:16:58Z">
+        <changelog><![CDATA[* Added detailed message on error crash]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Items%20Editing/ek_Edge%20silence%20cropper.lua</source>
+        <source file="../Core/data/edge-silence-cropper_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/data/edge-silence-cropper_5.3.dat</source>
+        <source file="../Core/data/edge-silence-cropper_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/data/edge-silence-cropper_5.4.dat</source>
+        <source main="main" file="ek_Edge silence cropper (no prompt).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Items%20Editing/ek_Edge%20silence%20cropper%20(no%20prompt).lua</source>
+        <source main="main" file="ek_Edge silence cropper - apply Preset 1.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%201.lua</source>
+        <source main="main" file="ek_Edge silence cropper - apply Preset 2.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%202.lua</source>
+        <source main="main" file="ek_Edge silence cropper - apply Preset 3.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%203.lua</source>
+        <source main="main" file="ek_Edge silence cropper - apply Preset 4.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%204.lua</source>
+        <source main="main" file="ek_Edge silence cropper - apply Preset 5.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Items%20Editing/ek_Edge%20silence%20cropper%20-%20apply%20Preset%205.lua</source>
+      </version>
     </reapack>
     <reapack name="ek_Pitch Tool.lua" type="script" desc="ek_Pitch Tool">
       <metadata>
@@ -2277,6 +2347,13 @@ Please restart Reaper for taking effect]]></changelog>
         <source file="../Core/data/pitch-tool_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7b6d25ecec6801119684843f997e6986fa475883/Core/data/pitch-tool_5.4.dat</source>
         <source main="main" file="ek_Pitch Tool - Tooltip (background).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7b6d25ecec6801119684843f997e6986fa475883/Items%20Editing/ek_Pitch%20Tool%20-%20Tooltip%20(background).lua</source>
       </version>
+      <version name="2.0.10" author="Ed Kashinsky" time="2025-10-15T10:16:58Z">
+        <changelog><![CDATA[* Added detailed message on error crash]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Items%20Editing/ek_Pitch%20Tool.lua</source>
+        <source file="../Core/data/pitch-tool_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/data/pitch-tool_5.3.dat</source>
+        <source file="../Core/data/pitch-tool_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/data/pitch-tool_5.4.dat</source>
+        <source main="main" file="ek_Pitch Tool - Tooltip (background).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Items%20Editing/ek_Pitch%20Tool%20-%20Tooltip%20(background).lua</source>
+      </version>
     </reapack>
     <reapack name="ek_Remove 1 sec gap between selected items.lua" type="script" desc="ek_Remove 1 sec gap between selected items">
       <metadata>
@@ -2389,6 +2466,12 @@ Please restart Reaper for taking effect]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a32303d0cd977af45b6d830e0493cdb2df860663/Items%20Editing/ek_Separated%20actions%20for%20Media%20item%20in%20Mouse%20modifiers.lua</source>
         <source file="../Core/data/dual-header-action_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a32303d0cd977af45b6d830e0493cdb2df860663/Core/data/dual-header-action_5.3.dat</source>
         <source file="../Core/data/dual-header-action_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a32303d0cd977af45b6d830e0493cdb2df860663/Core/data/dual-header-action_5.4.dat</source>
+      </version>
+      <version name="1.1.7" author="Ed Kashinsky" time="2025-10-15T10:16:58Z">
+        <changelog><![CDATA[* Added detailed message on error crash]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Items%20Editing/ek_Separated%20actions%20for%20Media%20item%20in%20Mouse%20modifiers.lua</source>
+        <source file="../Core/data/dual-header-action_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/data/dual-header-action_5.3.dat</source>
+        <source file="../Core/data/dual-header-action_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/data/dual-header-action_5.4.dat</source>
       </version>
     </reapack>
     <reapack name="ek_Smart split items by mouse cursor.lua" type="script" desc="ek_Smart split items by mouse cursor">
@@ -2663,6 +2746,30 @@ Also there is flexible offset: just begin of item, snap offset, first cue marker
         <source file="../Core/images/smart-snap/region_stems@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7b6d25ecec6801119684843f997e6986fa475883/Core/images/smart-snap/region_stems@2x.png</source>
         <source main="main" file="ek_Snap items to closest markers.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7b6d25ecec6801119684843f997e6986fa475883/Items%20Editing/ek_Snap%20items%20to%20closest%20markers.lua</source>
         <source main="main" file="ek_Snap items to closest regions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7b6d25ecec6801119684843f997e6986fa475883/Items%20Editing/ek_Snap%20items%20to%20closest%20regions.lua</source>
+      </version>
+      <version name="1.2.2" author="Ed Kashinsky" time="2025-10-15T10:16:58Z">
+        <changelog><![CDATA[* Added detailed message on error crash]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Items%20Editing/ek_Snap%20items%20to%20markers%20or%20regions.lua</source>
+        <source file="../Core/data/smart-snap_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/data/smart-snap_5.3.dat</source>
+        <source file="../Core/data/smart-snap_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/data/smart-snap_5.4.dat</source>
+        <source file="../Core/images/smart-snap/marker_all.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/images/smart-snap/marker_all.png</source>
+        <source file="../Core/images/smart-snap/marker_all@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/images/smart-snap/marker_all@2x.png</source>
+        <source file="../Core/images/smart-snap/marker_overlapped.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/images/smart-snap/marker_overlapped.png</source>
+        <source file="../Core/images/smart-snap/marker_overlapped@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/images/smart-snap/marker_overlapped@2x.png</source>
+        <source file="../Core/images/smart-snap/marker_single.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/images/smart-snap/marker_single.png</source>
+        <source file="../Core/images/smart-snap/marker_single@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/images/smart-snap/marker_single@2x.png</source>
+        <source file="../Core/images/smart-snap/marker_stems.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/images/smart-snap/marker_stems.png</source>
+        <source file="../Core/images/smart-snap/marker_stems@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/images/smart-snap/marker_stems@2x.png</source>
+        <source file="../Core/images/smart-snap/region_all.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/images/smart-snap/region_all.png</source>
+        <source file="../Core/images/smart-snap/region_all@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/images/smart-snap/region_all@2x.png</source>
+        <source file="../Core/images/smart-snap/region_overlapped.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/images/smart-snap/region_overlapped.png</source>
+        <source file="../Core/images/smart-snap/region_overlapped@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/images/smart-snap/region_overlapped@2x.png</source>
+        <source file="../Core/images/smart-snap/region_single.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/images/smart-snap/region_single.png</source>
+        <source file="../Core/images/smart-snap/region_single@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/images/smart-snap/region_single@2x.png</source>
+        <source file="../Core/images/smart-snap/region_stems.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/images/smart-snap/region_stems.png</source>
+        <source file="../Core/images/smart-snap/region_stems@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/images/smart-snap/region_stems@2x.png</source>
+        <source main="main" file="ek_Snap items to closest markers.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Items%20Editing/ek_Snap%20items%20to%20closest%20markers.lua</source>
+        <source main="main" file="ek_Snap items to closest regions.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Items%20Editing/ek_Snap%20items%20to%20closest%20regions.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Toggle group for selected items.lua" type="script" desc="ek_Toggle group for selected items">
@@ -3010,6 +3117,13 @@ Also there is flexible offset: just begin of item, snap offset, first cue marker
         <source file="../Core/data/rrm-filler_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7b6d25ecec6801119684843f997e6986fa475883/Core/data/rrm-filler_5.3.dat</source>
         <source file="../Core/data/rrm-filler_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7b6d25ecec6801119684843f997e6986fa475883/Core/data/rrm-filler_5.4.dat</source>
         <source main="main" file="ek_Region Render Matrix Filler (no prompt).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7b6d25ecec6801119684843f997e6986fa475883/Regions/ek_Region%20Render%20Matrix%20Filler%20(no%20prompt).lua</source>
+      </version>
+      <version name="1.0.13" author="Ed Kashinsky" time="2025-10-15T10:16:58Z">
+        <changelog><![CDATA[* Added detailed message on error crash]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Regions/ek_Region%20Render%20Matrix%20Filler.lua</source>
+        <source file="../Core/data/rrm-filler_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/data/rrm-filler_5.3.dat</source>
+        <source file="../Core/data/rrm-filler_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/data/rrm-filler_5.4.dat</source>
+        <source main="main" file="ek_Region Render Matrix Filler (no prompt).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Regions/ek_Region%20Render%20Matrix%20Filler%20(no%20prompt).lua</source>
       </version>
     </reapack>
   </category>
@@ -3460,6 +3574,12 @@ Also there is flexible offset: just begin of item, snap offset, first cue marker
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/96e7bca8cbe135a4e1621ecb3eb75b2085ca95e4/Tracks%20Properties/ek_Smart%20renaming%20depending%20on%20focus.lua</source>
         <source file="../Core/data/smart-renamer_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/96e7bca8cbe135a4e1621ecb3eb75b2085ca95e4/Core/data/smart-renamer_5.3.dat</source>
         <source file="../Core/data/smart-renamer_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/96e7bca8cbe135a4e1621ecb3eb75b2085ca95e4/Core/data/smart-renamer_5.4.dat</source>
+      </version>
+      <version name="1.1.8" author="Ed Kashinsky" time="2025-10-15T10:16:58Z">
+        <changelog><![CDATA[* Added detailed message on error crash]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Tracks%20Properties/ek_Smart%20renaming%20depending%20on%20focus.lua</source>
+        <source file="../Core/data/smart-renamer_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/data/smart-renamer_5.3.dat</source>
+        <source file="../Core/data/smart-renamer_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/data/smart-renamer_5.4.dat</source>
       </version>
     </reapack>
     <reapack name="ek_Toggle exclusive arm for selected tracks.lua" type="script" desc="Toggle exclusive arm for selected tracks">
