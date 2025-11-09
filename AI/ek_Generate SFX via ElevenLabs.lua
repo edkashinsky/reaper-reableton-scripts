@@ -1,13 +1,13 @@
 --[[
 @description ek_Generate SFX via ElevenLabs
-@version 1.2.5
+@version 1.2.6
 @author Ed Kashinsky
 @readme_skip
 @about
    This script allows you to generate sounds via Eleven Labs directly from Reaper. Simply enter a prompt describing the sound you want to create - whether it’s the crackle of fire or an alarm signal on an orbital station. The script will generate the sound and insert it directly onto the timeline.
 @changelog
-   * Added detailed message on error crash
-   * Fixed curl crash for Reaper 5 + Win 10
+   * Added option "Save prompt to item notes"
+   * Added option "Insert content to new take"
 @links
 	Documentation https://github.com/edkashinsky/reaper-reableton-scripts/wiki/ElevenLabs-SFX-Generator
 	Forum thread https://forum.cockos.com/showthread.php?t=292807

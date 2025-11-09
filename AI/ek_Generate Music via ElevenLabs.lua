@@ -1,13 +1,13 @@
 --[[
 @description ek_Generate Music via ElevenLabs
-@version 1.0.2
+@version 1.0.3
 @author Ed Kashinsky
 @readme_skip
 @about
    This script allows you to generate music via Eleven Labs directly from Reaper. The script will generate the sound and insert it directly onto the timeline.
 @changelog
-   * Added detailed message on error crash
-   * Fixed curl crash for Reaper 5 + Win 10
+   * Added option "Save prompt to item notes"
+   * Added option "Insert content to new take"
 @links
 	Documentation https://github.com/edkashinsky/reaper-reableton-scripts/wiki/ElevenLabs-Music-Generator
 	Buy Licence https://ekscripts.gumroad.com/l/ai-11-labs-music
