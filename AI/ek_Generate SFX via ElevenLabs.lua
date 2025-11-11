@@ -1,6 +1,6 @@
 --[[
 @description ek_Generate SFX via ElevenLabs
-@version 1.2.6
+@version 1.2.7
 @author Ed Kashinsky
 @readme_skip
 @about
@@ -8,6 +8,7 @@
 @changelog
    * Added option "Save prompt to item notes"
    * Added option "Insert content to new take"
+   * Turned off useless output formats
 @links
 	Documentation https://github.com/edkashinsky/reaper-reableton-scripts/wiki/ElevenLabs-SFX-Generator
 	Forum thread https://forum.cockos.com/showthread.php?t=292807
