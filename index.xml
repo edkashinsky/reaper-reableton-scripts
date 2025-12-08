@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="EK Scripts" commit="6f522f8319e2c8476268cbf4fd6d02eeb23f0b67">
+<index version="1" name="EK Scripts" commit="144423ccfd43ec6eb401e818766ae37018f291a7">
   <category name="AI">
     <reapack name="ek_Generate Music via ElevenLabs.lua" type="script" desc="ek_Generate Music via ElevenLabs">
       <metadata>
@@ -1250,6 +1250,19 @@ Improved core performance]]></changelog>
         <source file="images/core/logo-black@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7a9e45eedffe89b337d3627c05c7caf31a95b30b/Core/images/core/logo-black@2x.png</source>
         <source file="images/core/logo-white.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7a9e45eedffe89b337d3627c05c7caf31a95b30b/Core/images/core/logo-white.png</source>
         <source file="images/core/logo-white@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7a9e45eedffe89b337d3627c05c7caf31a95b30b/Core/images/core/logo-white@2x.png</source>
+      </version>
+      <version name="1.2.17" author="Ed Kashinsky" time="2025-12-08T13:56:55Z">
+        <changelog><![CDATA[* Small fix for clamp crash on Linux (thanks to @hans for report)]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/144423ccfd43ec6eb401e818766ae37018f291a7/Core/ek_Core%20functions.lua</source>
+        <source file="data/core_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/144423ccfd43ec6eb401e818766ae37018f291a7/Core/data/core_5.3.dat</source>
+        <source file="data/core_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/144423ccfd43ec6eb401e818766ae37018f291a7/Core/data/core_5.4.dat</source>
+        <source file="curl/curl-ca-bundle.crt">https://github.com/edkashinsky/reaper-reableton-scripts/raw/144423ccfd43ec6eb401e818766ae37018f291a7/Core/curl/curl-ca-bundle.crt</source>
+        <source file="curl/curl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/144423ccfd43ec6eb401e818766ae37018f291a7/Core/curl/curl.exe</source>
+        <source file="curl/trurl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/144423ccfd43ec6eb401e818766ae37018f291a7/Core/curl/trurl.exe</source>
+        <source file="images/core/logo-black.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/144423ccfd43ec6eb401e818766ae37018f291a7/Core/images/core/logo-black.png</source>
+        <source file="images/core/logo-black@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/144423ccfd43ec6eb401e818766ae37018f291a7/Core/images/core/logo-black@2x.png</source>
+        <source file="images/core/logo-white.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/144423ccfd43ec6eb401e818766ae37018f291a7/Core/images/core/logo-white.png</source>
+        <source file="images/core/logo-white@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/144423ccfd43ec6eb401e818766ae37018f291a7/Core/images/core/logo-white@2x.png</source>
       </version>
     </reapack>
     <reapack name="ek_Focus virtual MIDI keyboard.lua" type="script" desc="ek_Focus virtual MIDI keyboard">
