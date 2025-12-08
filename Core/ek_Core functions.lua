@@ -2,9 +2,9 @@
 @description ek_Core functions
 @author Ed Kashinsky
 @about Base functions used by ek-scripts.
-@version 1.2.16
+@version 1.2.17
 @changelog
-   * Improved Undo/Redo manager
+   * Small fix for clamp crash on Linux (thanks to @hans for report)
  @provides
     data/core_*.dat
     [nomain] curl/*
