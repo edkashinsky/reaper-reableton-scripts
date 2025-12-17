@@ -1,10 +1,12 @@
 --[[
 @author Ed Kashinsky
 @description ek_Toggle Docker
-@version 2.0.0
+@version 2.0.1
 @about
    The script toggles the visibility of the selected docker window: it hides the window on the first run and shows it again on the next run. 
    The docker can contain any REAPER windows. The script provides four slot versions to support separate shortcuts for different dockers.
+@changelog
+    - Small fixes
 @metapackage
 @provides
     ../Core/data/toggle-docker_*.dat
