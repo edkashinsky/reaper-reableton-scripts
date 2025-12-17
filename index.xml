@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="EK Scripts" commit="144423ccfd43ec6eb401e818766ae37018f291a7">
+<index version="1" name="EK Scripts" commit="a143ee1eb2f36a495cbbb5acabfa0da21422e828">
   <category name="AI">
     <reapack name="ek_Generate Music via ElevenLabs.lua" type="script" desc="ek_Generate Music via ElevenLabs">
       <metadata>
@@ -1264,6 +1264,19 @@ Improved core performance]]></changelog>
         <source file="images/core/logo-white.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/144423ccfd43ec6eb401e818766ae37018f291a7/Core/images/core/logo-white.png</source>
         <source file="images/core/logo-white@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/144423ccfd43ec6eb401e818766ae37018f291a7/Core/images/core/logo-white@2x.png</source>
       </version>
+      <version name="1.2.18" author="Ed Kashinsky" time="2025-12-17T09:32:34Z">
+        <changelog><![CDATA[* Removed old functions]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a143ee1eb2f36a495cbbb5acabfa0da21422e828/Core/ek_Core%20functions.lua</source>
+        <source file="data/core_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a143ee1eb2f36a495cbbb5acabfa0da21422e828/Core/data/core_5.3.dat</source>
+        <source file="data/core_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a143ee1eb2f36a495cbbb5acabfa0da21422e828/Core/data/core_5.4.dat</source>
+        <source file="curl/curl-ca-bundle.crt">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a143ee1eb2f36a495cbbb5acabfa0da21422e828/Core/curl/curl-ca-bundle.crt</source>
+        <source file="curl/curl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a143ee1eb2f36a495cbbb5acabfa0da21422e828/Core/curl/curl.exe</source>
+        <source file="curl/trurl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a143ee1eb2f36a495cbbb5acabfa0da21422e828/Core/curl/trurl.exe</source>
+        <source file="images/core/logo-black.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a143ee1eb2f36a495cbbb5acabfa0da21422e828/Core/images/core/logo-black.png</source>
+        <source file="images/core/logo-black@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a143ee1eb2f36a495cbbb5acabfa0da21422e828/Core/images/core/logo-black@2x.png</source>
+        <source file="images/core/logo-white.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a143ee1eb2f36a495cbbb5acabfa0da21422e828/Core/images/core/logo-white.png</source>
+        <source file="images/core/logo-white@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a143ee1eb2f36a495cbbb5acabfa0da21422e828/Core/images/core/logo-white@2x.png</source>
+      </version>
     </reapack>
     <reapack name="ek_Focus virtual MIDI keyboard.lua" type="script" desc="ek_Focus virtual MIDI keyboard">
       <metadata>
@@ -1732,6 +1745,14 @@ Improved performance]]></changelog>
         <source file="data/core-bg_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/data/core-bg_5.3.dat</source>
         <source file="data/core-bg_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/data/core-bg_5.4.dat</source>
         <source main="main" file="ek_Global startup action - settings.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/f1e2924afd809a6b2d0090e3e5ba8970e56e7111/Core/ek_Global%20startup%20action%20-%20settings.lua</source>
+      </version>
+      <version name="1.2.5" author="Ed Kashinsky" time="2025-12-17T09:32:34Z">
+        <changelog><![CDATA[* Added new feature "Keep only one open window per docker"
+* Script shows actual command state of this script]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a143ee1eb2f36a495cbbb5acabfa0da21422e828/Core/ek_Global%20startup%20action.lua</source>
+        <source file="data/core-bg_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a143ee1eb2f36a495cbbb5acabfa0da21422e828/Core/data/core-bg_5.3.dat</source>
+        <source file="data/core-bg_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a143ee1eb2f36a495cbbb5acabfa0da21422e828/Core/data/core-bg_5.4.dat</source>
+        <source main="main" file="ek_Global startup action - settings.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a143ee1eb2f36a495cbbb5acabfa0da21422e828/Core/ek_Global%20startup%20action%20-%20settings.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Save project with a check of unused media files.lua" type="script" desc="ek_Save project with a check of unused media files">
@@ -3315,7 +3336,7 @@ Also there is flexible offset: just begin of item, snap offset, first cue marker
 {\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
 \widowctrl\hyphauto
 
-{\pard \ql \f0 \sa180 \li0 \fi0 Toggle Docker tool allows you to have just one opened window in one docker. When you open another toggle docker window, current one closes. Also you can switch last opened window by special scripts like "ek_Toggle Docker - toggle bottom window"\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 The script toggles the visibility of the selected docker window: it hides the window on the first run and shows it again on the next run. The docker can contain any REAPER windows. The script provides four slot versions to support separate shortcuts for different dockers.\par}
 }
 ]]></description>
       </metadata>
@@ -3359,6 +3380,14 @@ Also there is flexible offset: just begin of item, snap offset, first cue marker
         <source main="main" file="ek_Toggle Docker - Video.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/c405a16807254967c36bd6df6b274d86a00045b9/Toolbars/ek_Toggle%20Docker%20-%20Video.lua</source>
         <source main="main midi_editor" file="ek_Toggle Docker - toggle bottom window.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/c405a16807254967c36bd6df6b274d86a00045b9/Toolbars/ek_Toggle%20Docker%20-%20toggle%20bottom%20window.lua</source>
         <source main="main midi_editor" file="ek_Toggle Docker - toggle right window.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/c405a16807254967c36bd6df6b274d86a00045b9/Toolbars/ek_Toggle%20Docker%20-%20toggle%20right%20window.lua</source>
+      </version>
+      <version name="2.0.0" author="Ed Kashinsky" time="2025-12-17T09:32:34Z">
+        <source file="../Core/data/toggle-docker_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a143ee1eb2f36a495cbbb5acabfa0da21422e828/Core/data/toggle-docker_5.3.dat</source>
+        <source file="../Core/data/toggle-docker_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a143ee1eb2f36a495cbbb5acabfa0da21422e828/Core/data/toggle-docker_5.4.dat</source>
+        <source main="main" file="ek_Toggle Docker (slot 1).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a143ee1eb2f36a495cbbb5acabfa0da21422e828/Toolbars/ek_Toggle%20Docker%20(slot%201).lua</source>
+        <source main="main" file="ek_Toggle Docker (slot 2).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a143ee1eb2f36a495cbbb5acabfa0da21422e828/Toolbars/ek_Toggle%20Docker%20(slot%202).lua</source>
+        <source main="main" file="ek_Toggle Docker (slot 3).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a143ee1eb2f36a495cbbb5acabfa0da21422e828/Toolbars/ek_Toggle%20Docker%20(slot%203).lua</source>
+        <source main="main" file="ek_Toggle Docker (slot 4).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a143ee1eb2f36a495cbbb5acabfa0da21422e828/Toolbars/ek_Toggle%20Docker%20(slot%204).lua</source>
       </version>
     </reapack>
     <reapack name="ek_Toggle monitoring FX.lua" type="script" desc="ek_Toggle monitoring FX">
