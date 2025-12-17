@@ -2,9 +2,9 @@
 @description ek_Core functions
 @author Ed Kashinsky
 @about Base functions used by ek-scripts.
-@version 1.2.17
+@version 1.2.18
 @changelog
-   * Small fix for clamp crash on Linux (thanks to @hans for report)
+   * Removed old functions
  @provides
     data/core_*.dat
     [nomain] curl/*

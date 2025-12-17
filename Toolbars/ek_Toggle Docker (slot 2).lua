@@ -1,28 +1,6 @@
---[[
-@description ek_Global startup action
-@version 1.2.5
-@author Ed Kashinsky
-@about
-  This is startup action brings some ableton-like features in realtime. You can control any option by 'ek_Global startup action settings' script.
-
-  For installation:
-     1. Install 'ek_Core functions.lua'
-	 2. Install this script via **Extensions** -> **ReaPack** -> **Browse Packages**
-	 3. Open script 'ek_Global startup action settings' and turn on "Enable global action"
-     4. Restart Reaper
-     5. Open 'ek_Global startup action settings' again for customize options
-     6. If you want to use auto-grid for MIDI Editor, install script **ek_Auto grid for MIDI Editor** and set it on zoom shortcut.
-@changelog
-   * Added new feature "Keep only one open window per docker"
-   * Script shows actual command state of this script
-@links
-	Documentation https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Global-Startup-Action
-	Forum thread https://forum.cockos.com/showthread.php?t=298431
-	Buy Licence https://ekscripts.gumroad.com/l/core-bg
-@provides
-	data/core-bg_*.dat
-	[main=main] ek_Global startup action - settings.lua
-]]--
+-- @author Ed Kashinsky
+-- @noindex
+-- @readme_skip
 
 local CONTEXT = ({reaper.get_action_context()})
 local SCRIPT_NAME = CONTEXT[2]:match("([^/\\]+)%.lua$"):gsub("ek_", "")
@@ -54,13 +32,13 @@ if not reaper.APIExists("ImGui_GetVersion") then
 end
 
 xpcall(function()
-	if not CoreLibraryLoad("core") or not CoreLibraryLoad("core-bg") then
+	if not CoreLibraryLoad("core")or not CoreLibraryLoad("toggle-docker") then
 		reaper.MB('Core functions is missing. Please install "ek_Core functions" it via ReaPack (Action: Browse packages). \nLua version is: ' .. _VERSION, SCRIPT_NAME, 0)
 		reaper.ReaPack_BrowsePackages("ek_Core functions")
 		return
 	end
 
-	GA_Start()
+	TD_ToggleDockerSlot("td_slot_2")
 end, function(err)
 	local _, _, imGuiVersion = reaper.ImGui_GetVersion()
 
