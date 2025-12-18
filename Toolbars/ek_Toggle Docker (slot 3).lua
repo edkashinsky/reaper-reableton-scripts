@@ -38,6 +38,11 @@ xpcall(function()
 		return
 	end
 
+	GUI_SetAboutLinks({
+		{'Documentation', 'https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Toggle-Docker'},
+		{'Forum thread', 'https://forum.cockos.com/showthread.php?t=305506'}
+	})
+	
 	TD_ToggleDockerSlot("td_slot_3")
 end, function(err)
 	local _, _, imGuiVersion = reaper.ImGui_GetVersion()
