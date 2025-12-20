@@ -10,6 +10,7 @@
     * Improved stability and performance
     * Added documentation link
 @metapackage
+@readme_skip
 @provides
     ../Core/data/toggle-docker_*.dat
     [main=main] ek_Toggle Docker (slot 1).lua

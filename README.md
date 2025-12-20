@@ -72,24 +72,28 @@ This script allows you to generate sounds via Eleven Labs directly from Reaper. 
 
 <img src="/Assets/images/global_action_settings.png" alt="Global Functions preview" width="500"/>
 
-This function has many useful perks that processed in real-time:
+This function has many useful perks that processed in real-time
 
-1. **Track working time on a project**. You can control how much time you spend on every particular project. It works automatically, when checkbox is enabled
-2. **Automatically adjust grid to zoom**. When you change zoom level, grid adjusts to it. Also you can choose grid level like in Ableton (adaptive or fixed). For detailed control recommended to install 'ek_Adaptive grid settings' script
-3. **Automatically limit zoom to size of project**. Max zoom level limits by the farthest item in the project.
-4. **Automatically focus to MIDI editor when you click on an item**. When you single click on item, you see only one MIDI editor and focus on this particular item.
-5. **Auto-Switch playback via selected track in Media Explorer**. If you use previewing in the "Play through the first selected track" mode in Media Explorer and want playback to follow the currently selected track.
-6. **Automatically highlight buttons**. This option highlights toolbar buttons in real-time. This applies to scripts: 'ek_Toggle preserve pitch for selected items', 'ek_Toggle trim mode for selected trackes', 'ek_Toggle monitoring fx plugin'
-7. **Toggle monitoring fx slots in exclusive mode**. If you use spectrum correction plugins (such as Realphones, Sonarworks Reference 4, SoundID Reference and etc.) on Monitoring FX when using headphones, you can always see if the plugin is enabled. For using it, add script 'ek_Toggle monitoring FX on slot 1-5' to your toolbar and this button will be highlighted automatically when the plugin on monitoring FX in particular slot is enabled.
-8. **Different sample rate for recording**. This option useful for sound designers, who usually uses 48kHz and forget to increase the sampling rate before recording to get better recording quality.
-9. **Dark mode theme**. If you want to turn on special dark theme in night hours, you can use this feature
-10. **Additional global startup action**. If you have your own action on startup, you can specified command Id and it will be executed on startup.
+#### [Documentation](https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Global-Startup-Action)
 
-For installation:
-1. Install '**ek_Global startup action**' script via Extensions -> ReaPack -> Browse Packages
-2. Execute script '**ek_Global startup action - settings**' in Action List and enable 'Enable global action' checkbox
-3. Restart Reaper
-4. Check script '**ek_Global startup action - settings**' again and enable features you need
+
+### Smart Snap
+
+<img src="/Assets/images/smart_snap.png" alt="smart_snap" width="400"/>
+
+This script extremely useful for wokirng with markers and videos. It snaps selected items to markers or regions started from specified number.
+
+#### [Documentation](https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Smart-Snap)
+
+
+### Toggle Docker
+
+<img src="/Assets/images/toggle_docker.png" alt="Toggle Docker" width="400"/>
+
+This script was inspired by Ableton’s workflow. It’s very convenient to be able to hide a docker with all the windows inside it with a single click, and just as convenient to show it again with another click. That’s exactly how this script works. Simple as that!
+
+#### [Documentation](https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Toggle-Docker)
+
 
 ### Adaptive grid
 
@@ -138,32 +142,7 @@ This helps to keep track of file garbage in your projects. It shows a special wa
 Installation:
 1. Install script **ek_Save project with a check of unused media files**
 2. Just attach it on Cmd/Ctrl+S instead of saving by default.
-
-### Snap items to markers or regions
-
-This script extremely useful for wokirng with markers and videos. It snaps selected items to markers or regions started from specified number.
-
-<img src="/Assets/images/pin_items_to_markers_or_regions.png" alt="pin_items_to_markers_or_regions" width="500"/>
-
-It has 3 behaviours (You can see how it works shematically on pictograms in GUI): 
-1. Simple - every item will be snapped to one marker, 
-2. Stems - items on different tracks will be snapped to one marker in order of selection, 
-3. Consider overlapped items - overlapped items will be joined to one stem and will be snapped to one marker 
-
-You can set custom offset depends on your need: 
-1. Beginning of leading item 
-2. Snap offset of leading item 
-3. First cue marker in leading item
-4. Peak of leading item
-
-Script gives posibility to limit markers/regions snapping. For example only 2 markers after specified.
-
-Script requires ReaImGui, but also it has 2 useful additional scripts without GUI:
-- ek_Snap items to closest markers
-- ek_Snap items to closest regions
-
-Installation:
-1. Install script **ek_Snap items to markers or regions**
+   
 
 # List of other useful scripts
 
@@ -218,10 +197,6 @@ This script makes group disable, if any selected item is grouped and otherwise i
 
 This script toggles option of editing multiple items on one track at the same time
 
-### ek_Move cursor or items pack
-
-This package has many scripts which are making navigation in arrange view and at the same time are moving some items depends on selection
-
 ### ek_Select items from selected to mouse cursor
 
 This script extends selection of items from selected to mouse cursor. As usual this action attaches in mouse modifiers on media item section
@@ -234,20 +209,70 @@ This script helps live with Project Limit option is on. It makes zoom available 
 
 This script helps live with Project Limit option is on. It makes zoom available to places behind limits
 
-### ek_Toggle preview in Media Editor
-
-This action allows preview playback in the Media Explorer (if available) within the arrangement window
-
 ### ek_Toggle time selection by razor or selected items
 
 This script toggle time selection by razor or selected items or envelope lines. Actually it works with loop points, so it supports behaviour when loop points and time selection is unlinked. Also it toggles transport repeat like in Ableton
 
-### ek_Tracks navigator
-
-This package has 2 scripts "ek_Tracks navigator - go to prev track" and "ek_Tracks navigator - go to next track".
-With these scripts you can navigate between non-tiny visible tracks and envelopes. You can attach scripts to arrow keys
-
 ### ek_Create region depending on selection
 
 Create region based on razor, selected items or time selection
+
+### ek_Toggle random color for selected items or tracks
+
+It changes color for items or tracks depending on focus
+
+### ek_Delete selected tracks
+
+If item has several takes and option "Show all takes in lane (when room)" is on, we gonna delete active take. If automation lane in focus, delete it. And in other case it deletes track and select previous available track
+
+### ek_Duplicate selected tracks or items
+
+If any item is selected, it duplicate item. In other case is duplicate track
+
+### ek_Insert new track
+
+It just inserts track or inserts it in the end of list depending on situation
+
+### ek_Move selected tracks under specified track
+
+Script moves selected tracks to new track as childs
+
+### ek_Nudge volume for selected tracks down
+
+It decrease volume for selected track a bit and shows tooltip with set volume
+
+### ek_Nudge volume for selected tracks up
+
+It increase volume for selected track a bit and shows tooltip with set volume
+
+### ek_Set volume for selected tracks
+
+Script shows window with input to set volume
+
+### Toggle exclusive arm for selected tracks
+
+It just toggles exclusive arm for selected tracks
+
+### ek_Toggle mute and offline FX for selected tracks
+
+This script makes fx offline when selected track is muted
+
+### ek_Toggle mute for selected tracks
+
+This script toggles mute for selected tracks and makes fx online if it is offine
+
+### ek_Toggle single solo for selected tracks
+
+Toggles selected track soloed
+
+### ek_Toggle trim mode for selected trackes
+
+Toggles trim mode for selected tracks and shows current state as button highlight
+
+## Support and feedback
+
+Please fill free to contact me here or on [LinkedIn](https://www.linkedin.com/in/edkashinsky/) or [Facebook](https://www.facebook.com/edkashinsky.music/) if you have any questions.
+
+If you like my scripts, you can support me via [PayPal](https://www.paypal.com/paypalme/kashinsky), [BuyMeACoffee](https://buymeacoffee.com/edkashinsky) or subscribe on my [Soundcloud](https://soundcloud.com/edkashinsky).
+
 
