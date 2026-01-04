@@ -1,6 +1,6 @@
 --[[
 @description ek_Smart renaming depending on focus
-@version 1.1.11
+@version 1.1.12
 @author Ed Kashinsky
 @readme_skip
 @about This script allows for convenient context-aware renaming of objects in REAPER. It also offers advanced features for batch renaming using simple rules. As a bonus, it lets you change the color of selected elements.
