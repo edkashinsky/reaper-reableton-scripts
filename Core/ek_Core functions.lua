@@ -2,7 +2,7 @@
 @description ek_Core functions
 @author Ed Kashinsky
 @about Base functions used by ek-scripts.
-@version 1.2.21
+@version 1.2.22
 @changelog
    * Added new functions
    * Improved stability
