@@ -24,8 +24,9 @@ xpcall(function()
 		{'Forum thread', 'https://forum.cockos.com/showthread.php?t=298431'}
 	})
 
-	GA_ShowGui()
+	EK:GlobalAction_ShowGui()
 end, function(err)
+	--- @diagnostic disable-next-line: undefined-field
 	local _, _, imGuiVersion = reaper.ImGui_GetVersion()
 
 	reaper.ShowConsoleMsg("\nERROR: " .. err .. "\n\n")
