@@ -43,8 +43,9 @@ xpcall(function()
 		{'Forum thread', 'https://forum.cockos.com/showthread.php?t=305506'}
 	})
 
-	TD_ToggleDockerSlot("td_slot_1")
+	EK:ToggleDockerSlot("td_slot_1")
 end, function(err)
+	--- @diagnostic disable-next-line: undefined-field
 	local _, _, imGuiVersion = reaper.ImGui_GetVersion()
 
 	reaper.ShowConsoleMsg("\nERROR: " .. err .. "\n\n")

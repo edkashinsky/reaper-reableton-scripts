@@ -42,9 +42,10 @@ xpcall(function()
 		{'Documentation', 'https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Toggle-Docker'},
 		{'Forum thread', 'https://forum.cockos.com/showthread.php?t=305506'}
 	})
-	
-	TD_ToggleDockerSlot("td_slot_4")
+
+	EK:ToggleDockerSlot("td_slot_4")
 end, function(err)
+	--- @diagnostic disable-next-line: undefined-field
 	local _, _, imGuiVersion = reaper.ImGui_GetVersion()
 
 	reaper.ShowConsoleMsg("\nERROR: " .. err .. "\n\n")
