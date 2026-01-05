@@ -1,10 +1,10 @@
 -- @author Ed Kashinsky
 -- @description ek_Monitoring FX Watcher
--- @version 1.0.5
+-- @version 1.0.6
 -- @about
 --   This script monitors a certain fx slot in the monitoring chain and switches the bypass on it in realtime.
 -- @changelog
---   * Fixed crash on REAPER 6
+--   * Fixed crash for first click on slot button
 -- @provides
 --   ../Core/data/mon-fx-watcher_*.dat
 --   [main=main] ek_Monitoring FX Watcher (slot 1).lua
