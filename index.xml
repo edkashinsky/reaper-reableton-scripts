@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="EK Scripts" commit="a983c58f4663c682a60a9264dd07c69a1e57dd1a">
+<index version="1" name="EK Scripts" commit="aaa7318cd04b9a01649c6fd777983279767284c3">
   <category name="AI">
     <reapack name="ek_Generate Music via ElevenLabs.lua" type="script" desc="ek_Generate Music via ElevenLabs">
       <metadata>
@@ -1817,6 +1817,15 @@ Improved performance]]></changelog>
         <source file="data/core-bg_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2f15c2313260c188e74fcd901c257100cd0879c9/Core/data/core-bg_5.4.dat</source>
         <source main="main" file="ek_Global startup action - settings.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2f15c2313260c188e74fcd901c257100cd0879c9/Core/ek_Global%20startup%20action%20-%20settings.lua</source>
       </version>
+      <version name="1.2.7" author="Ed Kashinsky" time="2026-01-05T00:39:20Z">
+        <changelog><![CDATA[* Monitoring FX feature was transffered to script 'ek_Monitoring FX Watcher'
+* Added new feature 'Automatic low-pass fades'
+* Core refactoring]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/aaa7318cd04b9a01649c6fd777983279767284c3/Core/ek_Global%20startup%20action.lua</source>
+        <source file="data/core-bg_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/aaa7318cd04b9a01649c6fd777983279767284c3/Core/data/core-bg_5.3.dat</source>
+        <source file="data/core-bg_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/aaa7318cd04b9a01649c6fd777983279767284c3/Core/data/core-bg_5.4.dat</source>
+        <source main="main" file="ek_Global startup action - settings.lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/aaa7318cd04b9a01649c6fd777983279767284c3/Core/ek_Global%20startup%20action%20-%20settings.lua</source>
+      </version>
     </reapack>
     <reapack name="ek_Save project with a check of unused media files.lua" type="script" desc="ek_Save project with a check of unused media files">
       <metadata>
@@ -3428,6 +3437,19 @@ Also there is flexible offset: just begin of item, snap offset, first cue marker
         <source main="main" file="ek_Monitoring FX Watcher (slot 4).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a983c58f4663c682a60a9264dd07c69a1e57dd1a/Toolbars/ek_Monitoring%20FX%20Watcher%20(slot%204).lua</source>
         <source main="main" file="ek_Monitoring FX Watcher (slot 5).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a983c58f4663c682a60a9264dd07c69a1e57dd1a/Toolbars/ek_Monitoring%20FX%20Watcher%20(slot%205).lua</source>
         <source main="main" file="ek_Monitoring FX Watcher (custom slot).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/a983c58f4663c682a60a9264dd07c69a1e57dd1a/Toolbars/ek_Monitoring%20FX%20Watcher%20(custom%20slot).lua</source>
+      </version>
+      <version name="1.0.2" author="Ed Kashinsky" time="2026-01-05T00:39:20Z">
+        <changelog><![CDATA[* Put any slot-script on any toolbar and press the button
+* Use CMD/CTRL on toolbar button for exclude mode]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/aaa7318cd04b9a01649c6fd777983279767284c3/Toolbars/ek_Monitoring%20FX%20Watcher.lua</source>
+        <source file="../Core/data/mon-fx-watcher_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/aaa7318cd04b9a01649c6fd777983279767284c3/Core/data/mon-fx-watcher_5.3.dat</source>
+        <source file="../Core/data/mon-fx-watcher_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/aaa7318cd04b9a01649c6fd777983279767284c3/Core/data/mon-fx-watcher_5.4.dat</source>
+        <source main="main" file="ek_Monitoring FX Watcher (slot 1).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/aaa7318cd04b9a01649c6fd777983279767284c3/Toolbars/ek_Monitoring%20FX%20Watcher%20(slot%201).lua</source>
+        <source main="main" file="ek_Monitoring FX Watcher (slot 2).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/aaa7318cd04b9a01649c6fd777983279767284c3/Toolbars/ek_Monitoring%20FX%20Watcher%20(slot%202).lua</source>
+        <source main="main" file="ek_Monitoring FX Watcher (slot 3).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/aaa7318cd04b9a01649c6fd777983279767284c3/Toolbars/ek_Monitoring%20FX%20Watcher%20(slot%203).lua</source>
+        <source main="main" file="ek_Monitoring FX Watcher (slot 4).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/aaa7318cd04b9a01649c6fd777983279767284c3/Toolbars/ek_Monitoring%20FX%20Watcher%20(slot%204).lua</source>
+        <source main="main" file="ek_Monitoring FX Watcher (slot 5).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/aaa7318cd04b9a01649c6fd777983279767284c3/Toolbars/ek_Monitoring%20FX%20Watcher%20(slot%205).lua</source>
+        <source main="main" file="ek_Monitoring FX Watcher (custom slot).lua">https://github.com/edkashinsky/reaper-reableton-scripts/raw/aaa7318cd04b9a01649c6fd777983279767284c3/Toolbars/ek_Monitoring%20FX%20Watcher%20(custom%20slot).lua</source>
       </version>
     </reapack>
     <reapack name="ek_Toggle Docker.lua" type="script" desc="ek_Toggle Docker">
