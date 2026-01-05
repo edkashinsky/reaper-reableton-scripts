@@ -1,6 +1,6 @@
 -- @author Ed Kashinsky
 -- @description ek_Monitoring FX Watcher
--- @version 1.0.1
+-- @version 1.0.2
 -- @about
 --   This script monitors a certain fx slot in the monitoring chain and switches the bypass on it in realtime.
 -- @changelog
