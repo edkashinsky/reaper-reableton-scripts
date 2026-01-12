@@ -1,6 +1,6 @@
 --[[
 @description ek_Global startup action
-@version 1.2.7
+@version 1.2.8
 @author Ed Kashinsky
 @about
   This is startup action brings some ableton-like features in realtime. You can control any option by 'ek_Global startup action settings' script.
@@ -13,9 +13,7 @@
      5. Open 'ek_Global startup action settings' again for customize options
      6. If you want to use auto-grid for MIDI Editor, install script **ek_Auto grid for MIDI Editor** and set it on zoom shortcut.
 @changelog
-   * Monitoring FX feature was transffered to script 'ek_Monitoring FX Watcher'
-   * Added new feature 'Automatic low-pass fades'
-   * Core refactoring
+   * Bug fix of selecting midi item
 @links
 	Documentation https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Global-Startup-Action
 	Forum thread https://forum.cockos.com/showthread.php?t=298431
