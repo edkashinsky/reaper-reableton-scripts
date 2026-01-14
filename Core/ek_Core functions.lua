@@ -2,9 +2,9 @@
 @description ek_Core functions
 @author Ed Kashinsky
 @about Base functions used by ek-scripts.
-@version 1.2.24
+@version 1.2.25
 @changelog
-   * Fixed crash on REAPER 6
+   * New script versions is checking only on first script executing, so there is no any lags on next executions
  @provides
     data/core_*.dat
     [nomain] curl/*
