@@ -95,6 +95,15 @@ This script was inspired by Ableton’s workflow. It’s very convenient to be a
 #### [Documentation](https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Toggle-Docker)
 
 
+### Monitoring FX Watcher
+
+<img src="/Assets/images/mon-fx-watcher.png" alt="Monitoring FX Watcher" width="400"/>
+
+This script monitors a certain fx slot in the monitoring chain and switches the bypass on it in realtime.
+
+#### [Documentation](https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Monitoring-FX-Watcher)
+
+
 ### Adaptive grid
 
 <img src="/Assets/images/auto_grid_preview.gif" alt="Global Functions preview" width="500"/>
@@ -142,7 +151,7 @@ This helps to keep track of file garbage in your projects. It shows a special wa
 Installation:
 1. Install script **ek_Save project with a check of unused media files**
 2. Just attach it on Cmd/Ctrl+S instead of saving by default.
-   
+
 
 # List of other useful scripts
 
@@ -193,9 +202,9 @@ If you move mouse on transport panel and execute script, you will see settings w
 
 This script makes group disable, if any selected item is grouped and otherwise if not.
 
-### ek_Toggle overlaping items vertically option
+### ek_Move cursor or items pack
 
-This script toggles option of editing multiple items on one track at the same time
+This package has many scripts which are making navigation in arrange view and at the same time are moving some items depends on selection
 
 ### ek_Select items from selected to mouse cursor
 
@@ -209,9 +218,18 @@ This script helps live with Project Limit option is on. It makes zoom available 
 
 This script helps live with Project Limit option is on. It makes zoom available to places behind limits
 
+### ek_Toggle preview in Media Editor
+
+This action allows preview playback in the Media Explorer (if available) within the arrangement window
+
 ### ek_Toggle time selection by razor or selected items
 
 This script toggle time selection by razor or selected items or envelope lines. Actually it works with loop points, so it supports behaviour when loop points and time selection is unlinked. Also it toggles transport repeat like in Ableton
+
+### ek_Tracks navigator
+
+This package has 2 scripts "ek_Tracks navigator - go to prev track" and "ek_Tracks navigator - go to next track".
+With these scripts you can navigate between non-tiny visible tracks and envelopes. You can attach scripts to arrow keys
 
 ### ek_Create region depending on selection
 
@@ -265,9 +283,10 @@ This script toggles mute for selected tracks and makes fx online if it is offine
 
 Toggles selected track soloed
 
-### ek_Toggle trim mode for selected trackes
+### ek_Tracks collapser
 
-Toggles trim mode for selected tracks and shows current state as button highlight
+This package has 2 scripts "ek_Collapse selected tracks" and "ek_Expand selected tracks". They toggle selected tracks/envelope lanes between 3 states: small, medium, large.
+Execute one of these scripts on transport panel and put height values there
 
 ## Support and feedback
 

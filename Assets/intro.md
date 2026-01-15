@@ -95,6 +95,15 @@ This script was inspired by Ableton’s workflow. It’s very convenient to be a
 #### [Documentation](https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Toggle-Docker)
 
 
+### Monitoring FX Watcher
+
+<img src="/Assets/images/mon-fx-watcher.png" alt="Monitoring FX Watcher" width="400"/>
+
+This script monitors a certain fx slot in the monitoring chain and switches the bypass on it in realtime.
+
+#### [Documentation](https://github.com/edkashinsky/reaper-reableton-scripts/wiki/Monitoring-FX-Watcher)
+
+
 ### Adaptive grid
 
 <img src="/Assets/images/auto_grid_preview.gif" alt="Global Functions preview" width="500"/>

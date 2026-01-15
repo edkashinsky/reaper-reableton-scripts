@@ -3,6 +3,7 @@
 -- @version 1.0.6
 -- @about
 --   This script monitors a certain fx slot in the monitoring chain and switches the bypass on it in realtime.
+-- @readme_skip
 -- @changelog
 --   * Fixed crash for first click on slot button
 -- @provides
