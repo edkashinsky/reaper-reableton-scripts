@@ -97,7 +97,7 @@ This script was inspired by Ableton’s workflow. It’s very convenient to be a
 
 ### Monitoring FX Watcher
 
-<img src="/Assets/images/mon-fx-watcher.png" alt="Monitoring FX Watcher" width="400"/>
+<img src="/Assets/images/mon-fx-watcher.gif" alt="Monitoring FX Watcher" width="400"/>
 
 This script monitors a certain fx slot in the monitoring chain and switches the bypass on it in realtime.
 
