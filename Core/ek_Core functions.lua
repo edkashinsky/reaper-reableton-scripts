@@ -2,9 +2,9 @@
 @description ek_Core functions
 @author Ed Kashinsky
 @about Base functions used by ek-scripts.
-@version 1.2.26
+@version 1.2.27
 @changelog
-   * New script versions is checking only on first script executing, so there is no any lags on next executions
+   * Fixed crash for Adaptive grid
  @provides
     data/core_*.dat
     [nomain] curl/*
