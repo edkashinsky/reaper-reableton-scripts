@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="EK Scripts" commit="9239c1e43ac5cbb4afd3846f8f19cde7243dee00">
+<index version="1" name="EK Scripts" commit="72af27cf7967faf40595aada6226a4a302c9f600">
   <category name="AI">
     <reapack name="ek_Generate Music via ElevenLabs.lua" type="script" desc="ek_Generate Music via ElevenLabs">
       <metadata>
@@ -526,6 +526,19 @@ new UI support]]></changelog>
         <source file="images/core/logo-black@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/9239c1e43ac5cbb4afd3846f8f19cde7243dee00/Core/images/core/logo-black@2x.png</source>
         <source file="images/core/logo-white.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/9239c1e43ac5cbb4afd3846f8f19cde7243dee00/Core/images/core/logo-white.png</source>
         <source file="images/core/logo-white@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/9239c1e43ac5cbb4afd3846f8f19cde7243dee00/Core/images/core/logo-white@2x.png</source>
+      </version>
+      <version name="1.2.27" author="Ed Kashinsky" time="2026-01-15T11:38:11Z">
+        <changelog><![CDATA[* Fixed crash for Adaptive grid]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/72af27cf7967faf40595aada6226a4a302c9f600/Core/ek_Core%20functions.lua</source>
+        <source file="data/core_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/72af27cf7967faf40595aada6226a4a302c9f600/Core/data/core_5.3.dat</source>
+        <source file="data/core_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/72af27cf7967faf40595aada6226a4a302c9f600/Core/data/core_5.4.dat</source>
+        <source file="curl/curl-ca-bundle.crt">https://github.com/edkashinsky/reaper-reableton-scripts/raw/72af27cf7967faf40595aada6226a4a302c9f600/Core/curl/curl-ca-bundle.crt</source>
+        <source file="curl/curl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/72af27cf7967faf40595aada6226a4a302c9f600/Core/curl/curl.exe</source>
+        <source file="curl/trurl.exe">https://github.com/edkashinsky/reaper-reableton-scripts/raw/72af27cf7967faf40595aada6226a4a302c9f600/Core/curl/trurl.exe</source>
+        <source file="images/core/logo-black.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/72af27cf7967faf40595aada6226a4a302c9f600/Core/images/core/logo-black.png</source>
+        <source file="images/core/logo-black@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/72af27cf7967faf40595aada6226a4a302c9f600/Core/images/core/logo-black@2x.png</source>
+        <source file="images/core/logo-white.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/72af27cf7967faf40595aada6226a4a302c9f600/Core/images/core/logo-white.png</source>
+        <source file="images/core/logo-white@2x.png">https://github.com/edkashinsky/reaper-reableton-scripts/raw/72af27cf7967faf40595aada6226a4a302c9f600/Core/images/core/logo-white@2x.png</source>
       </version>
     </reapack>
     <reapack name="ek_Focus virtual MIDI keyboard.lua" type="script" desc="ek_Focus virtual MIDI keyboard">
@@ -1851,27 +1864,6 @@ Also there is flexible offset: just begin of item, snap offset, first cue marker
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/967be14c6b6d98e1b7245aa706f6bd59bda6aeed/Items%20Editing/ek_Toggle%20group%20for%20selected%20items.lua</source>
       </version>
     </reapack>
-    <reapack name="ek_Toggle overlaping items vertically option.lua" type="script" desc="ek_Toggle overlaping items vertically option">
-      <metadata>
-        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
-{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
-\widowctrl\hyphauto
-
-{\pard \ql \f0 \sa180 \li0 \fi0 This script toggles option of editing multiple items on one track at the same time\par}
-}
-]]></description>
-      </metadata>
-      <version name="1.0.0" author="Ed Kashinsky" time="2022-05-30T09:42:49Z">
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Items%20Editing/ek_Toggle%20overlaping%20items%20vertically%20option.lua</source>
-      </version>
-      <version name="1.0.1" author="Ed Kashinsky" time="2022-05-31T08:06:26Z">
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Items%20Editing/ek_Toggle%20overlaping%20items%20vertically%20option.lua</source>
-      </version>
-      <version name="1.0.2" author="Ed Kashinsky" time="2025-04-14T11:45:23Z">
-        <changelog><![CDATA[Support of core dat-files]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Items%20Editing/ek_Toggle%20overlaping%20items%20vertically%20option.lua</source>
-      </version>
-    </reapack>
   </category>
   <category name="Navigation">
     <reapack name="ek_Move cursor or items pack.lua" type="script" desc="ek_Move cursor or items pack">
@@ -2862,37 +2854,6 @@ Also there is flexible offset: just begin of item, snap offset, first cue marker
       <version name="1.0.1" author="Ed Kashinsky" time="2023-11-07T15:47:48Z">
         <changelog><![CDATA[When mouse on lane, it will be solo]]></changelog>
         <source main="main midi_editor">https://github.com/edkashinsky/reaper-reableton-scripts/raw/779591c514ce98b29b304c7f47b679fe5071661d/Tracks%20Properties/ek_Toggle%20single%20solo%20for%20selected%20tracks.lua</source>
-      </version>
-    </reapack>
-    <reapack name="ek_Toggle trim mode for selected trackes.lua" type="script" desc="ek_Toggle trim mode for selected trackes">
-      <metadata>
-        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
-{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
-\widowctrl\hyphauto
-
-{\pard \ql \f0 \sa180 \li0 \fi0 Toggles trim mode for selected tracks and shows current state as button highlight\par}
-}
-]]></description>
-      </metadata>
-      <version name="1.0.0" author="Ed Kashinsky" time="2022-05-30T09:42:49Z">
-        <changelog><![CDATA[- Added core functions]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/d45a9c34c8c77fd6e1232670a5915fbe0f2f2cbe/Tracks%20Properties/ek_Toggle%20trim%20mode%20for%20selected%20trackes.lua</source>
-      </version>
-      <version name="1.0.1" author="Ed Kashinsky" time="2022-05-30T10:25:11Z">
-        <changelog><![CDATA[- Added core functions]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/7db1659bcf581a5cee34da9e7129764a37d1e2c4/Tracks%20Properties/ek_Toggle%20trim%20mode%20for%20selected%20trackes.lua</source>
-      </version>
-      <version name="1.0.2" author="Ed Kashinsky" time="2022-05-31T08:06:26Z">
-        <changelog><![CDATA[- Added core functions]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/715e3abfc82c1c9b93fbdc2ada3f054c7879acb3/Tracks%20Properties/ek_Toggle%20trim%20mode%20for%20selected%20trackes.lua</source>
-      </version>
-      <version name="1.0.3" author="Ed Kashinsky" time="2025-04-14T11:45:23Z">
-        <changelog><![CDATA[Support of core dat-files]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/854f8579731ede74c4c2d39c9adfedc5ee657db3/Tracks%20Properties/ek_Toggle%20trim%20mode%20for%20selected%20trackes.lua</source>
-      </version>
-      <version name="1.0.4" author="Ed Kashinsky" time="2025-04-21T16:54:42Z">
-        <changelog><![CDATA[Support of core dat-files]]></changelog>
-        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/c405a16807254967c36bd6df6b274d86a00045b9/Tracks%20Properties/ek_Toggle%20trim%20mode%20for%20selected%20trackes.lua</source>
       </version>
     </reapack>
     <reapack name="ek_Tracks collapser.lua" type="script" desc="ek_Tracks collapser">
