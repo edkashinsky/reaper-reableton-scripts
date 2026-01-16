@@ -1,11 +1,11 @@
 -- @author Ed Kashinsky
 -- @description ek_Monitoring FX Watcher
--- @version 1.0.6
+-- @version 1.0.7
 -- @about
 --   This script monitors a certain fx slot in the monitoring chain and switches the bypass on it in realtime.
 -- @readme_skip
 -- @changelog
---   * Fixed crash for first click on slot button
+--   * Fixed lags for slots
 -- @provides
 --   ../Core/data/mon-fx-watcher_*.dat
 --   [main=main] ek_Monitoring FX Watcher (slot 1).lua
