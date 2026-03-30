@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="EK Scripts" commit="1c29298f504d482ca5059e6e004fd5473896aca1">
+<index version="1" name="EK Scripts" commit="cec791af5aad6fbd54aa08232467291aa3b17863">
   <category name="AI">
     <reapack name="ek_Generate Music via ElevenLabs.lua" type="script" desc="ek_Generate Music via ElevenLabs">
       <metadata>
@@ -1525,6 +1525,12 @@ Please restart Reaper for taking effect]]></changelog>
         <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Items%20Editing/ek_Separated%20actions%20for%20Media%20item%20in%20Mouse%20modifiers.lua</source>
         <source file="../Core/data/dual-header-action_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/data/dual-header-action_5.3.dat</source>
         <source file="../Core/data/dual-header-action_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/2615093e18ddfda4b630583a10d2cecc864ee45e/Core/data/dual-header-action_5.4.dat</source>
+      </version>
+      <version name="1.1.8" author="Ed Kashinsky" time="2026-03-30T14:12:11Z">
+        <changelog><![CDATA[* Fixed bug when saved actions were cleared (now it's reset as well, but it will be saved in future)]]></changelog>
+        <source main="main">https://github.com/edkashinsky/reaper-reableton-scripts/raw/cec791af5aad6fbd54aa08232467291aa3b17863/Items%20Editing/ek_Separated%20actions%20for%20Media%20item%20in%20Mouse%20modifiers.lua</source>
+        <source file="../Core/data/dual-header-action_5.3.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/cec791af5aad6fbd54aa08232467291aa3b17863/Core/data/dual-header-action_5.3.dat</source>
+        <source file="../Core/data/dual-header-action_5.4.dat">https://github.com/edkashinsky/reaper-reableton-scripts/raw/cec791af5aad6fbd54aa08232467291aa3b17863/Core/data/dual-header-action_5.4.dat</source>
       </version>
     </reapack>
     <reapack name="ek_Smart split items by mouse cursor.lua" type="script" desc="ek_Smart split items by mouse cursor">
