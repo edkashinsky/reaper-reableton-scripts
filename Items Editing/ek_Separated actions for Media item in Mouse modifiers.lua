@@ -1,6 +1,6 @@
 --[[
 @description ek_Separated actions for Media item in Mouse modifiers
-@version 1.1.7
+@version 1.1.8
 @author Ed Kashinsky
 @readme_skip
 @about
@@ -10,7 +10,7 @@
 		- If option enabled, header label is positioned above the item and "header part" calculates as 1/4 of the upper part of the item
         - If option disabled, header label is positioned on item and header part calculates as header label height
 @changelog
-   * Added detailed message on error crash
+   * Fixed bug when saved actions were cleared (now it's reset as well, but it will be saved in future)
 @provides
    ../Core/data/dual-header-action_*.dat
 ]]--
